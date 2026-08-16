@@ -86,4 +86,4 @@ Observation checks before public release:
 
 ## Next decision
 
-The next meaningful investment after the third slice is comparative observation, not a fourth mechanic. Compare discovery, comfort, repeat interest, caregiver co-play, and natural stopping across creation, connected-region planning, and reversible hide/reveal play. Keep the scene-maker and more demanding direct-manipulation ideas exploratory until that evidence exists, and do not extract a generalized framework merely because three pages share controls.
+The ordered implementation and validation sequence now lives in `ROADMAP.md`. The immediate priority is to remove apparent missed touches from Color Splash, then deepen Peekaboo and Bloom before adding a direct-manipulation construction experiment. Comparative observation remains necessary before treating these hypotheses as validated, but an unavailable real-world observation step should not prevent bounded, reversible technical prototypes from advancing. Do not extract a generalized framework merely because the pages share controls.

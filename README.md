@@ -6,6 +6,7 @@ SuperSimpleGames is a mobile-first collection of playful, no-fail experiences fo
 
 The product intent lives in [INCEPTION.md](./INCEPTION.md).
 Current hypotheses and validation criteria live in [docs/PRODUCT.md](./docs/PRODUCT.md).
+The ordered implementation plan lives in [docs/ROADMAP.md](./docs/ROADMAP.md).
 The first caregiver-observation protocol is in [docs/PLAYTEST.md](./docs/PLAYTEST.md).
 Color Splash has its own focused protocol in [docs/COLOR_SPLASH_PLAYTEST.md](./docs/COLOR_SPLASH_PLAYTEST.md).
 Peekaboo Pockets has a reversible-discovery protocol in [docs/PEEKABOO_PLAYTEST.md](./docs/PEEKABOO_PLAYTEST.md).
@@ -60,4 +61,4 @@ node --test
 
 ## Near-term direction
 
-Validate all three interaction styles with caregivers and children before adding progression or extracting a general game framework. Bloom tests direct open-ended creation, Color Splash tests connected-region planning, and Peekaboo Pockets tests open/close discovery and revisiting stable hidden objects.
+Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). The immediate priority is forgiving Color Splash input, followed by deeper Peekaboo and Bloom interactions, then a direct-manipulation construction experiment. Real-world observation remains necessary before treating any product hypothesis as validated.
