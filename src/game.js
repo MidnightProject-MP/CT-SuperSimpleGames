@@ -5,6 +5,7 @@ export const NEIGHBOR_DISTANCE = 170;
 export const MAX_SPARKS = 24;
 export const MAX_GARDEN_LINKS = 32;
 export const MAX_GARDEN_CANOPIES = 4;
+export const GARDEN_VISITOR_TOUCHES = 4;
 
 export const BLOOM_STAGES = Object.freeze([
   Object.freeze({ name: "fresh", label: "fresh bloom", toneFactor: 1 }),
@@ -93,6 +94,56 @@ export function gardenNeighborhoods(items, maxDistance, {
     }
   }
   return Object.freeze({ links: Object.freeze(links), canopies: Object.freeze(canopies) });
+}
+
+export function gardenVisitorFor(items, maxDistance) {
+  const blooms = [...items].sort((left, right) => left.id - right.id);
+  if (!Number.isFinite(maxDistance) || maxDistance <= 0) throw new RangeError("maxDistance must be positive");
+  for (const bloom of blooms) {
+    if (!bloom || !Number.isFinite(bloom.x) || !Number.isFinite(bloom.y)
+      || !Number.isInteger(bloom.stage) || bloom.stage < 0 || bloom.stage >= BLOOM_STAGES.length) {
+      throw new TypeError("visitors require valid garden blooms");
+    }
+  }
+  const neighborhoods = gardenNeighborhoods(blooms, maxDistance);
+  if (neighborhoods.canopies.length) {
+    const anchorIds = neighborhoods.canopies[0].ids;
+    const anchors = anchorIds.map((id) => blooms.find((bloom) => bloom.id === id));
+    return Object.freeze({
+      type: "bee",
+      label: "one busy bee",
+      x: anchors.reduce((sum, bloom) => sum + bloom.x, 0) / anchors.length,
+      y: anchors.reduce((sum, bloom) => sum + bloom.y, 0) / anchors.length - 74,
+      anchorIds,
+    });
+  }
+  const seed = blooms.find((bloom) => bloom.stage === 3);
+  if (seed) return Object.freeze({ type: "bird", label: "a spotted bird", x: seed.x + 66, y: seed.y - 58, anchorIds: Object.freeze([seed.id]) });
+  for (let firstIndex = 0; firstIndex < blooms.length; firstIndex += 1) {
+    for (let secondIndex = firstIndex + 1; secondIndex < blooms.length; secondIndex += 1) {
+      const first = blooms[firstIndex];
+      const second = blooms[secondIndex];
+      const gap = Math.hypot(first.x - second.x, first.y - second.y);
+      if (gap < maxDistance * 0.72 || gap > maxDistance * 1.35) continue;
+      return Object.freeze({
+        type: "butterfly",
+        label: "a butterfly with two wings",
+        x: (first.x + second.x) / 2,
+        y: (first.y + second.y) / 2 - 62,
+        anchorIds: Object.freeze([first.id, second.id]),
+      });
+    }
+  }
+  return null;
+}
+
+export function moveGardenVisitor(visitor, visit, width, height) {
+  if (!visitor || !["bee", "bird", "butterfly"].includes(visitor.type)
+    || !Number.isFinite(visitor.x) || !Number.isFinite(visitor.y)) throw new TypeError("invalid garden visitor");
+  if (!Number.isInteger(visit) || visit < 0) throw new RangeError("visitor visit must be non-negative");
+  const offsets = Object.freeze([[0, 0], [42, -18], [-38, -10], [18, 26]]);
+  const offset = offsets[visit % offsets.length];
+  return Object.freeze(clampPosition(visitor.x + offset[0], visitor.y + offset[1], width, height, 42));
 }
 
 export function trimToLimit(items, limit = MAX_BLOOMS) {

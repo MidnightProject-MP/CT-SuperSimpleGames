@@ -3,13 +3,16 @@ import {
   COLORS,
   MAX_BLOOMS,
   MAX_SPARKS,
+  GARDEN_VISITOR_TOUCHES,
   clampPosition,
   createBloom,
   growBloom,
   gardenNeighborhoods,
+  gardenVisitorFor,
   nearestBloom,
   neighborDistanceForLayout,
-  planGardenInteraction
+  planGardenInteraction,
+  moveGardenVisitor
 } from "./game.js";
 import { createTonePlayer } from "./audio.js";
 import { createPointerSampler } from "./interaction.js";
@@ -20,6 +23,7 @@ const blooms = document.querySelector("#blooms");
 const invitation = document.querySelector("#invitation");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
+const visitorLayer = document.querySelector("#visitor-layer");
 
 let bloomCount = 0;
 const gardenBlooms = new Map();
@@ -30,6 +34,58 @@ let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 const pointerSampler = createPointerSampler();
 let resizeFrame;
+let visitorState = null;
+let dismissedVisitorKey = null;
+
+const VISITOR_TONES = Object.freeze({ bee: 739.99, butterfly: 622.25, bird: 554.37 });
+
+function visitorKey(visitor) {
+  return visitor ? `${visitor.type}:${visitor.anchorIds.join("-")}` : null;
+}
+
+function createVisitorElement(visitor) {
+  const button = document.createElement("button");
+  const art = document.createElement("span");
+  button.type = "button";
+  button.className = "garden-visitor";
+  button.dataset.type = visitor.type;
+  button.setAttribute("aria-label", `${visitor.label}; touch to say hello`);
+  art.className = "visitor-art";
+  art.setAttribute("aria-hidden", "true");
+  art.append(document.createElement("i"), document.createElement("i"), document.createElement("i"));
+  button.append(art);
+  return button;
+}
+
+function placeVisitor() {
+  const element = visitorLayer.querySelector(".garden-visitor");
+  if (!element || !visitorState) return;
+  const point = moveGardenVisitor(visitorState.visitor, visitorState.visits, garden.clientWidth, garden.clientHeight);
+  element.style.left = `${point.x}px`;
+  element.style.top = `${point.y}px`;
+}
+
+function renderVisitor() {
+  const reach = neighborDistanceForLayout(garden.clientWidth, garden.clientHeight);
+  const visitor = gardenVisitorFor(gardenBlooms.values(), reach);
+  const key = visitorKey(visitor);
+  if (!visitor || key === dismissedVisitorKey) {
+    visitorState = null;
+    visitorLayer.replaceChildren();
+    return;
+  }
+  if (visitorState?.key === key) {
+    visitorState = { ...visitorState, visitor };
+    placeVisitor();
+    return;
+  }
+  dismissedVisitorKey = null;
+  visitorState = { key, visitor, visits: 0 };
+  visitorLayer.replaceChildren(createVisitorElement(visitor));
+  placeVisitor();
+  announcement.textContent = `${visitor.label} came to visit the garden`;
+  tonePlayer.play(VISITOR_TONES[visitor.type]);
+}
 
 function renderSoundState() {
   soundToggle.setAttribute("aria-pressed", String(soundEnabled));
@@ -137,6 +193,7 @@ function renderNeighborhoods() {
     blooms.prepend(element);
     gardenCanopies.push(element);
   }
+  renderVisitor();
   return neighborhoods;
 }
 
@@ -281,6 +338,30 @@ soundToggle.addEventListener("click", (event) => {
   saveSoundPreference(soundEnabled);
   renderSoundState();
   if (soundEnabled) tonePlayer.play(COLORS[bloomCount % COLORS.length].tone);
+});
+
+visitorLayer.addEventListener("click", (event) => {
+  const visitor = event.target.closest(".garden-visitor");
+  if (!visitor || !visitorState) return;
+  event.stopPropagation();
+  const visits = visitorState.visits + 1;
+  if (visits >= GARDEN_VISITOR_TOUCHES) {
+    dismissedVisitorKey = visitorState.key;
+    const label = visitorState.visitor.label;
+    visitorState = null;
+    visitor.classList.add("leaving");
+    visitor.addEventListener("animationend", () => visitorLayer.replaceChildren(), { once: true });
+    announcement.textContent = `${label} flies away. Every flower stays safe.`;
+    tonePlayer.play(VISITOR_TONES[visitor.dataset.type] * 0.86);
+    return;
+  }
+  visitorState = { ...visitorState, visits };
+  placeVisitor();
+  visitor.classList.remove("visiting");
+  void visitor.offsetWidth;
+  visitor.classList.add("visiting");
+  announcement.textContent = `${visitorState.visitor.label} visits another flower`;
+  tonePlayer.play(VISITOR_TONES[visitor.dataset.type] * (1 + visits * 0.025));
 });
 
 document.addEventListener("visibilitychange", () => {

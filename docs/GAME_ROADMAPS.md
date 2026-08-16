@@ -154,6 +154,8 @@ The child currently receives immediate creation, color and size variation, broad
 
 ### BL-3 — Garden visitors
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** system expansion; Round 3.
 
 - Introduce at most one calm visitor at a time, earned by stable garden conditions rather than random rarity.
@@ -167,6 +169,8 @@ The child currently receives immediate creation, color and size variation, broad
 **Learning exposure:** simple ecological cause and effect, quantity, classification, and anticipation.
 
 **Gate:** Visitors do not become rare rewards, collectibles, or a reason to prolong play.
+
+**Implementation note:** Deterministic garden conditions now invite exactly one local CSS-drawn visitor: three nearby mature blooms invite a bee, a seed-stage bloom invites a three-spotted bird, and a deliberately spaced pair invites a two-winged butterfly. The visitor has an 84-pixel touch target, moves among four bounded local positions, and leaves after a short four-touch visit without changing any flower. Dismissal persists while the same condition remains, so the visitor cannot become a collectible or attention loop.
 
 ### BL-4 — Garden seasons and themes
 

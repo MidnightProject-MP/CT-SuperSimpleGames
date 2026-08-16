@@ -27,7 +27,7 @@ That invariant has a device boundary. A web app cannot prevent operating-system 
 
 Every tap on empty space grows a large flower at or near the contact point. Flowers cycle through named colors and vary in size and petal count. Touching an existing flower advances a circular visual growth story—fresh, taller, full, seed-ready, and renewed—making earlier work revisitable without leaving any stage unfinished. Nearby matching colors form a soft harmony, differing colors form an alternating rhythm, and three mutually nearby full blooms share a calm canopy. These relationships update without deleting flowers. A short synthesized tone reinforces each result, and a visible sound control disables it. Dragging produces a deliberately rate-limited trail. The garden remains bounded at 24 flowers, but reaching the bound converts new touches into tending the nearest flower instead of silently erasing prior work.
 
-Bloom supports exposure to cause and effect, colors, spatial position, relative size, and variation. It does **not** claim to teach or assess mastery of those concepts.
+Bloom supports exposure to cause and effect, colors, spatial position, relative size, variation, and simple ecological relationships. Stable arrangements can invite exactly one calm visitor: a bee, a two-winged butterfly, or a three-spotted bird. Each moves locally when touched and leaves after a short visit without taking or changing a flower. Visitors are deterministic consequences, not rare rewards or collectibles. Bloom does **not** claim to teach or assess mastery of those concepts.
 
 ## Color Splash: second product slice
 
@@ -70,6 +70,7 @@ Mechanical checks:
 - generated flower positions remain within the visible viewport;
 - existing flowers can be revisited and grow only to a bounded maximum size;
 - Bloom neighborhood links and canopies derive deterministically from current state, remain capped, and never consume a flower;
+- Bloom exposes at most one visitor from current garden conditions; four visitor touches end the visit without changing a flower;
 - reaching the flower count bound revisits an existing flower and never silently removes the child's work;
 - sound-off play retains complete visible feedback;
 - the application shell is available offline after a successful first load;

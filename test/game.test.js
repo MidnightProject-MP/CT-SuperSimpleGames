@@ -4,14 +4,17 @@ import {
   BLOOM_STAGES,
   COLORS,
   MAX_BLOOMS,
+  GARDEN_VISITOR_TOUCHES,
   NEIGHBOR_DISTANCE,
   clampPosition,
   createBloom,
   growBloom,
   gardenNeighborhoods,
+  gardenVisitorFor,
   nearestBloom,
   neighborDistanceForLayout,
   planGardenInteraction,
+  moveGardenVisitor,
   trimToLimit
 } from "../src/game.js";
 
@@ -39,6 +42,33 @@ test("garden neighborhood effects obey explicit budgets", () => {
   assert.equal(result.links.length, 7);
   assert.equal(result.canopies.length, 2);
   assert.throws(() => gardenNeighborhoods(blooms, 0), RangeError);
+});
+
+test("stable garden conditions invite one deterministic visitor", () => {
+  const mature = [
+    { ...createBloom(0, 100, 120, 500, 500), stage: 2 },
+    { ...createBloom(1, 170, 120, 500, 500), stage: 2 },
+    { ...createBloom(2, 135, 180, 500, 500), stage: 2 },
+  ];
+  const bee = gardenVisitorFor(mature, 120);
+  assert.equal(bee.type, "bee");
+  assert.deepEqual(bee.anchorIds, [0, 1, 2]);
+  assert.equal(Object.isFrozen(bee), true);
+
+  const seed = [{ ...createBloom(4, 200, 220, 500, 500), stage: 3 }];
+  assert.equal(gardenVisitorFor(seed, 120).type, "bird");
+
+  const spaced = [createBloom(5, 100, 200, 500, 500), createBloom(6, 220, 200, 500, 500)];
+  assert.equal(gardenVisitorFor(spaced, 120).type, "butterfly");
+  assert.equal(gardenVisitorFor([createBloom(7, 100, 100, 500, 500)], 120), null);
+});
+
+test("garden visitors move locally within bounds and have a short visit", () => {
+  const visitor = { type: "bee", x: 300, y: 300 };
+  assert.deepEqual(moveGardenVisitor(visitor, 1, 320, 400), { x: 278, y: 282 });
+  assert.deepEqual(moveGardenVisitor({ ...visitor, x: 4, y: 4 }, 2, 320, 400), { x: 42, y: 42 });
+  assert.equal(GARDEN_VISITOR_TOUCHES, 4);
+  assert.throws(() => moveGardenVisitor(visitor, -1, 320, 400), RangeError);
 });
 
 test("createBloom cycles colors and varies size and petal count predictably", () => {
