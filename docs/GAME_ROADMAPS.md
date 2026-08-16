@@ -32,6 +32,8 @@ Each game should provide a different kind of agency and a different route into e
 9. Continue to prohibit scores, streaks, timers, lives, locked content, rarity, autoplay, nagging, analytics, accounts, advertising, and external actions.
 10. Availability is not validation. A roadmap milestone may be public for testing while its child, device, and caregiver evidence remains pending.
 11. Every finite or round-based experience must offer an obvious in-game replay after its restful completion pause. Open-ended creations must offer a deliberate, confirmed fresh start when clearing prior work would be destructive.
+12. Keep user-initiated browser and accessibility zoom available, but use game-directed zoom or reframing only when changing scale materially improves the central mechanic.
+13. Keep the primary play surface spatially stable. Controls and render-state changes must not unexpectedly move, resize, or recenter it; reserve control space or overlay controls without changing child-authored geometry.
 
 ## Delivery cadence
 
@@ -64,6 +66,8 @@ Proceed after each Round 1 mechanic is technically verified and any obvious inte
 6. `TT-2` Touchable recent history
 
 ### Round 3 — Deepen social and conceptual play
+
+The cross-game **Familiar World** phase in `ROADMAP.md` now precedes the remaining isolated work in this round. Bloom's first garden visitors are already implemented; further Round 3 mechanics should wait until the shared control, preservation, spatial-stability, and recurring-resident contracts are coherent.
 
 Use observation to choose the strongest order within this round:
 
@@ -225,6 +229,14 @@ The child currently receives a forgiving board touch, a growing corner region, d
 - Define animation interruption rules so rapid choices settle into the correct final board without queued motion.
 
 **Gate:** Every accepted input can identify the resolved cell, selected identity, prior region, and resulting region without relying on timing.
+
+**Spatial stability correction — required before CS-3:**
+
+- Reserve or overlay the Back one and New board controls so their appearance cannot change the board's bounding box, cell size, center, or accepted tap geometry.
+- Keep the board anchored through ordinary moves, completion, the restful pause, and the transition to a new board. Content may change; the frame must not jump without a gameplay reason.
+- Do not add game-controlled camera zoom or automatic fit changes. User-controlled browser and accessibility zoom remains supported.
+- Make orientation reflow deterministic and preserve the active board's relationships without accidental input, clipping, or collision.
+- Add deterministic layout-contract checks where the DOM can express the invariant, then require rendered portrait, short-landscape, and touch-device observation before calling the correction verified.
 
 ### CS-1 — Puzzle families
 

@@ -22,6 +22,7 @@ That invariant has a device boundary. A web app cannot prevent operating-system 
 6. **Privacy is the default.** There are no accounts, analytics, identifiers, third-party SDKs, or data transmission.
 7. **Accessibility is part of resilience.** The app supports keyboard activation and assistive labels, leaves browser zoom available, exposes a sound toggle, and respects reduced-motion preferences.
 8. **Engagement is not the objective.** Do not add streaks, nagging, notifications, variable rewards, or autoplay. Caregiver-observed delight and repeat interest matter more than session length.
+9. **Spatial stability is part of legibility.** The child's active surface does not unexpectedly move, resize, or recenter when controls appear or state changes. Browser and accessibility zoom remain available; game-controlled zoom or reframing is reserved for mechanics that genuinely benefit from changing scale.
 
 ## Bloom: first product slice
 
@@ -80,6 +81,9 @@ Mechanical checks:
 - decorative board gaps resolve deterministically to a nearby square;
 - repeated/current-color input visibly acknowledges the connected region;
 - Color Splash completion waits for the explicit new-board control before starting another board.
+- Color Splash reserves or overlays its Back one and New board controls so their appearance cannot shift the board, resize cells, recenter the grid, or change accepted tap geometry;
+- state changes preserve the active play surface's stable anchors, and game-controlled camera zoom or automatic fit changes appear only where a documented mechanic requires them;
+- user-initiated browser and accessibility zoom remains functional;
 - each Peekaboo search contains one stable target, two unique familiar friends, one stable clue pocket, and three distinct non-color patterns;
 - pocket discovery is monotonic, opening and closing never mutates prior state, and discovering all pockets never blocks further play;
 - every friend has a locally bundled vector illustration and remains independently touchable while emerged;
@@ -125,4 +129,4 @@ Observation checks before public release:
 
 ## Next decision
 
-The portfolio sequence lives in `ROADMAP.md`, and the ordered expansion plan for every experience lives in `GAME_ROADMAPS.md`. All six experiences are available from the launcher for testing. Implement one bounded roadmap milestone at a time and make it available for observation; availability is not validation. Do not compound additional content when the underlying interaction remains unclear, and do not extract a generalized framework merely because the pages share controls.
+The agreed next portfolio phase is **Familiar World**, defined in `ROADMAP.md`; the ordered expansion plan for every experience remains in `GAME_ROADMAPS.md`. Stabilize shared control meanings, bounded preservation, and the play surface—especially Color Splash—before continuing isolated Round 3 expansion. All six experiences remain available from the launcher for testing. Implement one bounded roadmap milestone at a time and make it available for observation; availability is not validation. Do not compound additional content when the underlying interaction remains unclear, and do not extract a generalized framework merely because the pages share controls.
