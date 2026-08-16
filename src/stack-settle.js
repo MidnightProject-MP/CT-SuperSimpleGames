@@ -52,12 +52,16 @@ function renderPieces() {
 
 function animatePiece(id, className = "settled") {
   const element = piecesElement.querySelector(`[data-id="${id}"]`);
-  element.classList.remove("settled", "related");
+  element.classList.remove("settled", "related", "structure-found");
   void element.offsetWidth;
   element.classList.add(className);
 }
 
 function describeResult(result) {
+  const newestStructure = result.structures.find((structure) => structure.top === result.piece.id);
+  if (newestStructure?.type === "enclosure") return "A cozy enclosure!";
+  if (newestStructure?.type === "bridge") return "A bridge!";
+  if (newestStructure?.type === "shelter") return "A little shelter!";
   const strongest = result.relations.find((relation) => relation.type === "nested")
     || result.relations.find((relation) => relation.type === "stacked")
     || result.relations.find((relation) => relation.type === "beside");
@@ -72,6 +76,7 @@ function applyResult(result) {
   renderPieces();
   animatePiece(result.piece.id);
   for (const relation of result.relations) animatePiece(relation.with, "related");
+  if (result.structures.some((structure) => structure.top === result.piece.id)) animatePiece(result.piece.id, "structure-found");
   const definition = STACK_PIECES.find((piece) => piece.id === result.piece.id);
   const text = describeResult(result);
   message.textContent = text;

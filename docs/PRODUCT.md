@@ -43,7 +43,7 @@ Peekaboo Pockets supports exposure to open/closed, visible/hidden, containment, 
 
 ## Stack & Settle: fourth product slice
 
-Stack & Settle presents five oversized, reusable pieces in one bounded construction scene. A tap places or rearranges a piece without requiring sustained dragging. A broad drag gives richer positioning, after which the piece settles safely on the floor, on a nearby support, or into the ball-and-nest relationship. Floor neighbors, stacks, and nesting produce different brief responses. Pieces never collapse as punishment, remain movable, and cannot be consumed or duplicated.
+Stack & Settle presents five oversized, reusable pieces in one bounded construction scene. A tap places or rearranges a piece without requiring sustained dragging. A broad drag gives richer positioning, after which capability-defined pieces settle safely on the floor, a nearby support, two broad supports, or into the ball-and-nest relationship. Floor neighbors, stacks, nesting, bridges, shelters, and enclosures produce different brief responses. Pieces never collapse as punishment, remain movable, and cannot be consumed or duplicated.
 
 Stack & Settle supports exposure to above/below, beside, inside, relative size, arrangement, revision, and turn-taking. It does **not** assess coordination, construction, balance, or spatial reasoning. Its larger purpose is to test direct manipulation and child-authored revision, forms of agency not present in the first three games.
 

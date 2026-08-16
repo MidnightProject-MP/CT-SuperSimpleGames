@@ -420,6 +420,8 @@ The child currently receives five reusable pieces, tap-complete placement, broad
 
 ### STK-0 — Generalized settling engine
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** technical foundation supporting all Stack milestones.
 
 - Replace special-case pair logic with validated piece capabilities: supports, rests-on, nests-with, spans, covers, rolls-with, and decorates.
@@ -432,6 +434,8 @@ The child currently receives five reusable pieces, tap-complete placement, broad
 **Gate:** Every released piece reaches a visible valid state, and every structure can be revised without clearing the scene.
 
 ### STK-1 — Structural relationships
+
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
 
 **Kind:** core gameplay improvement; Round 1.
 
@@ -446,6 +450,8 @@ The child currently receives five reusable pieces, tap-complete placement, broad
 **Learning exposure:** support, spanning, inside/outside, part/whole, and spatial planning.
 
 **Gate:** Near-miss placements still settle safely and remain interesting; recognition cannot be the only satisfying outcome.
+
+**Implementation note:** Every piece now declares bounded construction capabilities for support, resting, spanning, covering, and nesting. The physical-layout settling engine can place a beam or roof across two forgiving supports, while pure structure recognition identifies bridges, shelters, and enclosures without consuming or locking pieces. Local responses acknowledge a discovered structure per placement, and randomized portrait/landscape placement tests protect identity, bounds, and recoverability.
 
 ### STK-2 — Open-ended idea cards
 

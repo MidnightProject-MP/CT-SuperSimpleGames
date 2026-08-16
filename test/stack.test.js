@@ -6,6 +6,7 @@ import {
   createStackState,
   relationshipsFor,
   settlePiece,
+  structuresFor,
   tapPiece
 } from "../src/stack.js";
 
@@ -16,6 +17,13 @@ test("stack state starts bounded, distinct, and reusable", () => {
   assert.equal(state.pieces.every((piece) => !piece.placed && piece.moves === 0), true);
   assert.equal(Object.isFrozen(state), true);
   assert.equal(Object.isFrozen(state.pieces), true);
+});
+
+test("piece definitions expose construction capabilities", () => {
+  for (const piece of STACK_PIECES) {
+    for (const name of ["supports", "restsOn", "spans", "covers"]) assert.equal(typeof piece[name], "boolean");
+    assert.equal(Array.isArray(piece.nestsWith), true);
+  }
 });
 
 test("an ordinary drop always settles safely on the floor and remains in bounds", () => {
@@ -42,6 +50,28 @@ test("ball and nest snap together from a forgiving neighborhood", () => {
   assert.equal(result.settledAs, "nested");
   assert.equal(result.piece.x, 0.6);
   assert.ok(result.relations.some((relation) => relation.type === "nested" && relation.with === "nest"));
+});
+
+test("a beam spans two forgiving supports and a roof recognizes shelter", () => {
+  let state = settlePiece(createStackState(), "berry", { x: 0.38, y: 0.7 }).state;
+  state = settlePiece(state, "nest", { x: 0.62, y: 0.7 }).state;
+  const bridge = settlePiece(state, "sky", { x: 0.5, y: 0.48 });
+  assert.equal(bridge.settledAs, "bridge");
+  assert.ok(bridge.structures.some((structure) => structure.type === "bridge"));
+  state = settlePiece(bridge.state, "sunny", { x: 0.5, y: 0.64 }).state;
+  const roof = settlePiece(state, "leaf", { x: 0.5, y: 0.32 });
+  assert.ok(structuresFor(roof.state).some((structure) => ["shelter", "enclosure"].includes(structure.type)));
+});
+
+test("many arbitrary placements preserve identity, bounds, and recoverability", () => {
+  let state = createStackState();
+  for (let move = 0; move < 500; move += 1) {
+    const piece = STACK_PIECES[move % STACK_PIECES.length];
+    const layout = move % 2 ? { width: 320, height: 640 } : { width: 800, height: 320 };
+    state = settlePiece(state, piece.id, { x: ((move * 37) % 101) / 100, y: ((move * 53) % 79) / 100 }, layout).state;
+    assert.equal(new Set(state.pieces.map((item) => item.id)).size, STACK_PIECES.length);
+    assert.equal(state.pieces.every((item) => item.x >= 0 && item.x <= 1 && item.y >= 0 && item.y <= 1), true);
+  }
 });
 
 test("nearby floor pieces form a side-by-side relation", () => {

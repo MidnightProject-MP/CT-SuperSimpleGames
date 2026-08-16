@@ -2,11 +2,11 @@ export const FLOOR_Y = 0.79;
 export const BUILD_TOP = 0.12;
 
 export const STACK_PIECES = Object.freeze([
-  Object.freeze({ id: "berry", kind: "block", width: 0.17, height: 0.17, tone: 392.0 }),
-  Object.freeze({ id: "sky", kind: "beam", width: 0.25, height: 0.13, tone: 440.0 }),
-  Object.freeze({ id: "sunny", kind: "ball", width: 0.15, height: 0.15, tone: 523.25 }),
-  Object.freeze({ id: "nest", kind: "nest", width: 0.25, height: 0.19, tone: 349.23 }),
-  Object.freeze({ id: "leaf", kind: "roof", width: 0.21, height: 0.16, tone: 466.16 })
+  Object.freeze({ id: "berry", kind: "block", width: 0.17, height: 0.17, tone: 392.0, supports: true, restsOn: true, spans: false, covers: false, nestsWith: Object.freeze([]) }),
+  Object.freeze({ id: "sky", kind: "beam", width: 0.25, height: 0.13, tone: 440.0, supports: true, restsOn: true, spans: true, covers: false, nestsWith: Object.freeze([]) }),
+  Object.freeze({ id: "sunny", kind: "ball", width: 0.15, height: 0.15, tone: 523.25, supports: false, restsOn: true, spans: false, covers: false, nestsWith: Object.freeze(["nest"]) }),
+  Object.freeze({ id: "nest", kind: "nest", width: 0.25, height: 0.19, tone: 349.23, supports: true, restsOn: true, spans: false, covers: false, nestsWith: Object.freeze(["ball"]) }),
+  Object.freeze({ id: "leaf", kind: "roof", width: 0.21, height: 0.16, tone: 466.16, supports: false, restsOn: true, spans: true, covers: true, nestsWith: Object.freeze([]) })
 ]);
 
 const PIECE_BY_ID = new Map(STACK_PIECES.map((piece) => [piece.id, piece]));
@@ -122,6 +122,29 @@ export function relationshipsFor(state, id, layout) {
   return Object.freeze(relations);
 }
 
+export function structuresFor(state, layout) {
+  const pieces = normalizeState(state).filter((piece) => piece.placed);
+  const structures = [];
+  for (const top of pieces.filter((piece) => piece.spans)) {
+    const topSize = dimensions(top, layout);
+    const supports = pieces.filter((piece) => {
+      if (piece.id === top.id || !piece.supports || piece.y <= top.y) return false;
+      const size = dimensions(piece, layout);
+      return Math.abs(piece.x - top.x) <= topSize.width * 0.68
+        && piece.y - top.y <= (topSize.height + size.height) * 1.5;
+    }).sort((left, right) => left.x - right.x);
+    if (supports.length >= 2 && supports[0].x < top.x && supports.at(-1).x > top.x) {
+      structures.push(Object.freeze({ type: top.covers ? "enclosure" : "bridge", top: top.id, supports: Object.freeze([supports[0].id, supports.at(-1).id]) }));
+    }
+    if (top.covers) {
+      const sheltered = pieces.find((piece) => piece.id !== top.id && piece.y > top.y
+        && Math.abs(piece.x - top.x) < topSize.width * 0.52);
+      if (sheltered) structures.push(Object.freeze({ type: "shelter", top: top.id, inside: sheltered.id }));
+    }
+  }
+  return Object.freeze(structures);
+}
+
 export function settlePiece(state, id, point, layout) {
   const pieces = normalizeState(state);
   const moving = pieceById(pieces, id);
@@ -137,12 +160,23 @@ export function settlePiece(state, id, point, layout) {
   let settledAs = "floor";
 
   const nestingPartner = others
-    .filter((other) => new Set([moving.kind, other.kind]).has("ball")
-      && new Set([moving.kind, other.kind]).has("nest"))
+    .filter((other) => moving.nestsWith.includes(other.kind) || other.nestsWith.includes(moving.kind))
     .sort((left, right) => layoutDistance({ x, y: point.y }, left, layout)
       - layoutDistance({ x, y: point.y }, right, layout))[0];
 
-  if (nestingPartner && layoutDistance({ x, y: point.y }, nestingPartner, layout) < 0.24) {
+  const spanSupports = moving.spans ? others.filter((other) => other.supports && point.y < other.y)
+    .filter((other) => Math.abs(other.x - x) <= movingSize.width * 0.75)
+    .sort((left, right) => left.x - right.x) : [];
+  const leftSupport = [...spanSupports].reverse().find((other) => other.x < x);
+  const rightSupport = spanSupports.find((other) => other.x > x);
+  const levelTolerance = (0.11 * metrics.unit) / metrics.height;
+
+  if (leftSupport && rightSupport && Math.abs(leftSupport.y - rightSupport.y) <= levelTolerance) {
+    x = (leftSupport.x + rightSupport.x) / 2;
+    const supportTop = Math.min(leftSupport.y - dimensions(leftSupport, layout).height / 2, rightSupport.y - dimensions(rightSupport, layout).height / 2);
+    y = Math.max(BUILD_TOP + movingSize.height / 2, supportTop - movingSize.height / 2);
+    settledAs = moving.covers ? "enclosure" : "bridge";
+  } else if (nestingPartner && layoutDistance({ x, y: point.y }, nestingPartner, layout) < 0.24) {
     x = nestingPartner.x;
     y = nestingPartner.y + (moving.kind === "ball" ? 0.015 : -0.015);
     settledAs = "nested";
@@ -172,7 +206,8 @@ export function settlePiece(state, id, point, layout) {
     state: nextState,
     piece: pieceById(nextState.pieces, id),
     settledAs,
-    relations: relationshipsFor(nextState, id, layout)
+    relations: relationshipsFor(nextState, id, layout),
+    structures: structuresFor(nextState, layout)
   });
 }
 
