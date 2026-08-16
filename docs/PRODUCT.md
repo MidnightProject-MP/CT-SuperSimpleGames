@@ -35,6 +35,12 @@ Color Splash presents a 4×4 board using four color-and-symbol identities. Tappi
 
 Color Splash supports exposure to color and symbol matching, connected regions, cause and effect, and simple multi-step planning. It does **not** assess reasoning or claim that completion demonstrates mastery.
 
+## Peekaboo Pockets: third product slice
+
+Peekaboo Pockets presents three oversized, patterned pockets with familiar objects that remain assigned to stable locations. Tapping opens or closes a pocket. Every pocket responds, discovery is retained, and opening all three produces one brief acknowledgement without ending or restarting play. There is no correct pocket, shuffle, memory test, score, or precision drag.
+
+Peekaboo Pockets supports exposure to open/closed, visible/hidden, containment, stable location, and revisiting. It does **not** assess memory or claim to teach object permanence. Its larger purpose is to test whether a reversible state change invites a different kind of curiosity and caregiver co-play from the first two games.
+
 ## Acceptance evidence
 
 Mechanical checks:
@@ -50,6 +56,8 @@ Mechanical checks:
 - every generated Color Splash board contains all four identities and is solvable without a move limit;
 - flood moves never shrink the connected corner region or mutate the prior board;
 - Color Splash completion waits for input before starting another board.
+- each Peekaboo round contains three unique familiar objects and three distinct non-color patterns;
+- pocket discovery is monotonic, opening and closing never mutates prior state, and discovering all pockets never blocks further play;
 
 Observation checks before public release:
 
@@ -78,4 +86,4 @@ Observation checks before public release:
 
 ## Next decision
 
-The next meaningful investment is observed playtesting of both games, not a third implemented mechanic. Compare discovery, comfort, repeat interest, and caregiver understanding across open-ended creation and simple color planning before extracting shared framework code. Keep the scene-maker direction in `docs/IDEAS.md` exploratory until that evidence exists.
+The next meaningful investment after the third slice is comparative observation, not a fourth mechanic. Compare discovery, comfort, repeat interest, caregiver co-play, and natural stopping across creation, connected-region planning, and reversible hide/reveal play. Keep the scene-maker and more demanding direct-manipulation ideas exploratory until that evidence exists, and do not extract a generalized framework merely because three pages share controls.

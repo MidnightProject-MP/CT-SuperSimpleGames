@@ -50,14 +50,14 @@ body {
 
 .game-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(18px, 4vw, 34px);
 }
 
 .game-card {
   display: grid;
-  min-height: clamp(270px, 54vw, 390px);
-  padding: clamp(20px, 5vw, 36px);
+  min-height: clamp(250px, 38vw, 340px);
+  padding: clamp(16px, 3vw, 28px);
   place-items: center;
   align-content: center;
   gap: 22px;
@@ -75,8 +75,9 @@ body {
 .game-card:focus-visible { outline: 6px solid #33236f; outline-offset: 5px; }
 .bloom-card { background: linear-gradient(145deg, #fff8bd, #ffb5d3); }
 .splash-card { background: linear-gradient(145deg, #d8cbff, #9de6ff); }
+.peek-card { background: linear-gradient(145deg, #ffe49a, #ffb4d2); }
 
-.card-art { position: relative; display: block; width: clamp(130px, 27vw, 190px); aspect-ratio: 1; }
+.card-art { position: relative; display: block; width: clamp(110px, 20vw, 170px); aspect-ratio: 1; }
 .card-copy { display: grid; gap: 5px; }
 .card-copy strong { font-size: clamp(28px, 6vw, 40px); letter-spacing: -.03em; }
 .card-copy small { font-size: clamp(17px, 3.5vw, 22px); }
@@ -125,11 +126,60 @@ body {
 .splash-art i:nth-child(4n+3) { background: #ffb52e; }
 .splash-art i:nth-child(4n) { background: #168fe5; }
 
+.pocket-art {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: end;
+  gap: 6px;
+  padding: 8px 5px;
+}
+
+.pocket-art i {
+  position: relative;
+  display: block;
+  height: 62%;
+  border: 3px solid rgba(255,255,255,.76);
+  border-radius: 8px 8px 18px 18px;
+  background: #ed5997;
+  box-shadow: inset 0 -5px rgba(108,29,78,.16), 0 5px 0 rgba(87,48,102,.12);
+}
+
+.pocket-art i:nth-child(2) { height: 72%; background: #7457e8; }
+.pocket-art i:nth-child(3) { height: 66%; background: #1799d5; }
+.pocket-art b {
+  position: absolute;
+  left: 50%;
+  bottom: 68%;
+  display: grid;
+  width: 78%;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 3px solid white;
+  border-radius: 50%;
+  color: #704063;
+  background: #fff7c8;
+  font-size: clamp(14px, 4vw, 28px);
+  transform: translateX(-50%);
+}
+
 @media (max-width: 620px) {
   .launcher-heading { justify-content: flex-start; }
   .game-grid { grid-template-columns: 1fr; }
   .game-card { grid-template-columns: auto 1fr; min-height: 190px; text-align: left; }
   .card-art { width: min(34vw, 150px); }
+}
+
+@media (max-width: 620px) and (max-height: 699px) and (orientation: portrait) {
+  .launcher { padding: max(16px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); }
+  .launcher-heading { gap: 10px; margin: 0 0 14px; }
+  .launcher-heading h1 { font-size: clamp(25px, 8vw, 34px); }
+  .launcher-heading p { font-size: clamp(15px, 4.5vw, 19px); }
+  .launcher-mark { width: clamp(46px, 14vw, 58px); border-width: 3px; font-size: 29px; }
+  .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .game-card { grid-template-columns: 1fr; min-height: 190px; padding: 12px; gap: 8px; text-align: center; border-width: 4px; border-radius: 26px; }
+  .card-art { width: min(25vw, 92px); }
+  .card-copy strong { font-size: clamp(20px, 6vw, 27px); }
+  .card-copy small { font-size: clamp(14px, 4vw, 17px); }
 }
 
 @media (orientation: landscape) and (max-height: 430px) {
@@ -148,11 +198,23 @@ body {
   .launcher-heading h1 { font-size: clamp(24px, 7vh, 32px); }
   .launcher-heading p { display: none; }
   .launcher-mark { width: clamp(42px, 13vh, 54px); border-width: 3px; font-size: clamp(24px, 7vh, 32px); }
-  .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; min-height: 0; }
-  .game-card { grid-template-columns: auto 1fr; min-height: 0; padding: 12px 16px; gap: 12px; border-width: 4px; border-radius: 26px; text-align: left; }
-  .card-art { width: min(27vh, 112px); }
+  .game-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; min-height: 0; }
+  .game-card { grid-template-columns: 1fr; min-height: 0; padding: 10px 8px; gap: 7px; border-width: 4px; border-radius: 24px; text-align: center; }
+  .card-art { width: min(25vh, 92px); }
   .card-copy strong { font-size: clamp(22px, 7vh, 31px); }
   .card-copy small { font-size: clamp(15px, 4.5vh, 19px); }
+}
+
+@media (orientation: landscape) and (max-height: 270px) {
+  .launcher { padding-block: max(6px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-bottom)); }
+  .launcher-heading { margin-bottom: 6px; }
+  .launcher-heading h1 { font-size: 22px; }
+  .launcher-mark { width: 34px; border-width: 2px; font-size: 22px; }
+  .game-grid { gap: 7px; }
+  .game-card { padding: 6px 5px; gap: 4px; border-width: 3px; border-radius: 18px; }
+  .card-art { width: min(22vh, 54px); }
+  .card-copy strong { font-size: 18px; }
+  .card-copy small { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

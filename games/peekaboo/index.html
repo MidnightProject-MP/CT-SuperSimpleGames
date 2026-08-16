@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; connect-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'none'; worker-src 'self'; manifest-src 'self'" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#d75c92" />
+    <meta name="description" content="Open bright pockets and meet the friendly surprises inside." />
+    <link rel="manifest" href="../../manifest.webmanifest" />
+    <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../../assets/icon-192.png" />
+    <link rel="stylesheet" href="../../peekaboo.css" />
+    <title>Peekaboo Pockets · SuperSimpleGames</title>
+  </head>
+  <body>
+    <main class="peek-game">
+      <header class="peek-topbar">
+        <a class="peek-brand" href="../../" aria-label="All games">
+          <span class="peek-brand-mark" aria-hidden="true">‹</span>
+          <span>Peekaboo</span>
+        </a>
+        <button id="sound-toggle" class="peek-sound" type="button" aria-pressed="true" aria-label="Turn sound off">
+          <svg class="sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.5 3a4.5 4.5 0 0 0-2-4v8a4.5 4.5 0 0 0 2-4Zm-2-7.7v2.1a6.5 6.5 0 0 1 0 11.2v2.1a8.5 8.5 0 0 0 0-15.4Z"/></svg>
+          <svg class="sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm11.5 3 2.2-2.2 1.4 1.4-2.2 2.2 2.2 2.2-1.4 1.4-2.2-2.2-2.2 2.2-1.4-1.4 2.2-2.2-2.2-2.2 1.4-1.4 2.2 2.2Z"/></svg>
+        </button>
+      </header>
+
+      <section id="peek-playfield" class="peek-playfield" aria-labelledby="peek-prompt">
+        <p id="peek-prompt" class="peek-prompt">Who’s inside?</p>
+        <div id="pocket-row" class="pocket-row" role="group" aria-label="Three pockets to open"></div>
+        <p id="peek-message" class="peek-message" aria-live="polite">Tap a pocket!</p>
+      </section>
+      <div id="announcement" class="sr-only" aria-live="polite"></div>
+    </main>
+    <noscript>Peekaboo Pockets needs JavaScript to play.</noscript>
+    <script type="module" src="../../src/peekaboo.js"></script>
+  </body>
+</html>

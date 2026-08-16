@@ -8,7 +8,9 @@ The product intent lives in [INCEPTION.md](./INCEPTION.md).
 Current hypotheses and validation criteria live in [docs/PRODUCT.md](./docs/PRODUCT.md).
 The first caregiver-observation protocol is in [docs/PLAYTEST.md](./docs/PLAYTEST.md).
 Color Splash has its own focused protocol in [docs/COLOR_SPLASH_PLAYTEST.md](./docs/COLOR_SPLASH_PLAYTEST.md).
+Peekaboo Pockets has a reversible-discovery protocol in [docs/PEEKABOO_PLAYTEST.md](./docs/PEEKABOO_PLAYTEST.md).
 Uncommitted future directions are captured separately in [docs/IDEAS.md](./docs/IDEAS.md).
+The broader interaction landscape and third-game decision are recorded in [docs/CONCEPTS.md](./docs/CONCEPTS.md).
 
 ## Games
 
@@ -19,6 +21,10 @@ Bloom is a cause-and-effect color garden. Tapping or dragging anywhere on the pl
 ### Color Splash
 
 Color Splash is a no-fail flood-fill puzzle. Tapping any square gives its color and symbol to the connected region growing from the top-left corner. There is no move limit or wrong choice; filling the board creates a gentle completion moment, and the next tap starts a new board.
+
+### Peekaboo Pockets
+
+Peekaboo Pockets is an open-and-close discovery game. Three large patterned pockets hold stable familiar surprises. Every pocket opens, closes, and can be revisited; there is no correct pocket, memory test, or forced ending.
 
 The first slice establishes these product principles:
 
@@ -53,4 +59,4 @@ node --test
 
 ## Near-term direction
 
-Validate both interaction styles with caregivers and children before adding progression or extracting a general game framework. Bloom tests direct open-ended creation; Color Splash tests color matching, connected regions, and simple planning.
+Validate all three interaction styles with caregivers and children before adding progression or extracting a general game framework. Bloom tests direct open-ended creation, Color Splash tests connected-region planning, and Peekaboo Pockets tests open/close discovery and revisiting stable hidden objects.
