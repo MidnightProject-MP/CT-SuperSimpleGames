@@ -456,6 +456,8 @@ The child currently receives five reusable pieces, tap-complete placement, broad
 
 **Gate:** Every released piece reaches a visible valid state, and every structure can be revised without clearing the scene.
 
+**Collision refinement:** Every release and orientation change now ends with a deterministic clearance pass. An occupied drop first tries the nearest valid support, then the nearest clear horizontal space; an already placed piece returns to its prior valid position if neither is available. Ball-and-nest overlap remains intentional, while randomized alternating portrait/landscape tests reject every other intersecting pair. This strengthens the technical foundation before adding themed kits.
+
 ### STK-1 — Structural relationships
 
 **Status:** implemented and automatically verified; rendered, device, and child observation pending.

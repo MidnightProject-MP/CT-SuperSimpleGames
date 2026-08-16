@@ -1,5 +1,5 @@
 import { createTonePlayer } from "./audio.js";
-import { STACK_IDEAS, STACK_PIECES, createStackState, matchesStackIdea, settlePiece, tapPiece } from "./stack.js";
+import { STACK_IDEAS, STACK_PIECES, createStackState, matchesStackIdea, resolveStackLayout, settlePiece, tapPiece } from "./stack.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 
 const buildArea = document.querySelector("#build-area");
@@ -99,6 +99,9 @@ function describeResult(result) {
   const strongest = result.relations.find((relation) => relation.type === "nested")
     || result.relations.find((relation) => relation.type === "stacked")
     || result.relations.find((relation) => relation.type === "beside");
+  if (!strongest && result.settledAs === "returned") return "Back to a clear spot!";
+  if (!strongest && result.settledAs === "waiting") return "Waiting for a clear spot!";
+  if (!strongest && result.collisionResolved) return "Found a clear spot!";
   if (!strongest) return "Settled safely!";
   if (strongest.type === "nested") return "Snuggled inside!";
   if (strongest.type === "stacked") return "Stacked together!";
@@ -197,6 +200,12 @@ soundToggle.addEventListener("click", () => {
   saveSoundPreference(soundEnabled);
   renderSoundState();
   if (soundEnabled) tonePlayer.play(440);
+});
+
+addEventListener("resize", () => {
+  state = resolveStackLayout(state, currentLayout());
+  renderPieces();
+  acknowledgeIdea();
 });
 
 ideaCard.addEventListener("click", () => {

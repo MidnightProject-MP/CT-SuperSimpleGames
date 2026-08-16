@@ -43,7 +43,7 @@ Peekaboo Pockets supports exposure to open/closed, visible/hidden, containment, 
 
 ## Stack & Settle: fourth product slice
 
-Stack & Settle presents five oversized, reusable pieces in one bounded construction scene. A tap places or rearranges a piece without requiring sustained dragging. A broad drag gives richer positioning, after which capability-defined pieces settle safely on the floor, a nearby support, two broad supports, or into the ball-and-nest relationship. Floor neighbors, stacks, nesting, bridges, shelters, and enclosures produce different brief responses. Pieces never collapse as punishment, remain movable, and cannot be consumed or duplicated. An optional pictorial idea card suggests a bridge, tower, home, nest, or row; it can be changed or hidden and never makes other arrangements wrong. Matching an idea produces one quiet acknowledgement without scoring, advancing, locking pieces, or clearing the construction.
+Stack & Settle presents five oversized, reusable pieces in one bounded construction scene. A tap places or rearranges a piece without requiring sustained dragging. A broad drag gives richer positioning, after which capability-defined pieces settle safely on the floor, a nearby support, two broad supports, or into the ball-and-nest relationship. Occupied drops stack onto a valid support or slide to the nearest clear space instead of visually merging, and orientation changes reflow accidental collisions without consuming pieces. Floor neighbors, stacks, nesting, bridges, shelters, and enclosures produce different brief responses. Pieces never collapse as punishment, remain movable, and cannot be consumed or duplicated. An optional pictorial idea card suggests a bridge, tower, home, nest, or row; it can be changed or hidden and never makes other arrangements wrong. Matching an idea produces one quiet acknowledgement without scoring, advancing, locking pieces, or clearing the construction.
 
 Stack & Settle supports exposure to above/below, beside, inside, relative size, arrangement, revision, and turn-taking. It does **not** assess coordination, construction, balance, or spatial reasoning. Its larger purpose is to test direct manipulation and child-authored revision, forms of agency not present in the first three games.
 
@@ -86,6 +86,7 @@ Mechanical checks:
 - the target and clue indices never change in response to a choice, and target discovery is monotonic;
 - greeting partners are selected deterministically only from currently open non-clue pockets;
 - Stack & Settle always contains exactly five distinct reusable pieces with immutable state transitions;
+- Stack & Settle permits only its explicit ball-and-nest overlap; other occupied releases and layout changes resolve to clear supported positions;
 - tap-only input places and rearranges pieces without requiring a drag;
 - every released piece settles within horizontal bounds and into a supported floor, stack, or nest state;
 - ball-and-nest, stacked, and side-by-side relationships are deterministic and do not consume pieces;

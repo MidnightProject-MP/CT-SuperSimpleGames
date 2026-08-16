@@ -7,9 +7,11 @@ import {
   createStackState,
   matchesStackIdea,
   relationshipsFor,
+  resolveStackLayout,
   settlePiece,
   structuresFor,
-  tapPiece
+  tapPiece,
+  unintendedOverlapsFor
 } from "../src/stack.js";
 
 test("stack state starts bounded, distinct, and reusable", () => {
@@ -41,6 +43,27 @@ test("an ordinary drop always settles safely on the floor and remains in bounds"
   assert.equal(left.piece.y + left.piece.height / 2, FLOOR_Y);
   assert.equal(right.piece.x, 1 - STACK_PIECES[1].width / 2);
   assert.equal(right.settledAs, "floor");
+});
+
+test("occupied drops stack or slide instead of visually merging", () => {
+  let state = settlePiece(createStackState(), "berry", { x: 0.5, y: 0.7 }).state;
+  const stacked = settlePiece(state, "sky", { x: 0.5, y: 0.75 });
+  assert.equal(stacked.collisionResolved, true);
+  assert.equal(stacked.settledAs, "stacked");
+  assert.deepEqual(unintendedOverlapsFor(stacked.state), []);
+
+  state = settlePiece(createStackState(), "sunny", { x: 0.5, y: 0.7 }).state;
+  const shifted = settlePiece(state, "leaf", { x: 0.5, y: 0.75 });
+  assert.equal(shifted.collisionResolved, true);
+  assert.equal(shifted.settledAs, "floor");
+  assert.notEqual(shifted.piece.x, 0.5);
+  assert.deepEqual(unintendedOverlapsFor(shifted.state), []);
+
+  state = settlePiece(createStackState(), "berry", { x: 0.16, y: 0.7 }).state;
+  state = settlePiece(state, "sunny", { x: 0.8, y: 0.7 }).state;
+  const localShift = settlePiece(state, "leaf", { x: 0.8, y: 0.75 });
+  assert.equal(localShift.settledAs, "floor");
+  assert.ok(localShift.piece.x > 0.5);
 });
 
 test("broad drops above a placed piece settle into a stable stack", () => {
@@ -91,8 +114,8 @@ test("idea matching accepts multiple stack and row arrangements", () => {
   assert.equal(matchesStackIdea(tower, "tower"), true);
 
   let row = settlePiece(createStackState(), "berry", { x: 0.3, y: 0.7 }).state;
-  row = settlePiece(row, "sky", { x: 0.49, y: 0.7 }).state;
-  row = settlePiece(row, "nest", { x: 0.73, y: 0.7 }).state;
+  row = settlePiece(row, "sky", { x: 0.52, y: 0.7 }).state;
+  row = settlePiece(row, "nest", { x: 0.78, y: 0.7 }).state;
   assert.equal(matchesStackIdea(row, "beside"), true);
   assert.throws(() => matchesStackIdea(row, "missing"), RangeError);
 });
@@ -105,7 +128,16 @@ test("many arbitrary placements preserve identity, bounds, and recoverability", 
     state = settlePiece(state, piece.id, { x: ((move * 37) % 101) / 100, y: ((move * 53) % 79) / 100 }, layout).state;
     assert.equal(new Set(state.pieces.map((item) => item.id)).size, STACK_PIECES.length);
     assert.equal(state.pieces.every((item) => item.x >= 0 && item.x <= 1 && item.y >= 0 && item.y <= 1), true);
+    assert.deepEqual(unintendedOverlapsFor(state, layout), []);
   }
+});
+
+test("orientation changes reflow collisions without losing any piece", () => {
+  let state = settlePiece(createStackState(), "berry", { x: 0.34, y: 0.7 }, { width: 320, height: 640 }).state;
+  state = settlePiece(state, "nest", { x: 0.58, y: 0.7 }, { width: 320, height: 640 }).state;
+  const landscape = resolveStackLayout(state, { width: 800, height: 320 });
+  assert.equal(landscape.pieces.filter(({ placed }) => placed).length, 2);
+  assert.deepEqual(unintendedOverlapsFor(landscape, { width: 800, height: 320 }), []);
 });
 
 test("nearby floor pieces form a side-by-side relation", () => {

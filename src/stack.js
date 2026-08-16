@@ -84,6 +84,117 @@ function layoutDistance(first, second, layout) {
   );
 }
 
+function canNest(first, second) {
+  return first.nestsWith.includes(second.kind) || second.nestsWith.includes(first.kind);
+}
+
+function piecesOverlap(first, second, layout) {
+  const metrics = layoutMetrics(layout);
+  const firstSize = dimensions(first, layout);
+  const secondSize = dimensions(second, layout);
+  const toleranceX = Math.min(0.004, 1 / metrics.width);
+  const toleranceY = Math.min(0.004, 1 / metrics.height);
+  return Math.abs(first.x - second.x) < ((firstSize.width + secondSize.width) / 2) - toleranceX
+    && Math.abs(first.y - second.y) < ((firstSize.height + secondSize.height) / 2) - toleranceY;
+}
+
+function collisionIds(pieces, candidate, layout, ignoredIds = new Set()) {
+  return pieces
+    .filter((piece) => piece.placed && piece.id !== candidate.id && !ignoredIds.has(piece.id)
+      && piecesOverlap(candidate, piece, layout))
+    .map(({ id }) => id);
+}
+
+export function unintendedOverlapsFor(state, layout) {
+  const pieces = normalizeState(state).filter((piece) => piece.placed);
+  const overlaps = [];
+  for (let firstIndex = 0; firstIndex < pieces.length; firstIndex += 1) {
+    for (let secondIndex = firstIndex + 1; secondIndex < pieces.length; secondIndex += 1) {
+      const first = pieces[firstIndex];
+      const second = pieces[secondIndex];
+      const intendedNest = canNest(first, second) && layoutDistance(first, second, layout) < 0.075;
+      if (!intendedNest && piecesOverlap(first, second, layout)) {
+        overlaps.push(Object.freeze({ first: first.id, second: second.id }));
+      }
+    }
+  }
+  return Object.freeze(overlaps);
+}
+
+function clearHorizontalCandidate(pieces, moving, desiredX, y, layout, ignoredIds = new Set()) {
+  const metrics = layoutMetrics(layout);
+  const movingSize = dimensions(moving, layout);
+  const minimum = movingSize.width / 2;
+  const maximum = 1 - minimum;
+  const gap = Math.min(0.022, 7 / metrics.width);
+  const candidates = [clamp(desiredX, minimum, maximum)];
+  for (const other of pieces.filter((piece) => piece.placed && piece.id !== moving.id && !ignoredIds.has(piece.id))) {
+    const otherSize = dimensions(other, layout);
+    const separation = (movingSize.width + otherSize.width) / 2 + gap;
+    candidates.push(clamp(other.x - separation, minimum, maximum));
+    candidates.push(clamp(other.x + separation, minimum, maximum));
+  }
+  const unique = [...new Set(candidates.map((value) => value.toFixed(8)))].map(Number)
+    .sort((left, right) => Math.abs(left - desiredX) - Math.abs(right - desiredX) || left - right);
+  return unique.find((x) => collisionIds(pieces, { ...moving, x, y, placed: true }, layout, ignoredIds).length === 0) ?? null;
+}
+
+function resolvePlacement(pieces, moving, candidate, layout, ignoredIds = new Set()) {
+  const initial = { ...moving, ...candidate, placed: true };
+  if (collisionIds(pieces, initial, layout, ignoredIds).length === 0) {
+    return Object.freeze({ ...candidate, collisionResolved: false });
+  }
+
+  const movingSize = dimensions(moving, layout);
+  const metrics = layoutMetrics(layout);
+  const supportReach = (0.12 * metrics.unit) / metrics.width;
+  const supports = pieces.filter((piece) => piece.placed && piece.id !== moving.id && piece.supports
+    && Math.abs(piece.x - candidate.x) <= ((dimensions(piece, layout).width + movingSize.width) / 2) + supportReach)
+    .sort((left, right) => Math.abs(left.x - candidate.x) - Math.abs(right.x - candidate.x) || left.y - right.y);
+  for (const support of supports) {
+    const supportSize = dimensions(support, layout);
+    const x = clamp(support.x, movingSize.width / 2, 1 - movingSize.width / 2);
+    const y = support.y - ((supportSize.height + movingSize.height) / 2);
+    if (y < BUILD_TOP + movingSize.height / 2) continue;
+    const stacked = { ...moving, x, y, placed: true };
+    if (collisionIds(pieces, stacked, layout).length === 0) {
+      return Object.freeze({ x, y, settledAs: "stacked", collisionResolved: true });
+    }
+  }
+
+  const structural = ["nested", "bridge", "enclosure"].includes(candidate.settledAs);
+  const levels = structural ? [FLOOR_Y - movingSize.height / 2] : [candidate.y, FLOOR_Y - movingSize.height / 2];
+  for (const y of levels) {
+    const x = clearHorizontalCandidate(pieces, moving, candidate.x, y, layout);
+    if (x !== null) return Object.freeze({ x, y, settledAs: !structural && y === candidate.y ? candidate.settledAs : "floor", collisionResolved: true });
+  }
+
+  if (moving.placed) {
+    return Object.freeze({ x: moving.x, y: moving.y, settledAs: "returned", collisionResolved: true });
+  }
+  return Object.freeze({ x: moving.x, y: moving.y, settledAs: "waiting", collisionResolved: true });
+}
+
+export function resolveStackLayout(state, layout) {
+  const source = normalizeState(state);
+  const placed = source.filter((piece) => piece.placed)
+    .sort((left, right) => right.y - left.y || STACK_PIECES.findIndex(({ id }) => id === left.id) - STACK_PIECES.findIndex(({ id }) => id === right.id));
+  const resolved = [];
+  for (const piece of placed) {
+    const nestingPartner = resolved.find((other) => canNest(piece, other) && layoutDistance(piece, other, layout) < 0.075);
+    const ignoredIds = nestingPartner ? new Set([nestingPartner.id]) : new Set();
+    const placement = resolvePlacement(resolved, piece, { x: piece.x, y: piece.y, settledAs: nestingPartner ? "nested" : "layout" }, layout, ignoredIds);
+    resolved.push({
+      ...piece,
+      x: placement.x,
+      y: placement.y,
+      placed: placement.settledAs !== "waiting",
+    });
+  }
+  const byId = new Map(resolved.map((piece) => [piece.id, piece]));
+  return createState(source.map((piece) => byId.get(piece.id) || piece));
+}
+
 export function createStackState() {
   return createState(STACK_PIECES.map((piece, index) => ({
     ...piece,
@@ -193,7 +304,7 @@ export function matchesStackIdea(state, ideaId, layout) {
 }
 
 export function settlePiece(state, id, point, layout) {
-  const pieces = normalizeState(state);
+  const pieces = normalizeState(resolveStackLayout(state, layout));
   const moving = pieceById(pieces, id);
   const metrics = layoutMetrics(layout);
   const movingSize = dimensions(moving, layout);
@@ -205,6 +316,7 @@ export function settlePiece(state, id, point, layout) {
   let x = clamp(point.x, movingSize.width / 2, 1 - movingSize.width / 2);
   let y;
   let settledAs = "floor";
+  let ignoredCollisionIds = new Set();
 
   const nestingPartner = others
     .filter((other) => moving.nestsWith.includes(other.kind) || other.nestsWith.includes(moving.kind))
@@ -223,10 +335,12 @@ export function settlePiece(state, id, point, layout) {
     const supportTop = Math.min(leftSupport.y - dimensions(leftSupport, layout).height / 2, rightSupport.y - dimensions(rightSupport, layout).height / 2);
     y = Math.max(BUILD_TOP + movingSize.height / 2, supportTop - movingSize.height / 2);
     settledAs = moving.covers ? "enclosure" : "bridge";
+    ignoredCollisionIds = new Set([leftSupport.id, rightSupport.id]);
   } else if (nestingPartner && layoutDistance({ x, y: point.y }, nestingPartner, layout) < 0.24) {
     x = nestingPartner.x;
     y = nestingPartner.y + (moving.kind === "ball" ? 0.015 : -0.015);
     settledAs = "nested";
+    ignoredCollisionIds = new Set([nestingPartner.id]);
   } else {
     const supports = others
       .filter((other) => point.y < other.y
@@ -245,14 +359,20 @@ export function settlePiece(state, id, point, layout) {
     }
   }
 
+  const resolved = resolvePlacement(pieces, moving, { x, y, settledAs }, layout, ignoredCollisionIds);
+  x = resolved.x;
+  y = resolved.y;
+  settledAs = resolved.settledAs;
+
   const nextPieces = pieces.map((piece) => piece.id === id
-    ? { ...piece, x, y, placed: true, moves: piece.moves + 1 }
+    ? { ...piece, x, y, placed: settledAs !== "waiting", moves: piece.moves + 1 }
     : piece);
   const nextState = createState(nextPieces);
   return Object.freeze({
     state: nextState,
     piece: pieceById(nextState.pieces, id),
     settledAs,
+    collisionResolved: resolved.collisionResolved,
     relations: relationshipsFor(nextState, id, layout),
     structures: structuresFor(nextState, layout)
   });
