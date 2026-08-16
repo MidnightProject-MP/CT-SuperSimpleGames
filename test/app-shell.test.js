@@ -29,11 +29,19 @@ test("every pre-cached application-shell asset exists", () => {
   }
 });
 
-test("the playable page loads no third-party scripts or styles", () => {
-  const html = readFileSync(resolve(root, "index.html"), "utf8");
-  const executableReferences = [...html.matchAll(/<(?:script|link)\b[^>]+(?:src|href)="([^"]+)"/g)]
-    .map((match) => match[1]);
+test("every app page uses only existing internal navigation and assets", () => {
+  const pages = ["index.html", "games/bloom/index.html", "games/color-splash/index.html"];
 
-  assert.ok(executableReferences.length > 0);
-  assert.equal(executableReferences.some((reference) => /^https?:\/\//.test(reference)), false);
+  for (const page of pages) {
+    const html = readFileSync(resolve(root, page), "utf8");
+    const references = [...html.matchAll(/<(?:a|script|link)\b[^>]+(?:src|href)="([^"]+)"/g)]
+      .map((match) => match[1]);
+
+    assert.ok(references.length > 0, `${page} has no local references`);
+    assert.equal(references.some((reference) => /^https?:\/\//.test(reference)), false, `${page} has an external reference`);
+    for (const reference of references) {
+      const target = resolve(root, page, "..", reference);
+      assert.ok(existsSync(target), `${page} references missing ${reference}`);
+    }
+  }
 });

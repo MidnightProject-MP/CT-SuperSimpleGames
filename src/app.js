@@ -1,8 +1,7 @@
 import { COLORS, MAX_BLOOMS, clampPosition, createBloom } from "./game.js";
 import { createTonePlayer } from "./audio.js";
 import { createPointerSampler } from "./interaction.js";
-
-const SOUND_STORAGE_KEY = "bloom.sound-enabled";
+import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 
 const garden = document.querySelector("#garden");
 const blooms = document.querySelector("#blooms");
@@ -15,22 +14,6 @@ let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 const pointerSampler = createPointerSampler();
 let resizeFrame;
-
-function loadSoundPreference() {
-  try {
-    return localStorage.getItem(SOUND_STORAGE_KEY) !== "false";
-  } catch {
-    return true;
-  }
-}
-
-function saveSoundPreference() {
-  try {
-    localStorage.setItem(SOUND_STORAGE_KEY, String(soundEnabled));
-  } catch {
-    // Storage may be unavailable in private or restricted browsing modes.
-  }
-}
 
 function renderSoundState() {
   soundToggle.setAttribute("aria-pressed", String(soundEnabled));
@@ -118,7 +101,7 @@ function reflowBlooms() {
 }
 
 garden.addEventListener("pointerdown", (event) => {
-  if (event.target.closest("button")) return;
+  if (event.target.closest("a, button")) return;
   event.preventDefault();
   garden.setPointerCapture?.(event.pointerId);
   growAt(event.clientX, event.clientY);
@@ -137,7 +120,7 @@ for (const eventName of ["pointerup", "pointercancel", "lostpointercapture"]) {
 }
 
 garden.addEventListener("keydown", (event) => {
-  if (event.target.closest("button")) return;
+  if (event.target.closest("a, button")) return;
   if (event.key !== "Enter" && event.key !== " ") return;
   event.preventDefault();
   const offset = (bloomCount % COLORS.length) * 9;
@@ -148,7 +131,7 @@ soundToggle.addEventListener("click", (event) => {
   event.stopPropagation();
   soundEnabled = !soundEnabled;
   tonePlayer.setEnabled(soundEnabled);
-  saveSoundPreference();
+  saveSoundPreference(soundEnabled);
   renderSoundState();
   if (soundEnabled) tonePlayer.play(COLORS[bloomCount % COLORS.length].tone);
 });

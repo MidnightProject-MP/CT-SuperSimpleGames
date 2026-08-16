@@ -1,8 +1,8 @@
 {
-  "name": "Bloom · SuperSimpleGames",
-  "short_name": "Bloom",
+  "name": "SuperSimpleGames",
+  "short_name": "SimpleGames",
   "id": "./",
-  "description": "A bright, no-fail color garden made for curious little hands.",
+  "description": "Big, bright, no-fail games made for curious little hands.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

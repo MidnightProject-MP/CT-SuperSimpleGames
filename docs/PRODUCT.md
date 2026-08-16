@@ -4,7 +4,7 @@ This document turns the intent in `INCEPTION.md` into explicit, testable hypothe
 
 ## Audience hypothesis
 
-Bloom is initially designed for children roughly 18–36 months old playing with a nearby caregiver. That range is a hypothesis, not a release claim; toddlers' motor, language, sensory, and attention needs vary substantially.
+SuperSimpleGames is initially designed for children roughly 18–36 months old playing with a nearby caregiver. That range is a hypothesis, not a release claim; toddlers' motor, language, sensory, and attention needs vary substantially.
 
 ## Core safety invariant
 
@@ -29,6 +29,12 @@ Every tap grows a large flower at or near the contact point. Flowers cycle throu
 
 Bloom supports exposure to cause and effect, colors, spatial position, relative size, and variation. It does **not** claim to teach or assess mastery of those concepts.
 
+## Color Splash: second product slice
+
+Color Splash presents a 4×4 board using four color-and-symbol identities. Tapping any square changes the connected region anchored at the top-left to that square's identity, absorbing adjacent matches. There is no move limit, wrong choice, score, or automatic restart. A completed board holds its state until the child taps again. The compact grid keeps every square comfortably tappable even on a short landscape phone.
+
+Color Splash supports exposure to color and symbol matching, connected regions, cause and effect, and simple multi-step planning. It does **not** assess reasoning or claim that completion demonstrates mastery.
+
 ## Acceptance evidence
 
 Mechanical checks:
@@ -40,6 +46,9 @@ Mechanical checks:
 - sound-off play retains complete visible feedback;
 - the application shell is available offline after a successful first load;
 - reduced-motion mode removes ambient and sparkle motion and shortens growth motion.
+- every generated Color Splash board contains all four identities and is solvable without a move limit;
+- flood moves never shrink the connected corner region or mutate the prior board;
+- Color Splash completion waits for input before starting another board.
 
 Observation checks before public release:
 
@@ -52,7 +61,7 @@ Observation checks before public release:
 
 ## Explicit non-goals for the first slice
 
-- A launcher, game catalog, content platform, progression system, scoring, or rewards economy.
+- A content platform, progression system, scoring, rewards economy, or generalized game framework.
 - Accounts, cloud sync, telemetry, personalization, advertising, or monetization.
 - Device-lockdown claims. A web app cannot suppress operating-system gestures, notifications, or the Home action.
 - Spoken color names until consistent, warm, locally bundled recordings are available.
@@ -68,4 +77,4 @@ Observation checks before public release:
 
 ## Next decision
 
-The next meaningful investment is observed playtesting, not a second game. If Bloom's interaction thesis survives observation, choose a second game that tests a distinct concept—such as matching or size—before extracting shared framework code.
+The next meaningful investment is observed playtesting of both games, not a third implemented mechanic. Compare discovery, comfort, repeat interest, and caregiver understanding across open-ended creation and simple color planning before extracting shared framework code. Keep the scene-maker direction in `docs/IDEAS.md` exploratory until that evidence exists.

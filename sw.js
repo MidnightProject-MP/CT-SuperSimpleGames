@@ -1,12 +1,22 @@
-const CACHE_NAME = "supersimplegames-bloom-v2";
+const CACHE_NAME = "supersimplegames-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
+  "./launcher.css",
   "./styles.css",
+  "./color-splash.css",
+  "./games/bloom/",
+  "./games/bloom/index.html",
+  "./games/color-splash/",
+  "./games/color-splash/index.html",
   "./src/app.js",
   "./src/audio.js",
+  "./src/color-splash.js",
+  "./src/flood.js",
   "./src/game.js",
   "./src/interaction.js",
+  "./src/launcher.js",
+  "./src/settings.js",
   "./manifest.webmanifest",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
