@@ -41,6 +41,7 @@ Mechanical checks:
 
 - portrait and landscape phone layouts fit without scrolling or clipping;
 - the first interaction is available without a network call or permission;
+- every page enforces a local-only browser policy that blocks external scripts, connections, forms, frames, and embedded objects;
 - 30 rapid taps do not freeze, navigate, stack audio, or grow the DOM without bound;
 - generated flower positions remain within the visible viewport;
 - sound-off play retains complete visible feedback;

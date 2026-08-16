@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; connect-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'none'; worker-src 'self'; manifest-src 'self'" />
+    <meta name="referrer" content="no-referrer" />
     <meta name="theme-color" content="#6449c9" />
     <meta name="description" content="Tap colors and fill the board in a bright, no-fail puzzle." />
     <link rel="manifest" href="../../manifest.webmanifest" />
@@ -27,7 +29,7 @@
       <section class="board-shell" aria-labelledby="splash-prompt">
         <p id="splash-prompt" class="splash-prompt">Tap a color!</p>
         <div id="color-board" class="color-board" role="group" aria-label="Color squares. The sparkling top-left square grows."></div>
-        <div id="celebration" class="celebration" hidden aria-hidden="true">
+        <div id="celebration" class="celebration" hidden>
           <strong>All filled!</strong>
           <span>Tap for a new board</span>
         </div>

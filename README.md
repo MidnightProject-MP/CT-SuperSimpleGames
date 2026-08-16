@@ -27,6 +27,12 @@ The first slice establishes these product principles:
 - no personal data is collected or transmitted;
 - the app works offline after its first successful load.
 
+## Safety boundary
+
+The playable pages contain no purchases, accounts, forms, permissions, advertising, analytics, or links to another service. A local-only browser policy also blocks external scripts and network connections if a future edit introduces one accidentally.
+
+SuperSimpleGames is not device lockdown: a website cannot prevent operating-system gestures, notifications, or access to the rest of a phone. A caregiver should remain nearby and use the device's single-app control—Guided Access on Apple devices or screen pinning on Android—when handing over a device that contains sensitive apps or accounts. See [docs/PRODUCT.md](./docs/PRODUCT.md) for the complete invariant and validation criteria.
+
 ## Run locally
 
 The project has no third-party runtime dependencies.

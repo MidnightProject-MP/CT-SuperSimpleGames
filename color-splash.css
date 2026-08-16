@@ -219,9 +219,29 @@ button { font: inherit; }
 }
 
 @media (orientation: landscape) and (max-height: 520px) {
-  .splash-game { padding-top: max(76px, calc(env(safe-area-inset-top) + 68px)); padding-bottom: 6px; }
+  .splash-game { padding-top: max(58px, calc(env(safe-area-inset-top) + 52px)); padding-bottom: 4px; }
+  .splash-topbar { padding: max(6px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) 4px max(10px, env(safe-area-inset-left)); }
+  .splash-brand { min-height: 48px; padding: 4px 12px 4px 6px; gap: 6px; }
+  .splash-brand-mark { width: 36px; height: 36px; font-size: 31px; }
+  .splash-sound { width: 48px; height: 48px; padding: 11px; }
   .splash-prompt { display: none; }
-  .color-board { --board-size: min(62vw, calc(100svh - 88px), 420px); }
+  .color-board { --board-size: min(72vw, calc(100svh - 64px), 420px); }
+}
+
+@media (orientation: landscape) and (max-height: 270px) {
+  .splash-game { padding: 8px; }
+  .splash-topbar { padding: max(5px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) 4px max(8px, env(safe-area-inset-left)); }
+  .splash-brand { width: 40px; min-height: 40px; padding: 3px; overflow: hidden; }
+  .splash-brand > span:last-child { display: none; }
+  .splash-brand-mark { width: 30px; height: 30px; font-size: 27px; }
+  .splash-sound { width: 40px; height: 40px; padding: 9px; }
+  .color-board {
+    --board-size: min(calc(100svh - 16px), calc(100vw - 96px), 420px);
+    padding: 5px;
+    gap: 3px;
+    border-width: 4px;
+    border-radius: 20px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
