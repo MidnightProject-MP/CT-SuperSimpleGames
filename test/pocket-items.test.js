@@ -11,13 +11,19 @@ test("every generated pocket item has complete presentation metadata", () => {
     const item = getPocketItem(id);
     assert.equal(typeof item.name, "string");
     assert.ok(item.name.length > 0);
-    assert.equal(typeof item.symbol, "string");
-    assert.ok(item.symbol.length > 0);
+    assert.equal(item.artId, `friend-${id}`);
     assert.equal(Number.isFinite(item.tone), true);
     assert.ok(item.tone > 0);
     assert.equal(Object.isFrozen(item), true);
   }
   assert.equal(Object.isFrozen(POCKET_ITEMS), true);
+});
+
+test("every pocket item has a local vector illustration", () => {
+  const sprite = readFileSync(resolve(import.meta.dirname, "../assets/pocket-friends.svg"), "utf8");
+  for (const id of ITEM_CATALOG) {
+    assert.match(sprite, new RegExp(`id=["']friend-${id}["']`), `${id} has no vector symbol`);
+  }
 });
 
 test("unknown pocket items are rejected", () => {

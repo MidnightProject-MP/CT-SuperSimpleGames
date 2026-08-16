@@ -26,7 +26,7 @@ Color Splash is a no-fail flood-fill puzzle. Tapping anywhere on the board resol
 
 ### Peekaboo Pockets
 
-Peekaboo Pockets is an open-and-close discovery game. Three large patterned pockets hold stable familiar surprises. Every pocket opens, closes, and can be revisited; there is no correct pocket, memory test, or forced ending.
+Peekaboo Pockets is an open-and-close discovery game. Three large patterned pockets hold stable familiar friends that visibly emerge, remain touchable, and greet nearby friends. Every pocket opens, closes, and can be revisited; there is no correct pocket, memory test, or forced ending.
 
 The first slice establishes these product principles:
 

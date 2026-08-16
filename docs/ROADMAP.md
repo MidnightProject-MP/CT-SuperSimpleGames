@@ -69,7 +69,7 @@ Acceptance focus:
 
 ## Milestone 2 — Peekaboo: emergence, search, and reunion
 
-**Status: planned**
+**Status: base interaction implemented and automatically verified; search experiment and device observation pending**
 
 **Objective:** Turn opening a pouch into the beginning of an interaction rather than the entire interaction.
 
@@ -80,6 +80,8 @@ Minimum coherent slice:
 - Give two simultaneously emerged objects one simple, deterministic shared reaction.
 - Replace platform-dependent emoji with a small cohesive local visual set.
 - Replace checklist-like completion language with a brief whole-scene response that leaves play available.
+
+Implementation note: the minimum coherent slice is present. Friends are independent controls backed by a local vector set, opening visibly lifts them from their pouches, touching them produces a greeting, two open friends share a deterministic reaction, and the three-friend moment leaves the scene interactive.
 
 Follow-up experiment:
 

@@ -13,10 +13,11 @@ Allow up to five minutes, ending as soon as the child disengages or shows discom
 1. Open Peekaboo Pockets without explaining what is inside.
 2. Wait roughly 15 seconds for a self-directed tap.
 3. If needed, offer once: “You can touch a pocket.” Do not identify a particular pocket or demonstrate all three.
-4. Observe the first six actions, including repeated taps on one pocket and movement to another pocket.
-5. Do not ask “Where is…?”, test recall, praise correctness, or prompt the child to open every pocket.
-6. The caregiver may naturally name an object or say “open,” “closed,” “in,” or “out.” Record whether this becomes shared attention rather than required instruction.
-7. If all pockets are discovered, observe whether the brief acknowledgement is understood and whether the child continues, revisits, or stops naturally.
+4. Observe the first six actions, including repeated taps on one pocket, touching an emerged friend, and movement to another pocket.
+5. When two friends are open, observe whether their shared greeting is noticed or intentionally repeated.
+6. Do not ask “Where is…?”, test recall, praise correctness, or prompt the child to open every pocket.
+7. The caregiver may naturally name an object or say “open,” “closed,” “in,” or “out.” Record whether this becomes shared attention rather than required instruction.
+8. If all pockets are discovered, observe whether the brief reunion is understood and whether the child continues, revisits, or stops naturally.
 
 ## Observation sheet
 
@@ -29,6 +30,8 @@ Allow up to five minutes, ending as soon as the child disengages or shows discom
 | First six actions all produced clear feedback? | |
 | Repeated opening/closing observed? | |
 | Child revisited a previously opened pocket? | |
+| Child touched an emerged friend independently? | |
+| Shared greeting noticed or intentionally repeated? | |
 | Child appeared to anticipate a stable object? | |
 | All three discovered without coaching? | |
 | Response to the brief all-found acknowledgement | |
@@ -47,6 +50,8 @@ Hold and revise before adding another mechanic unless:
 - at least three of four children tap a pocket within 15 seconds without instruction or after at most one neutral invitation;
 - the first six ordinary, repeated, and imprecise taps always produce understandable local feedback;
 - at least three children open more than one pocket without coaching;
+- emerged friends remain understandable as separate touch targets without making the pouches harder to operate;
+- shared greetings remain brief, legible, and non-blocking;
 - no child shows repeated sensory distress, a perceived wrong choice, a freeze, or accidental navigation;
 - caregivers describe opening, closing, peeking, or finding rather than assuming a scored memory test;
 - every child disengages naturally and the experience does not prompt continued play.

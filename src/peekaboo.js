@@ -1,9 +1,10 @@
 import { createTonePlayer } from "./audio.js";
 import { getPocketItem } from "./pocket-items.js";
-import { createRound, togglePocket } from "./pockets.js";
+import { createRound, greetingPair, togglePocket } from "./pockets.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 
 const pocketRow = document.querySelector("#pocket-row");
+const playfield = document.querySelector("#peek-playfield");
 const message = document.querySelector("#peek-message");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
@@ -30,44 +31,97 @@ function renderSoundState() {
 function createPockets() {
   const fragment = document.createDocumentFragment();
   for (let index = 0; index < round.itemIds.length; index += 1) {
+    const station = document.createElement("div");
     const pocket = document.createElement("button");
-    const friend = document.createElement("span");
+    const friend = document.createElement("button");
+    const friendArt = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    const friendUse = document.createElementNS("http://www.w3.org/2000/svg", "use");
     const body = document.createElement("span");
     const flap = document.createElement("span");
+    station.className = "pocket-station";
+    station.dataset.index = String(index);
     pocket.className = "pocket";
     pocket.type = "button";
     pocket.dataset.index = String(index);
+    friend.type = "button";
     friend.className = "pocket-friend";
-    friend.setAttribute("aria-hidden", "true");
+    friend.dataset.index = String(index);
+    friendArt.setAttribute("viewBox", "0 0 100 100");
+    friendArt.setAttribute("aria-hidden", "true");
+    friendArt.append(friendUse);
+    friend.append(friendArt);
     body.className = "pocket-body";
     body.setAttribute("aria-hidden", "true");
     flap.className = "pocket-flap";
     flap.setAttribute("aria-hidden", "true");
-    pocket.append(friend, body, flap);
-    fragment.append(pocket);
+    pocket.append(body, flap);
+    station.append(friend, pocket);
+    fragment.append(station);
   }
   pocketRow.replaceChildren(fragment);
   renderPockets();
 }
 
 function renderPockets() {
-  for (const pocket of pocketRow.querySelectorAll(".pocket")) {
-    const index = Number(pocket.dataset.index);
+  for (const station of pocketRow.querySelectorAll(".pocket-station")) {
+    const index = Number(station.dataset.index);
+    const pocket = station.querySelector(".pocket");
+    const friend = station.querySelector(".pocket-friend");
     const item = getPocketItem(round.itemIds[index]);
     const isOpen = round.open[index];
+    station.classList.toggle("open", isOpen);
     pocket.dataset.pattern = round.patternIds[index];
     pocket.setAttribute("aria-expanded", String(isOpen));
     pocket.setAttribute("aria-label", isOpen
       ? `Pocket ${index + 1}, open, ${item.name} inside`
       : `Pocket ${index + 1}, closed`);
-    pocket.querySelector(".pocket-friend").textContent = item.symbol;
+    friend.tabIndex = isOpen ? 0 : -1;
+    friend.setAttribute("aria-hidden", String(!isOpen));
+    friend.setAttribute("aria-label", `Say hello to ${item.name}`);
+    friend.querySelector("use").setAttribute("href", `../../assets/pocket-friends.svg#${item.artId}`);
   }
 }
 
 function animatePocket(pocket, opening) {
+  const friend = pocket.closest(".pocket-station").querySelector(".pocket-friend");
   pocket.classList.remove("just-opened", "just-closed");
+  friend.classList.remove("just-emerged");
   void pocket.offsetWidth;
   pocket.classList.add(opening ? "just-opened" : "just-closed");
+  if (opening) friend.classList.add("just-emerged");
+}
+
+function animateFriend(index, className = "saying-hello") {
+  const friend = pocketRow.querySelector(`.pocket-friend[data-index="${index}"]`);
+  friend.classList.remove("saying-hello", "greeting-left", "greeting-right");
+  void friend.offsetWidth;
+  friend.classList.add(className);
+}
+
+function animateGreeting(pair) {
+  const [firstIndex, secondIndex] = pair;
+  const leftIndex = Math.min(firstIndex, secondIndex);
+  const rightIndex = Math.max(firstIndex, secondIndex);
+  animateFriend(leftIndex, "greeting-right");
+  animateFriend(rightIndex, "greeting-left");
+}
+
+function playFriend(index) {
+  if (!round.open[index]) return;
+  const item = getPocketItem(round.itemIds[index]);
+  const pair = greetingPair(round, index);
+  tonePlayer.play(item.tone * 1.08);
+  if (pair) {
+    animateGreeting(pair);
+    const partnerIndex = pair.find((value) => value !== index);
+    const partner = getPocketItem(round.itemIds[partnerIndex]);
+    message.textContent = `${item.name} and ${partner.name} say hello!`;
+    announcement.textContent = `${item.name} and ${partner.name} greet each other`;
+    return;
+  }
+  animateFriend(index);
+  message.textContent = `Hello, ${item.name}!`;
+  announcement.textContent = `${item.name} says hello`;
 }
 
 function toggle(index) {
@@ -81,14 +135,29 @@ function toggle(index) {
   tonePlayer.play(tone);
 
   if (result.completedNow) {
-    message.textContent = "All found!";
+    playfield.classList.remove("reunion");
+    void playfield.offsetWidth;
+    playfield.classList.add("reunion");
+    message.textContent = "Hello, friends!";
     message.classList.add("complete");
-    announcement.textContent = `All three found. ${item.name} is in pocket ${index + 1}.`;
+    announcement.textContent = `The friends are together. ${item.name} came from pocket ${index + 1}.`;
     return;
   }
 
   message.classList.remove("complete");
-  message.textContent = result.open ? `${item.symbol} ${item.name}!` : "Peekaboo!";
+  if (result.open) {
+    const pair = greetingPair(round, index);
+    if (pair) {
+      animateGreeting(pair);
+      const partnerIndex = pair.find((value) => value !== index);
+      const partner = getPocketItem(round.itemIds[partnerIndex]);
+      message.textContent = `${item.name} meets ${partner.name}!`;
+    } else {
+      message.textContent = `${item.name}!`;
+    }
+  } else {
+    message.textContent = "Peekaboo!";
+  }
   announcement.textContent = result.open
     ? `${item.name} in pocket ${index + 1}`
     : `Pocket ${index + 1} closed`;
@@ -110,6 +179,11 @@ function nearestPocket(clientX, clientY) {
 }
 
 pocketRow.addEventListener("click", (event) => {
+  const friend = event.target.closest(".pocket-friend");
+  if (friend) {
+    playFriend(Number(friend.dataset.index));
+    return;
+  }
   const pocket = event.target.closest(".pocket") || nearestPocket(event.clientX, event.clientY);
   if (!pocket) return;
   toggle(Number(pocket.dataset.index));

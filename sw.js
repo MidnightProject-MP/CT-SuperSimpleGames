@@ -1,4 +1,4 @@
-const CACHE_NAME = "supersimplegames-v6";
+const CACHE_NAME = "supersimplegames-v7";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -28,7 +28,8 @@ const APP_SHELL = [
   "./manifest.webmanifest",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
-  "./assets/icon.svg"
+  "./assets/icon.svg",
+  "./assets/pocket-friends.svg"
 ];
 
 self.addEventListener("install", (event) => {

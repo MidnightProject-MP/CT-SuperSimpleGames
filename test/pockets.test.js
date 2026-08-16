@@ -5,6 +5,7 @@ import {
   PATTERN_CATALOG,
   POCKET_COUNT,
   createRound,
+  greetingPair,
   togglePocket
 } from "../src/pockets.js";
 
@@ -114,6 +115,24 @@ test("completion is held after every pocket has been opened at least once", () =
   assert.equal(closed.completedNow, false);
   assert.deepEqual(closed.state.open, [true, true, false]);
   assert.deepEqual(closed.state.discovered, [true, true, true]);
+});
+
+test("greeting partners are deterministic and prefer the nearest open pocket", () => {
+  let round = createRound({ seed: 25 });
+  assert.equal(greetingPair(round, 0), null);
+  round = togglePocket(round, 0).state;
+  assert.equal(greetingPair(round, 0), null);
+  round = togglePocket(round, 2).state;
+  assert.deepEqual(greetingPair(round, 2), [2, 0]);
+  round = togglePocket(round, 1).state;
+  assert.deepEqual(greetingPair(round, 1), [1, 0]);
+  assert.deepEqual(greetingPair(round, 2), [2, 1]);
+});
+
+test("closed and invalid pockets cannot receive a greeting partner", () => {
+  const round = createRound({ seed: 26 });
+  assert.equal(greetingPair(round, 1), null);
+  assert.throws(() => greetingPair(round, 3), RangeError);
 });
 
 test("rapid toggles remain bounded to three valid flags", () => {

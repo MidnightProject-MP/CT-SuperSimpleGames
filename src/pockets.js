@@ -248,6 +248,27 @@ export function togglePocket(state, index) {
   });
 }
 
+/**
+ * Choose one stable greeting partner for an open pocket. The closest open
+ * pocket wins; an equal-distance tie uses the lower index.
+ */
+export function greetingPair(state, index) {
+  const current = normalizeState(state);
+  const pocketIndex = validateIndex(index);
+  if (!current.open[pocketIndex]) return null;
+
+  const partners = current.open
+    .map((isOpen, partnerIndex) => ({ isOpen, partnerIndex }))
+    .filter(({ isOpen, partnerIndex }) => isOpen && partnerIndex !== pocketIndex)
+    .sort((left, right) => (
+      Math.abs(left.partnerIndex - pocketIndex) - Math.abs(right.partnerIndex - pocketIndex)
+      || left.partnerIndex - right.partnerIndex
+    ));
+
+  if (partners.length === 0) return null;
+  return Object.freeze([pocketIndex, partners[0].partnerIndex]);
+}
+
 // Explicit aliases make the game-specific name available without duplicating
 // any behavior or state model.
 export const createPocketsRound = createRound;
