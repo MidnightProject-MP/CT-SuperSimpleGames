@@ -147,7 +147,7 @@ Implementation note: five fixed pieces now support tap placement, broad drag pos
 
 ## Milestone 5 — Comparative observation and portfolio review
 
-**Status: planned; real-world observation required for validation**
+**Status: technical portfolio review complete; real-world observation required for validation**
 
 Compare creation, region transformation, hide/search, and direct manipulation using the repository's observation protocols. Do not rank children or optimize session length.
 
@@ -163,6 +163,14 @@ Look for:
 - voluntary interest on a later occasion.
 
 If real-world observation is unavailable, preserve the evidence gap explicitly. Technical and accessibility verification may continue, and later ideas may be built as bounded prototypes, but they must not be described as child-validated.
+
+Technical review recorded after Milestone 4:
+
+- The four games and their complete offline application shell pass 72 deterministic tests.
+- The public launcher, Stack & Settle page, and Stack & Settle logic asset were verified reachable after the matching GitHub Pages deployment completed.
+- Creation, connected-region transformation, reversible search, and direct manipulation now have distinct state models and observation protocols.
+- Recent depth changes have not yet been observed with children or caregivers. Discoverability, touch comfort, sensory comfort, intentional repetition, shared play, and natural stopping therefore remain evidence gaps rather than passed criteria.
+- Wiggle Way remains conditional and is not promoted to the launcher until observation supports broad dragging or shows that a tap-authored path would be independently satisfying.
 
 ## Milestone 6 — Wiggle Way
 
