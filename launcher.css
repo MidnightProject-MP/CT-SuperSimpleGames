@@ -50,7 +50,7 @@ body {
 
 .game-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(18px, 4vw, 34px);
 }
 
@@ -76,6 +76,7 @@ body {
 .bloom-card { background: linear-gradient(145deg, #fff8bd, #ffb5d3); }
 .splash-card { background: linear-gradient(145deg, #d8cbff, #9de6ff); }
 .peek-card { background: linear-gradient(145deg, #ffe49a, #ffb4d2); }
+.stack-card { background: linear-gradient(145deg, #c7f4d7, #9eddf5); }
 
 .card-art { position: relative; display: block; width: clamp(110px, 20vw, 170px); aspect-ratio: 1; }
 .card-copy { display: grid; gap: 5px; }
@@ -162,6 +163,12 @@ body {
   transform: translateX(-50%);
 }
 
+.stack-art i, .stack-art b { position: absolute; display: block; border: 3px solid rgba(255,255,255,.78); box-shadow: inset 0 -5px rgba(41,56,95,.14), 0 5px 0 rgba(51,68,91,.12); }
+.stack-art i:nth-child(1) { left: 26%; bottom: 8%; width: 48%; height: 24%; border-radius: 15px; background: #399ed8; }
+.stack-art i:nth-child(2) { left: 36%; bottom: 32%; width: 30%; height: 30%; border-radius: 18px; background: #ef5b82; }
+.stack-art i:nth-child(3) { left: 42%; bottom: 62%; width: 20%; height: 20%; border-radius: 50%; background: #ffd84f; }
+.stack-art b { right: 5%; bottom: 8%; width: 25%; height: 28%; border: 9px solid #8a6be8; border-top-width: 4px; border-radius: 10px 10px 50% 50%; background: rgba(255,255,255,.45); }
+
 @media (max-width: 620px) {
   .launcher-heading { justify-content: flex-start; }
   .game-grid { grid-template-columns: 1fr; }
@@ -198,7 +205,7 @@ body {
   .launcher-heading h1 { font-size: clamp(24px, 7vh, 32px); }
   .launcher-heading p { display: none; }
   .launcher-mark { width: clamp(42px, 13vh, 54px); border-width: 3px; font-size: clamp(24px, 7vh, 32px); }
-  .game-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; min-height: 0; }
+  .game-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; min-height: 0; }
   .game-card { grid-template-columns: 1fr; min-height: 0; padding: 10px 8px; gap: 7px; border-width: 4px; border-radius: 24px; text-align: center; }
   .card-art { width: min(25vh, 92px); }
   .card-copy strong { font-size: clamp(22px, 7vh, 31px); }

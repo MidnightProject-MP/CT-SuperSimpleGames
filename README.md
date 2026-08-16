@@ -10,6 +10,7 @@ The ordered implementation plan lives in [docs/ROADMAP.md](./docs/ROADMAP.md).
 The first caregiver-observation protocol is in [docs/PLAYTEST.md](./docs/PLAYTEST.md).
 Color Splash has its own focused protocol in [docs/COLOR_SPLASH_PLAYTEST.md](./docs/COLOR_SPLASH_PLAYTEST.md).
 Peekaboo Pockets has a reversible-discovery protocol in [docs/PEEKABOO_PLAYTEST.md](./docs/PEEKABOO_PLAYTEST.md).
+Stack & Settle has a direct-manipulation protocol in [docs/STACK_SETTLE_PLAYTEST.md](./docs/STACK_SETTLE_PLAYTEST.md).
 Cross-game observations are normalized in [docs/COMPARATIVE_PLAYTEST.md](./docs/COMPARATIVE_PLAYTEST.md).
 Uncommitted future directions are captured separately in [docs/IDEAS.md](./docs/IDEAS.md).
 The broader interaction landscape and third-game decision are recorded in [docs/CONCEPTS.md](./docs/CONCEPTS.md).
@@ -27,6 +28,10 @@ Color Splash is a no-fail flood-fill puzzle. Tapping anywhere on the board resol
 ### Peekaboo Pockets
 
 Peekaboo Pockets is an open-and-close search game. A large visual target invites the child to explore three stable patterned pockets: two hold familiar friends and one holds a playful clue. Friends visibly emerge, remain touchable, and greet one another. Every pocket responds and finding the target enriches the scene without ending play.
+
+### Stack & Settle
+
+Stack & Settle is a no-fail construction toy with five oversized reusable pieces. Tapping places or rearranges a piece, while broad dragging offers direct control. Pieces magnetically settle on the floor, stack, sit side by side, or let the ball nest inside the curved piece. Every arrangement remains movable and there is nothing to complete.
 
 The first slice establishes these product principles:
 
@@ -61,4 +66,4 @@ node --test
 
 ## Near-term direction
 
-Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). The deeper Color Splash, Peekaboo, and Bloom slices are implemented and await device observation. The next implementation milestone is Stack & Settle, a bounded direct-manipulation construction experiment. Real-world observation remains necessary before treating any product hypothesis as validated.
+Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). The deeper three-game slices and the Stack & Settle construction prototype are implemented and await device observation. The next milestone is comparative portfolio review; later prototypes remain conditional and must not be described as child-validated without real-world observation.

@@ -123,7 +123,7 @@ Acceptance focus:
 
 ## Milestone 4 — Stack & Settle
 
-**Status: ready**
+**Status: implemented and automatically verified; device and child observation pending**
 
 **Objective:** Add direct manipulation, arrangement, revision, containment, and simple spatial planning to the collection.
 
@@ -142,6 +142,8 @@ Acceptance focus:
 - Repositioning is more rewarding than merely spawning additional pieces.
 - The state stays bounded and every arrangement is recoverable.
 - Two people can naturally alternate actions without a formal multiplayer mode.
+
+Implementation note: five fixed pieces now support tap placement, broad drag positioning, floor settling, forgiving stacks, side-by-side arrangements, and a special ball-and-nest relationship. Pieces remain reusable, drag cancellation restores the prior arrangement, and the pure state model is bounded and deterministic.
 
 ## Milestone 5 — Comparative observation and portfolio review
 

@@ -1,14 +1,15 @@
-# Three-game comparative evidence plan
+# Four-game comparative evidence plan
 
 ## Purpose
 
-Use Bloom, Color Splash, and Peekaboo Pockets to compare three interaction models—creation, connected-region transformation, and reversible hide/reveal—without ranking children, claiming learning outcomes, or optimizing engagement time.
+Use Bloom, Color Splash, Peekaboo Pockets, and Stack & Settle to compare four interaction models—creation, connected-region transformation, reversible search, and direct manipulation—without ranking children, claiming learning outcomes, or optimizing engagement time.
 
 The individual protocols remain authoritative for each game:
 
 - `PLAYTEST.md`
 - `COLOR_SPLASH_PLAYTEST.md`
 - `PEEKABOO_PLAYTEST.md`
+- `STACK_SETTLE_PLAYTEST.md`
 
 This document only defines what can be compared after those sessions.
 
@@ -23,20 +24,21 @@ This document only defines what can be compared after those sessions.
 
 ## Common observation fields
 
-| Field | Bloom | Color Splash | Peekaboo Pockets |
-|---|---|---|---|
-| Self-directed first action time | | | |
-| Needed one neutral invitation? | | | |
-| First five or six actions all responded clearly? | | | |
-| Repeated/imprecise/palm input stayed satisfying? | | | |
-| Child repeated the core action voluntarily? | | | |
-| Child shifted strategy or explored a new state? | | | |
-| Caregiver joined through words, imitation, or shared attention? | | | |
-| Sound/motion/brightness concern | | | |
-| Apparent dead end, failure, or accidental navigation | | | |
-| Natural stopping signal and session length | | | |
-| Voluntary interest on a later day | | | |
-| Caregiver's plain-language description | | | |
+| Field | Bloom | Color Splash | Peekaboo | Stack & Settle |
+|---|---|---|---|---|
+| Self-directed first action time | | | | |
+| Needed one neutral invitation? | | | | |
+| First five or six actions all responded clearly? | | | | |
+| Repeated/imprecise/palm input stayed satisfying? | | | | |
+| Child repeated the core action voluntarily? | | | | |
+| Child shifted strategy or explored a new state? | | | | |
+| Child revisited or revised an earlier action? | | | | |
+| Caregiver joined through words, imitation, or shared attention? | | | | |
+| Sound/motion/brightness concern | | | | |
+| Apparent dead end, failure, or accidental navigation | | | | |
+| Natural stopping signal and session length | | | | |
+| Voluntary interest on a later day | | | | |
+| Caregiver's plain-language description | | | | |
 
 Session length is context for natural stopping, not a success metric.
 
@@ -45,6 +47,7 @@ Session length is context for natural stopping, not a success metric.
 - **Bloom:** whether immediate open-ended creation supports discovery, broad gesture, and self-directed variation.
 - **Color Splash:** whether a stable visual rule and accumulating connected region support understandable multi-step exploration without a wrong choice.
 - **Peekaboo Pockets:** whether reversible visibility and stable locations support revisit, anticipation, and caregiver co-play without becoming a memory quiz.
+- **Stack & Settle:** whether tap-complete and broad-drag manipulation support arrangement, revision, spatial relationships, and turn-taking without precision failure.
 
 Do not infer that one game is “more educational” because it has a visible completion state or appears harder to an adult.
 
@@ -57,4 +60,4 @@ For each game independently:
 - **Hold** when apparent failure, sensory distress, unsafe navigation, resisted disengagement, or caregiver concern occurs. Do not compensate with rewards, coaching, or more stimulation.
 - **Retire the mechanic** when its value depends on precision, adult explanation, repeated correction, or engagement pressure that conflicts with the product philosophy.
 
-Across games, invest next in the interaction that reveals a distinct, repeatable form of comfortable agency—not simply the longest sessions or most taps. Preserve unresolved concepts in `CONCEPTS.md` and `IDEAS.md`; do not build a fourth mechanic until the evidence identifies a specific question the existing three cannot answer.
+Across games, invest next in the interaction that reveals a distinct, repeatable form of comfortable agency—not simply the longest sessions or most taps. Preserve unresolved concepts in `CONCEPTS.md` and `IDEAS.md`; later mechanics should remain bounded prototypes until observation shows which interaction questions are still unanswered.

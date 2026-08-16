@@ -41,6 +41,12 @@ Peekaboo Pockets presents one large visual target and three oversized, patterned
 
 Peekaboo Pockets supports exposure to open/closed, visible/hidden, containment, stable location, and revisiting. It does **not** assess memory or claim to teach object permanence. Its larger purpose is to test whether a reversible state change invites a different kind of curiosity and caregiver co-play from the first two games.
 
+## Stack & Settle: fourth product slice
+
+Stack & Settle presents five oversized, reusable pieces in one bounded construction scene. A tap places or rearranges a piece without requiring sustained dragging. A broad drag gives richer positioning, after which the piece settles safely on the floor, on a nearby support, or into the ball-and-nest relationship. Floor neighbors, stacks, and nesting produce different brief responses. Pieces never collapse as punishment, remain movable, and cannot be consumed or duplicated.
+
+Stack & Settle supports exposure to above/below, beside, inside, relative size, arrangement, revision, and turn-taking. It does **not** assess coordination, construction, balance, or spatial reasoning. Its larger purpose is to test direct manipulation and child-authored revision, forms of agency not present in the first three games.
+
 ## Acceptance evidence
 
 Mechanical checks:
@@ -66,6 +72,11 @@ Mechanical checks:
 - every friend has a locally bundled vector illustration and remains independently touchable while emerged;
 - the target and clue indices never change in response to a choice, and target discovery is monotonic;
 - greeting partners are selected deterministically only from currently open non-clue pockets;
+- Stack & Settle always contains exactly five distinct reusable pieces with immutable state transitions;
+- tap-only input places and rearranges pieces without requiring a drag;
+- every released piece settles within horizontal bounds and into a supported floor, stack, or nest state;
+- ball-and-nest, stacked, and side-by-side relationships are deterministic and do not consume pieces;
+- interrupted drags preserve the prior arrangement and never consume the next tap;
 
 Observation checks before public release:
 
@@ -94,4 +105,4 @@ Observation checks before public release:
 
 ## Next decision
 
-The ordered implementation and validation sequence now lives in `ROADMAP.md`. The deeper Color Splash, Peekaboo, and Bloom slices await device observation; the next implementation priority is Stack & Settle, a bounded direct-manipulation construction experiment. Comparative observation remains necessary before treating these hypotheses as validated, but an unavailable real-world observation step should not prevent bounded, reversible technical prototypes from advancing. Do not extract a generalized framework merely because the pages share controls.
+The ordered implementation and validation sequence now lives in `ROADMAP.md`. The deeper Color Splash, Peekaboo, Bloom, and Stack & Settle slices await device and child observation. Comparative portfolio review is the next milestone. An unavailable real-world observation step should not prevent bounded, reversible technical prototypes from advancing, but those prototypes must not be described as child-validated. Do not extract a generalized framework merely because the pages share controls.
