@@ -22,7 +22,7 @@ The broader interaction landscape and third-game decision are recorded in [docs/
 
 ### Bloom
 
-Bloom is a relational color garden. Tapping or dragging empty space creates bright flowers and soft musical tones; touching an existing flower grows it again, and nearby flowers form visible connections and lean toward one another. There are no scores, timers, mistakes, ads, accounts, or links away from the experience.
+Bloom is a relational color garden. Tapping or dragging empty space creates bright flowers and soft musical tones; revisiting one moves it through a circular growth story, and nearby flowers form visible connections and lean toward one another. There are no scores, timers, mistakes, ads, accounts, or links away from the experience.
 
 ### Color Splash
 

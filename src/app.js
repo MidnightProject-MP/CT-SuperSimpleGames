@@ -1,11 +1,13 @@
 import {
+  BLOOM_STAGES,
   COLORS,
   MAX_BLOOMS,
-  NEIGHBOR_DISTANCE,
+  MAX_SPARKS,
   clampPosition,
   createBloom,
   growBloom,
   nearestBloom,
+  neighborDistanceForLayout,
   planGardenInteraction
 } from "./game.js";
 import { createTonePlayer } from "./audio.js";
@@ -20,6 +22,8 @@ const soundToggle = document.querySelector("#sound-toggle");
 
 let bloomCount = 0;
 const gardenBlooms = new Map();
+const bloomElements = new Map();
+const gardenLinks = [];
 let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 const pointerSampler = createPointerSampler();
@@ -47,6 +51,7 @@ function makeFlower(bloom) {
   flower.dataset.y = String(bloom.y);
   flower.dataset.size = String(bloom.size);
   flower.dataset.id = String(bloom.id);
+  flower.dataset.stage = String(bloom.stage);
   flower.setAttribute("role", "presentation");
 
   for (let i = 0; i < bloom.petals; i += 1) {
@@ -59,6 +64,17 @@ function makeFlower(bloom) {
   const core = document.createElement("b");
   core.className = "flower-core";
   flower.append(core);
+
+  const leaves = document.createElement("span");
+  leaves.className = "growth-leaves";
+  leaves.setAttribute("aria-hidden", "true");
+  leaves.append(document.createElement("i"), document.createElement("i"));
+  flower.append(leaves);
+
+  const seeds = document.createElement("span");
+  seeds.className = "seed-dots";
+  seeds.setAttribute("aria-hidden", "true");
+  flower.append(seeds);
   return flower;
 }
 
@@ -69,6 +85,7 @@ function updateFlower(flower, bloom) {
   flower.dataset.x = String(bloom.x);
   flower.dataset.y = String(bloom.y);
   flower.dataset.size = String(bloom.size);
+  flower.dataset.stage = String(bloom.stage);
 }
 
 function updateLink(link) {
@@ -84,7 +101,7 @@ function updateLink(link) {
 }
 
 function updateLinks() {
-  for (const link of blooms.querySelectorAll(".bloom-link")) updateLink(link);
+  for (const link of gardenLinks) updateLink(link);
 }
 
 function connectBlooms(first, second) {
@@ -93,10 +110,11 @@ function connectBlooms(first, second) {
   link.dataset.first = String(first.id);
   link.dataset.second = String(second.id);
   blooms.prepend(link);
+  gardenLinks.push(link);
   updateLink(link);
 
-  const firstFlower = blooms.querySelector(`.bloom[data-id="${first.id}"]`);
-  const secondFlower = blooms.querySelector(`.bloom[data-id="${second.id}"]`);
+  const firstFlower = bloomElements.get(first.id);
+  const secondFlower = bloomElements.get(second.id);
   const firstClass = first.x <= second.x ? "greet-right" : "greet-left";
   const secondClass = first.x <= second.x ? "greet-left" : "greet-right";
   animateFlower(secondFlower, secondClass);
@@ -111,6 +129,11 @@ function animateFlower(flower, className = "tended") {
 
 function addSparkles(bloom) {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const overflow = blooms.querySelectorAll(".spark").length + 4 - MAX_SPARKS;
+  if (overflow > 0) {
+    for (const spark of [...blooms.querySelectorAll(".spark")].slice(0, overflow)) spark.remove();
+  }
 
   for (let i = 0; i < 4; i += 1) {
     const spark = document.createElement("i");
@@ -131,9 +154,13 @@ function createAt(x, y) {
   const bloom = createBloom(bloomCount, x, y, garden.clientWidth, garden.clientHeight);
   bloomCount += 1;
   invitation.classList.add("hidden");
-  const neighbor = nearestBloom(gardenBlooms.values(), bloom.x, bloom.y, { maxDistance: NEIGHBOR_DISTANCE });
+  const neighbor = nearestBloom(gardenBlooms.values(), bloom.x, bloom.y, {
+    maxDistance: neighborDistanceForLayout(garden.clientWidth, garden.clientHeight)
+  });
   gardenBlooms.set(bloom.id, bloom);
-  blooms.append(makeFlower(bloom));
+  const flower = makeFlower(bloom);
+  bloomElements.set(bloom.id, flower);
+  blooms.append(flower);
   addSparkles(bloom);
   if (neighbor) {
     connectBlooms(bloom, neighbor);
@@ -149,13 +176,14 @@ function tendBloom(id) {
   if (!current) return;
   const bloom = growBloom(current, { width: garden.clientWidth, height: garden.clientHeight });
   gardenBlooms.set(id, bloom);
-  const flower = blooms.querySelector(`.bloom[data-id="${id}"]`);
+  const flower = bloomElements.get(id);
   updateFlower(flower, bloom);
   updateLinks();
   animateFlower(flower);
   addSparkles(bloom);
-  announcement.textContent = `${bloom.color.name} flower grew again`;
-  tonePlayer.play(bloom.color.tone * 1.06);
+  const stage = BLOOM_STAGES[bloom.stage];
+  announcement.textContent = `${bloom.color.name} flower, ${stage.label}`;
+  tonePlayer.play(bloom.color.tone * stage.toneFactor);
 }
 
 function interactAt(x, y, flower) {
@@ -172,7 +200,7 @@ function interactAt(x, y, flower) {
 }
 
 function reflowBlooms() {
-  for (const flower of blooms.querySelectorAll(".bloom")) {
+  for (const [id, flower] of bloomElements) {
     const size = Number(flower.dataset.size);
     const position = clampPosition(
       Number(flower.dataset.x),
@@ -185,7 +213,6 @@ function reflowBlooms() {
     flower.dataset.y = String(position.y);
     flower.style.left = `${position.x}px`;
     flower.style.top = `${position.y}px`;
-    const id = Number(flower.dataset.id);
     gardenBlooms.set(id, { ...gardenBlooms.get(id), ...position });
   }
   updateLinks();

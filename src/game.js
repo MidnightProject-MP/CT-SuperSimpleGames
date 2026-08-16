@@ -2,6 +2,15 @@ export const MAX_BLOOMS = 24;
 export const MAX_BLOOM_SIZE = 164;
 export const BLOOM_GROWTH_STEP = 12;
 export const NEIGHBOR_DISTANCE = 170;
+export const MAX_SPARKS = 24;
+
+export const BLOOM_STAGES = Object.freeze([
+  Object.freeze({ name: "fresh", label: "fresh bloom", toneFactor: 1 }),
+  Object.freeze({ name: "tall", label: "taller bloom", toneFactor: 1.04 }),
+  Object.freeze({ name: "full", label: "full bloom", toneFactor: 1.08 }),
+  Object.freeze({ name: "seed", label: "seeds ready", toneFactor: 0.94 }),
+  Object.freeze({ name: "renewed", label: "new bloom", toneFactor: 1.12 })
+]);
 
 export const COLORS = Object.freeze([
   { name: "pink", petal: "#ef3f8f", light: "#ff8fbe", tone: 523.25 },
@@ -30,9 +39,19 @@ export function createBloom(index, x, y, width, height) {
     id: index,
     ...position,
     size,
+    baseSize: size,
     petals: 5 + (index % 4),
-    color
+    color,
+    stage: 0,
+    visits: 0
   };
+}
+
+export function neighborDistanceForLayout(width, height) {
+  if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) {
+    throw new RangeError("layout must have positive finite dimensions");
+  }
+  return Math.min(190, Math.max(120, Math.min(width, height) * 0.34));
 }
 
 export function trimToLimit(items, limit = MAX_BLOOMS) {
@@ -69,14 +88,26 @@ export function growBloom(bloom, {
 } = {}) {
   if (!bloom || !Number.isFinite(bloom.size)) throw new TypeError("bloom must have a finite size");
   if (!Number.isFinite(step) || step < 0) throw new RangeError("step must not be negative");
-  if (!Number.isFinite(maxSize) || maxSize < bloom.size) {
-    throw new RangeError("maxSize must not be smaller than the current bloom");
+  if (!Number.isFinite(maxSize) || maxSize <= 0) throw new RangeError("maxSize must be positive");
+  const stage = bloom.stage ?? 0;
+  if (!Number.isInteger(stage) || stage < 0 || stage >= BLOOM_STAGES.length) {
+    throw new RangeError("bloom stage is invalid");
   }
-  const size = Math.min(maxSize, bloom.size + step);
+  const nextStage = (stage + 1) % BLOOM_STAGES.length;
+  const baseSize = bloom.baseSize ?? bloom.size;
+  const offsets = [0, step, step * 2, Math.round(step * 0.65), Math.round(step * 1.35)];
+  const size = Math.min(maxSize, baseSize + offsets[nextStage]);
   const position = Number.isFinite(width) && Number.isFinite(height)
     ? clampPosition(bloom.x, bloom.y, width, height, size * 0.43)
     : { x: bloom.x, y: bloom.y };
-  return { ...bloom, ...position, size, visits: (bloom.visits || 0) + 1 };
+  return {
+    ...bloom,
+    ...position,
+    size,
+    baseSize,
+    stage: nextStage,
+    visits: (bloom.visits || 0) + 1
+  };
 }
 
 export function planGardenInteraction(items, x, y, {

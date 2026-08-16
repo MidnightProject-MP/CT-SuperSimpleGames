@@ -228,6 +228,64 @@ button { font: inherit; }
   background: linear-gradient(145deg, rgba(255,255,255,.76), var(--petal-light) 34%, var(--petal) 100%);
 }
 
+.growth-leaves,
+.seed-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.growth-leaves i {
+  position: absolute;
+  z-index: 1;
+  top: 54%;
+  left: 17%;
+  width: 25%;
+  height: 16%;
+  border: 3px solid rgba(255,255,255,.48);
+  border-radius: 90% 20% 90% 20%;
+  background: #3fa85f;
+  opacity: 0;
+  transform: rotate(24deg) scale(.4);
+  transition: opacity 180ms ease, transform 220ms ease;
+}
+
+.growth-leaves i:nth-child(2) {
+  right: 15%;
+  left: auto;
+  border-radius: 20% 90% 20% 90%;
+  transform: rotate(-24deg) scale(.4);
+}
+
+.bloom[data-stage="1"] .growth-leaves i:first-child,
+.bloom[data-stage="2"] .growth-leaves i,
+.bloom[data-stage="4"] .growth-leaves i {
+  opacity: 1;
+  transform: rotate(24deg) scale(1);
+}
+
+.bloom[data-stage="2"] .growth-leaves i:nth-child(2),
+.bloom[data-stage="4"] .growth-leaves i:nth-child(2) { transform: rotate(-24deg) scale(1); }
+.bloom[data-stage="2"] .petal { filter: saturate(1.12) brightness(1.05); }
+.bloom[data-stage="3"] .petal { opacity: .34; filter: saturate(.55); }
+.bloom[data-stage="3"] .flower-core { background: radial-gradient(circle,#8a6134 0 10%,#f0c45c 11% 24%,#896032 25% 34%,#e5b74e 35% 48%,#7c542d 49%); }
+.bloom[data-stage="4"] .petal { filter: brightness(1.12) saturate(1.16); }
+
+.seed-dots {
+  z-index: 3;
+  top: 43%;
+  left: 47%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff5b0;
+  box-shadow: -20px -13px #fff5b0, 19px -17px #fff5b0, 25px 14px #fff5b0, -24px 17px #fff5b0;
+  opacity: 0;
+  transform: scale(.35);
+}
+
+.bloom[data-stage="3"] .seed-dots { opacity: 1; transform: scale(1); }
+
 .bloom-link {
   position: absolute;
   z-index: 4;
@@ -306,6 +364,7 @@ button { font: inherit; }
   .bloom.greet-left,
   .bloom.greet-right { animation-duration: 1ms; }
   .spark { display: none; }
+  .growth-leaves i { transition: none; }
 }
 
 @media (min-width: 800px) {

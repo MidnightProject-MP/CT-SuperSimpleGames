@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  BLOOM_STAGES,
   COLORS,
   MAX_BLOOMS,
   NEIGHBOR_DISTANCE,
@@ -8,6 +9,7 @@ import {
   createBloom,
   growBloom,
   nearestBloom,
+  neighborDistanceForLayout,
   planGardenInteraction,
   trimToLimit
 } from "../src/game.js";
@@ -24,6 +26,9 @@ test("createBloom cycles colors and varies size and petal count predictably", ()
   assert.equal(wrapped.color.name, "pink");
   assert.ok(first.size >= 92 && first.size <= 140);
   assert.ok(first.petals >= 5 && first.petals <= 8);
+  assert.equal(first.stage, 0);
+  assert.equal(first.baseSize, first.size);
+  assert.equal(first.visits, 0);
 });
 
 test("trimToLimit retains the newest blooms", () => {
@@ -46,16 +51,32 @@ test("nearestBloom finds a nearby relation and respects exclusions", () => {
   assert.equal(nearestBloom(items, 500, 500, { maxDistance: 40 }), null);
 });
 
-test("growBloom increases revisited flowers without crossing its cap or viewport", () => {
-  const original = { id: 1, x: 8, y: 8, size: 100, visits: 0 };
+test("growBloom advances a bounded circular lifecycle without mutating prior state", () => {
+  const original = { id: 1, x: 8, y: 8, size: 100, baseSize: 100, stage: 0, visits: 0 };
   const grown = growBloom(original, { step: 20, maxSize: 130, width: 320, height: 640 });
   const capped = growBloom(grown, { step: 20, maxSize: 130, width: 320, height: 640 });
-  assert.deepEqual(original, { id: 1, x: 8, y: 8, size: 100, visits: 0 });
+  assert.deepEqual(original, { id: 1, x: 8, y: 8, size: 100, baseSize: 100, stage: 0, visits: 0 });
   assert.equal(grown.size, 120);
+  assert.equal(grown.stage, 1);
   assert.equal(grown.visits, 1);
   assert.ok(grown.x > original.x && grown.y > original.y);
   assert.equal(capped.size, 130);
+  assert.equal(capped.stage, 2);
   assert.equal(capped.visits, 2);
+
+  let cycled = original;
+  for (let index = 0; index < BLOOM_STAGES.length; index += 1) cycled = growBloom(cycled);
+  assert.equal(cycled.stage, 0);
+  assert.equal(cycled.size, original.baseSize);
+  assert.equal(cycled.visits, BLOOM_STAGES.length);
+});
+
+test("garden neighbor reach follows the shorter physical layout dimension", () => {
+  assert.equal(neighborDistanceForLayout(320, 640), 120);
+  assert.equal(neighborDistanceForLayout(800, 320), 120);
+  assert.equal(neighborDistanceForLayout(500, 500), 170);
+  assert.equal(neighborDistanceForLayout(1200, 900), 190);
+  assert.throws(() => neighborDistanceForLayout(0, 500), RangeError);
 });
 
 test("garden interactions create below the cap and revisit without erasing at the cap", () => {

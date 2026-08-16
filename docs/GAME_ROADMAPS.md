@@ -95,6 +95,8 @@ The child currently receives immediate creation, color and size variation, broad
 
 ### BL-0 — Garden resilience and scale
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** technical foundation supporting all Bloom milestones.
 
 - Separate stable garden state from presentation animation so lifecycle changes remain deterministic and testable.
@@ -107,6 +109,8 @@ The child currently receives immediate creation, color and size variation, broad
 **Gate:** Dense gardens remain responsive and calm; no resize or pointer sequence can move a plant out of bounds, duplicate an identity, or erase prior work.
 
 ### BL-1 — Growth stories
+
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
 
 **Kind:** core gameplay improvement; Round 1.
 
@@ -121,6 +125,8 @@ The child currently receives immediate creation, color and size variation, broad
 **Learning exposure:** sequence, change over time, relative size, and “again.”
 
 **Gate:** A child who only creates new flowers still has the complete current experience; lifecycle discovery requires no mode, precision gesture, or instruction.
+
+**Implementation note:** The first touch still creates a complete flower. Revisiting now advances deterministically through fresh, taller, full, seed-ready, and renewed states, with bounded size, leaves, petal treatment, seed marks, visual announcements, and optional tone changes. Bloom objects and links use indexed runtime collections, relationship reach follows the shorter viewport dimension, transient sparks are capped, and lifecycle and geometry invariants are tested.
 
 ### BL-2 — Garden neighborhoods
 
