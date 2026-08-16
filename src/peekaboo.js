@@ -1,15 +1,24 @@
 import { createTonePlayer } from "./audio.js";
-import { getPocketItem } from "./pocket-items.js";
-import { createRound, greetingPair, togglePocket } from "./pockets.js";
+import { POCKET_CLUE, getPocketItem } from "./pocket-items.js";
+import {
+  createSearchRound,
+  getPocketContentId,
+  getTargetItemId,
+  searchGreetingPair,
+  toggleSearchPocket
+} from "./peekaboo-search.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 
 const pocketRow = document.querySelector("#pocket-row");
 const playfield = document.querySelector("#peek-playfield");
+const prompt = document.querySelector("#peek-prompt");
+const targetLabel = document.querySelector("#target-label");
+const targetArt = document.querySelector("#target-art use");
 const message = document.querySelector("#peek-message");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
 
-let round = createRound({ seed: nextSeed() });
+let round = createSearchRound({ seed: nextSeed() });
 let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 
@@ -30,7 +39,7 @@ function renderSoundState() {
 
 function createPockets() {
   const fragment = document.createDocumentFragment();
-  for (let index = 0; index < round.itemIds.length; index += 1) {
+  for (let index = 0; index < round.pockets.itemIds.length; index += 1) {
     const station = document.createElement("div");
     const pocket = document.createElement("button");
     const friend = document.createElement("button");
@@ -67,19 +76,30 @@ function renderPockets() {
     const index = Number(station.dataset.index);
     const pocket = station.querySelector(".pocket");
     const friend = station.querySelector(".pocket-friend");
-    const item = getPocketItem(round.itemIds[index]);
-    const isOpen = round.open[index];
+    const contentId = getPocketContentId(round, index);
+    const item = contentId ? getPocketItem(contentId) : POCKET_CLUE;
+    const isOpen = round.pockets.open[index];
     station.classList.toggle("open", isOpen);
-    pocket.dataset.pattern = round.patternIds[index];
+    pocket.dataset.pattern = round.pockets.patternIds[index];
     pocket.setAttribute("aria-expanded", String(isOpen));
     pocket.setAttribute("aria-label", isOpen
-      ? `Pocket ${index + 1}, open, ${item.name} inside`
+      ? `Pocket ${index + 1}, open, ${contentId ? item.name : "a clue"} inside`
       : `Pocket ${index + 1}, closed`);
     friend.tabIndex = isOpen ? 0 : -1;
     friend.setAttribute("aria-hidden", String(!isOpen));
-    friend.setAttribute("aria-label", `Say hello to ${item.name}`);
+    friend.setAttribute("aria-label", contentId ? `Say hello to ${item.name}` : "Play with the little clue");
     friend.querySelector("use").setAttribute("href", `../../assets/pocket-friends.svg#${item.artId}`);
   }
+}
+
+function renderTarget() {
+  const target = getPocketItem(getTargetItemId(round));
+  targetArt.setAttribute("href", `../../assets/pocket-friends.svg#${target.artId}`);
+  targetLabel.textContent = round.targetFound ? "Here you are" : "Where is";
+  prompt.setAttribute("aria-label", round.targetFound
+    ? `${target.name} found; the pockets remain open for play`
+    : `Find the ${target.name}`);
+  playfield.classList.toggle("target-found", round.targetFound);
 }
 
 function animatePocket(pocket, opening) {
@@ -107,29 +127,31 @@ function animateGreeting(pair) {
 }
 
 function playFriend(index) {
-  if (!round.open[index]) return;
-  const item = getPocketItem(round.itemIds[index]);
-  const pair = greetingPair(round, index);
+  if (!round.pockets.open[index]) return;
+  const contentId = getPocketContentId(round, index);
+  const item = contentId ? getPocketItem(contentId) : POCKET_CLUE;
+  const pair = searchGreetingPair(round, index);
   tonePlayer.play(item.tone * 1.08);
   if (pair) {
     animateGreeting(pair);
     const partnerIndex = pair.find((value) => value !== index);
-    const partner = getPocketItem(round.itemIds[partnerIndex]);
+    const partner = getPocketItem(getPocketContentId(round, partnerIndex));
     message.textContent = `${item.name} and ${partner.name} say hello!`;
     announcement.textContent = `${item.name} and ${partner.name} greet each other`;
     return;
   }
   animateFriend(index);
-  message.textContent = `Hello, ${item.name}!`;
-  announcement.textContent = `${item.name} says hello`;
+  message.textContent = contentId ? `Hello, ${item.name}!` : "A little clue!";
+  announcement.textContent = contentId ? `${item.name} says hello` : "The little clue wiggles";
 }
 
 function toggle(index) {
-  const result = togglePocket(round, index);
+  const result = toggleSearchPocket(round, index);
   round = result.state;
-  const pocket = pocketRow.querySelector(`[data-index="${index}"]`);
-  const item = getPocketItem(result.itemId);
+  const pocket = pocketRow.querySelector(`.pocket[data-index="${index}"]`);
+  const item = result.contentId ? getPocketItem(result.contentId) : POCKET_CLUE;
   renderPockets();
+  renderTarget();
   animatePocket(pocket, result.open);
   const tone = result.completedNow ? item.tone * 1.25 : result.open ? item.tone : item.tone * 0.78;
   tonePlayer.play(tone);
@@ -138,7 +160,7 @@ function toggle(index) {
     playfield.classList.remove("reunion");
     void playfield.offsetWidth;
     playfield.classList.add("reunion");
-    message.textContent = "Hello, friends!";
+    message.textContent = "Everybody’s here!";
     message.classList.add("complete");
     announcement.textContent = `The friends are together. ${item.name} came from pocket ${index + 1}.`;
     return;
@@ -146,11 +168,21 @@ function toggle(index) {
 
   message.classList.remove("complete");
   if (result.open) {
-    const pair = greetingPair(round, index);
+    if (result.empty) {
+      message.textContent = "A little clue!";
+      announcement.textContent = `A playful clue came from pocket ${index + 1}`;
+      return;
+    }
+    if (result.foundNow) {
+      message.textContent = `${item.name}! Here you are!`;
+      announcement.textContent = `${item.name} found in pocket ${index + 1}. The scene remains open for play.`;
+      return;
+    }
+    const pair = searchGreetingPair(round, index);
     if (pair) {
       animateGreeting(pair);
       const partnerIndex = pair.find((value) => value !== index);
-      const partner = getPocketItem(round.itemIds[partnerIndex]);
+      const partner = getPocketItem(getPocketContentId(round, partnerIndex));
       message.textContent = `${item.name} meets ${partner.name}!`;
     } else {
       message.textContent = `${item.name}!`;
@@ -203,6 +235,7 @@ document.addEventListener("visibilitychange", () => {
 addEventListener("pagehide", tonePlayer.stop);
 
 createPockets();
+renderTarget();
 renderSoundState();
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {

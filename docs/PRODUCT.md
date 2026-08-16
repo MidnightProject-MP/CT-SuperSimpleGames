@@ -37,7 +37,7 @@ Color Splash supports exposure to color and symbol matching, connected regions, 
 
 ## Peekaboo Pockets: third product slice
 
-Peekaboo Pockets presents three oversized, patterned pockets with familiar friends that remain assigned to stable locations. Tapping opens or closes a pocket. A friend visibly emerges as its own large control, can be greeted independently, and exchanges one deterministic greeting with a nearby emerged friend. The illustrations are a cohesive local vector set rather than platform-dependent emoji. Every pocket responds, discovery is retained, and opening all three produces one brief whole-scene reunion without ending or restarting play. There is no correct pocket, shuffle, memory test, score, or precision drag.
+Peekaboo Pockets presents one large visual target and three oversized, patterned pockets whose contents remain stable for the session. Two pockets hold familiar friends and one holds a playful footprint clue. Tapping opens or closes a pocket. A friend visibly emerges as its own large control, can be greeted independently, and exchanges one deterministic greeting with the other emerged friend. The clue is also touchable and lively, so a non-target choice never resembles failure. The illustrations are a cohesive local vector set rather than platform-dependent emoji. Finding the target changes the prompt but leaves every interaction available; opening all three produces one brief whole-scene reunion without ending or restarting play. There is no shuffle after a guess, memory score, forced reset, or precision drag.
 
 Peekaboo Pockets supports exposure to open/closed, visible/hidden, containment, stable location, and revisiting. It does **not** assess memory or claim to teach object permanence. Its larger purpose is to test whether a reversible state change invites a different kind of curiosity and caregiver co-play from the first two games.
 
@@ -58,10 +58,11 @@ Mechanical checks:
 - decorative board gaps resolve deterministically to a nearby square;
 - repeated/current-color input visibly acknowledges the connected region;
 - Color Splash completion waits for the explicit new-board control before starting another board.
-- each Peekaboo round contains three unique familiar objects and three distinct non-color patterns;
+- each Peekaboo search contains one stable target, two unique familiar friends, one stable clue pocket, and three distinct non-color patterns;
 - pocket discovery is monotonic, opening and closing never mutates prior state, and discovering all pockets never blocks further play;
 - every friend has a locally bundled vector illustration and remains independently touchable while emerged;
-- greeting partners are selected deterministically from currently open non-self pockets;
+- the target and clue indices never change in response to a choice, and target discovery is monotonic;
+- greeting partners are selected deterministically only from currently open non-clue pockets;
 
 Observation checks before public release:
 

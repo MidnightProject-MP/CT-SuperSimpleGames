@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { POCKET_ITEMS, getPocketItem } from "../src/pocket-items.js";
+import { POCKET_CLUE, POCKET_ITEMS, getPocketItem } from "../src/pocket-items.js";
 import { ITEM_CATALOG, PATTERN_CATALOG } from "../src/pockets.js";
 
 test("every generated pocket item has complete presentation metadata", () => {
@@ -24,6 +24,9 @@ test("every pocket item has a local vector illustration", () => {
   for (const id of ITEM_CATALOG) {
     assert.match(sprite, new RegExp(`id=["']friend-${id}["']`), `${id} has no vector symbol`);
   }
+  assert.match(sprite, new RegExp(`id=["']${POCKET_CLUE.artId}["']`), "the clue has no vector symbol");
+  assert.equal(Number.isFinite(POCKET_CLUE.tone), true);
+  assert.equal(Object.isFrozen(POCKET_CLUE), true);
 });
 
 test("unknown pocket items are rejected", () => {

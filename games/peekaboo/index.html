@@ -27,7 +27,11 @@
       </header>
 
       <section id="peek-playfield" class="peek-playfield" aria-labelledby="peek-prompt">
-        <p id="peek-prompt" class="peek-prompt">Who’s inside?</p>
+        <div id="peek-prompt" class="peek-prompt" aria-label="Find the hidden friend">
+          <span id="target-label">Where is</span>
+          <svg id="target-art" class="target-art" viewBox="0 0 100 100" aria-hidden="true"><use></use></svg>
+          <span aria-hidden="true">?</span>
+        </div>
         <div id="pocket-row" class="pocket-row" role="group" aria-label="Three pockets to open"></div>
         <p id="peek-message" class="peek-message" aria-live="polite">Tap a pocket!</p>
       </section>

@@ -11,6 +11,12 @@ export const POCKET_ITEMS = Object.freeze({
   sun: Object.freeze({ artId: "friend-sun", name: "sun", tone: 554.37 })
 });
 
+export const POCKET_CLUE = Object.freeze({
+  artId: "friend-clue",
+  name: "little clue",
+  tone: 311.13
+});
+
 export function getPocketItem(id) {
   const item = POCKET_ITEMS[id];
   if (!item) throw new RangeError(`unknown pocket item: ${id}`);

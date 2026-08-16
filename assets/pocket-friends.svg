@@ -52,4 +52,15 @@
     <circle cx="50" cy="50" r="29" fill="#ffd85c" stroke="#47224f" stroke-width="5"/>
     <path d="M39 45h1m20 0h1M38 57c7 8 17 8 24 0" fill="none" stroke="#47224f" stroke-width="5" stroke-linecap="round"/>
   </symbol>
+  <symbol id="friend-clue" viewBox="0 0 100 100">
+    <ellipse cx="35" cy="60" rx="15" ry="22" transform="rotate(-24 35 60)" fill="#bca9f5" stroke="#47224f" stroke-width="5"/>
+    <circle cx="17" cy="39" r="6" fill="#bca9f5" stroke="#47224f" stroke-width="4"/>
+    <circle cx="27" cy="31" r="6" fill="#bca9f5" stroke="#47224f" stroke-width="4"/>
+    <circle cx="40" cy="29" r="6" fill="#bca9f5" stroke="#47224f" stroke-width="4"/>
+    <ellipse cx="68" cy="70" rx="13" ry="19" transform="rotate(24 68 70)" fill="#72cde1" stroke="#47224f" stroke-width="5"/>
+    <circle cx="58" cy="50" r="5" fill="#72cde1" stroke="#47224f" stroke-width="4"/>
+    <circle cx="69" cy="45" r="5" fill="#72cde1" stroke="#47224f" stroke-width="4"/>
+    <circle cx="80" cy="48" r="5" fill="#72cde1" stroke="#47224f" stroke-width="4"/>
+    <path d="m76 17 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z" fill="#ffd85c" stroke="#47224f" stroke-width="3" stroke-linejoin="round"/>
+  </symbol>
 </svg>

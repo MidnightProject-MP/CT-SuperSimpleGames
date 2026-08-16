@@ -69,7 +69,7 @@ Acceptance focus:
 
 ## Milestone 2 — Peekaboo: emergence, search, and reunion
 
-**Status: base interaction implemented and automatically verified; search experiment and device observation pending**
+**Status: implementation and automated verification complete; device and child observation pending**
 
 **Objective:** Turn opening a pouch into the beginning of an interaction rather than the entire interaction.
 
@@ -88,6 +88,8 @@ Follow-up experiment:
 - Present one visually communicated target and keep its pouch stable for the round.
 - Allow some pouches to contain playful clues or an explicitly lively empty state.
 - Finding the target changes the scene but does not force an ending or restart.
+
+Implementation note: the search experiment is present. Each session has one visually communicated target, two real friends, and one lively footprint clue. Target and clue locations are deterministic and stable, all reveals remain interactive, and finding the target changes the prompt without ending the scene. The essential target remains visible as a compact cue in short landscape layouts.
 
 Acceptance focus:
 

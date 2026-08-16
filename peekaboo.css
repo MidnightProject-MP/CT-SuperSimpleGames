@@ -112,7 +112,16 @@ button { font: inherit; }
   text-align: center;
 }
 
-.peek-prompt { font-size: clamp(22px, 5.7vw, 31px); }
+.peek-prompt {
+  display: flex;
+  min-height: 62px;
+  gap: 8px;
+  align-items: center;
+  font-size: clamp(22px, 5.7vw, 31px);
+}
+.target-art { width: clamp(46px, 12vw, 68px); height: clamp(46px, 12vw, 68px); }
+.peek-playfield.target-found .peek-prompt { background: rgba(255,247,184,.94); }
+.peek-playfield.target-found .target-art { animation: target-found 540ms ease-out; }
 .peek-message { min-width: min(74vw, 330px); font-size: clamp(17px, 4.2vw, 22px); }
 .peek-message.complete { color: #6c2960; background: rgba(255,247,184,.92); }
 
@@ -283,6 +292,12 @@ button { font: inherit; }
   68% { transform: translate(-50%, -76%) scale(1.04) rotate(4deg); }
 }
 
+@keyframes target-found {
+  0%, 100% { transform: scale(1) rotate(0); }
+  42% { transform: scale(1.15) rotate(-7deg); }
+  72% { transform: scale(1.08) rotate(6deg); }
+}
+
 @keyframes pocket-pat {
   50% { transform: scale(.96); }
 }
@@ -294,7 +309,17 @@ button { font: inherit; }
   .peek-brand-mark { width: 36px; height: 36px; font-size: 31px; }
   .peek-sound { width: 46px; height: 46px; padding: 10px; }
   .peek-playfield { gap: 4px; }
-  .peek-prompt { display: none; }
+  .peek-prompt {
+    position: absolute;
+    z-index: 25;
+    top: max(5px, env(safe-area-inset-top));
+    left: 50%;
+    min-height: 46px;
+    padding: 2px 10px;
+    transform: translateX(-50%);
+  }
+  .peek-prompt #target-label { display: none; }
+  .target-art { width: 40px; height: 40px; }
   .peek-message { padding-block: 3px; font-size: clamp(15px, 4.8vh, 18px); }
   .pocket-station { height: calc(100svh - 88px); min-height: 0; }
   .pocket-friend { width: min(42%, 86px); padding: 5px; border-width: 3px; }
@@ -310,4 +335,5 @@ button { font: inherit; }
   .pocket-friend.greeting-left,
   .pocket-friend.greeting-right,
   .peek-playfield.reunion .pocket-friend { animation-duration: 1ms; }
+  .peek-playfield.target-found .target-art { animation-duration: 1ms; }
 }
