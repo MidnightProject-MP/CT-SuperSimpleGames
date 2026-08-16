@@ -21,7 +21,16 @@ export const ITEM_CATALOG = Object.freeze([
   "flower",
   "moon",
   "star",
-  "sun"
+  "sun",
+  "car",
+  "bus",
+  "plane",
+  "boat",
+  "cloud",
+  "fish",
+  "whale",
+  "octopus",
+  "turtle"
 ]);
 
 export const PATTERN_CATALOG = Object.freeze([
@@ -77,6 +86,16 @@ function chooseDistinct(catalog, count, random) {
     [values[index], values[swapIndex]] = [values[swapIndex], values[index]];
   }
   return values.slice(0, count);
+}
+
+function catalogSelection(value, fallback, name) {
+  if (value === undefined) return fallback;
+  if (!Array.isArray(value) || value.length < POCKET_COUNT) fail(`${name} needs at least ${POCKET_COUNT} IDs`, RangeError);
+  const valid = new Set(fallback);
+  if (new Set(value).size !== value.length || value.some((id) => !valid.has(id))) {
+    fail(`${name} must contain distinct catalog IDs`, RangeError);
+  }
+  return value;
 }
 
 function freezeArray(values) {
@@ -182,8 +201,11 @@ function buildAnnouncement({ index, itemId, patternId, opening, discoveredNow, c
 export function createRound(input) {
   const seed = readSeed(input);
   const random = createRandom(seed);
-  const itemIds = chooseDistinct(ITEM_CATALOG, POCKET_COUNT, random);
-  const patternIds = chooseDistinct(PATTERN_CATALOG, POCKET_COUNT, random);
+  const options = typeof input === "object" && input ? input : {};
+  const itemCatalog = catalogSelection(options.itemCatalog, ITEM_CATALOG, "itemCatalog");
+  const patternCatalog = catalogSelection(options.patternCatalog, PATTERN_CATALOG, "patternCatalog");
+  const itemIds = chooseDistinct(itemCatalog, POCKET_COUNT, random);
+  const patternIds = chooseDistinct(patternCatalog, POCKET_COUNT, random);
 
   return createState({
     seed,

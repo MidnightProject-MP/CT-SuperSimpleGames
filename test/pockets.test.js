@@ -46,6 +46,13 @@ test("round generation is deterministic and varies across many explicit seeds", 
   assert.ok(signatures.size > 100, "many seeds should produce varied rounds");
 });
 
+test("round generation accepts validated thematic subsets", () => {
+  const round = createRound({ seed: 5, itemCatalog: ["car", "bus", "plane", "boat"], patternCatalog: ["checks", "dots", "stripes"] });
+  assert.equal(round.itemIds.every((id) => ["car", "bus", "plane", "boat"].includes(id)), true);
+  assert.equal(round.patternIds.every((id) => ["checks", "dots", "stripes"].includes(id)), true);
+  assert.throws(() => createRound({ seed: 5, itemCatalog: ["cat", "cat", "bird"] }), RangeError);
+});
+
 test("round state is frozen and callers cannot mutate generated arrays", () => {
   const round = createRound(9);
 

@@ -8,7 +8,16 @@ export const POCKET_ITEMS = Object.freeze({
   flower: Object.freeze({ artId: "friend-flower", name: "flower", tone: 415.3 }),
   moon: Object.freeze({ artId: "friend-moon", name: "moon", tone: 329.63 }),
   star: Object.freeze({ artId: "friend-star", name: "star", tone: 587.33 }),
-  sun: Object.freeze({ artId: "friend-sun", name: "sun", tone: 554.37 })
+  sun: Object.freeze({ artId: "friend-sun", name: "sun", tone: 554.37 }),
+  car: Object.freeze({ artId: "friend-car", name: "car", tone: 392.0 }),
+  bus: Object.freeze({ artId: "friend-bus", name: "bus", tone: 349.23 }),
+  plane: Object.freeze({ artId: "friend-plane", name: "airplane", tone: 523.25 }),
+  boat: Object.freeze({ artId: "friend-boat", name: "boat", tone: 440.0 }),
+  cloud: Object.freeze({ artId: "friend-cloud", name: "cloud", tone: 311.13 }),
+  fish: Object.freeze({ artId: "friend-fish", name: "fish", tone: 466.16 }),
+  whale: Object.freeze({ artId: "friend-whale", name: "whale", tone: 329.63 }),
+  octopus: Object.freeze({ artId: "friend-octopus", name: "octopus", tone: 415.3 }),
+  turtle: Object.freeze({ artId: "friend-turtle", name: "turtle", tone: 369.99 })
 });
 
 export const POCKET_CLUE = Object.freeze({

@@ -52,6 +52,39 @@
     <circle cx="50" cy="50" r="29" fill="#ffd85c" stroke="#47224f" stroke-width="5"/>
     <path d="M39 45h1m20 0h1M38 57c7 8 17 8 24 0" fill="none" stroke="#47224f" stroke-width="5" stroke-linecap="round"/>
   </symbol>
+  <symbol id="friend-car" viewBox="0 0 100 100">
+    <path d="M13 57 24 35h47l16 22v20H13Z" fill="#ef5d6c" stroke="#47224f" stroke-width="5" stroke-linejoin="round"/>
+    <path d="m31 39-8 18h54L66 39Z" fill="#a9e7f5" stroke="#47224f" stroke-width="4"/>
+    <circle cx="29" cy="77" r="10" fill="#fff4cf" stroke="#47224f" stroke-width="5"/><circle cx="73" cy="77" r="10" fill="#fff4cf" stroke="#47224f" stroke-width="5"/>
+  </symbol>
+  <symbol id="friend-bus" viewBox="0 0 100 100">
+    <rect x="15" y="18" width="70" height="61" rx="12" fill="#ffd85c" stroke="#47224f" stroke-width="5"/>
+    <path d="M24 29h52v25H24Z" fill="#a9e7f5" stroke="#47224f" stroke-width="4"/><path d="M50 29v25" stroke="#47224f" stroke-width="4"/>
+    <circle cx="31" cy="79" r="9" fill="#fff4cf" stroke="#47224f" stroke-width="5"/><circle cx="70" cy="79" r="9" fill="#fff4cf" stroke="#47224f" stroke-width="5"/>
+  </symbol>
+  <symbol id="friend-plane" viewBox="0 0 100 100">
+    <path d="M9 58 43 45l8-31h12l-2 30 25 8c8 3 8 10 0 12l-25 2 2 18H51l-8-17-34 2Z" fill="#74cbe6" stroke="#47224f" stroke-width="5" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="friend-boat" viewBox="0 0 100 100">
+    <path d="M50 13v46M50 18 18 52h32Zm4 8 27 26H54Z" fill="#fff4cf" stroke="#47224f" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M12 57h76L74 80H27Z" fill="#ef5d6c" stroke="#47224f" stroke-width="5" stroke-linejoin="round"/><path d="M16 88c8-7 16 7 24 0s16 7 24 0 16 7 23 0" fill="none" stroke="#47a4d8" stroke-width="5" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="friend-cloud" viewBox="0 0 100 100">
+    <path d="M22 74c-13 0-17-19-5-25 2-14 18-21 29-13 9-20 38-12 38 10 16 6 10 28-5 28Z" fill="#e8f7ff" stroke="#47224f" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M38 57h1m22 0h1M40 66c6 5 14 5 20 0" fill="none" stroke="#47224f" stroke-width="5" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="friend-fish" viewBox="0 0 100 100">
+    <path d="M19 51C35 27 67 28 84 50 66 75 35 74 19 51Zm0 0L5 31v40Z" fill="#ff9b62" stroke="#47224f" stroke-width="5" stroke-linejoin="round"/><circle cx="67" cy="45" r="4" fill="#47224f"/>
+  </symbol>
+  <symbol id="friend-whale" viewBox="0 0 100 100">
+    <path d="M13 55c12-24 42-29 64-13 5-12 14-15 20-11-1 11-7 16-15 18 6 25-17 39-41 35-19-3-31-12-28-29Z" fill="#65c5df" stroke="#47224f" stroke-width="5" stroke-linejoin="round"/><circle cx="66" cy="49" r="4" fill="#47224f"/><path d="M27 72c10 4 21 4 31 0" fill="none" stroke="#47224f" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="friend-octopus" viewBox="0 0 100 100">
+    <path d="M22 57c0-25 12-42 28-42s28 17 28 42v26c-8 7-14-2-14-10 0 16-14 16-14 0 0 16-14 16-14 0 0 10-7 17-14 10Z" fill="#c68aeb" stroke="#47224f" stroke-width="5" stroke-linejoin="round"/><circle cx="39" cy="48" r="4" fill="#47224f"/><circle cx="61" cy="48" r="4" fill="#47224f"/><path d="M41 60c5 5 13 5 18 0" fill="none" stroke="#47224f" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="friend-turtle" viewBox="0 0 100 100">
+    <ellipse cx="48" cy="53" rx="34" ry="26" fill="#68bd74" stroke="#47224f" stroke-width="5"/><path d="m30 38 18 15 18-15M30 69l18-16 18 16" fill="none" stroke="#d0e977" stroke-width="4"/><circle cx="85" cy="52" r="12" fill="#8bd28d" stroke="#47224f" stroke-width="5"/><circle cx="89" cy="49" r="3" fill="#47224f"/><path d="M18 34 7 25m11 47L7 81m60-47 9-12m-9 50 9 12" stroke="#47224f" stroke-width="5" stroke-linecap="round"/>
+  </symbol>
   <symbol id="friend-clue" viewBox="0 0 100 100">
     <ellipse cx="35" cy="60" rx="15" ry="22" transform="rotate(-24 35 60)" fill="#bca9f5" stroke="#47224f" stroke-width="5"/>
     <circle cx="17" cy="39" r="6" fill="#bca9f5" stroke="#47224f" stroke-width="4"/>

@@ -3,6 +3,7 @@ import { POCKET_CLUE, getPocketItem } from "./pocket-items.js";
 import {
   createSearchRound,
   getPocketContentId,
+  getSearchScene,
   getTargetItemId,
   searchGreetingPair,
   toggleSearchPocket
@@ -72,6 +73,8 @@ function createPockets() {
 }
 
 function renderPockets() {
+  const scene = getSearchScene(round);
+  playfield.dataset.scene = scene.id;
   for (const station of pocketRow.querySelectorAll(".pocket-station")) {
     const index = Number(station.dataset.index);
     const pocket = station.querySelector(".pocket");
@@ -83,8 +86,8 @@ function renderPockets() {
     pocket.dataset.pattern = round.pockets.patternIds[index];
     pocket.setAttribute("aria-expanded", String(isOpen));
     pocket.setAttribute("aria-label", isOpen
-      ? `Pocket ${index + 1}, open, ${contentId ? item.name : "a clue"} inside`
-      : `Pocket ${index + 1}, closed`);
+      ? `${scene.containerName} ${index + 1}, open, ${contentId ? item.name : "a clue"} inside`
+      : `${scene.containerName} ${index + 1}, closed`);
     friend.tabIndex = isOpen ? 0 : -1;
     friend.setAttribute("aria-hidden", String(!isOpen));
     friend.setAttribute("aria-label", contentId ? `Say hello to ${item.name}` : "Play with the little clue");

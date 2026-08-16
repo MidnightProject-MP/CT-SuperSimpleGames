@@ -311,6 +311,8 @@ The child currently receives three stable containers, one visual target, two fri
 
 ### PP-0 — Container and round architecture
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** technical foundation supporting all Peekaboo milestones.
 
 - Define scenes, containers, target sets, clues, emergence behavior, and relationships through validated local data.
@@ -322,6 +324,8 @@ The child currently receives three stable containers, one visual target, two fri
 **Gate:** No generated scene can contain an ambiguous target, duplicate essential identity, silent empty state, moving answer, or unreachable control.
 
 ### PP-1 — Themed searches
+
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
 
 **Kind:** core gameplay and content improvement; Round 1.
 
@@ -336,6 +340,8 @@ The child currently receives three stable containers, one visual target, two fri
 **Learning exposure:** categories, familiar objects, containment, and stable location.
 
 **Gate:** A child who ignores the target still receives satisfying, complete play from every container.
+
+**Implementation note:** Four validated, seed-deterministic local scenes now group cozy animals in beds, vehicles in garages, weather friends behind clouds, and sea creatures in shells. Each scene declares its container vocabulary, item pool, patterns, emergence, and relationship behavior; the target and empty clue location remain stable. Every item has offline vector art, each theme changes the playfield and container silhouette, and thematic subset generation and scene invariants are tested.
 
 ### PP-2 — Legible clue chains
 

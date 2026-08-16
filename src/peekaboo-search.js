@@ -1,4 +1,5 @@
 import { POCKET_COUNT, createRound, togglePocket } from "./pockets.js";
+import { getPeekabooScene, peekabooSceneForSeed } from "./peekaboo-scenes.js";
 
 function validateIndex(index, name) {
   if (!Number.isInteger(index) || index < 0 || index >= POCKET_COUNT) {
@@ -7,7 +8,7 @@ function validateIndex(index, name) {
   return index;
 }
 
-function createSearchState({ pockets, emptyIndex, targetIndex, targetFound }) {
+function createSearchState({ pockets, emptyIndex, targetIndex, targetFound, sceneId }) {
   validateIndex(emptyIndex, "emptyIndex");
   validateIndex(targetIndex, "targetIndex");
   if (emptyIndex === targetIndex) throw new RangeError("the target pocket cannot be empty");
@@ -15,7 +16,8 @@ function createSearchState({ pockets, emptyIndex, targetIndex, targetFound }) {
   if (targetFound !== pockets.discovered[targetIndex]) {
     throw new RangeError("targetFound must match target-pocket discovery");
   }
-  return Object.freeze({ pockets, emptyIndex, targetIndex, targetFound });
+  getPeekabooScene(sceneId);
+  return Object.freeze({ pockets, emptyIndex, targetIndex, targetFound, sceneId });
 }
 
 function normalizeSearchState(state) {
@@ -26,12 +28,18 @@ function normalizeSearchState(state) {
 }
 
 export function createSearchRound(input) {
-  const pockets = createRound(input);
+  const seed = typeof input === "number" ? input : input?.seed;
+  const scene = input?.sceneId ? getPeekabooScene(input.sceneId) : peekabooSceneForSeed(seed);
+  const pockets = createRound({ seed, itemCatalog: scene.itemIds, patternCatalog: scene.patternIds });
   const emptyIndex = pockets.seed % POCKET_COUNT;
   const possibleTargets = Array.from({ length: POCKET_COUNT }, (_, index) => index)
     .filter((index) => index !== emptyIndex);
   const targetIndex = possibleTargets[Math.floor(pockets.seed / POCKET_COUNT) % possibleTargets.length];
-  return createSearchState({ pockets, emptyIndex, targetIndex, targetFound: false });
+  return createSearchState({ pockets, emptyIndex, targetIndex, targetFound: false, sceneId: scene.id });
+}
+
+export function getSearchScene(state) {
+  return getPeekabooScene(normalizeSearchState(state).sceneId);
 }
 
 export function getTargetItemId(state) {
@@ -57,7 +65,8 @@ export function toggleSearchPocket(state, index) {
     pockets: result.state,
     emptyIndex: current.emptyIndex,
     targetIndex: current.targetIndex,
-    targetFound
+    targetFound,
+    sceneId: current.sceneId
   });
 
   return Object.freeze({
@@ -90,4 +99,3 @@ export function searchGreetingPair(state, index) {
   if (partners.length === 0) return null;
   return Object.freeze([pocketIndex, partners[0].partnerIndex]);
 }
-
