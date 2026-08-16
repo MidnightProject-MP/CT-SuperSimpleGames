@@ -47,17 +47,17 @@ Stack & Settle presents five oversized, reusable pieces in one bounded construct
 
 Stack & Settle supports exposure to above/below, beside, inside, relative size, arrangement, revision, and turn-taking. It does **not** assess coordination, construction, balance, or spatial reasoning. Its larger purpose is to test direct manipulation and child-authored revision, forms of agency not present in the first three games.
 
-## Story Scenes: unlisted technical prototype
+## Story Scenes: available technical prototype
 
 Story Scenes explores whether the existing creation, revisiting, direct-manipulation, and relational mechanics can become a tiny child-authored narrative. One garden starts with flowers selected so the first empty-space tap works immediately. Four oversized object-family controls select flowers, friends, clouds, or suns; successive placements cycle through five variants. Existing objects remain touchable and broadly movable. Nearby weather and flowers produce watering or warming, nearby friends greet, and a nearby sun and cloud make a rainbow.
 
-The prototype remains absent from the launcher. It does not yet establish that young children understand selecting a family and then placing it, distinguish changing an object from moving it, or intentionally discover and repeat relationships. It has no background selector or additional themed casts because those would add content before the central mode and storytelling hypotheses are observed.
+The prototype is available from the launcher for testing. Its availability does not establish that young children understand selecting a family and then placing it, distinguish changing an object from moving it, or intentionally discover and repeat relationships. It has no background selector or additional themed casts because those would add content before the central mode and storytelling hypotheses are observed.
 
-## Together Tones: unlisted technical prototype
+## Together Tones: available technical prototype
 
 Together Tones explores temporal order and informal turn-taking through four oversized visual voices. Every activation creates a complete visible response whether sound is enabled or not. Repeating the same voice creates an echo response; moving to a different voice connects the last pair. A four-bead trail shows recent order without asking the child to copy it. Only one brief generated tone plays at a time, and muting never removes the visual state.
 
-The prototype remains absent from the launcher. It does not claim to teach rhythm, musical concepts, memory, or cooperation. It specifically excludes automatic playback, imitation prompts, tempo changes, accuracy, scores, performance recording, and completion. Its question is whether stable visual voices and a tiny shared history invite comfortable variation or natural alternating turns.
+The prototype is available from the launcher for testing. It does not claim to teach rhythm, musical concepts, memory, or cooperation. It specifically excludes automatic playback, imitation prompts, tempo changes, accuracy, scores, performance recording, and completion. Its question is whether stable visual voices and a tiny shared history invite comfortable variation or natural alternating turns.
 
 ## Acceptance evidence
 
@@ -123,4 +123,4 @@ Observation checks before public release:
 
 ## Next decision
 
-The ordered implementation and validation sequence now lives in `ROADMAP.md`. The four launched games await comparative device and child observation. Story Scenes and Together Tones remain unlisted technical prototypes for relational storytelling and temporal/cooperative play. Do not expand their content or promote them until their central interaction hypotheses are observed, and do not extract a generalized framework merely because the pages share controls.
+The ordered implementation and validation sequence now lives in `ROADMAP.md`. All six experiences are available from the launcher for testing. Story Scenes and Together Tones remain technical prototypes for relational storytelling and temporal/cooperative play; availability is not validation. Do not expand their content until their central interaction hypotheses are observed, and do not extract a generalized framework merely because the pages share controls.

@@ -85,6 +85,20 @@ test("every app page enforces the no-external-action boundary", () => {
   }
 });
 
+test("the launcher exposes every available game and prototype", () => {
+  const html = readFileSync(resolve(root, "index.html"), "utf8");
+  const gameLinks = [...html.matchAll(/<a\s+class="game-card[^"]*"\s+href="([^"]+)"/g)]
+    .map((match) => match[1]);
+  assert.deepEqual(gameLinks, [
+    "./games/bloom/",
+    "./games/color-splash/",
+    "./games/peekaboo/",
+    "./games/stack-settle/",
+    "./games/story-scenes/",
+    "./games/together-tones/"
+  ]);
+});
+
 test("Color Splash completion remains available to assistive technology", () => {
   const html = readFileSync(resolve(root, "games/color-splash/index.html"), "utf8");
   const celebration = html.match(/<div\s+id="celebration"[^>]*>/i)?.[0];

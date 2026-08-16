@@ -4,7 +4,7 @@
 
 Test whether four stable visual voices invite comfortable repetition, intentional variation, and informal turn-taking without sound dependence, imitation demands, or engagement pressure. This is not an assessment of rhythm, memory, music, attention, or cooperation.
 
-Use the consent, privacy, device-locking, assent, and immediate-stop rules in `PLAYTEST.md`. Keep Together Tones unlisted and treat four caregiver–child sessions as directional evidence only.
+Use the consent, privacy, device-locking, assent, and immediate-stop rules in `PLAYTEST.md`. Together Tones is available from the launcher, but treat four caregiver–child sessions as directional evidence only.
 
 ## Session
 
@@ -41,7 +41,7 @@ Allow up to four minutes and stop immediately when the child disengages or shows
 
 ## Decision thresholds
 
-Keep the prototype unlisted and revise one interaction variable unless:
+Keep its product evidence at prototype status and revise one interaction variable unless:
 
 - at least three of four children activate a voice without instruction or after one neutral invitation;
 - every ordinary, repeated, and rapid touch produces a legible bounded response;

@@ -4,7 +4,7 @@
 
 Test whether young children can move from immediate default flower placement to deliberately choosing, placing, revisiting, and combining a tiny cast. This is an observation of interaction clarity and child-authored play, not an assessment of imagination, language, categorization, or narrative ability.
 
-Use the consent, privacy, device-locking, assent, and immediate-stop rules in `PLAYTEST.md`. Keep Story Scenes unlisted during this formative stage and treat four caregiver–child sessions as directional evidence only.
+Use the consent, privacy, device-locking, assent, and immediate-stop rules in `PLAYTEST.md`. Story Scenes is available from the launcher, but treat four caregiver–child sessions as directional evidence only.
 
 ## Session
 
@@ -42,7 +42,7 @@ Allow up to five minutes and stop immediately when the child disengages or shows
 
 ## Decision thresholds
 
-Keep the prototype unlisted and revise one interaction variable unless:
+Keep its product evidence at prototype status and revise one interaction variable unless:
 
 - at least three of four children produce an immediate scene response without instruction or after one neutral invitation;
 - ordinary scene taps and palette choices always have legible local feedback;

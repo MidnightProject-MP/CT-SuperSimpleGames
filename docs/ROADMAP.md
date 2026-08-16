@@ -188,7 +188,7 @@ Advance this concept when prior play shows that broad dragging is comfortable or
 
 ## Milestone 7 — Story Scenes
 
-**Status: bounded technical prototype implemented; intentionally absent from the launcher; rendered, device, and child observation pending**
+**Status: available launcher prototype; automated verification complete; rendered, device, and child observation pending**
 
 **Objective:** Evolve the strongest parts of Bloom, Peekaboo, and Stack & Settle into open-ended symbolic storytelling.
 
@@ -200,17 +200,17 @@ Advance this concept when prior play shows that broad dragging is comfortable or
 
 Advance this concept only after earlier milestones clarify whether children understand mode selection, object revisiting, dragging, and relational consequences. Story Scenes should be a synthesis of proven interactions, not Bloom with a larger toolbar.
 
-Prototype note: one garden scene now defaults to immediate flower placement and offers four oversized object families: flowers, friends, clouds, and suns. New placements cycle through five variants, existing objects can be changed or broadly moved, and nearby pairs produce four stable relationships: watering, warming, greeting, and a rainbow. The scene is capped at 16 objects; further placement tends a nearby object of the selected kind instead of deleting work. Background selection, additional casts, and launcher promotion remain deliberately excluded until observation shows that selecting and then placing is understandable.
+Prototype note: one garden scene now defaults to immediate flower placement and offers four oversized object families: flowers, friends, clouds, and suns. New placements cycle through five variants, existing objects can be changed or broadly moved, and nearby pairs produce four stable relationships: watering, warming, greeting, and a rainbow. The scene is capped at 16 objects; further placement tends a nearby object of the selected kind instead of deleting work. It is available from the launcher for testing. Background selection and additional casts remain deliberately excluded until observation shows that selecting and then placing is understandable.
 
 ## Milestone 8 — Temporal and cooperative play
 
-**Status: bounded technical prototype implemented; intentionally absent from the launcher; rendered, device, and child observation pending**
+**Status: available launcher prototype; automated verification complete; rendered, device, and child observation pending**
 
 Explore a restrained musical experience in which large characters or objects contribute simple sounds and combinations. Touching, holding, and taking turns may alter the shared result. Silence remains available; sound is never required for understanding.
 
 Avoid imitation tests, escalating tempo, audio dependence, automatic performance, and stimulation used only to prolong attention.
 
-Prototype note: Together Tones presents four oversized visual voices. A first touch produces a local visual and optional tone, repeating one voice creates an echo response, and choosing a different voice connects the last pair. Four colored beads preserve only the recent action order. Visual levels, recent history, and the active pair are strictly bounded; there is no playback, tempo, prompt sequence, score, completion, or sound-only meaning. Launcher promotion remains conditional on observing clear first use, comfortable repetition, sound-off comprehension, and natural turn-taking.
+Prototype note: Together Tones presents four oversized visual voices. A first touch produces a local visual and optional tone, repeating one voice creates an echo response, and choosing a different voice connects the last pair. Four colored beads preserve only the recent action order. Visual levels, recent history, and the active pair are strictly bounded; there is no playback, tempo, prompt sequence, score, completion, or sound-only meaning. It is available from the launcher for testing; validation and expansion remain conditional on observing clear first use, comfortable repetition, sound-off comprehension, and natural turn-taking.
 
 ## Portfolio rule
 
