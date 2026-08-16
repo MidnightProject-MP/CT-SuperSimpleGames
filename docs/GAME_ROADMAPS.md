@@ -258,7 +258,7 @@ The child currently receives a forgiving board touch, a growing corner region, d
 - Make orientation reflow deterministic and preserve the active board's relationships without accidental input, clipping, or collision.
 - Add deterministic layout-contract checks where the DOM can express the invariant, then require rendered portrait, short-landscape, and touch-device observation before calling the correction verified.
 
-**Implementation note:** The prompt, board, and Back one slot now occupy one stable three-row frame. Back one visibility no longer changes the board-size formula; teaching and later boards share the same outer frame; completion remains an overlay; and new-board transitions replace content without introducing a second frame size. Portrait and short-landscape formulas reserve the control slot from first render. Deterministic DOM/CSS contracts and local HTTP verification are complete; rendered orientation, touch-device, caregiver, and child evidence remain pending.
+**Implementation note:** The prompt, board, and Back one slot now occupy one stable three-row frame. Back one visibility no longer changes the board-size formula; teaching and later boards share the same outer frame; completion remains an overlay; and new-board transitions replace content without introducing a second frame size. Portrait and short-landscape formulas reserve the full control height and margin from first render. Deterministic DOM/CSS contracts, local HTTP verification, and rendered 390×844 portrait and 640×360 short-landscape geometry checks are complete; physical touch-device, caregiver, and child evidence remain pending.
 
 ### CS-1 — Puzzle families
 

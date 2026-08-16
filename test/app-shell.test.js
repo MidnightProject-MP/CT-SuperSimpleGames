@@ -121,7 +121,11 @@ test("Color Splash reserves controls without state-dependent board dimensions", 
   const css = readFileSync(resolve(root, "color-splash.css"), "utf8");
   const runtime = readFileSync(resolve(root, "src/color-splash.js"), "utf8");
   assert.match(css, /\.board-shell\s*\{[^}]*grid-template-rows:\s*auto auto 72px/s);
+  assert.equal([...css.matchAll(/grid-template-rows:\s*auto auto 72px/g)].length, 2);
   assert.doesNotMatch(css, /\.has-undo[^}]*--board-size/s);
   assert.doesNotMatch(css, /\.teaching-board\s*\{[^}]*--board-size/s);
+  assert.match(css, /\.splash-prompt\s*\{[^}]*grid-row:\s*1/s);
+  assert.match(css, /\.color-board\s*\{[^}]*grid-row:\s*2/s);
+  assert.match(css, /\.undo-move\s*\{[^}]*grid-row:\s*3/s);
   assert.doesNotMatch(runtime, /has-undo/);
 });

@@ -101,6 +101,7 @@ button { font: inherit; }
 }
 
 .splash-prompt {
+  grid-row: 1;
   margin: 0 0 12px;
   padding: 7px 18px;
   border: 2px solid rgba(255,255,255,.7);
@@ -111,6 +112,7 @@ button { font: inherit; }
 }
 
 .color-board {
+  grid-row: 2;
   --board-size: min(88vw, calc(100svh - 225px), 420px);
   position: relative;
   display: grid;
@@ -235,7 +237,7 @@ button { font: inherit; }
   cursor: pointer;
   pointer-events: auto;
 }
-.undo-move { display: flex; min-height: 58px; margin-top: 14px; padding: 8px 20px; gap: 8px; align-items: center; border: 3px solid white; border-radius: 999px; color: #312166; background: rgba(255,255,255,.88); box-shadow: 0 5px 0 rgba(73,53,168,.28); cursor: pointer; }
+.undo-move { grid-row: 3; display: flex; min-height: 58px; margin-top: 14px; padding: 8px 20px; gap: 8px; align-items: center; border: 3px solid white; border-radius: 999px; color: #312166; background: rgba(255,255,255,.88); box-shadow: 0 5px 0 rgba(73,53,168,.28); cursor: pointer; }
 .undo-move[hidden] { display: none; }
 .undo-move span:first-child { font-size: 30px; }
 .undo-move:focus-visible { outline: 5px solid #312166; outline-offset: 4px; }
@@ -287,7 +289,7 @@ button { font: inherit; }
   .splash-brand-mark { width: 36px; height: 36px; font-size: 31px; }
   .splash-sound { width: 48px; height: 48px; padding: 11px; }
   .splash-prompt { display: none; }
-  .board-shell { grid-template-rows: auto auto 68px; }
+  .board-shell { grid-template-rows: auto auto 72px; }
   .color-board { --board-size: min(72vw, calc(100svh - 136px), 420px); }
 }
 
