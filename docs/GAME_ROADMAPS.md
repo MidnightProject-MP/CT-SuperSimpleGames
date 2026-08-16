@@ -472,6 +472,8 @@ The child currently receives five reusable pieces, tap-complete placement, broad
 
 ### STK-2 — Open-ended idea cards
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** optional puzzle mechanic; Round 2.
 
 - Offer one large pictorial idea at the edge of the scene: bridge, tall tower, home, nest, or side-by-side pattern.
@@ -485,6 +487,8 @@ The child currently receives five reusable pieces, tap-complete placement, broad
 **Learning exposure:** representation, planning, comparison, and multiple solutions.
 
 **Gate:** Children who ignore the card must receive the same complete construction experience.
+
+**Implementation note:** A large optional card now offers five CSS-drawn ideas—bridge, tall tower, home, nest, and side-by-side row. The child can cycle or hide it without affecting the reusable pieces. Pure relationship matching accepts broad structural solutions, gives each matched idea one quiet acknowledgement, and never advances, locks, scores, or clears the build.
 
 ### STK-3 — Themed construction kits
 

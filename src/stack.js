@@ -9,6 +9,14 @@ export const STACK_PIECES = Object.freeze([
   Object.freeze({ id: "leaf", kind: "roof", width: 0.21, height: 0.16, tone: 466.16, supports: false, restsOn: true, spans: true, covers: true, nestsWith: Object.freeze([]) })
 ]);
 
+export const STACK_IDEAS = Object.freeze([
+  Object.freeze({ id: "bridge", label: "A bridge", hint: "Can your pieces make a way across?" }),
+  Object.freeze({ id: "tower", label: "A tall tower", hint: "Can three pieces reach upward?" }),
+  Object.freeze({ id: "home", label: "A little home", hint: "Can something rest under a roof?" }),
+  Object.freeze({ id: "nest", label: "A cozy nest", hint: "Can one piece fit inside another?" }),
+  Object.freeze({ id: "beside", label: "Side by side", hint: "Can three pieces make a row?" })
+]);
+
 const PIECE_BY_ID = new Map(STACK_PIECES.map((piece) => [piece.id, piece]));
 const TAP_X = Object.freeze([0.2, 0.38, 0.56, 0.74, 0.5]);
 
@@ -143,6 +151,45 @@ export function structuresFor(state, layout) {
     }
   }
   return Object.freeze(structures);
+}
+
+function connectedCount(state, relationType, layout) {
+  const pieces = normalizeState(state).filter((piece) => piece.placed);
+  const links = new Map(pieces.map((piece) => [piece.id, new Set()]));
+  for (const piece of pieces) {
+    for (const relation of relationshipsFor(state, piece.id, layout)) {
+      if (relation.type !== relationType) continue;
+      links.get(piece.id).add(relation.with);
+      links.get(relation.with)?.add(piece.id);
+    }
+  }
+  let largest = 0;
+  const visited = new Set();
+  for (const piece of pieces) {
+    if (visited.has(piece.id)) continue;
+    const pending = [piece.id];
+    let count = 0;
+    while (pending.length) {
+      const id = pending.pop();
+      if (visited.has(id)) continue;
+      visited.add(id);
+      count += 1;
+      for (const neighbor of links.get(id) || []) pending.push(neighbor);
+    }
+    largest = Math.max(largest, count);
+  }
+  return largest;
+}
+
+export function matchesStackIdea(state, ideaId, layout) {
+  if (!STACK_IDEAS.some((idea) => idea.id === ideaId)) throw new RangeError(`unknown stack idea: ${ideaId}`);
+  if (ideaId === "bridge") return structuresFor(state, layout).some((structure) => structure.type === "bridge");
+  if (ideaId === "home") return structuresFor(state, layout).some((structure) => ["shelter", "enclosure"].includes(structure.type));
+  if (ideaId === "nest") {
+    return normalizeState(state).some((piece) => piece.placed
+      && relationshipsFor(state, piece.id, layout).some((relation) => relation.type === "nested"));
+  }
+  return connectedCount(state, ideaId === "tower" ? "stacked" : "beside", layout) >= 3;
 }
 
 export function settlePiece(state, id, point, layout) {

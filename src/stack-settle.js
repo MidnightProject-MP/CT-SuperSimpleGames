@@ -1,5 +1,5 @@
 import { createTonePlayer } from "./audio.js";
-import { STACK_PIECES, createStackState, settlePiece, tapPiece } from "./stack.js";
+import { STACK_IDEAS, STACK_PIECES, createStackState, matchesStackIdea, settlePiece, tapPiece } from "./stack.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 
 const buildArea = document.querySelector("#build-area");
@@ -7,12 +7,46 @@ const piecesElement = document.querySelector("#pieces");
 const message = document.querySelector("#stack-message");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
+const ideaCard = document.querySelector("#idea-card");
+const ideaName = document.querySelector("#idea-name");
+const ideaHint = document.querySelector("#idea-hint");
+const ideaPicture = document.querySelector("#idea-picture");
+const hideIdeaButton = document.querySelector("#hide-idea");
+const showIdeaButton = document.querySelector("#show-idea");
 
 let state = createStackState();
 let soundEnabled = loadSoundPreference();
 let drag = null;
 let suppressClickFor = null;
+let ideaIndex = 0;
+let ideaVisible = true;
+const acknowledgedIdeas = new Set();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
+
+function renderIdea() {
+  const idea = STACK_IDEAS[ideaIndex];
+  ideaCard.hidden = !ideaVisible;
+  hideIdeaButton.hidden = !ideaVisible;
+  showIdeaButton.hidden = ideaVisible;
+  ideaCard.dataset.idea = idea.id;
+  ideaPicture.dataset.idea = idea.id;
+  ideaName.textContent = idea.label;
+  ideaHint.textContent = idea.hint;
+  ideaCard.setAttribute("aria-label", `${idea.label}. ${idea.hint} Tap for another idea.`);
+}
+
+function acknowledgeIdea() {
+  if (!ideaVisible) return;
+  const idea = STACK_IDEAS[ideaIndex];
+  if (!matchesStackIdea(state, idea.id, currentLayout()) || acknowledgedIdeas.has(idea.id)) return;
+  acknowledgedIdeas.add(idea.id);
+  ideaCard.classList.remove("idea-matched");
+  void ideaCard.offsetWidth;
+  ideaCard.classList.add("idea-matched");
+  message.textContent = `Your ${idea.label.toLowerCase()}!`;
+  announcement.textContent = `${idea.label} idea found. Keep building any way you like.`;
+  tonePlayer.play(659.25, 0.16);
+}
 
 function renderSoundState() {
   soundToggle.setAttribute("aria-pressed", String(soundEnabled));
@@ -83,6 +117,7 @@ function applyResult(result) {
   announcement.textContent = `${definition.kind} ${text.toLowerCase()}`;
   const lift = result.relations.length ? 1.15 : 1;
   tonePlayer.play(definition.tone * lift);
+  acknowledgeIdea();
 }
 
 function normalizedPoint(event) {
@@ -164,6 +199,28 @@ soundToggle.addEventListener("click", () => {
   if (soundEnabled) tonePlayer.play(440);
 });
 
+ideaCard.addEventListener("click", () => {
+  ideaIndex = (ideaIndex + 1) % STACK_IDEAS.length;
+  ideaCard.classList.remove("idea-matched");
+  renderIdea();
+  announcement.textContent = `${STACK_IDEAS[ideaIndex].label} idea. ${STACK_IDEAS[ideaIndex].hint}`;
+  acknowledgeIdea();
+});
+
+hideIdeaButton.addEventListener("click", (event) => {
+  event.stopPropagation();
+  ideaVisible = false;
+  renderIdea();
+  announcement.textContent = "Building idea hidden. Free building continues.";
+});
+
+showIdeaButton.addEventListener("click", () => {
+  ideaVisible = true;
+  renderIdea();
+  announcement.textContent = `${STACK_IDEAS[ideaIndex].label} idea shown.`;
+  acknowledgeIdea();
+});
+
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") void tonePlayer.suspend();
 });
@@ -171,6 +228,7 @@ addEventListener("pagehide", tonePlayer.stop);
 
 createPieces();
 renderSoundState();
+renderIdea();
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   const workerUrl = new URL("../sw.js", import.meta.url);

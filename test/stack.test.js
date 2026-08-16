@@ -3,7 +3,9 @@ import assert from "node:assert/strict";
 import {
   FLOOR_Y,
   STACK_PIECES,
+  STACK_IDEAS,
   createStackState,
+  matchesStackIdea,
   relationshipsFor,
   settlePiece,
   structuresFor,
@@ -24,6 +26,11 @@ test("piece definitions expose construction capabilities", () => {
     for (const name of ["supports", "restsOn", "spans", "covers"]) assert.equal(typeof piece[name], "boolean");
     assert.equal(Array.isArray(piece.nestsWith), true);
   }
+});
+
+test("five optional pictorial ideas are stable and uniquely identified", () => {
+  assert.deepEqual(STACK_IDEAS.map((idea) => idea.id), ["bridge", "tower", "home", "nest", "beside"]);
+  assert.equal(STACK_IDEAS.every((idea) => idea.label && idea.hint && Object.isFrozen(idea)), true);
 });
 
 test("an ordinary drop always settles safely on the floor and remains in bounds", () => {
@@ -61,6 +68,33 @@ test("a beam spans two forgiving supports and a roof recognizes shelter", () => 
   state = settlePiece(bridge.state, "sunny", { x: 0.5, y: 0.64 }).state;
   const roof = settlePiece(state, "leaf", { x: 0.5, y: 0.32 });
   assert.ok(structuresFor(roof.state).some((structure) => ["shelter", "enclosure"].includes(structure.type)));
+});
+
+test("idea matching recognizes broad structural relationships without changing state", () => {
+  const initial = createStackState();
+  let bridgeState = settlePiece(initial, "berry", { x: 0.38, y: 0.7 }).state;
+  bridgeState = settlePiece(bridgeState, "nest", { x: 0.62, y: 0.7 }).state;
+  bridgeState = settlePiece(bridgeState, "sky", { x: 0.5, y: 0.48 }).state;
+  assert.equal(matchesStackIdea(bridgeState, "bridge"), true);
+  assert.equal(matchesStackIdea(initial, "bridge"), false);
+
+  let nestedState = settlePiece(initial, "nest", { x: 0.6, y: 0.7 }).state;
+  nestedState = settlePiece(nestedState, "sunny", { x: 0.64, y: 0.66 }).state;
+  assert.equal(matchesStackIdea(nestedState, "nest"), true);
+  assert.equal(initial.pieces.every((piece) => !piece.placed), true);
+});
+
+test("idea matching accepts multiple stack and row arrangements", () => {
+  let tower = settlePiece(createStackState(), "sky", { x: 0.5, y: 0.7 }).state;
+  tower = settlePiece(tower, "berry", { x: 0.5, y: 0.48 }).state;
+  tower = settlePiece(tower, "leaf", { x: 0.5, y: 0.3 }).state;
+  assert.equal(matchesStackIdea(tower, "tower"), true);
+
+  let row = settlePiece(createStackState(), "berry", { x: 0.3, y: 0.7 }).state;
+  row = settlePiece(row, "sky", { x: 0.49, y: 0.7 }).state;
+  row = settlePiece(row, "nest", { x: 0.73, y: 0.7 }).state;
+  assert.equal(matchesStackIdea(row, "beside"), true);
+  assert.throws(() => matchesStackIdea(row, "missing"), RangeError);
 });
 
 test("many arbitrary placements preserve identity, bounds, and recoverability", () => {

@@ -30,6 +30,17 @@
         <div class="sky-cloud cloud-one" aria-hidden="true"></div>
         <div class="sky-cloud cloud-two" aria-hidden="true"></div>
         <div class="settle-floor" aria-hidden="true"></div>
+        <aside class="idea-dock" aria-label="Optional building idea">
+          <button id="idea-card" class="idea-card" type="button">
+            <span class="idea-heading">Try making…</span>
+            <span id="idea-picture" class="idea-picture" data-idea="bridge" aria-hidden="true"><i></i><i></i><i></i></span>
+            <strong id="idea-name">A bridge</strong>
+            <small id="idea-hint">Can your pieces make a way across?</small>
+            <span class="idea-next">Another idea ›</span>
+          </button>
+          <button id="hide-idea" class="hide-idea" type="button" aria-label="Hide building idea">×</button>
+          <button id="show-idea" class="show-idea" type="button" hidden aria-label="Show a building idea"><span class="idea-bulb" aria-hidden="true"></span><span>Idea</span></button>
+        </aside>
         <div id="pieces" class="pieces"></div>
         <p id="stack-message" class="stack-message" aria-live="polite">Tap or move a piece!</p>
       </section>
@@ -39,4 +50,3 @@
     <script type="module" src="../../src/stack-settle.js"></script>
   </body>
 </html>
-
