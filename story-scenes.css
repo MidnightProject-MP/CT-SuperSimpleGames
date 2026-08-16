@@ -46,6 +46,22 @@ button { font: inherit; }
   background: linear-gradient(180deg, #84dcf4 0%, #c8f3fb 59%, #bee99f 59%, #9dd47a 100%);
   cursor: crosshair;
 }
+.scene-stage[data-scene="town"] { background: linear-gradient(180deg,#80d9f1 0 52%,#d8dde2 52% 72%,#8acb78 72%); }
+.scene-stage[data-scene="castle"] { background: linear-gradient(180deg,#9c8ee8 0 55%,#d8cef3 55% 66%,#80b66c 66%); }
+.scene-stage[data-scene="town"] .garden-hill { border-radius: 12px 12px 0 0; background: #b8bec8; }
+.scene-stage[data-scene="castle"] .garden-hill { background: #6fa25e; }
+
+.background-button { position: absolute; z-index: 92; top: max(86px,calc(env(safe-area-inset-top) + 74px)); left: max(12px,env(safe-area-inset-left)); min-height: 54px; padding: 8px 16px; border: 3px solid white; border-radius: 999px; color: #29405a; background: #fff7c9; box-shadow: 0 5px 0 rgba(41,64,90,.18); cursor: pointer; }
+.background-picker { position: absolute; z-index: 110; top: 50%; left: 50%; width: min(92vw,540px); padding: 20px; border: 5px solid white; border-radius: 30px; background: rgba(255,252,224,.97); box-shadow: 0 14px 45px rgba(31,52,75,.3); transform: translate(-50%,-50%); }
+.background-picker[hidden] { display: none; }
+.background-picker strong { display: block; margin-bottom: 12px; font-size: clamp(22px,5vw,30px); text-align: center; }
+.background-options { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.background-options button, .background-actions button { min-height: 64px; border: 3px solid white; border-radius: 18px; color: #29405a; background: #dceeff; cursor: pointer; }
+.background-options button[aria-pressed="true"] { outline: 5px solid #4978cc; background: #fff2a4; }
+.background-options button:disabled { opacity: .48; }
+.background-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.background-actions #background-confirm { color: white; background: #4978cc; }
+.background-actions #background-confirm:disabled { opacity: .45; }
 .distant-cloud { position: absolute; z-index: 1; width: 22vw; min-width: 110px; height: 43px; border-radius: 999px; background: rgba(255,255,255,.67); box-shadow: 28px -14px 0 -4px rgba(255,255,255,.67), 58px 0 0 -8px rgba(255,255,255,.67); }
 .distant-cloud-one { top: 19%; left: 9%; }
 .distant-cloud-two { top: 31%; right: 12%; transform: scale(.72); }
@@ -146,12 +162,28 @@ button { font: inherit; }
 .friend-art i::after { content: ""; position: absolute; left: 24%; top: 48%; width: 52%; height: 16%; border: 3px solid #573e39; border-top: 0; border-radius: 0 0 999px 999px; }
 .friend-art b { left: 25%; top: 48%; width: 50%; height: 45%; border-radius: 45% 45% 28% 28%; background: var(--object-main); box-shadow: -14px 9px 0 -9px var(--object-detail), 14px 9px 0 -9px var(--object-detail); }
 
+.child-art i, .royal-art i, .knight-art i { left: 31%; top: 8%; width: 38%; height: 38%; border: 6px solid var(--object-dark); border-radius: 50%; background: var(--object-detail); }
+.child-art b, .royal-art b, .knight-art b { left: 25%; top: 44%; width: 50%; height: 48%; border-radius: 35% 35% 22% 22%; background: var(--object-main); }
+.royal-art i::before { content: ""; position: absolute; left: -8px; right: -8px; top: -15px; height: 18px; background: var(--object-main); clip-path: polygon(0 100%,10% 0,35% 65%,50% 0,68% 65%,92% 0,100% 100%); }
+.knight-art i { border-radius: 48% 48% 30% 30%; background: var(--object-main); }
+.car-art i, .bus-art i { left: 9%; right: 9%; top: 36%; height: 40%; border: 6px solid var(--object-dark); border-radius: 18px; background: var(--object-main); }
+.car-art b, .bus-art b { left: 22%; top: 25%; width: 56%; height: 30%; border: 5px solid var(--object-dark); border-radius: 18px 18px 2px 2px; background: var(--object-detail); }
+.bus-art i { top: 22%; height: 55%; border-radius: 12px; }
+.bus-art b { top: 30%; height: 19%; }
+.home-art i, .castle-art i { left: 18%; right: 18%; top: 40%; bottom: 8%; border: 6px solid var(--object-dark); background: var(--object-detail); }
+.home-art b { left: 10%; top: 17%; width: 80%; height: 42%; background: var(--object-main); clip-path: polygon(50% 0,100% 100%,0 100%); }
+.castle-art i { top: 24%; background: var(--object-main); }
+.castle-art b { left: 32%; top: 52%; width: 36%; height: 40%; border-radius: 18px 18px 0 0; background: var(--object-dark); }
+.dragon-art i { left: 18%; top: 22%; width: 64%; height: 55%; border: 6px solid var(--object-dark); border-radius: 55% 45% 48% 40%; background: var(--object-main); }
+.dragon-art b { left: 5%; top: 40%; width: 42%; height: 35%; background: var(--object-detail); clip-path: polygon(0 50%,100% 0,75% 100%); }
+
 .related-watered.flower-object { animation: flower-drink 520ms ease-out; }
 .related-warmed.flower-object { filter: drop-shadow(0 0 15px rgba(255,221,70,.7)); }
 .related-greeting.friend-object { animation: friend-wave 460ms ease-in-out; }
 .related-rainbow { filter: drop-shadow(0 0 10px rgba(255,255,255,.65)); }
 
 .scene-relation { position: absolute; left: calc(var(--relation-x) * 100%); top: calc(var(--relation-y) * 100%); transform: translate(-50%,-50%); }
+.scene-relation:not(.relation-rainbow):not(.relation-watered):not(.relation-warmed):not(.relation-greeting) { width: 22px; height: 22px; border: 5px solid white; border-radius: 50%; background: #ffd85c; box-shadow: 0 0 0 5px rgba(73,120,204,.28); }
 .relation-rainbow { width: clamp(56px,11vmin,92px); height: clamp(28px,5.5vmin,46px); border: 8px solid #ef5578; border-bottom: 0; border-radius: 999px 999px 0 0; box-shadow: inset 0 7px #f7a847, inset 0 14px #f6df53, inset 0 21px #5ecb8c, inset 0 28px #58a8e8; }
 .relation-watered { width: 8px; height: 12px; border-radius: 60% 40% 60% 40%; background: #4da7dc; box-shadow: -18px 8px #4da7dc, 18px 8px #4da7dc; transform: translate(-50%,-25%) rotate(45deg); }
 .relation-warmed { width: 16px; height: 16px; border-radius: 50%; background: #fff2a0; box-shadow: 0 0 0 6px rgba(255,210,65,.35), 0 0 18px 8px rgba(255,226,91,.55); }
@@ -170,6 +202,7 @@ button { font: inherit; }
 }
 
 @media (orientation: landscape) and (max-height: 520px) {
+  .background-button { top: max(8px,env(safe-area-inset-top)); left: 74px; min-height: 44px; padding: 4px 10px; }
   .story-palette { top: max(82px, calc(env(safe-area-inset-top) + 72px)); right: max(10px, env(safe-area-inset-right)); bottom: max(10px, env(safe-area-inset-bottom)); left: auto; width: 94px; grid-template-columns: 1fr; align-content: center; }
   .story-tool { min-height: 62px; padding: 2px; }
   .mini-art { width: 42px; height: 34px; transform: scale(.55); }

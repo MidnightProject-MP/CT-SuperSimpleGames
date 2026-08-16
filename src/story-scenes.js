@@ -5,8 +5,10 @@ import {
   placeSceneObject,
   relationshipsForScene,
   selectSceneKind,
+  selectScenePack,
   touchSceneObject,
 } from "./story-scene.js";
+import { STORY_PACKS, getStoryPack, storyCastItem } from "./story-packs.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 
 const stage = document.querySelector("#scene-stage");
@@ -16,9 +18,12 @@ const palette = document.querySelector("#story-palette");
 const message = document.querySelector("#story-message");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
+const backgroundButton = document.querySelector("#background-button");
+const backgroundPicker = document.querySelector("#background-picker");
+const backgroundOptions = document.querySelector("#background-options");
+const backgroundCancel = document.querySelector("#background-cancel");
+const backgroundConfirm = document.querySelector("#background-confirm");
 
-const LABELS = Object.freeze({ flower: "flower", friend: "friend", cloud: "cloud", sun: "sun" });
-const TONES = Object.freeze({ flower: 523.25, friend: 440, cloud: 349.23, sun: 659.25 });
 const KEYBOARD_POINTS = Object.freeze([
   Object.freeze({ x: 0.3, y: 0.66 }),
   Object.freeze({ x: 0.5, y: 0.52 }),
@@ -55,12 +60,21 @@ const PALETTES = Object.freeze({
     ["#ffcf70", "#ef8752", "#81503a"],
     ["#f9e45d", "#dfa92a", "#756022"],
   ]),
+  child: Object.freeze([["#ed6f71","#f2b58d","#603a32"],["#4f96dc","#9c694e","#2e211f"],["#8f72d8","#f0c49d","#bb6b39"],["#39a776","#754733","#241f23"],["#f29b38","#d99670","#70462f"]]),
+  car: Object.freeze([["#ef5d6c","#a9e7f5","#47224f"],["#4f96dc","#fff4cf","#29385f"],["#ffd85c","#a9e7f5","#70462f"],["#39a776","#fff4cf","#254b42"],["#8f72d8","#d8f2ff","#493a73"]]),
+  bus: Object.freeze([["#ffd85c","#a9e7f5","#47224f"],["#ef5d6c","#fff4cf","#603a32"],["#4f96dc","#d8f2ff","#29385f"],["#39a776","#fff4cf","#254b42"],["#8f72d8","#e9e5fb","#493a73"]]),
+  home: Object.freeze([["#ef5d6c","#fff4cf","#603a32"],["#4f96dc","#ffd85c","#29385f"],["#39a776","#fff4cf","#254b42"],["#8f72d8","#f0c49d","#493a73"],["#f29b38","#d8f2ff","#70462f"]]),
+  dragon: Object.freeze([["#68bd74","#ffd85c","#47224f"],["#8f72d8","#ff9b62","#493a73"],["#4f96dc","#d8f2ff","#29385f"],["#ef5d6c","#fff4cf","#603a32"],["#39a776","#c68aeb","#254b42"]]),
+  knight: Object.freeze([["#7d91a8","#d8f2ff","#29385f"],["#4f96dc","#ffd85c","#29385f"],["#ef5d6c","#fff4cf","#603a32"],["#8f72d8","#e9e5fb","#493a73"],["#39a776","#fff4cf","#254b42"]]),
+  royal: Object.freeze([["#ed6f71","#ffd85c","#603a32"],["#4f96dc","#fff4cf","#29385f"],["#8f72d8","#f0c49d","#493a73"],["#39a776","#ffd85c","#254b42"],["#f29b38","#d8f2ff","#70462f"]]),
+  castle: Object.freeze([["#8f72d8","#ffd85c","#493a73"],["#7d91a8","#d8f2ff","#29385f"],["#ef5d6c","#fff4cf","#603a32"],["#4f96dc","#ffd85c","#29385f"],["#39a776","#fff4cf","#254b42"]]),
 });
 
 let state = createSceneState();
 let soundEnabled = loadSoundPreference();
 let drag = null;
 let suppressClickFor = null;
+let pendingSceneId = null;
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 
 function renderSoundState() {
@@ -74,6 +88,9 @@ function applyPalette(element, object) {
   element.style.setProperty("--object-detail", colors[1]);
   element.style.setProperty("--object-dark", colors[2]);
 }
+
+function currentPack() { return getStoryPack(state.sceneId); }
+function currentItem(kind) { return storyCastItem(currentPack(), kind); }
 
 function createObjectElement(object, motionId, motion) {
   const button = document.createElement("button");
@@ -89,7 +106,7 @@ function createObjectElement(object, motionId, motion) {
   button.style.setProperty("--x", object.x);
   button.style.setProperty("--y", object.y);
   button.style.zIndex = String(20 + Math.round(object.y * 50));
-  button.setAttribute("aria-label", `${LABELS[object.kind]}, version ${object.variant + 1}; tap to change or move`);
+  button.setAttribute("aria-label", `${currentItem(object.kind).label}, version ${object.variant + 1}; tap to change or move`);
   art.className = `scene-art ${object.kind}-art`;
   art.setAttribute("aria-hidden", "true");
   art.append(main, detail);
@@ -131,9 +148,22 @@ function renderScene(focusId, motion) {
 }
 
 function renderPalette() {
-  for (const tool of palette.querySelectorAll(".story-tool")) {
-    tool.setAttribute("aria-pressed", String(tool.dataset.kind === state.selected));
-  }
+  palette.replaceChildren(...currentPack().cast.map((item) => {
+    const tool = document.createElement("button");
+    tool.type = "button";
+    tool.className = "story-tool";
+    tool.dataset.kind = item.kind;
+    tool.setAttribute("aria-pressed", String(item.kind === state.selected));
+    tool.setAttribute("aria-label", `Choose ${item.plural.toLowerCase()}`);
+    const art = document.createElement("span");
+    art.className = `mini-art ${item.kind}-art`;
+    art.setAttribute("aria-hidden", "true");
+    art.append(document.createElement("i"), document.createElement("b"));
+    const label = document.createElement("span");
+    label.textContent = item.plural;
+    tool.append(art, label);
+    return tool;
+  }));
 }
 
 function normalizedPoint(event) {
@@ -145,12 +175,7 @@ function normalizedPoint(event) {
 }
 
 function relationMessage(relationships) {
-  const types = new Set(relationships.map(({ type }) => type));
-  if (types.has("rainbow")) return "A rainbow appeared!";
-  if (types.has("watered")) return "The flower drank the rain!";
-  if (types.has("warmed")) return "Warm sunshine!";
-  if (types.has("greeting")) return "Hello, friend!";
-  return null;
+  return relationships[0]?.message || null;
 }
 
 function applyResult(result) {
@@ -158,10 +183,10 @@ function applyResult(result) {
   renderScene(result.object.id, result.action === "placed" ? "arrived" : result.action === "changed" ? "changed" : null);
   const related = relationMessage(result.relationships);
   const action = result.action === "placed" ? "joined the story" : result.action === "moved" ? "moved" : "changed";
-  const text = related || `The ${LABELS[result.object.kind]} ${action}!`;
+  const text = related || `The ${currentItem(result.object.kind).label} ${action}!`;
   message.textContent = text;
   announcement.textContent = text;
-  tonePlayer.play(TONES[result.object.kind] * (related ? 1.18 : 1));
+  tonePlayer.play(currentItem(result.object.kind).tone * (related ? 1.18 : 1));
 }
 
 palette.addEventListener("click", (event) => {
@@ -172,7 +197,51 @@ palette.addEventListener("click", (event) => {
   const plural = tool.querySelector("span:last-child").textContent.toLowerCase();
   message.textContent = `Tap the garden to add ${plural}!`;
   announcement.textContent = `${plural} selected`;
-  tonePlayer.play(TONES[tool.dataset.kind]);
+  tonePlayer.play(currentItem(tool.dataset.kind).tone);
+});
+
+function closeBackgroundPicker() {
+  backgroundPicker.hidden = true;
+  backgroundButton.setAttribute("aria-expanded", "false");
+  pendingSceneId = null;
+}
+
+function renderBackgroundOptions() {
+  backgroundOptions.replaceChildren(...STORY_PACKS.map((pack) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.sceneId = pack.id;
+    button.textContent = pack.label;
+    button.setAttribute("aria-pressed", String(pack.id === pendingSceneId));
+    if (pack.id === state.sceneId) button.disabled = true;
+    return button;
+  }));
+  backgroundConfirm.disabled = !pendingSceneId;
+}
+
+backgroundButton.addEventListener("click", () => {
+  backgroundPicker.hidden = false;
+  backgroundButton.setAttribute("aria-expanded", "true");
+  renderBackgroundOptions();
+});
+backgroundOptions.addEventListener("click", (event) => {
+  const option = event.target.closest("[data-scene-id]");
+  if (!option || option.disabled) return;
+  pendingSceneId = option.dataset.sceneId;
+  renderBackgroundOptions();
+  announcement.textContent = `${getStoryPack(pendingSceneId).label} previewed. Choose start new story to confirm.`;
+});
+backgroundCancel.addEventListener("click", closeBackgroundPicker);
+backgroundConfirm.addEventListener("click", () => {
+  if (!pendingSceneId) return;
+  state = selectScenePack(state, pendingSceneId);
+  stage.dataset.scene = state.sceneId;
+  backgroundButton.textContent = currentPack().label;
+  renderPalette();
+  renderScene();
+  message.textContent = `Tap the ${currentPack().label.toLowerCase()} to add ${currentItem(state.selected).plural.toLowerCase()}!`;
+  announcement.textContent = `Started ${currentPack().label}. The previous scene was cleared.`;
+  closeBackgroundPicker();
 });
 
 objectLayer.addEventListener("pointerdown", (event) => {
@@ -234,12 +303,13 @@ objectLayer.addEventListener("click", (event) => {
 });
 
 stage.addEventListener("click", (event) => {
+  if (!backgroundPicker.hidden) return;
   if (event.target.closest(".scene-object")) return;
   applyResult(placeSceneObject(state, normalizedPoint(event), currentLayout()));
 });
 
 stage.addEventListener("keydown", (event) => {
-  if (event.target !== stage || !["Enter", " "].includes(event.key)) return;
+  if (!backgroundPicker.hidden || event.target !== stage || !["Enter", " "].includes(event.key)) return;
   event.preventDefault();
   applyResult(placeSceneObject(state, KEYBOARD_POINTS[state.objects.length % KEYBOARD_POINTS.length], currentLayout()));
 });
@@ -257,6 +327,8 @@ document.addEventListener("visibilitychange", () => {
 });
 addEventListener("pagehide", tonePlayer.stop);
 
+stage.dataset.scene = state.sceneId;
+backgroundButton.textContent = currentPack().label;
 renderPalette();
 renderSoundState();
 renderScene();

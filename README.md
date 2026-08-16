@@ -12,7 +12,7 @@ The first caregiver-observation protocol is in [docs/PLAYTEST.md](./docs/PLAYTES
 Color Splash has its own focused protocol in [docs/COLOR_SPLASH_PLAYTEST.md](./docs/COLOR_SPLASH_PLAYTEST.md).
 Peekaboo Pockets has a reversible-discovery protocol in [docs/PEEKABOO_PLAYTEST.md](./docs/PEEKABOO_PLAYTEST.md).
 Stack & Settle has a direct-manipulation protocol in [docs/STACK_SETTLE_PLAYTEST.md](./docs/STACK_SETTLE_PLAYTEST.md).
-The Story Scenes prototype has a focused composition protocol in [docs/STORY_SCENES_PLAYTEST.md](./docs/STORY_SCENES_PLAYTEST.md).
+Story Scenes has a focused composition protocol in [docs/STORY_SCENES_PLAYTEST.md](./docs/STORY_SCENES_PLAYTEST.md).
 The Together Tones prototype has a focused temporal and turn-taking protocol in [docs/TOGETHER_TONES_PLAYTEST.md](./docs/TOGETHER_TONES_PLAYTEST.md).
 Cross-game observations are normalized in [docs/COMPARATIVE_PLAYTEST.md](./docs/COMPARATIVE_PLAYTEST.md).
 Uncommitted future directions are captured separately in [docs/IDEAS.md](./docs/IDEAS.md).
@@ -36,9 +36,9 @@ Peekaboo Pockets is an open-and-close search game. A large visual target invites
 
 Stack & Settle is a no-fail construction toy with five oversized reusable pieces. Tapping places or rearranges a piece, while broad dragging offers direct control. Pieces magnetically settle on the floor, stack, sit side by side, nest, or form forgiving bridges, shelters, and enclosures. Every arrangement remains movable and there is nothing to complete.
 
-### Story Scenes prototype
+### Story Scenes
 
-Story Scenes is a garden-scene experiment available from the launcher. It combines four large object-family choices, tap-anywhere placement, five predictable variants, revisitable objects, broad movement, and a few discoverable relationships. It is available for testing but is not yet child-validated.
+Story Scenes is a symbolic storytelling world with garden, town, and castle settings. Each supplies four large object families, tap-anywhere placement, five predictable variants, revisitable objects, broad movement, and repeatable theme relationships. Changing the setting requires an explicit preview and confirmation so an incidental tap cannot erase a story. It is available for testing but is not yet child-validated.
 
 ### Together Tones prototype
 
@@ -77,4 +77,4 @@ node --test
 
 ## Near-term direction
 
-Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). All six experiences are available from the launcher for testing. Story Scenes and Together Tones remain bounded prototypes; their content expansion and validation claims remain conditional on real-world observation.
+Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). All six experiences are available from the launcher for testing. Content expansion and validation claims remain conditional on real-world observation; Together Tones remains the most explicitly prototype-stage experience.

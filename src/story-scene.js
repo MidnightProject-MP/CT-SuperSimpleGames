@@ -1,8 +1,10 @@
-export const SCENE_KINDS = Object.freeze(["flower", "friend", "cloud", "sun"]);
-export const VARIANT_COUNT = 5;
-export const MAX_SCENE_OBJECTS = 16;
+import { STORY_PACKS, STORY_VARIANT_COUNT, getStoryPack, storyCastItem, storyRelationship } from "./story-packs.js";
 
-const KIND_SET = new Set(SCENE_KINDS);
+export const SCENE_KINDS = Object.freeze(STORY_PACKS.flatMap((pack) => pack.cast.map(({ kind }) => kind)));
+export const VARIANT_COUNT = STORY_VARIANT_COUNT;
+export const MAX_SCENE_OBJECTS = 16;
+export const MAX_SCENE_RELATIONSHIPS = 12;
+
 const MIN_X = 0.08;
 const MAX_X = 0.92;
 const MIN_Y = 0.16;
@@ -27,8 +29,9 @@ function freezeObject(object) {
   return Object.freeze({ ...object });
 }
 
-function createState(selected, objects, nextId) {
+function createState(sceneId, selected, objects, nextId) {
   return Object.freeze({
+    sceneId,
     selected,
     objects: Object.freeze(objects.map(freezeObject)),
     nextId,
@@ -36,18 +39,21 @@ function createState(selected, objects, nextId) {
 }
 
 function normalizeState(state) {
-  if (!state || typeof state !== "object" || !KIND_SET.has(state.selected)
+  if (!state || typeof state !== "object"
     || !Array.isArray(state.objects) || !Number.isInteger(state.nextId) || state.nextId < 1) {
     throw new TypeError("invalid story scene state");
   }
+  const pack = getStoryPack(state.sceneId);
+  storyCastItem(pack, state.selected);
   if (state.objects.length > MAX_SCENE_OBJECTS) throw new RangeError("story scene exceeds its object limit");
 
   const ids = new Set();
   const objects = state.objects.map((object) => {
-    if (!object || typeof object.id !== "string" || ids.has(object.id) || !KIND_SET.has(object.kind)) {
+    if (!object || typeof object.id !== "string" || ids.has(object.id)) {
       throw new TypeError("story scene contains an invalid object");
     }
     ids.add(object.id);
+    storyCastItem(pack, object.kind);
     if (!Number.isInteger(object.variant) || object.variant < 0 || object.variant >= VARIANT_COUNT) {
       throw new RangeError("story scene variant is out of range");
     }
@@ -60,7 +66,7 @@ function normalizeState(state) {
     }
     return { ...object };
   });
-  return { selected: state.selected, objects, nextId: state.nextId };
+  return { sceneId: state.sceneId, selected: state.selected, objects, nextId: state.nextId };
 }
 
 function objectById(objects, id) {
@@ -85,35 +91,34 @@ function distance(first, second, layout) {
   );
 }
 
-function relationType(first, second) {
-  const pair = new Set([first.kind, second.kind]);
-  if (pair.has("sun") && pair.has("cloud")) return "rainbow";
-  if (pair.has("cloud") && pair.has("flower")) return "watered";
-  if (pair.has("sun") && pair.has("flower")) return "warmed";
-  if (first.kind === "friend" && second.kind === "friend") return "greeting";
-  return null;
+export function createSceneState(sceneId = "garden") {
+  const pack = getStoryPack(sceneId);
+  return createState(pack.id, pack.defaultKind, [], 1);
 }
 
-export function createSceneState() {
-  return createState("flower", [], 1);
+export function selectScenePack(state, sceneId) {
+  normalizeState(state);
+  return createSceneState(sceneId);
 }
 
 export function selectSceneKind(state, kind) {
   const current = normalizeState(state);
-  if (!KIND_SET.has(kind)) throw new RangeError(`unknown story scene kind: ${kind}`);
-  return createState(kind, current.objects, current.nextId);
+  storyCastItem(getStoryPack(current.sceneId), kind);
+  return createState(current.sceneId, kind, current.objects, current.nextId);
 }
 
 export function relationshipsForScene(state, layout) {
   const current = normalizeState(state);
+  const pack = getStoryPack(current.sceneId);
   const relationships = [];
   for (let firstIndex = 0; firstIndex < current.objects.length; firstIndex += 1) {
     for (let secondIndex = firstIndex + 1; secondIndex < current.objects.length; secondIndex += 1) {
       const first = current.objects[firstIndex];
       const second = current.objects[secondIndex];
-      const type = relationType(first, second);
-      if (type && distance(first, second, layout) <= RELATION_DISTANCE) {
-        relationships.push(Object.freeze({ type, first: first.id, second: second.id }));
+      const definition = storyRelationship(pack, first.kind, second.kind);
+      if (definition && distance(first, second, layout) <= RELATION_DISTANCE) {
+        relationships.push(Object.freeze({ type: definition.type, message: definition.message, first: first.id, second: second.id }));
+        if (relationships.length >= MAX_SCENE_RELATIONSHIPS) return Object.freeze(relationships);
       }
     }
   }
@@ -132,7 +137,7 @@ export function touchSceneObject(state, id, layout) {
   const objects = current.objects.map((object) => object.id === id
     ? { ...object, variant: (object.variant + 1) % VARIANT_COUNT, visits: object.visits + 1 }
     : object);
-  const nextState = createState(current.selected, objects, current.nextId);
+  const nextState = createState(current.sceneId, current.selected, objects, current.nextId);
   return resultFor(nextState, objectById(nextState.objects, id), "changed", layout);
 }
 
@@ -143,7 +148,7 @@ export function moveSceneObject(state, id, point, layout) {
   const objects = current.objects.map((object) => object.id === id
     ? { ...object, ...position, visits: object.visits + 1 }
     : object);
-  const nextState = createState(current.selected, objects, current.nextId);
+  const nextState = createState(current.sceneId, current.selected, objects, current.nextId);
   return resultFor(nextState, objectById(nextState.objects, id), "moved", layout);
 }
 
@@ -166,6 +171,6 @@ export function placeSceneObject(state, point, layout) {
     ...position,
     visits: 0,
   };
-  const nextState = createState(current.selected, [...current.objects, object], current.nextId + 1);
+  const nextState = createState(current.sceneId, current.selected, [...current.objects, object], current.nextId + 1);
   return resultFor(nextState, objectById(nextState.objects, object.id), "placed", layout);
 }

@@ -519,6 +519,8 @@ The child currently receives one garden, four object families, five variants, ta
 
 ### SCN-0 — Declarative scene grammar
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** technical foundation supporting all Story Scenes milestones.
 
 - Define backgrounds, casts, variants, object capabilities, pair relationships, state changes, and presentation through validated local scene data.
@@ -531,6 +533,8 @@ The child currently receives one garden, four object families, five variants, ta
 **Gate:** A malformed scene pack cannot load partially or create an object with missing behavior, art, label, or offline asset.
 
 ### SCN-1 — Scene grammar and backgrounds
+
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
 
 **Kind:** core gameplay and content improvement; Round 1.
 
@@ -547,6 +551,8 @@ The child currently receives one garden, four object families, five variants, ta
 **Learning exposure:** setting, categories, thematic objects, and context.
 
 **Gate:** The background control and palette remain large in portrait and short landscape; selection does not crowd the storytelling surface.
+
+**Implementation note:** Story Scenes now loads three validated, local scene packs: Garden weather, Town trip, and Castle tale. Each pack declares exactly four large object families, five visual variants, labels, tones, a safe default, and at least three deterministic theme relationships. A large setting control opens a preview panel; changing scenes requires selecting a different setting and then activating a separate “Start new story” confirmation before the existing scene is cleared. Relationship effects are capped, palette contents follow the setting, and physical-distance, cast, presentation, and relationship invariants are tested.
 
 ### SCN-2 — Stateful, redirectable interactions
 

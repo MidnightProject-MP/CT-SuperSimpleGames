@@ -9,12 +9,15 @@ import {
   placeSceneObject,
   relationshipsForScene,
   selectSceneKind,
+  selectScenePack,
   touchSceneObject,
 } from "../src/story-scene.js";
+import { STORY_PACKS, validateStoryPack } from "../src/story-packs.js";
 
 test("a story scene starts immediately ready to place a flower", () => {
   const state = createSceneState();
   assert.equal(state.selected, "flower");
+  assert.equal(state.sceneId, "garden");
   assert.deepEqual(state.objects, []);
   assert.equal(Object.isFrozen(state), true);
   assert.equal(Object.isFrozen(state.objects), true);
@@ -22,9 +25,35 @@ test("a story scene starts immediately ready to place a flower", () => {
 
 test("selecting every scene kind is immutable and bounded to the cast", () => {
   const initial = createSceneState();
-  for (const kind of SCENE_KINDS) assert.equal(selectSceneKind(initial, kind).selected, kind);
+  for (const kind of STORY_PACKS[0].cast.map(({ kind }) => kind)) assert.equal(selectSceneKind(initial, kind).selected, kind);
   assert.equal(initial.selected, "flower");
   assert.throws(() => selectSceneKind(initial, "dragon"), RangeError);
+  assert.ok(SCENE_KINDS.includes("dragon"));
+});
+
+test("three validated packs start empty with distinct four-family vocabularies", () => {
+  for (const pack of STORY_PACKS) {
+    assert.equal(validateStoryPack(pack), pack);
+    const state = selectScenePack(createSceneState(), pack.id);
+    assert.equal(state.sceneId, pack.id);
+    assert.equal(state.selected, pack.defaultKind);
+    assert.deepEqual(state.objects, []);
+    assert.ok(pack.relationships.length >= 3);
+  }
+});
+
+test("town and castle packs produce their own repeatable relationships", () => {
+  let town = createSceneState("town");
+  town = placeSceneObject(town, { x: 0.4, y: 0.6 }).state;
+  town = selectSceneKind(town, "car");
+  town = placeSceneObject(town, { x: 0.55, y: 0.6 }).state;
+  assert.equal(relationshipsForScene(town)[0].type, "riding");
+
+  let castle = createSceneState("castle");
+  castle = placeSceneObject(castle, { x: 0.4, y: 0.55 }).state;
+  castle = selectSceneKind(castle, "castle");
+  castle = placeSceneObject(castle, { x: 0.55, y: 0.55 }).state;
+  assert.equal(relationshipsForScene(castle)[0].type, "glowing");
 });
 
 test("placements cycle five variants and stay inside broad scene bounds", () => {

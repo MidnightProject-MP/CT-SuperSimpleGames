@@ -1,4 +1,4 @@
-const CACHE_NAME = "supersimplegames-v17";
+const CACHE_NAME = "supersimplegames-v18";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -39,6 +39,7 @@ const APP_SHELL = [
   "./src/stack.js",
   "./src/stack-settle.js",
   "./src/story-scene.js",
+  "./src/story-packs.js",
   "./src/story-scenes.js",
   "./src/together-tone.js",
   "./src/together-tones.js",

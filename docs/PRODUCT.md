@@ -47,11 +47,11 @@ Stack & Settle presents five oversized, reusable pieces in one bounded construct
 
 Stack & Settle supports exposure to above/below, beside, inside, relative size, arrangement, revision, and turn-taking. It does **not** assess coordination, construction, balance, or spatial reasoning. Its larger purpose is to test direct manipulation and child-authored revision, forms of agency not present in the first three games.
 
-## Story Scenes: available technical prototype
+## Story Scenes: available storytelling world
 
-Story Scenes explores whether the existing creation, revisiting, direct-manipulation, and relational mechanics can become a tiny child-authored narrative. One garden starts with flowers selected so the first empty-space tap works immediately. Four oversized object-family controls select flowers, friends, clouds, or suns; successive placements cycle through five variants. Existing objects remain touchable and broadly movable. Nearby weather and flowers produce watering or warming, nearby friends greet, and a nearby sun and cloud make a rainbow.
+Story Scenes explores whether creation, revisiting, direct manipulation, and stable relationships can become a tiny child-authored narrative. Garden weather, Town trip, and Castle tale each provide four oversized object families, five predictable visual variants, a safe initial selection, and their own repeatable relationship vocabulary. Existing objects remain touchable and broadly movable. A large setting control previews the three choices, and a separate confirmation is required before changing the background clears the current scene.
 
-The prototype is available from the launcher for testing. Its availability does not establish that young children understand selecting a family and then placing it, distinguish changing an object from moving it, or intentionally discover and repeat relationships. It has no background selector or additional themed casts because those would add content before the central mode and storytelling hypotheses are observed.
+The storytelling world is available from the launcher for testing. Its availability does not establish that young children understand selecting a family and then placing it, distinguish changing an object from moving it, understand the setting transition, or intentionally discover and repeat relationships. Those questions remain for rendered, device, caregiver, and child observation.
 
 ## Together Tones: available technical prototype
 

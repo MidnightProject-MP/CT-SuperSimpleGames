@@ -26,6 +26,16 @@
         </button>
       </header>
 
+      <button id="background-button" class="background-button" type="button" aria-expanded="false">Garden weather</button>
+      <section id="background-picker" class="background-picker" aria-label="Choose a story background" hidden>
+        <strong>Choose a new story</strong>
+        <div id="background-options" class="background-options"></div>
+        <div class="background-actions">
+          <button id="background-cancel" type="button">Keep this story</button>
+          <button id="background-confirm" type="button" disabled>Start new story</button>
+        </div>
+      </section>
+
       <section id="scene-stage" class="scene-stage" tabindex="0" aria-label="Garden story scene. Tap empty space or press Enter to add the selected kind.">
         <div class="distant-cloud distant-cloud-one" aria-hidden="true"></div>
         <div class="distant-cloud distant-cloud-two" aria-hidden="true"></div>
@@ -36,24 +46,7 @@
         <p id="story-message" class="story-message" aria-live="polite">Tap the garden to grow a flower!</p>
       </section>
 
-      <nav id="story-palette" class="story-palette" aria-label="Choose what to add">
-        <button class="story-tool" type="button" data-kind="flower" aria-pressed="true" aria-label="Choose flowers">
-          <span class="mini-art flower-art" aria-hidden="true"><i></i><b></b></span>
-          <span>Flowers</span>
-        </button>
-        <button class="story-tool" type="button" data-kind="friend" aria-pressed="false" aria-label="Choose friends">
-          <span class="mini-art friend-art" aria-hidden="true"><i></i><b></b></span>
-          <span>Friends</span>
-        </button>
-        <button class="story-tool" type="button" data-kind="cloud" aria-pressed="false" aria-label="Choose clouds">
-          <span class="mini-art cloud-art" aria-hidden="true"><i></i><b></b></span>
-          <span>Clouds</span>
-        </button>
-        <button class="story-tool" type="button" data-kind="sun" aria-pressed="false" aria-label="Choose suns">
-          <span class="mini-art sun-art" aria-hidden="true"><i></i><b></b></span>
-          <span>Suns</span>
-        </button>
-      </nav>
+      <nav id="story-palette" class="story-palette" aria-label="Choose what to add"></nav>
       <div id="announcement" class="sr-only" aria-live="polite"></div>
     </main>
     <noscript>Story Scenes needs JavaScript to play.</noscript>
