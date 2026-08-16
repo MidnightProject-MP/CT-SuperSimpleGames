@@ -3,6 +3,7 @@ import { POCKET_CLUE, getPocketItem } from "./pocket-items.js";
 import {
   createSearchRound,
   getPocketContentId,
+  getSearchClue,
   getSearchScene,
   getTargetItemId,
   searchGreetingPair,
@@ -74,6 +75,7 @@ function createPockets() {
 
 function renderPockets() {
   const scene = getSearchScene(round);
+  const clue = getSearchClue(round);
   playfield.dataset.scene = scene.id;
   for (const station of pocketRow.querySelectorAll(".pocket-station")) {
     const index = Number(station.dataset.index);
@@ -92,6 +94,11 @@ function renderPockets() {
     friend.setAttribute("aria-hidden", String(!isOpen));
     friend.setAttribute("aria-label", contentId ? `Say hello to ${item.name}` : "Play with the little clue");
     friend.querySelector("use").setAttribute("href", `../../assets/pocket-friends.svg#${item.artId}`);
+    if (!contentId) {
+      friend.dataset.clueDirection = clue.direction;
+      friend.dataset.pattern = clue.patternId;
+      friend.setAttribute("aria-label", `Play with the clue pointing ${clue.direction}, matching the target ${scene.containerName}`);
+    }
   }
 }
 
@@ -116,7 +123,7 @@ function animatePocket(pocket, opening) {
 
 function animateFriend(index, className = "saying-hello") {
   const friend = pocketRow.querySelector(`.pocket-friend[data-index="${index}"]`);
-  friend.classList.remove("saying-hello", "greeting-left", "greeting-right");
+  friend.classList.remove("saying-hello", "greeting-left", "greeting-right", "clue-left", "clue-right");
   void friend.offsetWidth;
   friend.classList.add(className);
 }
@@ -135,6 +142,13 @@ function playFriend(index) {
   const item = contentId ? getPocketItem(contentId) : POCKET_CLUE;
   const pair = searchGreetingPair(round, index);
   tonePlayer.play(item.tone * 1.08);
+  if (!contentId) {
+    const clue = getSearchClue(round);
+    animateFriend(index, `clue-${clue.direction}`);
+    message.textContent = `The clue points ${clue.direction}!`;
+    announcement.textContent = `The clue points ${clue.direction} and matches the target ${getSearchScene(round).containerName}`;
+    return;
+  }
   if (pair) {
     animateGreeting(pair);
     const partnerIndex = pair.find((value) => value !== index);

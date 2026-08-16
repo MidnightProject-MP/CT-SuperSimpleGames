@@ -355,6 +355,8 @@ The child currently receives three stable containers, one visual target, two fri
 
 ### PP-2 — Legible clue chains
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** new inference mechanic; Round 2.
 
 - Give the lively clue a direct visual relationship to the target or its container: matching tracks, a visible color-pattern fragment, a feather, wheel mark, or trail direction.
@@ -368,6 +370,8 @@ The child currently receives three stable containers, one visual target, two fri
 **Learning exposure:** evidence, matching, direction, and inference.
 
 **Gate:** Children who do not infer the clue remain fully successful explorers; the clue must not resemble a locked instruction.
+
+**Implementation note:** The lively empty-container clue now carries a fragment of the target container’s stable pattern plus a clear left or right mark. Touching it repeats a brief directional response and accessible description without moving the target, closing containers, or changing discovery. The descriptor is derived purely from immutable round state and remains identical before and after target discovery.
 
 ### PP-3 — Child hides, caregiver seeks
 

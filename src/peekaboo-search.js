@@ -42,6 +42,18 @@ export function getSearchScene(state) {
   return getPeekabooScene(normalizeSearchState(state).sceneId);
 }
 
+export function getSearchClue(state) {
+  const current = normalizeSearchState(state);
+  const offset = current.targetIndex - current.emptyIndex;
+  return Object.freeze({
+    fromIndex: current.emptyIndex,
+    targetIndex: current.targetIndex,
+    patternId: current.pockets.patternIds[current.targetIndex],
+    direction: offset < 0 ? "left" : "right",
+    distance: Math.abs(offset)
+  });
+}
+
 export function getTargetItemId(state) {
   const current = normalizeSearchState(state);
   return current.pockets.itemIds[current.targetIndex];

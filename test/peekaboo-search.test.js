@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   createSearchRound,
   getPocketContentId,
+  getSearchClue,
   getTargetItemId,
   searchGreetingPair,
   toggleSearchPocket
@@ -30,6 +31,18 @@ test("opening a clue remains a discovery but never finds or moves the target", (
   assert.equal(result.targetFound, false);
   assert.equal(result.state.targetIndex, round.targetIndex);
   assert.equal(result.state.emptyIndex, round.emptyIndex);
+});
+
+test("the clue stably matches the target home and points from its own location", () => {
+  let round = createSearchRound({ seed: 18 });
+  const clue = getSearchClue(round);
+  assert.equal(clue.fromIndex, round.emptyIndex);
+  assert.equal(clue.targetIndex, round.targetIndex);
+  assert.equal(clue.patternId, round.pockets.patternIds[round.targetIndex]);
+  assert.equal(clue.direction, round.targetIndex < round.emptyIndex ? "left" : "right");
+  round = toggleSearchPocket(round, round.emptyIndex).state;
+  round = toggleSearchPocket(round, round.targetIndex).state;
+  assert.deepEqual(getSearchClue(round), clue);
 });
 
 test("target discovery is monotonic and does not end pocket interaction", () => {
@@ -67,4 +80,3 @@ test("invalid search inputs are rejected", () => {
   assert.throws(() => toggleSearchPocket(null, 0), TypeError);
   assert.throws(() => toggleSearchPocket({ ...round, targetIndex: round.emptyIndex }, 0), RangeError);
 });
-
