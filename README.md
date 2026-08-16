@@ -9,6 +9,7 @@ Current hypotheses and validation criteria live in [docs/PRODUCT.md](./docs/PROD
 The first caregiver-observation protocol is in [docs/PLAYTEST.md](./docs/PLAYTEST.md).
 Color Splash has its own focused protocol in [docs/COLOR_SPLASH_PLAYTEST.md](./docs/COLOR_SPLASH_PLAYTEST.md).
 Peekaboo Pockets has a reversible-discovery protocol in [docs/PEEKABOO_PLAYTEST.md](./docs/PEEKABOO_PLAYTEST.md).
+Cross-game observations are normalized in [docs/COMPARATIVE_PLAYTEST.md](./docs/COMPARATIVE_PLAYTEST.md).
 Uncommitted future directions are captured separately in [docs/IDEAS.md](./docs/IDEAS.md).
 The broader interaction landscape and third-game decision are recorded in [docs/CONCEPTS.md](./docs/CONCEPTS.md).
 

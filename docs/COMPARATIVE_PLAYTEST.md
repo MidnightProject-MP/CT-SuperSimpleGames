@@ -1,0 +1,60 @@
+# Three-game comparative evidence plan
+
+## Purpose
+
+Use Bloom, Color Splash, and Peekaboo Pockets to compare three interaction models—creation, connected-region transformation, and reversible hide/reveal—without ranking children, claiming learning outcomes, or optimizing engagement time.
+
+The individual protocols remain authoritative for each game:
+
+- `PLAYTEST.md`
+- `COLOR_SPLASH_PLAYTEST.md`
+- `PEEKABOO_PLAYTEST.md`
+
+This document only defines what can be compared after those sessions.
+
+## Protect the observation
+
+- Keep one game as the focus of a session. Do not turn the launcher into a rapid three-game demonstration.
+- If a child sees more than one game, use different days when practical and vary the order across families. Familiarity, fatigue, and the first card's position can otherwise masquerade as preference.
+- End at disengagement even when a planned comparison remains incomplete.
+- Use the same device, ordinary orientation, comfortable volume, notification/device-lock settings, and neutral invitation rule when practical.
+- Record facts and caregiver language. Do not convert behavior into ability labels, accuracy scores, or developmental conclusions.
+- Absence of completion is not failure. Bloom has no completion, Peekaboo remains playable after discovery, and Color Splash may simply outlast a short session.
+
+## Common observation fields
+
+| Field | Bloom | Color Splash | Peekaboo Pockets |
+|---|---|---|---|
+| Self-directed first action time | | | |
+| Needed one neutral invitation? | | | |
+| First five or six actions all responded clearly? | | | |
+| Repeated/imprecise/palm input stayed satisfying? | | | |
+| Child repeated the core action voluntarily? | | | |
+| Child shifted strategy or explored a new state? | | | |
+| Caregiver joined through words, imitation, or shared attention? | | | |
+| Sound/motion/brightness concern | | | |
+| Apparent dead end, failure, or accidental navigation | | | |
+| Natural stopping signal and session length | | | |
+| Voluntary interest on a later day | | | |
+| Caregiver's plain-language description | | | |
+
+Session length is context for natural stopping, not a success metric.
+
+## What each game uniquely probes
+
+- **Bloom:** whether immediate open-ended creation supports discovery, broad gesture, and self-directed variation.
+- **Color Splash:** whether a stable visual rule and accumulating connected region support understandable multi-step exploration without a wrong choice.
+- **Peekaboo Pockets:** whether reversible visibility and stable locations support revisit, anticipation, and caregiver co-play without becoming a memory quiz.
+
+Do not infer that one game is “more educational” because it has a visible completion state or appears harder to an adult.
+
+## Decision rules
+
+For each game independently:
+
+- **Keep** when the core action is discovered, ordinary input stays legible and comfortable, caregivers understand the experience without inflated claims, and at least some children voluntarily return.
+- **Revise one variable** when a specific obstacle repeats—target size, prompt, motion, sound, state visibility, or completion behavior. Repeat the same protocol before adding features.
+- **Hold** when apparent failure, sensory distress, unsafe navigation, resisted disengagement, or caregiver concern occurs. Do not compensate with rewards, coaching, or more stimulation.
+- **Retire the mechanic** when its value depends on precision, adult explanation, repeated correction, or engagement pressure that conflicts with the product philosophy.
+
+Across games, invest next in the interaction that reveals a distinct, repeatable form of comfortable agency—not simply the longest sessions or most taps. Preserve unresolved concepts in `CONCEPTS.md` and `IDEAS.md`; do not build a fourth mechanic until the evidence identifies a specific question the existing three cannot answer.
