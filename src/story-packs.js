@@ -4,8 +4,17 @@ function cast(kind, label, plural, tone) {
   return Object.freeze({ kind, label, plural, tone, variants: STORY_VARIANT_COUNT });
 }
 
-function relationship(first, second, type, message) {
-  return Object.freeze({ pair: Object.freeze([first, second]), type, message });
+function relationship(first, second, type, active, paused, reversed) {
+  return Object.freeze({
+    pair: Object.freeze([first, second]),
+    type,
+    message: active,
+    states: Object.freeze([
+      Object.freeze({ phase: "active", message: active }),
+      Object.freeze({ phase: "paused", message: paused }),
+      Object.freeze({ phase: "reversed", message: reversed })
+    ])
+  });
 }
 
 function pack(id, label, defaultKind, castItems, relationships) {
@@ -23,28 +32,28 @@ export const STORY_PACKS = Object.freeze([
     cast("flower", "flower", "Flowers", 523.25), cast("friend", "friend", "Friends", 440),
     cast("cloud", "cloud", "Clouds", 349.23), cast("sun", "sun", "Suns", 659.25)
   ], [
-    relationship("sun", "cloud", "rainbow", "A rainbow appeared!"),
-    relationship("cloud", "flower", "watered", "The flower drank the rain!"),
-    relationship("sun", "flower", "warmed", "Warm sunshine!"),
-    relationship("friend", "friend", "greeting", "Hello, friend!")
+    relationship("sun", "cloud", "rainbow", "A rainbow appeared!", "The rainbow is resting.", "The rainbow bends the other way!"),
+    relationship("cloud", "flower", "watered", "The flower grows in the rain!", "The raindrops are waiting.", "The flower curls up to rest."),
+    relationship("sun", "flower", "warmed", "Warm sunshine!", "The sunshine pauses.", "The flower turns away to cool."),
+    relationship("friend", "friend", "greeting", "The friends walk together!", "The friends wait together.", "The friends turn the other way!")
   ]),
   pack("town", "Town trip", "child", [
     cast("child", "child", "Children", 440), cast("car", "car", "Cars", 392),
     cast("bus", "bus", "Buses", 349.23), cast("home", "home", "Homes", 523.25)
   ], [
-    relationship("child", "car", "riding", "Ready for a car ride!"),
-    relationship("child", "bus", "riding", "All aboard the bus!"),
-    relationship("car", "home", "arrived", "The car arrived home!"),
-    relationship("bus", "home", "arrived", "The bus reached home!")
+    relationship("child", "car", "riding", "Ready for a car ride!", "The car waits for its rider.", "The car turns back!"),
+    relationship("child", "bus", "riding", "All aboard the bus!", "The bus waits at the stop.", "The bus takes the return trip!"),
+    relationship("car", "home", "arrived", "The car stops at home!", "The car waits by the home.", "The car heads out again!"),
+    relationship("bus", "home", "arrived", "The bus stops at home!", "The bus waits by the home.", "The bus starts the return trip!")
   ]),
   pack("castle", "Castle tale", "dragon", [
     cast("dragon", "dragon", "Dragons", 311.13), cast("knight", "knight", "Knights", 392),
     cast("royal", "royal friend", "Royal friends", 523.25), cast("castle", "castle", "Castles", 349.23)
   ], [
-    relationship("dragon", "castle", "glowing", "The dragon warms the castle!"),
-    relationship("knight", "royal", "greeting", "The friends greet!"),
-    relationship("royal", "castle", "arrived", "Welcome to the castle!"),
-    relationship("dragon", "knight", "meeting", "Dragon and knight meet!")
+    relationship("dragon", "castle", "glowing", "The dragon warms the castle!", "The dragon's glow rests.", "A cool breeze reaches the castle!"),
+    relationship("knight", "royal", "greeting", "The friends walk together!", "The friends pause together.", "The friends turn around together!"),
+    relationship("royal", "castle", "arrived", "Welcome to the castle!", "The royal friend waits at the gate.", "The royal friend heads out again!"),
+    relationship("dragon", "knight", "meeting", "Dragon and knight meet!", "Dragon and knight wait.", "Dragon and knight change direction!")
   ])
 ]);
 
@@ -58,7 +67,9 @@ export function validateStoryPack(value) {
   }
   if (!Array.isArray(value.relationships) || value.relationships.length < 3) throw new RangeError("story pack needs three relationships");
   for (const relation of value.relationships) {
-    if (relation.pair.length !== 2 || relation.pair.some((kind) => !kinds.has(kind)) || !relation.type || !relation.message) {
+    if (relation.pair.length !== 2 || relation.pair.some((kind) => !kinds.has(kind)) || !relation.type || !relation.message
+      || !Array.isArray(relation.states) || relation.states.length !== 3
+      || relation.states.some((state, index) => state.phase !== ["active", "paused", "reversed"][index] || !state.message)) {
       throw new RangeError("story relationship is incomplete");
     }
   }

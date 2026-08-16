@@ -147,6 +147,9 @@ button { font: inherit; }
 .scene-object.dragging { cursor: grabbing; filter: brightness(1.04); animation: none; transform: translate(-50%,-55%) scale(1.08); }
 .scene-object.steady { animation: none; }
 .scene-object.changed { animation: object-change 320ms ease-out; }
+.scene-object.interaction-active .scene-art { filter: drop-shadow(0 8px 4px rgba(36,68,62,.18)) drop-shadow(0 0 10px rgba(255,238,123,.5)); }
+.scene-object.interaction-paused .scene-art { filter: saturate(.68) drop-shadow(0 5px 3px rgba(36,68,62,.14)); transform: scale(.94); }
+.scene-object.interaction-reversed .scene-art { transform: scaleX(-1); }
 
 .flower-art i { left: 43%; top: 42%; width: 14%; height: 54%; border-radius: 999px; background: var(--object-dark); transform-origin: 50% 100%; }
 .flower-art i::after { content: ""; position: absolute; width: 20px; height: 13px; left: 7px; top: 50%; border-radius: 90% 20% 90% 20%; background: color-mix(in srgb, var(--object-dark), white 18%); transform: rotate(-24deg); }
@@ -183,6 +186,8 @@ button { font: inherit; }
 .related-rainbow { filter: drop-shadow(0 0 10px rgba(255,255,255,.65)); }
 
 .scene-relation { position: absolute; left: calc(var(--relation-x) * 100%); top: calc(var(--relation-y) * 100%); transform: translate(-50%,-50%); }
+.scene-relation.interaction-paused { opacity: .48; filter: saturate(.55); }
+.scene-relation.interaction-reversed { filter: hue-rotate(145deg); transform: translate(-50%,-50%) scaleX(-1); }
 .scene-relation:not(.relation-rainbow):not(.relation-watered):not(.relation-warmed):not(.relation-greeting) { width: 22px; height: 22px; border: 5px solid white; border-radius: 50%; background: #ffd85c; box-shadow: 0 0 0 5px rgba(73,120,204,.28); }
 .relation-rainbow { width: clamp(56px,11vmin,92px); height: clamp(28px,5.5vmin,46px); border: 8px solid #ef5578; border-bottom: 0; border-radius: 999px 999px 0 0; box-shadow: inset 0 7px #f7a847, inset 0 14px #f6df53, inset 0 21px #5ecb8c, inset 0 28px #58a8e8; }
 .relation-watered { width: 8px; height: 12px; border-radius: 60% 40% 60% 40%; background: #4da7dc; box-shadow: -18px 8px #4da7dc, 18px 8px #4da7dc; transform: translate(-50%,-25%) rotate(45deg); }

@@ -134,7 +134,8 @@ function markRelated(relationship) {
   const firstObject = objectFor(relationship.first);
   const secondObject = objectFor(relationship.second);
   const decoration = document.createElement("span");
-  decoration.className = `scene-relation relation-${relationship.type}`;
+  decoration.className = `scene-relation relation-${relationship.type} interaction-${relationship.phase}`;
+  decoration.dataset.phase = relationship.phase;
   decoration.style.setProperty("--relation-x", (firstObject.x + secondObject.x) / 2);
   decoration.style.setProperty("--relation-y", (firstObject.y + secondObject.y) / 2);
   relationLayer.append(decoration);
@@ -143,7 +144,14 @@ function markRelated(relationship) {
 function renderScene(focusId, motion) {
   objectLayer.replaceChildren(...state.objects.map((object) => createObjectElement(object, focusId, motion)));
   relationLayer.replaceChildren();
-  for (const relationship of relationshipsForScene(state, currentLayout())) markRelated(relationship);
+  const relationships = relationshipsForScene(state, currentLayout());
+  const visiblePhase = new Map();
+  for (const relationship of relationships) {
+    if (!visiblePhase.has(relationship.first)) visiblePhase.set(relationship.first, relationship.phase);
+    if (!visiblePhase.has(relationship.second)) visiblePhase.set(relationship.second, relationship.phase);
+    markRelated(relationship);
+  }
+  for (const [id, phase] of visiblePhase) objectLayer.querySelector(`[data-id="${id}"]`)?.classList.add(`interaction-${phase}`);
   if (focusId) objectLayer.querySelector(`[data-id="${focusId}"]`)?.focus({ preventScroll: true });
 }
 

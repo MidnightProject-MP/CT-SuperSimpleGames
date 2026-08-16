@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   MAX_SCENE_OBJECTS,
+  INTERACTION_PHASES,
   SCENE_KINDS,
   VARIANT_COUNT,
   createSceneState,
@@ -89,6 +90,35 @@ test("moving objects reveals deterministic nearby relationships", () => {
   assert.equal(relationshipsForScene(moved.state).length, 1);
 });
 
+test("nearby relationships persist and cycle when either participant is touched", () => {
+  let state = selectSceneKind(createSceneState(), "sun");
+  const sun = placeSceneObject(state, { x: 0.3, y: 0.3 });
+  state = selectSceneKind(sun.state, "flower");
+  const flower = placeSceneObject(state, { x: 0.48, y: 0.3 });
+  state = flower.state;
+  assert.equal(relationshipsForScene(state)[0].phase, "active");
+  state = touchSceneObject(state, sun.object.id).state;
+  assert.equal(relationshipsForScene(state)[0].phase, "paused");
+  state = touchSceneObject(state, flower.object.id).state;
+  assert.equal(relationshipsForScene(state)[0].phase, "reversed");
+  state = touchSceneObject(state, sun.object.id).state;
+  assert.equal(relationshipsForScene(state)[0].phase, "active");
+  assert.deepEqual(INTERACTION_PHASES, ["active", "paused", "reversed"]);
+});
+
+test("moving a participant redirects the story to a new nearby partner", () => {
+  let state = selectSceneKind(createSceneState(), "friend");
+  const first = placeSceneObject(state, { x: 0.2, y: 0.7 });
+  const second = placeSceneObject(first.state, { x: 0.37, y: 0.7 });
+  const third = placeSceneObject(second.state, { x: 0.8, y: 0.7 });
+  state = touchSceneObject(third.state, first.object.id).state;
+  assert.equal(relationshipsForScene(state)[0].phase, "paused");
+  state = moveSceneObject(state, first.object.id, { x: 0.72, y: 0.7 }).state;
+  const relationship = relationshipsForScene(state)[0];
+  assert.equal(relationship.phase, "active");
+  assert.ok([relationship.first, relationship.second].includes(third.object.id));
+});
+
 test("relationship reach follows visible distance across orientations", () => {
   let portrait = selectSceneKind(createSceneState(), "sun");
   portrait = placeSceneObject(portrait, { x: 0.3, y: 0.3 }).state;
@@ -141,4 +171,5 @@ test("invalid states, IDs, and coordinates are rejected", () => {
   assert.throws(() => touchSceneObject(state, "missing"), RangeError);
   assert.throws(() => moveSceneObject(state, "missing", { x: 0.3, y: 0.4 }), RangeError);
   assert.throws(() => relationshipsForScene({ selected: "flower", objects: [], nextId: 0 }), TypeError);
+  assert.throws(() => relationshipsForScene({ ...state, interactions: [{ key: "bad", first: "missing", second: "also-missing", phase: "active", turns: 0 }] }), TypeError);
 });

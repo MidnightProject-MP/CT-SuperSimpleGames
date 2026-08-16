@@ -577,6 +577,8 @@ The child currently receives one garden, four object families, five variants, ta
 
 ### SCN-2 — Stateful, redirectable interactions
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** new narrative mechanic; Round 2.
 
 - Let relationships change object state rather than only play an animation.
@@ -590,6 +592,8 @@ The child currently receives one garden, four object families, five variants, ta
 **Learning exposure:** causality, sequence, state change, agency, and revision.
 
 **Gate:** Every state remains understandable with sound off and reduced motion, and every object remains directly usable afterward.
+
+**Implementation note:** Every nearby pair now owns one bounded, immutable interaction record with active, paused, and reversed phases. Theme-specific messages and persistent visual states make the story beat visible. Touching either participant cycles the shared phase, while moving a participant away removes that pairing and lets a new nearby partner begin a fresh interaction. Relationship records remain capped with the scene and never create autonomous motion.
 
 ### SCN-3 — Roles and child-directed sides
 

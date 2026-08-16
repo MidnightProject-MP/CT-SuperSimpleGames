@@ -49,7 +49,7 @@ Stack & Settle supports exposure to above/below, beside, inside, relative size, 
 
 ## Story Scenes: available storytelling world
 
-Story Scenes explores whether creation, revisiting, direct manipulation, and stable relationships can become a tiny child-authored narrative. Garden weather, Town trip, and Castle tale each provide four oversized object families, five predictable visual variants, a safe initial selection, and their own repeatable relationship vocabulary. Existing objects remain touchable and broadly movable. A large setting control previews the three choices, and a separate confirmation is required before changing the background clears the current scene.
+Story Scenes explores whether creation, revisiting, direct manipulation, and stable relationships can become a tiny child-authored narrative. Garden weather, Town trip, and Castle tale each provide four oversized object families, five predictable visual variants, a safe initial selection, and their own repeatable relationship vocabulary. Nearby pairs begin a persistent story beat; touching either participant cycles that shared interaction through active, paused, and reversed states, while moving one toward a new partner redirects the story. Existing objects remain touchable and broadly movable. A large setting control previews the three choices, and a separate confirmation is required before changing the background clears the current scene.
 
 The storytelling world is available from the launcher for testing. Its availability does not establish that young children understand selecting a family and then placing it, distinguish changing an object from moving it, understand the setting transition, or intentionally discover and repeat relationships. Those questions remain for rendered, device, caregiver, and child observation.
 
@@ -90,7 +90,7 @@ Mechanical checks:
 - ball-and-nest, stacked, and side-by-side relationships are deterministic and do not consume pieces;
 - interrupted drags preserve the prior arrangement and never consume the next tap;
 - Story Scenes defaults to flower placement, cycles exactly five variants per object family, and keeps every object revisitable;
-- Story Scenes relationships depend only on stable nearby pairs and never consume or replace their objects;
+- Story Scenes relationships depend on stable nearby pairs, retain only one bounded reversible interaction per pair, and never consume or replace their objects;
 - Story Scenes remains bounded at 16 objects and revisits nearby work instead of deleting it at the limit;
 - Together Tones retains at most four recent actions, five visual levels per voice, and one active pair;
 - repeating and alternating voices have deterministic visual consequences without requiring sound;

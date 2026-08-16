@@ -4,6 +4,7 @@ export const SCENE_KINDS = Object.freeze(STORY_PACKS.flatMap((pack) => pack.cast
 export const VARIANT_COUNT = STORY_VARIANT_COUNT;
 export const MAX_SCENE_OBJECTS = 16;
 export const MAX_SCENE_RELATIONSHIPS = 12;
+export const INTERACTION_PHASES = Object.freeze(["active", "paused", "reversed"]);
 
 const MIN_X = 0.08;
 const MAX_X = 0.92;
@@ -29,11 +30,12 @@ function freezeObject(object) {
   return Object.freeze({ ...object });
 }
 
-function createState(sceneId, selected, objects, nextId) {
+function createState(sceneId, selected, objects, nextId, interactions = []) {
   return Object.freeze({
     sceneId,
     selected,
     objects: Object.freeze(objects.map(freezeObject)),
+    interactions: Object.freeze(interactions.map((interaction) => Object.freeze({ ...interaction }))),
     nextId,
   });
 }
@@ -66,7 +68,24 @@ function normalizeState(state) {
     }
     return { ...object };
   });
-  return { sceneId: state.sceneId, selected: state.selected, objects, nextId: state.nextId };
+  const interactions = (state.interactions || []).map((interaction) => {
+    const firstObject = objects.find(({ id }) => id === interaction?.first);
+    const secondObject = objects.find(({ id }) => id === interaction?.second);
+    const definition = firstObject && secondObject ? storyRelationship(pack, firstObject.kind, secondObject.kind) : null;
+    if (!interaction || typeof interaction.key !== "string" || typeof interaction.first !== "string"
+      || typeof interaction.second !== "string" || !ids.has(interaction.first) || !ids.has(interaction.second)
+      || interaction.first === interaction.second || !INTERACTION_PHASES.includes(interaction.phase)
+      || interaction.key !== [interaction.first, interaction.second].sort().join("|")
+      || !definition || interaction.type !== definition.type
+      || !Number.isInteger(interaction.turns) || interaction.turns < 0) {
+      throw new TypeError("story scene contains an invalid interaction");
+    }
+    return { ...interaction };
+  });
+  if (interactions.length > MAX_SCENE_RELATIONSHIPS || new Set(interactions.map(({ key }) => key)).size !== interactions.length) {
+    throw new RangeError("story scene interactions are not bounded and unique");
+  }
+  return { sceneId: state.sceneId, selected: state.selected, objects, interactions, nextId: state.nextId };
 }
 
 function objectById(objects, id) {
@@ -104,10 +123,10 @@ export function selectScenePack(state, sceneId) {
 export function selectSceneKind(state, kind) {
   const current = normalizeState(state);
   storyCastItem(getStoryPack(current.sceneId), kind);
-  return createState(current.sceneId, kind, current.objects, current.nextId);
+  return createState(current.sceneId, kind, current.objects, current.nextId, current.interactions);
 }
 
-export function relationshipsForScene(state, layout) {
+function nearbyRelationships(state, layout) {
   const current = normalizeState(state);
   const pack = getStoryPack(current.sceneId);
   const relationships = [];
@@ -117,12 +136,60 @@ export function relationshipsForScene(state, layout) {
       const second = current.objects[secondIndex];
       const definition = storyRelationship(pack, first.kind, second.kind);
       if (definition && distance(first, second, layout) <= RELATION_DISTANCE) {
-        relationships.push(Object.freeze({ type: definition.type, message: definition.message, first: first.id, second: second.id }));
-        if (relationships.length >= MAX_SCENE_RELATIONSHIPS) return Object.freeze(relationships);
+        relationships.push({
+          key: [first.id, second.id].sort().join("|"),
+          definition,
+          type: definition.type,
+          first: first.id,
+          second: second.id,
+        });
+        if (relationships.length >= MAX_SCENE_RELATIONSHIPS) return relationships;
       }
     }
   }
-  return Object.freeze(relationships);
+  return relationships;
+}
+
+function reconcileInteractions(state, layout, cycleForId = null) {
+  const current = normalizeState(state);
+  const prior = new Map(current.interactions.map((interaction) => [interaction.key, interaction]));
+  return nearbyRelationships(current, layout).map((relationship) => {
+    const existing = prior.get(relationship.key) || { phase: "active", turns: 0 };
+    const cycles = cycleForId && [relationship.first, relationship.second].includes(cycleForId);
+    const phase = cycles
+      ? INTERACTION_PHASES[(INTERACTION_PHASES.indexOf(existing.phase) + 1) % INTERACTION_PHASES.length]
+      : existing.phase;
+    return Object.freeze({
+      key: relationship.key,
+      type: relationship.type,
+      first: relationship.first,
+      second: relationship.second,
+      phase,
+      turns: existing.turns + (cycles ? 1 : 0),
+    });
+  });
+}
+
+export function relationshipsForScene(state, layout) {
+  const current = normalizeState(state);
+  const interactions = new Map(current.interactions.map((interaction) => [interaction.key, interaction]));
+  return Object.freeze(nearbyRelationships(current, layout).map((relationship) => {
+    const interaction = interactions.get(relationship.key) || { phase: "active", turns: 0 };
+    const presentation = relationship.definition.states.find(({ phase }) => phase === interaction.phase);
+    return Object.freeze({
+      type: relationship.type,
+      message: presentation.message,
+      first: relationship.first,
+      second: relationship.second,
+      phase: interaction.phase,
+      turns: interaction.turns,
+    });
+  }));
+}
+
+function updateState(current, objects, nextId, layout, cycleForId = null) {
+  const preliminary = createState(current.sceneId, current.selected, objects, nextId, current.interactions);
+  return createState(current.sceneId, current.selected, objects, nextId, reconcileInteractions(preliminary, layout, cycleForId));
 }
 
 function resultFor(state, object, action, layout) {
@@ -137,7 +204,7 @@ export function touchSceneObject(state, id, layout) {
   const objects = current.objects.map((object) => object.id === id
     ? { ...object, variant: (object.variant + 1) % VARIANT_COUNT, visits: object.visits + 1 }
     : object);
-  const nextState = createState(current.sceneId, current.selected, objects, current.nextId);
+  const nextState = updateState(current, objects, current.nextId, layout, id);
   return resultFor(nextState, objectById(nextState.objects, id), "changed", layout);
 }
 
@@ -148,7 +215,7 @@ export function moveSceneObject(state, id, point, layout) {
   const objects = current.objects.map((object) => object.id === id
     ? { ...object, ...position, visits: object.visits + 1 }
     : object);
-  const nextState = createState(current.sceneId, current.selected, objects, current.nextId);
+  const nextState = updateState(current, objects, current.nextId, layout);
   return resultFor(nextState, objectById(nextState.objects, id), "moved", layout);
 }
 
@@ -171,6 +238,7 @@ export function placeSceneObject(state, point, layout) {
     ...position,
     visits: 0,
   };
-  const nextState = createState(current.sceneId, current.selected, [...current.objects, object], current.nextId + 1);
+  const objects = [...current.objects, object];
+  const nextState = updateState(current, objects, current.nextId + 1, layout);
   return resultFor(nextState, objectById(nextState.objects, object.id), "placed", layout);
 }
