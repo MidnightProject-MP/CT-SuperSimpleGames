@@ -23,7 +23,7 @@ Allow up to eight minutes of free exploration, ending sooner whenever the child 
 1. Present Bloom without instruction.
 2. If the child has not touched it after about 30 seconds, offer once: “You can touch it if you want.”
 3. Do not coach, correct, praise performance, demonstrate a goal, or coax continued play.
-4. Observe ordinary, missed, repeated, palm, simultaneous, and dragging touches as they occur naturally. Do not manufacture stress.
+4. Observe ordinary, missed, repeated, palm, simultaneous, and dragging touches as they occur naturally. Note whether the child touches an existing flower or places flowers near one another. Do not manufacture stress.
 5. If the child remains comfortable, the caregiver may offer sound-off once. Do not force a comparison.
 6. End when the child turns away, leaves, pushes the device away, signals “done,” or ignores it for roughly 20–30 seconds.
 
@@ -47,6 +47,9 @@ Record facts and direct caregiver language. Avoid interpreting intent during the
 | Needed one neutral invitation? | |
 | Touches observed: ordinary / missed / repeated / palm / simultaneous / drag | |
 | Clear response to imprecise touches? | |
+| Existing flower intentionally revisited? | |
+| Near/far placement or visible connection noticed? | |
+| Connected-flower response intentionally repeated? | |
 | Apparent failure or frustration | |
 | Sensory comfort or concern | |
 | Why and when the session stopped | |
@@ -72,6 +75,7 @@ Proceed to a distinct second-concept experiment only if:
 
 - at least three of four children begin within 60 seconds, with no more than one neutral invitation;
 - all four receive understandable visible feedback from ordinary and imprecise touches, without repeated apparent failure;
+- revisiting a flower and creating a nearby relationship never appear to be dead or wrong actions;
 - no child shows repeated distress and every child can disengage naturally;
 - at least three caregivers describe Bloom as exploration or play without assuming guaranteed learning;
 - at least two children show voluntary interest at the optional later revisit.

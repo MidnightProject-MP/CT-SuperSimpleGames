@@ -100,7 +100,7 @@ Acceptance focus:
 
 ## Milestone 3 — Bloom: a relational garden
 
-**Status: planned**
+**Status: implemented and automatically verified; device and child observation pending**
 
 **Objective:** Preserve Bloom's immediate simplicity while allowing the garden to develop understandable relationships.
 
@@ -112,6 +112,8 @@ Minimum coherent slice:
 - The garden's object limit no longer causes meaningful work to disappear silently.
 - Ambient invitation motion settles after play begins.
 
+Implementation note: existing flowers are now direct touch targets and grow to a bounded maximum when revisited. A new flower within a forgiving neighborhood connects to its nearest neighbor with a persistent garden link and the pair leans together. At the 24-flower bound, touches tend the nearest existing flower instead of deleting prior work. The invitation animation stops after the first interaction.
+
 Acceptance focus:
 
 - The first-touch experience remains at least as clear as the current Bloom.
@@ -121,7 +123,7 @@ Acceptance focus:
 
 ## Milestone 4 — Stack & Settle
 
-**Status: planned**
+**Status: ready**
 
 **Objective:** Add direct manipulation, arrangement, revision, containment, and simple spatial planning to the collection.
 

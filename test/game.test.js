@@ -1,6 +1,16 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { COLORS, MAX_BLOOMS, clampPosition, createBloom, trimToLimit } from "../src/game.js";
+import {
+  COLORS,
+  MAX_BLOOMS,
+  NEIGHBOR_DISTANCE,
+  clampPosition,
+  createBloom,
+  growBloom,
+  nearestBloom,
+  planGardenInteraction,
+  trimToLimit
+} from "../src/game.js";
 
 test("clampPosition keeps a bloom fully inside the viewport", () => {
   assert.deepEqual(clampPosition(-20, 900, 320, 640, 50), { x: 50, y: 590 });
@@ -23,4 +33,43 @@ test("trimToLimit retains the newest blooms", () => {
   assert.equal(trimmed.length, MAX_BLOOMS);
   assert.equal(trimmed[0].id, 3);
   assert.equal(trimmed.at(-1).id, MAX_BLOOMS + 2);
+});
+
+test("nearestBloom finds a nearby relation and respects exclusions", () => {
+  const items = [
+    { id: 1, x: 10, y: 10 },
+    { id: 2, x: 80, y: 10 },
+    { id: 3, x: 200, y: 10 }
+  ];
+  assert.equal(nearestBloom(items, 70, 12, { maxDistance: NEIGHBOR_DISTANCE }).id, 2);
+  assert.equal(nearestBloom(items, 70, 12, { excludeId: 2, maxDistance: 70 }).id, 1);
+  assert.equal(nearestBloom(items, 500, 500, { maxDistance: 40 }), null);
+});
+
+test("growBloom increases revisited flowers without crossing its cap or viewport", () => {
+  const original = { id: 1, x: 8, y: 8, size: 100, visits: 0 };
+  const grown = growBloom(original, { step: 20, maxSize: 130, width: 320, height: 640 });
+  const capped = growBloom(grown, { step: 20, maxSize: 130, width: 320, height: 640 });
+  assert.deepEqual(original, { id: 1, x: 8, y: 8, size: 100, visits: 0 });
+  assert.equal(grown.size, 120);
+  assert.equal(grown.visits, 1);
+  assert.ok(grown.x > original.x && grown.y > original.y);
+  assert.equal(capped.size, 130);
+  assert.equal(capped.visits, 2);
+});
+
+test("garden interactions create below the cap and revisit without erasing at the cap", () => {
+  const blooms = [
+    { id: 1, x: 20, y: 20 },
+    { id: 2, x: 200, y: 200 }
+  ];
+  assert.deepEqual(planGardenInteraction(blooms, 90, 90, { limit: 3 }), {
+    action: "create", x: 90, y: 90
+  });
+  assert.deepEqual(planGardenInteraction(blooms, 190, 190, { limit: 2 }), {
+    action: "revisit", id: 2
+  });
+  assert.deepEqual(planGardenInteraction(blooms, 90, 90, { targetId: 1, limit: 3 }), {
+    action: "revisit", id: 1
+  });
 });

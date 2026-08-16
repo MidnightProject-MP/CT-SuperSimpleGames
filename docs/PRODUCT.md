@@ -25,7 +25,7 @@ That invariant has a device boundary. A web app cannot prevent operating-system 
 
 ## Bloom: first product slice
 
-Every tap grows a large flower at or near the contact point. Flowers cycle through named colors and vary in size and petal count. A short synthesized tone reinforces each result; a visible sound control disables it. Dragging produces a deliberately rate-limited trail. The garden retains only the newest 24 flowers.
+Every tap on empty space grows a large flower at or near the contact point. Flowers cycle through named colors and vary in size and petal count. Touching an existing flower tends and enlarges that same flower, making earlier work revisitable. A newly created flower near another forms one persistent visible connection; the pair briefly leans together. A short synthesized tone reinforces each result, and a visible sound control disables it. Dragging produces a deliberately rate-limited trail. The garden remains bounded at 24 flowers, but reaching the bound converts new touches into tending the nearest flower instead of silently erasing prior work. The animated invitation stops after play begins.
 
 Bloom supports exposure to cause and effect, colors, spatial position, relative size, and variation. It does **not** claim to teach or assess mastery of those concepts.
 
@@ -50,6 +50,9 @@ Mechanical checks:
 - every page enforces a local-only browser policy that blocks external scripts, connections, forms, frames, and embedded objects;
 - 30 rapid taps do not freeze, navigate, stack audio, or grow the DOM without bound;
 - generated flower positions remain within the visible viewport;
+- existing flowers can be revisited and grow only to a bounded maximum size;
+- nearby new flowers form at most one stable connection to an existing neighbor;
+- reaching the flower count bound revisits an existing flower and never silently removes the child's work;
 - sound-off play retains complete visible feedback;
 - the application shell is available offline after a successful first load;
 - reduced-motion mode removes ambient and sparkle motion and shortens growth motion.
@@ -91,4 +94,4 @@ Observation checks before public release:
 
 ## Next decision
 
-The ordered implementation and validation sequence now lives in `ROADMAP.md`. Color Splash's forgiving-input implementation awaits device observation; the next implementation priority is to deepen Peekaboo, followed by Bloom and a direct-manipulation construction experiment. Comparative observation remains necessary before treating these hypotheses as validated, but an unavailable real-world observation step should not prevent bounded, reversible technical prototypes from advancing. Do not extract a generalized framework merely because the pages share controls.
+The ordered implementation and validation sequence now lives in `ROADMAP.md`. The deeper Color Splash, Peekaboo, and Bloom slices await device observation; the next implementation priority is Stack & Settle, a bounded direct-manipulation construction experiment. Comparative observation remains necessary before treating these hypotheses as validated, but an unavailable real-world observation step should not prevent bounded, reversible technical prototypes from advancing. Do not extract a generalized framework merely because the pages share controls.

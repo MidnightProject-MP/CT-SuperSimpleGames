@@ -1,4 +1,13 @@
-import { COLORS, MAX_BLOOMS, clampPosition, createBloom } from "./game.js";
+import {
+  COLORS,
+  MAX_BLOOMS,
+  NEIGHBOR_DISTANCE,
+  clampPosition,
+  createBloom,
+  growBloom,
+  nearestBloom,
+  planGardenInteraction
+} from "./game.js";
 import { createTonePlayer } from "./audio.js";
 import { createPointerSampler } from "./interaction.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
@@ -10,6 +19,7 @@ const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
 
 let bloomCount = 0;
+const gardenBlooms = new Map();
 let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 const pointerSampler = createPointerSampler();
@@ -36,6 +46,8 @@ function makeFlower(bloom) {
   flower.dataset.x = String(bloom.x);
   flower.dataset.y = String(bloom.y);
   flower.dataset.size = String(bloom.size);
+  flower.dataset.id = String(bloom.id);
+  flower.setAttribute("role", "presentation");
 
   for (let i = 0; i < bloom.petals; i += 1) {
     const petal = document.createElement("i");
@@ -48,6 +60,53 @@ function makeFlower(bloom) {
   core.className = "flower-core";
   flower.append(core);
   return flower;
+}
+
+function updateFlower(flower, bloom) {
+  flower.style.left = `${bloom.x}px`;
+  flower.style.top = `${bloom.y}px`;
+  flower.style.setProperty("--size", `${bloom.size}px`);
+  flower.dataset.x = String(bloom.x);
+  flower.dataset.y = String(bloom.y);
+  flower.dataset.size = String(bloom.size);
+}
+
+function updateLink(link) {
+  const first = gardenBlooms.get(Number(link.dataset.first));
+  const second = gardenBlooms.get(Number(link.dataset.second));
+  if (!first || !second) return;
+  const dx = second.x - first.x;
+  const dy = second.y - first.y;
+  link.style.left = `${first.x}px`;
+  link.style.top = `${first.y}px`;
+  link.style.width = `${Math.hypot(dx, dy)}px`;
+  link.style.transform = `rotate(${Math.atan2(dy, dx)}rad)`;
+}
+
+function updateLinks() {
+  for (const link of blooms.querySelectorAll(".bloom-link")) updateLink(link);
+}
+
+function connectBlooms(first, second) {
+  const link = document.createElement("i");
+  link.className = "bloom-link";
+  link.dataset.first = String(first.id);
+  link.dataset.second = String(second.id);
+  blooms.prepend(link);
+  updateLink(link);
+
+  const firstFlower = blooms.querySelector(`.bloom[data-id="${first.id}"]`);
+  const secondFlower = blooms.querySelector(`.bloom[data-id="${second.id}"]`);
+  const firstClass = first.x <= second.x ? "greet-right" : "greet-left";
+  const secondClass = first.x <= second.x ? "greet-left" : "greet-right";
+  animateFlower(secondFlower, secondClass);
+  firstFlower.addEventListener("animationend", () => animateFlower(firstFlower, firstClass), { once: true });
+}
+
+function animateFlower(flower, className = "tended") {
+  flower.classList.remove("tended", "greet-left", "greet-right");
+  void flower.offsetWidth;
+  flower.classList.add(className);
 }
 
 function addSparkles(bloom) {
@@ -68,19 +127,48 @@ function addSparkles(bloom) {
   }
 }
 
-function growAt(x, y) {
+function createAt(x, y) {
   const bloom = createBloom(bloomCount, x, y, garden.clientWidth, garden.clientHeight);
   bloomCount += 1;
   invitation.classList.add("hidden");
+  const neighbor = nearestBloom(gardenBlooms.values(), bloom.x, bloom.y, { maxDistance: NEIGHBOR_DISTANCE });
+  gardenBlooms.set(bloom.id, bloom);
   blooms.append(makeFlower(bloom));
   addSparkles(bloom);
-  announcement.textContent = `${bloom.color.name} flower`;
-
-  while (blooms.querySelectorAll(".bloom").length > MAX_BLOOMS) {
-    blooms.querySelector(".bloom")?.remove();
+  if (neighbor) {
+    connectBlooms(bloom, neighbor);
+    announcement.textContent = `${bloom.color.name} flower grew beside another flower`;
+  } else {
+    announcement.textContent = `${bloom.color.name} flower`;
   }
-
   tonePlayer.play(bloom.color.tone);
+}
+
+function tendBloom(id) {
+  const current = gardenBlooms.get(id);
+  if (!current) return;
+  const bloom = growBloom(current, { width: garden.clientWidth, height: garden.clientHeight });
+  gardenBlooms.set(id, bloom);
+  const flower = blooms.querySelector(`.bloom[data-id="${id}"]`);
+  updateFlower(flower, bloom);
+  updateLinks();
+  animateFlower(flower);
+  addSparkles(bloom);
+  announcement.textContent = `${bloom.color.name} flower grew again`;
+  tonePlayer.play(bloom.color.tone * 1.06);
+}
+
+function interactAt(x, y, flower) {
+  invitation.classList.add("hidden");
+  const plan = planGardenInteraction(gardenBlooms.values(), x, y, {
+    targetId: flower ? Number(flower.dataset.id) : undefined,
+    limit: MAX_BLOOMS
+  });
+  if (plan.action === "create") {
+    createAt(x, y);
+    return;
+  }
+  tendBloom(plan.id);
 }
 
 function reflowBlooms() {
@@ -97,14 +185,17 @@ function reflowBlooms() {
     flower.dataset.y = String(position.y);
     flower.style.left = `${position.x}px`;
     flower.style.top = `${position.y}px`;
+    const id = Number(flower.dataset.id);
+    gardenBlooms.set(id, { ...gardenBlooms.get(id), ...position });
   }
+  updateLinks();
 }
 
 garden.addEventListener("pointerdown", (event) => {
   if (event.target.closest("a, button")) return;
   event.preventDefault();
   garden.setPointerCapture?.(event.pointerId);
-  growAt(event.clientX, event.clientY);
+  interactAt(event.clientX, event.clientY, event.target.closest(".bloom"));
   pointerSampler.start(event.pointerId, performance.now());
 });
 
@@ -112,7 +203,7 @@ garden.addEventListener("pointermove", (event) => {
   if (!garden.hasPointerCapture?.(event.pointerId)) return;
   const now = performance.now();
   if (!pointerSampler.sample(event.pointerId, now)) return;
-  growAt(event.clientX, event.clientY);
+  interactAt(event.clientX, event.clientY, document.elementFromPoint(event.clientX, event.clientY)?.closest(".bloom"));
 });
 
 for (const eventName of ["pointerup", "pointercancel", "lostpointercapture"]) {
@@ -124,7 +215,9 @@ garden.addEventListener("keydown", (event) => {
   if (event.key !== "Enter" && event.key !== " ") return;
   event.preventDefault();
   const offset = (bloomCount % COLORS.length) * 9;
-  growAt(garden.clientWidth / 2 + offset, garden.clientHeight / 2 + offset);
+  const x = garden.clientWidth / 2 + offset;
+  const y = garden.clientHeight / 2 + offset;
+  interactAt(x, y, null);
 });
 
 soundToggle.addEventListener("click", (event) => {

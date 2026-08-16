@@ -18,7 +18,7 @@ The broader interaction landscape and third-game decision are recorded in [docs/
 
 ### Bloom
 
-Bloom is a cause-and-effect color garden. Tapping or dragging anywhere on the play surface creates bright flowers and soft musical tones. There are no scores, timers, mistakes, ads, accounts, or links away from the experience.
+Bloom is a relational color garden. Tapping or dragging empty space creates bright flowers and soft musical tones; touching an existing flower grows it again, and nearby flowers form visible connections and lean toward one another. There are no scores, timers, mistakes, ads, accounts, or links away from the experience.
 
 ### Color Splash
 
@@ -61,4 +61,4 @@ node --test
 
 ## Near-term direction
 
-Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). Color Splash's forgiving-input slice is implemented and awaits device observation; deeper Peekaboo and Bloom interactions follow, then a direct-manipulation construction experiment. Real-world observation remains necessary before treating any product hypothesis as validated.
+Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). The deeper Color Splash, Peekaboo, and Bloom slices are implemented and await device observation. The next implementation milestone is Stack & Settle, a bounded direct-manipulation construction experiment. Real-world observation remains necessary before treating any product hypothesis as validated.

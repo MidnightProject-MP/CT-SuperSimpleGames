@@ -164,6 +164,7 @@ button { font: inherit; }
 }
 
 .invitation.hidden { opacity: 0; transform: translate(-50%, -50%) scale(0.75); }
+.invitation.hidden .invitation-flower { animation: none; }
 .invitation p { margin: 21px 0 0; font-size: clamp(24px, 7vw, 38px); text-shadow: 0 3px white; white-space: nowrap; }
 
 .invitation-flower {
@@ -215,9 +216,10 @@ button { font: inherit; }
   z-index: 5;
   width: var(--size);
   height: var(--size);
-  transform: translate(-50%, -50%) scale(0.06) rotate(-15deg);
+  transform: translate(-50%, -50%) scale(1) rotate(0);
   animation: bloom-in 560ms cubic-bezier(.15, 1.45, .38, 1) forwards;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .bloom .petal {
@@ -225,6 +227,21 @@ button { font: inherit; }
   height: 43%;
   background: linear-gradient(145deg, rgba(255,255,255,.76), var(--petal-light) 34%, var(--petal) 100%);
 }
+
+.bloom-link {
+  position: absolute;
+  z-index: 4;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(52,151,73,.34), rgba(255,255,255,.8), rgba(52,151,73,.34));
+  box-shadow: 0 2px 0 rgba(36,119,57,.12);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+.bloom.tended { animation: bloom-tended 420ms ease-out; }
+.bloom.greet-left { animation: bloom-greet-left 430ms ease-in-out; }
+.bloom.greet-right { animation: bloom-greet-right 430ms ease-in-out; }
 
 .spark {
   position: absolute;
@@ -262,6 +279,21 @@ button { font: inherit; }
   to { opacity: 0; transform: translate(var(--drift-x), var(--drift-y)) scale(0.2); }
 }
 
+@keyframes bloom-tended {
+  0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0); }
+  48% { transform: translate(-50%, -55%) scale(1.08) rotate(4deg); }
+}
+
+@keyframes bloom-greet-left {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0); }
+  52% { transform: translate(-56%, -52%) rotate(-7deg); }
+}
+
+@keyframes bloom-greet-right {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0); }
+  52% { transform: translate(-44%, -52%) rotate(7deg); }
+}
+
 @keyframes breathe {
   0%, 100% { transform: scale(0.92) rotate(-3deg); }
   50% { transform: scale(1.07) rotate(3deg); }
@@ -270,6 +302,9 @@ button { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .invitation-flower { animation: none; }
   .bloom { animation-duration: 120ms; }
+  .bloom.tended,
+  .bloom.greet-left,
+  .bloom.greet-right { animation-duration: 1ms; }
   .spark { display: none; }
 }
 
