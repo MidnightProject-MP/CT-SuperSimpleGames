@@ -90,7 +90,7 @@ Add theme packs, larger vocabularies, or more complex combinations only when chi
 
 Bloom should become a small living garden rather than a general sticker canvas. Its pleasure comes from making something grow, revisiting it, noticing variation, and discovering how nearby living things affect one another.
 
-The child currently receives immediate creation, color and size variation, broad drag trails, tending, and one nearby relationship. Preserve the absence of a toolbar or explicit objective; Story Scenes owns selection and symbolic composition.
+The child currently receives immediate creation, color and size variation, broad drag trails, tending, nearby relationships, deterministic visitors, and a two-tier merge-three growth system. Preserve the absence of a toolbar or explicit objective; Story Scenes owns selection and symbolic composition.
 
 ### Concepts Bloom can expose
 
@@ -175,6 +175,26 @@ The child currently receives immediate creation, color and size variation, broad
 **Gate:** Visitors do not become rare rewards, collectibles, or a reason to prolong play.
 
 **Implementation note:** Deterministic garden conditions now invite exactly one local CSS-drawn visitor: three nearby mature blooms invite a bee, a seed-stage bloom invites a three-spotted bird, and a deliberately spaced pair invites a two-winged butterfly. The visitor has an 84-pixel touch target, moves among four bounded local positions, and leaves after a short four-touch visit without changing any flower. Dismissal persists while the same condition remains, so the visitor cannot become a collectible or attention loop.
+
+### BL-3A — Merge-three garden growth
+
+**Status:** implemented and automatically verified; rendered, device, caregiver, and child observation pending.
+
+**Kind:** bounded transformation and decluttering mechanic.
+
+- Merge exactly three mutually nearby objects of the same tier and color through a visible transformation, leaving mixed-color neighborhoods available for ecological relationships and visitors.
+- Three flowers become one bouquet representing three flowers; three bouquets become one flowering tree representing nine.
+- Stop at the flowering-tree tier. Do not add an indefinite upgrade ladder, score, collection book, or rarity.
+- Preserve source identity as a represented count so the transformation means “three became one new living thing,” not unexplained deletion.
+- Continue to support tending, relationships, visitors, sound-off play, reduced motion, and safe viewport reflow after a merge.
+
+**Experience question:** After encountering one merge, do children intentionally place another compatible trio nearby and understand that the resulting object represents the group?
+
+**Learning exposure:** grouping by three, part and whole, transformation, spatial planning, and simple composition.
+
+**Gate:** A merge must be clearly visible and reproducible, must reduce the live-object count, and must never chain beyond two tiers or trigger from objects that are not mutually nearby matching-color peers.
+
+**Implementation note:** Pure merge planning selects one stable ID-ordered compatible triple, verifies all three pair distances, and produces an immutable result with its complete source IDs and represented count. Runtime merging removes the three rendered inputs together, adds one CSS-drawn bouquet or flowering tree at their bounded centroid, announces the transformation, and repeats only when that new tier itself completes another valid trio. Mechanical behavior is tested; visual legibility and child comprehension remain unverified.
 
 ### BL-4 — Garden seasons and themes
 
@@ -488,7 +508,7 @@ The child currently receives five reusable pieces, tap-complete placement, broad
 
 **Gate:** Near-miss placements still settle safely and remain interesting; recognition cannot be the only satisfying outcome.
 
-**Implementation note:** Every piece now declares bounded construction capabilities for support, resting, spanning, covering, and nesting. The physical-layout settling engine can place a beam or roof across two forgiving supports, while pure structure recognition identifies bridges, shelters, and enclosures without consuming or locking pieces. Local responses acknowledge a discovered structure per placement, and randomized portrait/landscape placement tests protect identity, bounds, and recoverability.
+**Implementation note:** Every piece now declares bounded construction capabilities for support, resting, spanning, covering, and nesting. The bridge beam is at least 50% wider than every other piece. Broad beam drops search nearby same-level support pairs, accept an off-center release within a forgiving reach, and settle at the pair midpoint without overlap. Pure structure recognition identifies bridges, shelters, and enclosures without consuming or locking pieces. Local responses acknowledge a discovered structure per placement, and randomized portrait/landscape placement tests protect identity, bounds, and recoverability. Rendered and device confirmation that the correction feels easier remains pending.
 
 ### STK-2 — Open-ended idea cards
 
@@ -546,7 +566,7 @@ The child currently receives five reusable pieces, tap-complete placement, broad
 
 Story Scenes should become the collection’s symbolic-play and narrative world. Its pleasure comes from choosing a small cast, placing characters and objects, changing what they are doing, and discovering causal relationships that remain under the child’s direction.
 
-The child currently receives three settings, four object families per setting, five variants, toddler-first automatic palette rotation, exact palette selection, tap placement, revisiting, broad movement, persistent pair relationships, and one reversible compositional castle story. Preserve immediate default placement and the bounded, reversible scene.
+The child currently receives three settings, four object families per setting, per-family cast limits of one to three, five variants, toddler-first automatic palette rotation, exact palette selection, tap placement, revisiting, broad movement, persistent pair relationships, clearer local silhouettes, and one reversible compositional castle story. Preserve immediate default placement and the bounded, reversible scene.
 
 ### Concepts Story Scenes can expose
 
@@ -582,7 +602,7 @@ The child currently receives three settings, four object families per setting, f
 - Add one oversized background selector with three coherent starting scenes.
 - **Garden weather:** flower, friend, cloud, sun.
 - **Town trip:** child, car, bus, home.
-- **Castle tale:** dragon, knight, princess or prince, castle.
+- **Castle tale:** person, horse, armor, dragon; the castle remains in the setting and a royal friend can emerge from a composition.
 - Each background supplies only four large object families and starts with one safe default selected.
 - Changing background starts a new empty scene only after a deliberate, clearly previewed choice; never erase a scene through an incidental tap.
 - Give every scene at least three repeatable relationships unique to its theme.
@@ -593,7 +613,7 @@ The child currently receives three settings, four object families per setting, f
 
 **Gate:** The background control and palette remain large in portrait and short landscape; selection does not crowd the storytelling surface.
 
-**Implementation note:** Story Scenes now loads three validated, local scene packs: Garden weather, Town trip, and Castle tale. Each pack declares exactly four large object families, five visual variants, labels, tones, a safe default, and at least three deterministic theme relationships. A large setting control opens a preview panel; changing scenes requires selecting a different setting and then activating a separate “Start new story” confirmation before the existing scene is cleared. Relationship effects are capped, palette contents follow the setting, and physical-distance, cast, presentation, and relationship invariants are tested.
+**Implementation note:** Story Scenes now loads three validated, local scene packs: Garden weather, Town trip, and Castle tale. Each pack declares exactly four large object families, per-family limits of one to three, five visual variants, labels, tones, a safe default, and at least three deterministic theme relationships. A large setting control opens a preview panel; changing scenes requires selecting a different setting and then activating a separate “Start new story” confirmation before the existing scene is cleared. Relationship effects are capped, palette contents follow the setting, and physical-distance, cast, presentation, family-limit, and relationship invariants are tested.
 
 ### SCN-2 — Stateful, redirectable interactions
 
@@ -634,7 +654,7 @@ The child currently receives three settings, four object families per setting, f
 
 **Gate:** Palette movement must not move the play surface; compositions must be legible with sound off and reduced motion; no ingredient may be consumed, locked, or made difficult to separate.
 
-**Implementation note:** Exact palette selection remains available, but ordinary placement and revisiting now rotate the highlight through each scene's stable four-item cast. Castle tale uses person, horse, armor, and dragon. Pure proximity recipes derive rider, armored hero, armored rider, and royal-rescue tableaux from current positions; moving any ingredient away deterministically reveals the earlier composition or the original pieces. The composite artwork is layered above dimmed-but-touchable ingredients, and the final royal friend emerges as a calm story response. Runtime rendering, touch-device clarity, and child comprehension remain unverified.
+**Implementation note:** Exact palette selection remains available, but ordinary placement and revisiting now rotate the highlight through each scene's stable four-item cast. Each family declares a cap of one to three; an excess placement revisits the nearest existing member, so singular anchors stay singular and every visible object remains meaningful and movable. Castle tale uses person, horse, armor, and dragon. Pure proximity recipes derive rider, armored hero, armored rider, and royal-rescue tableaux from current positions; moving any ingredient away deterministically reveals the earlier composition or the original pieces. The dragon now has a more explicit head, eye, wing, body, and curling tail silhouette. The composite artwork is layered above dimmed-but-touchable ingredients, and the final royal friend emerges as a calm story response. Runtime rendering, touch-device clarity, object recognition, and child comprehension remain unverified.
 
 ### SCN-3 — Roles and child-directed sides
 

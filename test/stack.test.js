@@ -28,6 +28,9 @@ test("piece definitions expose construction capabilities", () => {
     for (const name of ["supports", "restsOn", "spans", "covers"]) assert.equal(typeof piece[name], "boolean");
     assert.equal(Array.isArray(piece.nestsWith), true);
   }
+  const beam = STACK_PIECES.find(({ kind }) => kind === "beam");
+  const otherWidths = STACK_PIECES.filter(({ kind }) => kind !== "beam").map(({ width }) => width);
+  assert.ok(beam.width >= Math.max(...otherWidths) * 1.5);
 });
 
 test("five optional pictorial ideas are stable and uniquely identified", () => {
@@ -93,6 +96,16 @@ test("a beam spans two forgiving supports and a roof recognizes shelter", () => 
   assert.ok(structuresFor(roof.state).some((structure) => ["shelter", "enclosure"].includes(structure.type)));
 });
 
+test("a broad beam drop finds a nearby compatible support pair", () => {
+  let state = settlePiece(createStackState(), "berry", { x: 0.31, y: 0.72 }).state;
+  state = settlePiece(state, "nest", { x: 0.67, y: 0.72 }).state;
+  const bridge = settlePiece(state, "sky", { x: 0.67, y: 0.43 });
+  assert.equal(bridge.settledAs, "bridge");
+  assert.equal(bridge.piece.x, 0.49);
+  assert.ok(bridge.structures.some(({ type }) => type === "bridge"));
+  assert.deepEqual(unintendedOverlapsFor(bridge.state), []);
+});
+
 test("idea matching recognizes broad structural relationships without changing state", () => {
   const initial = createStackState();
   let bridgeState = settlePiece(initial, "berry", { x: 0.38, y: 0.7 }).state;
@@ -113,8 +126,8 @@ test("idea matching accepts multiple stack and row arrangements", () => {
   tower = settlePiece(tower, "leaf", { x: 0.5, y: 0.3 }).state;
   assert.equal(matchesStackIdea(tower, "tower"), true);
 
-  let row = settlePiece(createStackState(), "berry", { x: 0.3, y: 0.7 }).state;
-  row = settlePiece(row, "sky", { x: 0.52, y: 0.7 }).state;
+  let row = settlePiece(createStackState(), "berry", { x: 0.2, y: 0.7 }).state;
+  row = settlePiece(row, "sky", { x: 0.46, y: 0.7 }).state;
   row = settlePiece(row, "nest", { x: 0.78, y: 0.7 }).state;
   assert.equal(matchesStackIdea(row, "beside"), true);
   assert.throws(() => matchesStackIdea(row, "missing"), RangeError);
@@ -141,8 +154,8 @@ test("orientation changes reflow collisions without losing any piece", () => {
 });
 
 test("nearby floor pieces form a side-by-side relation", () => {
-  let state = settlePiece(createStackState(), "berry", { x: 0.35, y: 0.7 }).state;
-  state = settlePiece(state, "sky", { x: 0.56, y: 0.7 }).state;
+  let state = settlePiece(createStackState(), "berry", { x: 0.3, y: 0.7 }).state;
+  state = settlePiece(state, "sky", { x: 0.58, y: 0.7 }).state;
   assert.ok(relationshipsFor(state, "berry").some((relation) => relation.type === "beside"));
 });
 

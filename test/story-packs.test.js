@@ -27,3 +27,12 @@ test("every selectable story ingredient has a local palette and CSS-drawn art", 
     }
   }
 });
+
+test("story packs declare small cast limits with singular anchors", () => {
+  const limits = Object.fromEntries(STORY_PACKS.flatMap(({ cast }) => cast.map(({ kind, limit }) => [kind, limit])));
+  assert.deepEqual(limits, {
+    flower: 3, friend: 3, cloud: 3, sun: 1,
+    child: 3, car: 2, bus: 1, home: 2,
+    person: 2, horse: 1, armor: 1, dragon: 1,
+  });
+});

@@ -2,10 +2,10 @@ export const FLOOR_Y = 0.79;
 export const BUILD_TOP = 0.12;
 
 export const STACK_PIECES = Object.freeze([
-  Object.freeze({ id: "berry", kind: "block", width: 0.17, height: 0.17, tone: 392.0, supports: true, restsOn: true, spans: false, covers: false, nestsWith: Object.freeze([]) }),
-  Object.freeze({ id: "sky", kind: "beam", width: 0.25, height: 0.13, tone: 440.0, supports: true, restsOn: true, spans: true, covers: false, nestsWith: Object.freeze([]) }),
+  Object.freeze({ id: "berry", kind: "block", width: 0.14, height: 0.18, tone: 392.0, supports: true, restsOn: true, spans: false, covers: false, nestsWith: Object.freeze([]) }),
+  Object.freeze({ id: "sky", kind: "beam", width: 0.38, height: 0.12, tone: 440.0, supports: true, restsOn: true, spans: true, covers: false, nestsWith: Object.freeze([]) }),
   Object.freeze({ id: "sunny", kind: "ball", width: 0.15, height: 0.15, tone: 523.25, supports: false, restsOn: true, spans: false, covers: false, nestsWith: Object.freeze(["nest"]) }),
-  Object.freeze({ id: "nest", kind: "nest", width: 0.25, height: 0.19, tone: 349.23, supports: true, restsOn: true, spans: false, covers: false, nestsWith: Object.freeze(["ball"]) }),
+  Object.freeze({ id: "nest", kind: "nest", width: 0.21, height: 0.19, tone: 349.23, supports: true, restsOn: true, spans: false, covers: false, nestsWith: Object.freeze(["ball"]) }),
   Object.freeze({ id: "leaf", kind: "roof", width: 0.21, height: 0.16, tone: 466.16, supports: false, restsOn: true, spans: true, covers: true, nestsWith: Object.freeze([]) })
 ]);
 
@@ -323,19 +323,31 @@ export function settlePiece(state, id, point, layout) {
     .sort((left, right) => layoutDistance({ x, y: point.y }, left, layout)
       - layoutDistance({ x, y: point.y }, right, layout))[0];
 
-  const spanSupports = moving.spans ? others.filter((other) => other.supports && point.y < other.y)
-    .filter((other) => Math.abs(other.x - x) <= movingSize.width * 0.75)
-    .sort((left, right) => left.x - right.x) : [];
-  const leftSupport = [...spanSupports].reverse().find((other) => other.x < x);
-  const rightSupport = spanSupports.find((other) => other.x > x);
   const levelTolerance = (0.11 * metrics.unit) / metrics.height;
+  const spanSupports = moving.spans ? others.filter((other) => other.supports && point.y < other.y)
+    .sort((left, right) => left.x - right.x) : [];
+  const supportPairs = [];
+  for (let leftIndex = 0; leftIndex < spanSupports.length; leftIndex += 1) {
+    for (let rightIndex = leftIndex + 1; rightIndex < spanSupports.length; rightIndex += 1) {
+      const left = spanSupports[leftIndex];
+      const right = spanSupports[rightIndex];
+      const separation = right.x - left.x;
+      const midpoint = (left.x + right.x) / 2;
+      if (Math.abs(left.y - right.y) > levelTolerance
+        || separation < movingSize.width * 0.32 || separation > movingSize.width * 1.08
+        || Math.abs(midpoint - x) > movingSize.width * 0.82) continue;
+      supportPairs.push({ left, right, midpoint, score: Math.abs(midpoint - x) + Math.abs(left.y - right.y) });
+    }
+  }
+  supportPairs.sort((first, second) => first.score - second.score || first.left.x - second.left.x);
+  const bridgePair = supportPairs[0];
 
-  if (leftSupport && rightSupport && Math.abs(leftSupport.y - rightSupport.y) <= levelTolerance) {
-    x = (leftSupport.x + rightSupport.x) / 2;
-    const supportTop = Math.min(leftSupport.y - dimensions(leftSupport, layout).height / 2, rightSupport.y - dimensions(rightSupport, layout).height / 2);
+  if (bridgePair) {
+    x = bridgePair.midpoint;
+    const supportTop = Math.min(bridgePair.left.y - dimensions(bridgePair.left, layout).height / 2, bridgePair.right.y - dimensions(bridgePair.right, layout).height / 2);
     y = Math.max(BUILD_TOP + movingSize.height / 2, supportTop - movingSize.height / 2);
     settledAs = moving.covers ? "enclosure" : "bridge";
-    ignoredCollisionIds = new Set([leftSupport.id, rightSupport.id]);
+    ignoredCollisionIds = new Set([bridgePair.left.id, bridgePair.right.id]);
   } else if (nestingPartner && layoutDistance({ x, y: point.y }, nestingPartner, layout) < 0.24) {
     x = nestingPartner.x;
     y = nestingPartner.y + (moving.kind === "ball" ? 0.015 : -0.015);

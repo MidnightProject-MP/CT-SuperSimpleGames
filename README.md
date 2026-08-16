@@ -22,7 +22,7 @@ The broader interaction landscape and third-game decision are recorded in [docs/
 
 ### Bloom
 
-Bloom is a relational color garden. Tapping or dragging empty space creates bright flowers and soft musical tones; revisiting one moves it through a circular growth story, and nearby flowers form visible connections and lean toward one another. There are no scores, timers, mistakes, ads, accounts, or links away from the experience.
+Bloom is a relational color garden. Tapping or dragging empty space creates bright flowers and soft musical tones; revisiting one moves it through a circular growth story, and nearby flowers form visible connections and lean toward one another. Three nearby matching-color flowers merge into a bouquet, and three matching bouquets can become one flowering tree, keeping dense gardens legible without an endless upgrade ladder. There are no scores, timers, mistakes, ads, accounts, or links away from the experience.
 
 ### Color Splash
 
@@ -34,11 +34,11 @@ Peekaboo Pockets is an open-and-close search game. A large visual target invites
 
 ### Stack & Settle
 
-Stack & Settle is a no-fail construction toy with five oversized reusable pieces. Tapping places or rearranges a piece, while broad dragging offers direct control. Pieces magnetically settle on the floor, stack, sit side by side, nest, or form forgiving bridges, shelters, and enclosures. Every arrangement remains movable and there is nothing to complete.
+Stack & Settle is a no-fail construction toy with five oversized reusable pieces. Tapping places or rearranges a piece, while broad dragging offers direct control. Pieces magnetically settle on the floor, stack, sit side by side, nest, or form forgiving bridges, shelters, and enclosures. The bridge beam is visibly longer and can find a nearby pair of supports from a broad drop. Every arrangement remains movable and there is nothing to complete.
 
 ### Story Scenes
 
-Story Scenes is a symbolic storytelling world with garden, town, and castle settings. Each supplies four large object families, tap-anywhere placement, five predictable variants, revisitable objects, broad movement, and repeatable theme relationships. Changing the setting requires an explicit preview and confirmation so an incidental tap cannot erase a story. It is available for testing but is not yet child-validated.
+Story Scenes is a symbolic storytelling world with garden, town, and castle settings. Each supplies four large object families, automatic palette rotation, five predictable variants, a small per-family cast limit, revisitable objects, broad movement, and repeatable theme relationships. Castle ingredients can form reversible rider, armor, and royal-reunion tableaux. Changing the setting requires an explicit preview and confirmation so an incidental tap cannot erase a story. It is available for testing but is not yet child-validated.
 
 ### Together Tones
 

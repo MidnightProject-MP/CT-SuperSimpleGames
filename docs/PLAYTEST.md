@@ -24,8 +24,9 @@ Allow up to eight minutes of free exploration, ending sooner whenever the child 
 2. If the child has not touched it after about 30 seconds, offer once: “You can touch it if you want.”
 3. Do not coach, correct, praise performance, demonstrate a goal, or coax continued play.
 4. Observe ordinary, missed, repeated, palm, simultaneous, and dragging touches as they occur naturally. Note whether the child touches an existing flower or places flowers near one another. Do not manufacture stress.
-5. If the child remains comfortable, the caregiver may offer sound-off once. Do not force a comparison.
-6. End when the child turns away, leaves, pushes the device away, signals “done,” or ignores it for roughly 20–30 seconds.
+5. If a bouquet or flowering tree appears naturally, do not explain it. Observe whether the child pauses, touches it, or later attempts another nearby trio.
+6. If the child remains comfortable, the caregiver may offer sound-off once. Do not force a comparison.
+7. End when the child turns away, leaves, pushes the device away, signals “done,” or ignores it for roughly 20–30 seconds.
 
 Optionally make Bloom available once more 24–72 hours later for no more than three minutes. Say only “Bloom is here.” Record voluntary interest; do not remind, reward, or persuade.
 
@@ -50,6 +51,9 @@ Record facts and direct caregiver language. Avoid interpreting intent during the
 | Existing flower intentionally revisited? | |
 | Near/far placement or visible connection noticed? | |
 | Connected-flower response intentionally repeated? | |
+| Bouquet or flowering tree encountered? | |
+| Merge appeared understandable rather than destructive? | |
+| Another compatible trio attempted afterward? | |
 | Apparent failure or frustration | |
 | Sensory comfort or concern | |
 | Why and when the session stopped | |

@@ -96,15 +96,16 @@ test("castle ingredients form reversible rider, armor, and royal-rescue composit
   assert.deepEqual(compositionsForScene(state), []);
 });
 
-test("placements cycle five variants and stay inside broad scene bounds", () => {
-  let state = createSceneState();
-  const variants = [];
-  for (let index = 0; index < VARIANT_COUNT + 1; index += 1) {
-    const result = placeSceneObject(state, { x: index % 2 ? 4 : -3, y: index % 2 ? 7 : -2 });
+test("placements stay in bounds and repeated touches cycle five variants", () => {
+  const placed = placeSceneObject(createSceneState(), { x: -3, y: 7 });
+  assert.ok(placed.object.x >= 0.08 && placed.object.x <= 0.92);
+  assert.ok(placed.object.y >= 0.16 && placed.object.y <= 0.88);
+  let state = placed.state;
+  const variants = [placed.object.variant];
+  for (let index = 0; index < VARIANT_COUNT; index += 1) {
+    const result = touchSceneObject(state, placed.object.id);
     state = result.state;
     variants.push(result.object.variant);
-    assert.ok(result.object.x >= 0.08 && result.object.x <= 0.92);
-    assert.ok(result.object.y >= 0.16 && result.object.y <= 0.88);
   }
   assert.deepEqual(variants, [0, 1, 2, 3, 4, 0]);
 });
@@ -191,17 +192,18 @@ test("two nearby friends greet but a distant friend stays independent", () => {
   assert.equal(greetings.length, 1);
 });
 
-test("the object limit revisits a nearby selected object instead of erasing work", () => {
+test("per-family limits revisit nearby objects instead of cluttering or erasing work", () => {
   let state = createSceneState();
-  for (let index = 0; index < MAX_SCENE_OBJECTS; index += 1) {
-    state = placeSceneObject(state, { x: 0.1 + ((index % 8) * 0.1), y: 0.25 + (Math.floor(index / 8) * 0.4) }).state;
+  for (let index = 0; index < 3; index += 1) {
+    state = placeSceneObject(state, { x: 0.2 + (index * 0.25), y: 0.55 }).state;
   }
   const before = state.objects.map(({ id }) => id);
-  const result = placeSceneObject(state, { x: 0.1, y: 0.25 });
-  assert.equal(result.state.objects.length, MAX_SCENE_OBJECTS);
+  const result = placeSceneObject(state, { x: 0.2, y: 0.55 });
+  assert.equal(result.state.objects.length, 3);
   assert.deepEqual(result.state.objects.map(({ id }) => id), before);
   assert.equal(result.action, "changed");
   assert.equal(result.object.visits, 1);
+  assert.ok(result.state.objects.length < MAX_SCENE_OBJECTS);
 });
 
 test("invalid states, IDs, and coordinates are rejected", () => {

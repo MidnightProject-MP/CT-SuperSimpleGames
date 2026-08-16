@@ -50,12 +50,16 @@ function normalizeState(state) {
   if (state.objects.length > MAX_SCENE_OBJECTS) throw new RangeError("story scene exceeds its object limit");
 
   const ids = new Set();
+  const kindCounts = new Map();
   const objects = state.objects.map((object) => {
     if (!object || typeof object.id !== "string" || ids.has(object.id)) {
       throw new TypeError("story scene contains an invalid object");
     }
     ids.add(object.id);
-    storyCastItem(pack, object.kind);
+    const castItem = storyCastItem(pack, object.kind);
+    const kindCount = (kindCounts.get(object.kind) || 0) + 1;
+    if (kindCount > castItem.limit) throw new RangeError(`story scene exceeds the ${object.kind} limit`);
+    kindCounts.set(object.kind, kindCount);
     if (!Number.isInteger(object.variant) || object.variant < 0 || object.variant >= VARIANT_COUNT) {
       throw new RangeError("story scene variant is out of range");
     }
@@ -276,6 +280,13 @@ export function moveSceneObject(state, id, point, layout) {
 export function placeSceneObject(state, point, layout) {
   const current = normalizeState(state);
   const position = normalizePoint(point);
+
+  const selectedObjects = current.objects.filter((object) => object.kind === current.selected);
+  const selectedLimit = storyCastItem(getStoryPack(current.sceneId), current.selected).limit;
+  if (selectedObjects.length >= selectedLimit) {
+    const nearest = [...selectedObjects].sort((left, right) => distance(left, position, layout) - distance(right, position, layout))[0];
+    return touchSceneObject(state, nearest.id, layout);
+  }
 
   if (current.objects.length >= MAX_SCENE_OBJECTS) {
     const preferred = current.objects.filter((object) => object.kind === current.selected);

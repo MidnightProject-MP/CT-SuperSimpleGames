@@ -1,7 +1,7 @@
 export const STORY_VARIANT_COUNT = 5;
 
-function cast(kind, label, plural, tone) {
-  return Object.freeze({ kind, label, plural, tone, variants: STORY_VARIANT_COUNT });
+function cast(kind, label, plural, tone, limit) {
+  return Object.freeze({ kind, label, plural, tone, limit, variants: STORY_VARIANT_COUNT });
 }
 
 function relationship(first, second, type, active, paused, reversed) {
@@ -29,8 +29,8 @@ function pack(id, label, defaultKind, castItems, relationships) {
 
 export const STORY_PACKS = Object.freeze([
   pack("garden", "Garden weather", "flower", [
-    cast("flower", "flower", "Flowers", 523.25), cast("friend", "friend", "Friends", 440),
-    cast("cloud", "cloud", "Clouds", 349.23), cast("sun", "sun", "Suns", 659.25)
+    cast("flower", "flower", "Flowers", 523.25, 3), cast("friend", "friend", "Friends", 440, 3),
+    cast("cloud", "cloud", "Clouds", 349.23, 3), cast("sun", "sun", "Suns", 659.25, 1)
   ], [
     relationship("sun", "cloud", "rainbow", "A rainbow appeared!", "The rainbow is resting.", "The rainbow bends the other way!"),
     relationship("cloud", "flower", "watered", "The flower grows in the rain!", "The raindrops are waiting.", "The flower curls up to rest."),
@@ -38,8 +38,8 @@ export const STORY_PACKS = Object.freeze([
     relationship("friend", "friend", "greeting", "The friends walk together!", "The friends wait together.", "The friends turn the other way!")
   ]),
   pack("town", "Town trip", "child", [
-    cast("child", "child", "Children", 440), cast("car", "car", "Cars", 392),
-    cast("bus", "bus", "Buses", 349.23), cast("home", "home", "Homes", 523.25)
+    cast("child", "child", "Children", 440, 3), cast("car", "car", "Cars", 392, 2),
+    cast("bus", "bus", "Buses", 349.23, 1), cast("home", "home", "Homes", 523.25, 2)
   ], [
     relationship("child", "car", "riding", "Ready for a car ride!", "The car waits for its rider.", "The car turns back!"),
     relationship("child", "bus", "riding", "All aboard the bus!", "The bus waits at the stop.", "The bus takes the return trip!"),
@@ -47,8 +47,8 @@ export const STORY_PACKS = Object.freeze([
     relationship("bus", "home", "arrived", "The bus stops at home!", "The bus waits by the home.", "The bus starts the return trip!")
   ]),
   pack("castle", "Castle tale", "person", [
-    cast("person", "person", "People", 392), cast("horse", "horse", "Horses", 349.23),
-    cast("armor", "armor", "Armor", 523.25), cast("dragon", "dragon", "Dragons", 311.13)
+    cast("person", "person", "People", 392, 2), cast("horse", "horse", "Horses", 349.23, 1),
+    cast("armor", "armor", "Armor", 523.25, 1), cast("dragon", "dragon", "Dragons", 311.13, 1)
   ], [
     relationship("person", "horse", "riding", "The person climbs onto the horse!", "Horse and rider take a rest.", "Horse and rider turn around!"),
     relationship("person", "armor", "armored", "The person puts on the armor!", "The shiny armor rests.", "The armor opens again!"),
@@ -63,7 +63,8 @@ export function validateStoryPack(value) {
   const kinds = new Set(value.cast.map(({ kind }) => kind));
   if (kinds.size !== 4 || !kinds.has(value.defaultKind)) throw new RangeError("story pack cast identities or default are invalid");
   for (const item of value.cast) {
-    if (!item.label || !item.plural || item.variants !== STORY_VARIANT_COUNT || !Number.isFinite(item.tone)) throw new TypeError("story cast presentation is incomplete");
+    if (!item.label || !item.plural || item.variants !== STORY_VARIANT_COUNT || !Number.isFinite(item.tone)
+      || !Number.isInteger(item.limit) || item.limit < 1 || item.limit > 3) throw new TypeError("story cast presentation is incomplete");
   }
   if (!Array.isArray(value.relationships) || value.relationships.length < 3) throw new RangeError("story pack needs three relationships");
   for (const relation of value.relationships) {

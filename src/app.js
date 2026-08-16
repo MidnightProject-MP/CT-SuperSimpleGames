@@ -1,5 +1,6 @@
 import {
   BLOOM_STAGES,
+  BLOOM_TIERS,
   COLORS,
   MAX_BLOOMS,
   MAX_SPARKS,
@@ -12,6 +13,7 @@ import {
   nearestBloom,
   neighborDistanceForLayout,
   planGardenInteraction,
+  planGardenMerge,
   moveGardenVisitor
 } from "./game.js";
 import { createTonePlayer } from "./audio.js";
@@ -110,6 +112,7 @@ function makeFlower(bloom) {
   flower.dataset.size = String(bloom.size);
   flower.dataset.id = String(bloom.id);
   flower.dataset.stage = String(bloom.stage);
+  flower.dataset.tier = String(bloom.tier || 0);
   flower.setAttribute("role", "presentation");
 
   for (let i = 0; i < bloom.petals; i += 1) {
@@ -133,6 +136,12 @@ function makeFlower(bloom) {
   seeds.className = "seed-dots";
   seeds.setAttribute("aria-hidden", "true");
   flower.append(seeds);
+
+  const mergeGrowth = document.createElement("span");
+  mergeGrowth.className = "merge-growth";
+  mergeGrowth.setAttribute("aria-hidden", "true");
+  mergeGrowth.append(document.createElement("i"), document.createElement("i"), document.createElement("i"));
+  flower.append(mergeGrowth);
   return flower;
 }
 
@@ -144,6 +153,7 @@ function updateFlower(flower, bloom) {
   flower.dataset.y = String(bloom.y);
   flower.dataset.size = String(bloom.size);
   flower.dataset.stage = String(bloom.stage);
+  flower.dataset.tier = String(bloom.tier || 0);
 }
 
 function updateLink(link) {
@@ -238,6 +248,14 @@ function createAt(x, y) {
   bloomElements.set(bloom.id, flower);
   blooms.append(flower);
   addSparkles(bloom);
+  const merged = mergeNearbyBlooms();
+  if (merged) {
+    renderNeighborhoods();
+    const tier = BLOOM_TIERS[merged.tier];
+    announcement.textContent = `${merged.mergedCount} flowers became a ${tier.label}!`;
+    tonePlayer.play(merged.color.tone * (1 + merged.tier * 0.14));
+    return;
+  }
   const neighborhoods = renderNeighborhoods();
   if (neighbor) {
     const relationship = neighborhoods.links.find(({ first, second }) => (
@@ -254,6 +272,33 @@ function createAt(x, y) {
   tonePlayer.play(bloom.color.tone);
 }
 
+function mergeNearbyBlooms() {
+  let finalBloom = null;
+  let plan = planGardenMerge(gardenBlooms.values(), neighborDistanceForLayout(garden.clientWidth, garden.clientHeight), {
+    width: garden.clientWidth,
+    height: garden.clientHeight,
+  });
+  while (plan) {
+    for (const id of plan.ids) {
+      gardenBlooms.delete(id);
+      bloomElements.get(id)?.remove();
+      bloomElements.delete(id);
+    }
+    gardenBlooms.set(plan.bloom.id, plan.bloom);
+    const flower = makeFlower(plan.bloom);
+    flower.classList.add("merged");
+    bloomElements.set(plan.bloom.id, flower);
+    blooms.append(flower);
+    addSparkles(plan.bloom);
+    finalBloom = plan.bloom;
+    plan = planGardenMerge(gardenBlooms.values(), neighborDistanceForLayout(garden.clientWidth, garden.clientHeight), {
+      width: garden.clientWidth,
+      height: garden.clientHeight,
+    });
+  }
+  return finalBloom;
+}
+
 function tendBloom(id) {
   const current = gardenBlooms.get(id);
   if (!current) return;
@@ -266,7 +311,8 @@ function tendBloom(id) {
   addSparkles(bloom);
   const stage = BLOOM_STAGES[bloom.stage];
   const inCanopy = neighborhoods.canopies.some(({ ids }) => ids.includes(bloom.id));
-  announcement.textContent = `${bloom.color.name} flower, ${stage.label}${inCanopy ? ", under a shared canopy" : ""}`;
+  const tier = BLOOM_TIERS[bloom.tier || 0];
+  announcement.textContent = `${bloom.color.name} ${tier.label}, ${stage.label}${inCanopy ? ", under a shared canopy" : ""}`;
   tonePlayer.play(bloom.color.tone * stage.toneFactor);
 }
 

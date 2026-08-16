@@ -15,8 +15,9 @@ Allow up to five minutes, ending immediately when the child disengages or shows 
 3. If needed, offer once: “You can touch a piece.” Do not demonstrate an arrangement.
 4. Observe whether the child taps, drags, or uses both. Tap-only play is complete and should not be treated as a lesser strategy.
 5. Observe whether magnetic movement to the floor, another piece, or the nest remains understandable.
-6. Do not correct arrangements, rebuild a fallen tower, ask for a named structure, or praise height or precision.
-7. The caregiver may take one natural turn if invited by the child. Record whether turn-taking emerges without becoming instruction.
+6. If two broad supports appear, observe whether the child brings the visibly longer beam near them and whether bridge snapping helps without surprising them. Do not suggest a bridge.
+7. Do not correct arrangements, rebuild a fallen tower, ask for a named structure, or praise height or precision.
+8. The caregiver may take one natural turn if invited by the child. Record whether turn-taking emerges without becoming instruction.
 
 ## Observation sheet
 
@@ -32,6 +33,9 @@ Allow up to five minutes, ending immediately when the child disengages or shows 
 | Side-by-side relationship explored? | |
 | Stack relationship explored? | |
 | Ball-and-nest relationship explored? | |
+| Longer beam recognized as a spanning piece? | |
+| Bridge formed or attempted without coaching? | |
+| Bridge snap helped rather than relocated unexpectedly? | |
 | Magnetic settling appeared helpful or surprising? | |
 | Caregiver turn-taking arose naturally? | |
 | Apparent rejection, collapse, or frustration | |
@@ -54,4 +58,3 @@ Hold and revise before deepening the mechanic unless:
 - caregivers describe arranging, moving, nesting, building, or taking turns rather than correctness or performance.
 
 Compare the distinct agency of revising an arrangement with the creation, transformation, and search interactions in the other games. Do not optimize tower height, number of moves, completion, or session duration.
-

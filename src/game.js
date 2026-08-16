@@ -6,6 +6,13 @@ export const MAX_SPARKS = 24;
 export const MAX_GARDEN_LINKS = 32;
 export const MAX_GARDEN_CANOPIES = 4;
 export const GARDEN_VISITOR_TOUCHES = 4;
+export const MAX_BLOOM_TIER = 2;
+
+export const BLOOM_TIERS = Object.freeze([
+  Object.freeze({ name: "flower", label: "flower" }),
+  Object.freeze({ name: "bouquet", label: "three-flower bouquet" }),
+  Object.freeze({ name: "tree", label: "flowering tree" })
+]);
 
 export const BLOOM_STAGES = Object.freeze([
   Object.freeze({ name: "fresh", label: "fresh bloom", toneFactor: 1 }),
@@ -45,9 +52,65 @@ export function createBloom(index, x, y, width, height) {
     baseSize: size,
     petals: 5 + (index % 4),
     color,
+    tier: 0,
+    mergedCount: 1,
+    sourceIds: Object.freeze([index]),
     stage: 0,
     visits: 0
   };
+}
+
+export function planGardenMerge(items, maxDistance, { width, height } = {}) {
+  if (!Number.isFinite(maxDistance) || maxDistance <= 0) throw new RangeError("merge distance must be positive");
+  const blooms = [...items].sort((left, right) => left.id - right.id);
+  for (const bloom of blooms) {
+    const tier = bloom?.tier ?? 0;
+    if (!bloom || !Number.isInteger(bloom.id) || !Number.isFinite(bloom.x) || !Number.isFinite(bloom.y)
+      || !Number.isInteger(tier) || tier < 0 || tier > MAX_BLOOM_TIER || !bloom.color) {
+      throw new TypeError("merge planning requires valid garden blooms");
+    }
+  }
+  const distance = (first, second) => Math.hypot(first.x - second.x, first.y - second.y);
+  for (let firstIndex = 0; firstIndex < blooms.length; firstIndex += 1) {
+    const first = blooms[firstIndex];
+    const tier = first.tier ?? 0;
+    if (tier >= MAX_BLOOM_TIER) continue;
+    for (let secondIndex = firstIndex + 1; secondIndex < blooms.length; secondIndex += 1) {
+      const second = blooms[secondIndex];
+      if ((second.tier ?? 0) !== tier || second.color.name !== first.color.name || distance(first, second) > maxDistance) continue;
+      for (let thirdIndex = secondIndex + 1; thirdIndex < blooms.length; thirdIndex += 1) {
+        const third = blooms[thirdIndex];
+        if ((third.tier ?? 0) !== tier || third.color.name !== first.color.name
+          || distance(first, third) > maxDistance || distance(second, third) > maxDistance) continue;
+        const group = [first, second, third];
+        const nextTier = tier + 1;
+        const size = nextTier === 1 ? 150 : MAX_BLOOM_SIZE;
+        const center = {
+          x: group.reduce((sum, bloom) => sum + bloom.x, 0) / 3,
+          y: group.reduce((sum, bloom) => sum + bloom.y, 0) / 3,
+        };
+        const position = Number.isFinite(width) && Number.isFinite(height)
+          ? clampPosition(center.x, center.y, width, height, size * 0.43)
+          : center;
+        const sourceIds = group.flatMap((bloom) => bloom.sourceIds || [bloom.id]).sort((left, right) => left - right);
+        const bloom = Object.freeze({
+          ...third,
+          ...position,
+          size,
+          baseSize: size,
+          petals: nextTier === 1 ? 9 : 12,
+          color: third.color,
+          tier: nextTier,
+          mergedCount: group.reduce((sum, item) => sum + (item.mergedCount || 1), 0),
+          sourceIds: Object.freeze(sourceIds),
+          stage: 0,
+          visits: 0,
+        });
+        return Object.freeze({ ids: Object.freeze(group.map(({ id }) => id)), bloom });
+      }
+    }
+  }
+  return null;
 }
 
 export function neighborDistanceForLayout(width, height) {

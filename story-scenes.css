@@ -185,7 +185,10 @@ button { font: inherit; }
 .castle-art i { top: 24%; background: var(--object-main); }
 .castle-art b { left: 32%; top: 52%; width: 36%; height: 40%; border-radius: 18px 18px 0 0; background: var(--object-dark); }
 .dragon-art i { left: 18%; top: 22%; width: 64%; height: 55%; border: 6px solid var(--object-dark); border-radius: 55% 45% 48% 40%; background: var(--object-main); }
-.dragon-art b { left: 5%; top: 40%; width: 42%; height: 35%; background: var(--object-detail); clip-path: polygon(0 50%,100% 0,75% 100%); }
+.dragon-art i::before { content: ""; position: absolute; right: -24%; top: -28%; width: 48%; height: 52%; border: 5px solid var(--object-dark); border-radius: 58% 48% 52% 44%; background: var(--object-main); box-shadow: inset -5px -3px var(--object-detail); }
+.dragon-art i::after { content: ""; position: absolute; left: -42%; bottom: -7%; width: 55%; height: 32%; border: 6px solid var(--object-dark); border-right: 0; border-bottom: 0; border-radius: 100% 0 0; transform: rotate(-18deg); }
+.dragon-art b { left: 3%; top: 25%; width: 47%; height: 43%; border: 5px solid var(--object-dark); border-radius: 85% 15% 75% 25%; background: var(--object-detail); clip-path: polygon(0 50%,100% 0,76% 100%); transform: rotate(-14deg); }
+.dragon-art b::before { content: ""; position: absolute; right: -77%; top: -34%; width: 13px; height: 13px; border-radius: 50%; background: white; box-shadow: inset -5px 0 var(--object-dark); }
 
 .related-watered.flower-object { animation: flower-drink 520ms ease-out; }
 .related-warmed.flower-object { filter: drop-shadow(0 0 15px rgba(255,221,70,.7)); }

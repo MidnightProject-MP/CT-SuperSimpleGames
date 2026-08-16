@@ -2,9 +2,11 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   BLOOM_STAGES,
+  BLOOM_TIERS,
   COLORS,
   MAX_BLOOMS,
   GARDEN_VISITOR_TOUCHES,
+  MAX_BLOOM_TIER,
   NEIGHBOR_DISTANCE,
   clampPosition,
   createBloom,
@@ -14,6 +16,7 @@ import {
   nearestBloom,
   neighborDistanceForLayout,
   planGardenInteraction,
+  planGardenMerge,
   moveGardenVisitor,
   trimToLimit
 } from "../src/game.js";
@@ -80,8 +83,53 @@ test("createBloom cycles colors and varies size and petal count predictably", ()
   assert.ok(first.size >= 92 && first.size <= 140);
   assert.ok(first.petals >= 5 && first.petals <= 8);
   assert.equal(first.stage, 0);
+  assert.equal(first.tier, 0);
+  assert.equal(first.mergedCount, 1);
+  assert.deepEqual(first.sourceIds, [0]);
   assert.equal(first.baseSize, first.size);
   assert.equal(first.visits, 0);
+});
+
+test("three nearby peers merge into a bounded new garden tier", () => {
+  const flowers = [
+    createBloom(0, 180, 200, 500, 500),
+    createBloom(COLORS.length, 240, 200, 500, 500),
+    createBloom(COLORS.length * 2, 210, 250, 500, 500),
+  ];
+  const bouquet = planGardenMerge(flowers, 90, { width: 500, height: 500 });
+  assert.deepEqual(bouquet.ids, [0, COLORS.length, COLORS.length * 2]);
+  assert.equal(bouquet.bloom.tier, 1);
+  assert.equal(bouquet.bloom.mergedCount, 3);
+  assert.deepEqual(bouquet.bloom.sourceIds, [0, COLORS.length, COLORS.length * 2]);
+  assert.equal(BLOOM_TIERS[bouquet.bloom.tier].name, "bouquet");
+  assert.equal(Object.isFrozen(bouquet.bloom), true);
+
+  const bouquets = [
+    bouquet.bloom,
+    { ...bouquet.bloom, id: 5, x: 270, sourceIds: Object.freeze([3, 4, 5]) },
+    { ...bouquet.bloom, id: 8, x: 225, y: 270, sourceIds: Object.freeze([6, 7, 8]) },
+  ];
+  const tree = planGardenMerge(bouquets, 100, { width: 500, height: 500 });
+  assert.equal(tree.bloom.tier, MAX_BLOOM_TIER);
+  assert.equal(tree.bloom.mergedCount, 9);
+  assert.equal(BLOOM_TIERS[tree.bloom.tier].name, "tree");
+  assert.equal(planGardenMerge([tree.bloom, tree.bloom, tree.bloom], 100), null);
+});
+
+test("garden merging requires three mutually nearby objects of one tier", () => {
+  const flowers = [
+    createBloom(0, 80, 80, 500, 500),
+    createBloom(1, 140, 80, 500, 500),
+    createBloom(2, 400, 400, 500, 500),
+  ];
+  assert.equal(planGardenMerge(flowers, 90), null);
+  assert.equal(planGardenMerge([flowers[0], flowers[1], { ...flowers[2], x: 110, y: 130, tier: 1 }], 90), null);
+  assert.equal(planGardenMerge([
+    flowers[0],
+    { ...flowers[1], x: 110, y: 80 },
+    { ...flowers[2], x: 100, y: 130, color: COLORS[1] },
+  ], 90), null);
+  assert.throws(() => planGardenMerge(flowers, 0), RangeError);
 });
 
 test("trimToLimit retains the newest blooms", () => {

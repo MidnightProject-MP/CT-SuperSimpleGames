@@ -30,6 +30,8 @@ Allow up to five minutes and stop immediately when the child disengages or shows
 | Continued with default flowers? | |
 | Automatic highlight change noticed or followed? | |
 | Repeated scene taps produced useful variety? | |
+| Family limit revisited an existing object without confusion? | |
+| Singular anchors remained individually meaningful and movable? | |
 | Selected another family without demonstration? | |
 | Selection visibly carried into the next placement? | |
 | Touched an existing object? | |
@@ -37,6 +39,7 @@ Allow up to five minutes and stop immediately when the child disengages or shows
 | Encountered a relationship? Which one? | |
 | Repeated or tested a relationship intentionally? | |
 | In Castle tale, encountered a rider, armor, or rescue composition? | |
+| Dragon, horse, armor, and person silhouettes recognized or named? | |
 | Brought ingredients together or separated them intentionally? | |
 | Caregiver language or turn-taking arose naturally? | |
 | Palette obscured play or created accidental selection? | |
