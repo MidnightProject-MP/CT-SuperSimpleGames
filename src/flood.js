@@ -150,6 +150,21 @@ export function resolveFloodChoice(board, selectedIndex) {
   };
 }
 
+export function planReversibleFloodChoice(board, selectedIndex) {
+  const previousBoard = createBoard(board);
+  const result = resolveFloodChoice(previousBoard, selectedIndex);
+  return Object.freeze({ ...result, previousBoard: result.moved ? previousBoard : null });
+}
+
+export function restoreFloodBoard(current, previous) {
+  const active = createBoard(current);
+  const restored = createBoard(previous);
+  if (active.width !== restored.width || active.height !== restored.height || active.colorCount !== restored.colorCount) {
+    throw new RangeError("previous board must match the active board shape");
+  }
+  return restored;
+}
+
 export function isSolved(board) {
   const current = createBoard(board);
   return current.cells.every((color) => color === current.cells[0]);

@@ -133,6 +133,7 @@ button { font: inherit; }
 }
 
 .color-board.teaching-board .cell-symbol { font-size: clamp(36px, 13vw, 70px); }
+.color-board.has-undo { --board-size: min(88vw, calc(100svh - 225px), 420px); }
 
 .color-cell {
   position: relative;
@@ -160,6 +161,8 @@ button { font: inherit; }
 
 .cell-symbol { font-size: clamp(22px, 7vw, 42px); line-height: 1; text-shadow: 0 3px rgba(45,30,90,.14); }
 .color-cell.captured { box-shadow: inset 0 0 0 4px rgba(255,255,255,.62), inset 0 -6px rgba(44,28,100,.12), 0 3px 5px rgba(45,35,90,.16); }
+.color-cell.preview-captured { box-shadow: inset 0 0 0 7px rgba(255,255,255,.78), inset 0 -6px rgba(44,28,100,.12), 0 3px 5px rgba(45,35,90,.16); }
+.color-cell.preview-choice { filter: brightness(1.13); }
 .color-cell.anchor { z-index: 2; outline: 4px solid white; outline-offset: -4px; }
 .color-cell.anchor::before {
   content: "✦";
@@ -234,6 +237,10 @@ button { font: inherit; }
   cursor: pointer;
   pointer-events: auto;
 }
+.undo-move { display: flex; min-height: 58px; margin-top: 14px; padding: 8px 20px; gap: 8px; align-items: center; border: 3px solid white; border-radius: 999px; color: #312166; background: rgba(255,255,255,.88); box-shadow: 0 5px 0 rgba(73,53,168,.28); cursor: pointer; }
+.undo-move[hidden] { display: none; }
+.undo-move span:first-child { font-size: 30px; }
+.undo-move:focus-visible { outline: 5px solid #312166; outline-offset: 4px; }
 
 .new-board:active { transform: translateY(3px); box-shadow: 0 2px 0 #4935a8; }
 .new-board:focus-visible { outline: 5px solid #312166; outline-offset: 4px; }

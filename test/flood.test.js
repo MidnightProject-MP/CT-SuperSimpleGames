@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createBoard, floodFill, floodRegion, generateBoard, isSolved, resolveFloodChoice } from "../src/flood.js";
+import { createBoard, floodFill, floodRegion, generateBoard, isSolved, planReversibleFloodChoice, resolveFloodChoice, restoreFloodBoard } from "../src/flood.js";
 
 function board(cells, width = 3, colorCount = 4) {
   return createBoard({ width, height: cells.length / width, colorCount, cells });
@@ -50,6 +50,17 @@ test("a resolved choice explains its cell, identity, and before-and-after region
   assert.deepEqual(result.captured, [0, 1, 2]);
   assert.deepEqual([...current.cells], [0, 1, 1, 2]);
   assert.throws(() => resolveFloodChoice(current, 4), RangeError);
+});
+
+test("one effective move can be restored exactly once without mutating either board", () => {
+  const current = board([0, 1, 1, 2], 2, 3);
+  const move = planReversibleFloodChoice(current, 1);
+  assert.ok(move.previousBoard);
+  const restored = restoreFloodBoard(move.board, move.previousBoard);
+  assert.deepEqual([...restored.cells], [...current.cells]);
+  assert.notEqual(restored.cells, current.cells);
+  assert.equal(planReversibleFloodChoice(current, 0).previousBoard, null);
+  assert.throws(() => restoreFloodBoard(move.board, board([0, 1, 2, 0, 1, 2], 3, 3)), RangeError);
 });
 
 test("solved state handles single-cell, uniform, and mixed boards", () => {

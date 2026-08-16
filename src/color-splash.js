@@ -1,7 +1,7 @@
 import { createTonePlayer } from "./audio.js";
 import { COLORS } from "./game.js";
 import { nearestTargetIndex } from "./color-input.js";
-import { floodRegion, resolveFloodChoice } from "./flood.js";
+import { floodRegion, planReversibleFloodChoice, resolveFloodChoice, restoreFloodBoard } from "./flood.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { createSplashBoard } from "./splash-boards.js";
 
@@ -14,10 +14,12 @@ const celebration = document.querySelector("#celebration");
 const newBoardButton = document.querySelector("#new-board");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
+const undoButton = document.querySelector("#undo-move");
 
 let board;
 let complete = false;
 let round = 0;
+let previousBoard = null;
 let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 
@@ -85,10 +87,25 @@ function renderBoard(animated = []) {
   }
 }
 
+function clearPreview() {
+  for (const tile of boardElement.querySelectorAll(".preview-captured, .preview-choice")) tile.classList.remove("preview-captured", "preview-choice");
+}
+
+function previewChoice(tile) {
+  if (!tile || complete) return;
+  clearPreview();
+  const result = resolveFloodChoice(board, Number(tile.dataset.index));
+  for (const index of result.captured) boardElement.querySelector(`[data-index="${index}"]`)?.classList.add("preview-captured");
+  tile.classList.add("preview-choice");
+}
+
 function newRound({ playSound = false } = {}) {
   round += 1;
   board = createSplashBoard({ round, seed: nextSeed() });
   complete = false;
+  previousBoard = null;
+  undoButton.hidden = true;
+  boardElement.classList.remove("has-undo");
   prompt.textContent = board.label;
   celebration.hidden = true;
   boardElement.classList.remove("complete");
@@ -143,6 +160,8 @@ function finishRound(colorIndex) {
   prompt.textContent = "All filled!";
   celebration.hidden = false;
   boardElement.classList.add("complete");
+  undoButton.hidden = true;
+  boardElement.classList.remove("has-undo");
   announcement.textContent = "All squares filled. Tap the board for a new one.";
   tonePlayer.play(GRID_COLORS[colorIndex].tone * 1.25);
 }
@@ -157,7 +176,8 @@ boardElement.addEventListener("click", (event) => {
     return;
   }
 
-  const result = resolveFloodChoice(board, Number(tile.dataset.index));
+  clearPreview();
+  const result = planReversibleFloodChoice(board, Number(tile.dataset.index));
   const colorIndex = result.selectedIdentity;
   tonePlayer.play(GRID_COLORS[colorIndex].tone);
   pulseTile(tile);
@@ -172,9 +192,33 @@ boardElement.addEventListener("click", (event) => {
   }
 
   board = result.board;
+  previousBoard = result.previousBoard;
+  undoButton.hidden = false;
+  boardElement.classList.add("has-undo");
   renderBoard(result.captured);
   announcement.textContent = `${GRID_COLORS[colorIndex].name} grows to ${result.captured.length} squares`;
   if (result.solved) finishRound(colorIndex);
+});
+
+boardElement.addEventListener("pointerover", (event) => {
+  if (event.pointerType === "touch") return;
+  previewChoice(event.target.closest(".color-cell"));
+});
+boardElement.addEventListener("pointerleave", clearPreview);
+boardElement.addEventListener("focusin", (event) => previewChoice(event.target.closest(".color-cell")));
+boardElement.addEventListener("focusout", clearPreview);
+
+undoButton.addEventListener("click", () => {
+  if (!previousBoard || complete) return;
+  board = restoreFloodBoard(board, previousBoard);
+  previousBoard = null;
+  undoButton.hidden = true;
+  boardElement.classList.remove("has-undo");
+  clearPreview();
+  renderBoard(floodRegion(board));
+  prompt.textContent = "Try another color";
+  announcement.textContent = "Back one step. Try another color.";
+  tonePlayer.play(GRID_COLORS[board.cells[0]].tone * 0.9);
 });
 
 newBoardButton.addEventListener("click", () => newRound({ playSound: true }));

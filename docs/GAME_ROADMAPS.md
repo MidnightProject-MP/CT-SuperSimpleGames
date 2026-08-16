@@ -241,6 +241,8 @@ The child currently receives a forgiving board touch, a growing corner region, d
 
 ### CS-2 — Reversible planning
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** new puzzle mechanic; Round 2.
 
 - Add one oversized, pictorial “back one step” control after the first effective move.
@@ -253,6 +255,8 @@ The child currently receives a forgiving board touch, a growing corner region, d
 **Learning exposure:** prediction, revision, before/after, and alternative paths.
 
 **Gate:** The back control does not compete with the board’s primary action or become required for completion.
+
+**Implementation note:** After each effective move, one large “Back one” control can restore the exact prior board once, with no score or mistake language. Mouse, pen-hover, and keyboard focus can preview the resulting connected region without changing state; ordinary touch and click still execute immediately. Pure planning and restoration functions copy board storage, validate matching dimensions and identities, and are covered by immutability tests.
 
 ### CS-3 — Two growing corners
 
