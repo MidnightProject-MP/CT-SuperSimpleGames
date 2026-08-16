@@ -1,5 +1,7 @@
 # SuperSimpleGames
 
+[![Verify](https://github.com/MidnightProject-MP/CT-SuperSimpleGames/actions/workflows/verify.yml/badge.svg)](https://github.com/MidnightProject-MP/CT-SuperSimpleGames/actions/workflows/verify.yml)
+
 SuperSimpleGames is a mobile-first collection of playful, no-fail experiences for toddlers. Each game should reward exploration while quietly reinforcing an early developmental concept.
 
 The product intent lives in [INCEPTION.md](./INCEPTION.md).
