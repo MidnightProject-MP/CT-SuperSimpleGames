@@ -105,7 +105,6 @@ function newRound({ playSound = false } = {}) {
   complete = false;
   previousBoard = null;
   undoButton.hidden = true;
-  boardElement.classList.remove("has-undo");
   prompt.textContent = board.label;
   celebration.hidden = true;
   boardElement.classList.remove("complete");
@@ -161,7 +160,6 @@ function finishRound(colorIndex) {
   celebration.hidden = false;
   boardElement.classList.add("complete");
   undoButton.hidden = true;
-  boardElement.classList.remove("has-undo");
   announcement.textContent = "All squares filled. Tap the board for a new one.";
   tonePlayer.play(GRID_COLORS[colorIndex].tone * 1.25);
 }
@@ -194,7 +192,6 @@ boardElement.addEventListener("click", (event) => {
   board = result.board;
   previousBoard = result.previousBoard;
   undoButton.hidden = false;
-  boardElement.classList.add("has-undo");
   renderBoard(result.captured);
   announcement.textContent = `${GRID_COLORS[colorIndex].name} grows to ${result.captured.length} squares`;
   if (result.solved) finishRound(colorIndex);
@@ -213,7 +210,6 @@ undoButton.addEventListener("click", () => {
   board = restoreFloodBoard(board, previousBoard);
   previousBoard = null;
   undoButton.hidden = true;
-  boardElement.classList.remove("has-undo");
   clearPreview();
   renderBoard(floodRegion(board));
   prompt.textContent = "Try another color";

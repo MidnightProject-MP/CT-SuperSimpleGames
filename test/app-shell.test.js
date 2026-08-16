@@ -116,3 +116,12 @@ test("open-ended creations share non-destructive home and confirmed fresh-start 
     assert.match(html, /id="fresh-confirm"[^>]*>Start fresh</i, `${page} cannot confirm clearing`);
   }
 });
+
+test("Color Splash reserves controls without state-dependent board dimensions", () => {
+  const css = readFileSync(resolve(root, "color-splash.css"), "utf8");
+  const runtime = readFileSync(resolve(root, "src/color-splash.js"), "utf8");
+  assert.match(css, /\.board-shell\s*\{[^}]*grid-template-rows:\s*auto auto 72px/s);
+  assert.doesNotMatch(css, /\.has-undo[^}]*--board-size/s);
+  assert.doesNotMatch(css, /\.teaching-board\s*\{[^}]*--board-size/s);
+  assert.doesNotMatch(runtime, /has-undo/);
+});
