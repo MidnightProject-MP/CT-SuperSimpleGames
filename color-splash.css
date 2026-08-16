@@ -111,6 +111,7 @@ button { font: inherit; }
 
 .color-board {
   --board-size: min(88vw, calc(100svh - 155px), 420px);
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: clamp(4px, 1.4vw, 8px);
@@ -167,6 +168,24 @@ button { font: inherit; }
 .color-cell.pressed { animation: tile-press 180ms ease-out; }
 .color-board.complete { animation: board-complete 620ms ease-out; }
 
+.color-travel {
+  position: absolute;
+  z-index: 6;
+  top: var(--travel-y, 50%);
+  left: var(--travel-x, 50%);
+  width: clamp(18px, 5vw, 28px);
+  aspect-ratio: 1;
+  border: 3px solid white;
+  border-radius: 50%;
+  background: var(--travel-color, #fff);
+  box-shadow: 0 3px 7px rgba(45,35,90,.24);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.color-travel.moving { animation: color-travel 300ms ease-out; }
+
 .celebration {
   position: absolute;
   z-index: 10;
@@ -190,6 +209,26 @@ button { font: inherit; }
 .celebration span { font-size: clamp(17px, 4.5vw, 23px); }
 .celebration[hidden] { display: none; }
 
+.new-board {
+  display: flex;
+  min-height: 58px;
+  margin-top: 8px;
+  padding: 8px 20px;
+  gap: 9px;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid white;
+  border-radius: 999px;
+  color: white;
+  background: #7457e8;
+  box-shadow: 0 5px 0 #4935a8;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.new-board:active { transform: translateY(3px); box-shadow: 0 2px 0 #4935a8; }
+.new-board:focus-visible { outline: 5px solid #312166; outline-offset: 4px; }
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -211,6 +250,15 @@ button { font: inherit; }
 @keyframes tile-press {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(.86); filter: brightness(1.2); }
+}
+
+@keyframes color-travel {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(.72); }
+  78% { opacity: .92; }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--travel-dx)), calc(-50% + var(--travel-dy))) scale(1.2);
+  }
 }
 
 @keyframes board-complete {
@@ -247,5 +295,6 @@ button { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .color-cell.splashing,
   .color-cell.pressed,
+  .color-travel.moving,
   .color-board.complete { animation-duration: 1ms; }
 }

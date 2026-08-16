@@ -1,16 +1,17 @@
 import { createTonePlayer } from "./audio.js";
 import { COLORS } from "./game.js";
-import { floodFill, floodRegion, generateBoard } from "./flood.js";
+import { nearestTargetIndex } from "./color-input.js";
+import { floodFill, floodRegion } from "./flood.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
+import { createSplashBoard, SPLASH_HEIGHT, SPLASH_WIDTH } from "./splash-boards.js";
 
-const WIDTH = 4;
-const HEIGHT = 4;
 const GRID_COLORS = COLORS.slice(0, 4);
 const SYMBOLS = ["●", "◆", "≡", "✦"];
 
 const boardElement = document.querySelector("#color-board");
 const prompt = document.querySelector("#splash-prompt");
 const celebration = document.querySelector("#celebration");
+const newBoardButton = document.querySelector("#new-board");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
 
@@ -21,7 +22,6 @@ let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 
 function nextSeed() {
-  round += 1;
   try {
     const value = new Uint32Array(1);
     crypto.getRandomValues(value);
@@ -49,7 +49,7 @@ function applyTileAppearance(tile, colorIndex, captured) {
 
 function createTiles() {
   const fragment = document.createDocumentFragment();
-  for (let index = 0; index < WIDTH * HEIGHT; index += 1) {
+  for (let index = 0; index < SPLASH_WIDTH * SPLASH_HEIGHT; index += 1) {
     const tile = document.createElement("button");
     tile.className = "color-cell";
     tile.type = "button";
@@ -61,6 +61,10 @@ function createTiles() {
     tile.append(symbol);
     fragment.append(tile);
   }
+  const travel = document.createElement("span");
+  travel.className = "color-travel";
+  travel.setAttribute("aria-hidden", "true");
+  fragment.append(travel);
   boardElement.replaceChildren(fragment);
 }
 
@@ -79,7 +83,8 @@ function renderBoard(animated = []) {
 }
 
 function newRound({ playSound = false } = {}) {
-  board = generateBoard({ width: WIDTH, height: HEIGHT, colorCount: GRID_COLORS.length, seed: nextSeed() });
+  round += 1;
+  board = createSplashBoard({ round, seed: nextSeed() });
   complete = false;
   prompt.textContent = "Tap a color!";
   celebration.hidden = true;
@@ -95,6 +100,40 @@ function pulseTile(tile) {
   tile.classList.add("pressed");
 }
 
+function showColorTravel(tile, colorIndex) {
+  const travel = boardElement.querySelector(".color-travel");
+  const anchor = boardElement.querySelector(".anchor");
+  const boardRect = boardElement.getBoundingClientRect();
+  const tileRect = tile.getBoundingClientRect();
+  const anchorRect = anchor.getBoundingClientRect();
+  const startX = ((tileRect.left + tileRect.right) / 2) - boardRect.left;
+  const startY = ((tileRect.top + tileRect.bottom) / 2) - boardRect.top;
+  const endX = ((anchorRect.left + anchorRect.right) / 2) - boardRect.left;
+  const endY = ((anchorRect.top + anchorRect.bottom) / 2) - boardRect.top;
+
+  boardElement.style.setProperty("--travel-x", `${startX}px`);
+  boardElement.style.setProperty("--travel-y", `${startY}px`);
+  boardElement.style.setProperty("--travel-dx", `${endX - startX}px`);
+  boardElement.style.setProperty("--travel-dy", `${endY - startY}px`);
+  boardElement.style.setProperty("--travel-color", GRID_COLORS[colorIndex].petal);
+  travel.classList.remove("moving");
+  void travel.offsetWidth;
+  travel.classList.add("moving");
+}
+
+function resolveTile(event) {
+  const literalTile = event.target.closest?.(".color-cell");
+  if (literalTile) return literalTile;
+  if (!Number.isFinite(event.clientX) || !Number.isFinite(event.clientY)) return null;
+  const tiles = [...boardElement.querySelectorAll(".color-cell")];
+  const index = nearestTargetIndex({
+    x: event.clientX,
+    y: event.clientY,
+    rects: tiles.map((tile) => tile.getBoundingClientRect())
+  });
+  return tiles[index];
+}
+
 function finishRound(colorIndex) {
   complete = true;
   prompt.textContent = "All filled!";
@@ -105,21 +144,25 @@ function finishRound(colorIndex) {
 }
 
 boardElement.addEventListener("click", (event) => {
-  const tile = event.target.closest(".color-cell");
+  const tile = resolveTile(event);
   if (!tile) return;
 
   if (complete) {
-    newRound({ playSound: true });
+    pulseTile(tile);
+    announcement.textContent = "The color board is filled. Use the new board button when you are ready.";
     return;
   }
 
   const colorIndex = board.cells[Number(tile.dataset.index)];
   const result = floodFill(board, colorIndex);
   tonePlayer.play(GRID_COLORS[colorIndex].tone);
+  pulseTile(tile);
+  showColorTravel(tile, colorIndex);
 
   if (!result.moved) {
-    pulseTile(tile);
-    pulseTile(boardElement.querySelector(".anchor"));
+    for (const index of result.captured) {
+      pulseTile(boardElement.querySelector(`[data-index="${index}"]`));
+    }
     announcement.textContent = `${GRID_COLORS[colorIndex].name} again`;
     return;
   }
@@ -129,6 +172,8 @@ boardElement.addEventListener("click", (event) => {
   announcement.textContent = `${GRID_COLORS[colorIndex].name} grows to ${result.captured.length} squares`;
   if (result.solved) finishRound(colorIndex);
 });
+
+newBoardButton.addEventListener("click", () => newRound({ playSound: true }));
 
 soundToggle.addEventListener("click", () => {
   soundEnabled = !soundEnabled;

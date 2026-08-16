@@ -22,7 +22,7 @@ Bloom is a cause-and-effect color garden. Tapping or dragging anywhere on the pl
 
 ### Color Splash
 
-Color Splash is a no-fail flood-fill puzzle. Tapping any square gives its color and symbol to the connected region growing from the top-left corner. There is no move limit or wrong choice; filling the board creates a gentle completion moment, and the next tap starts a new board.
+Color Splash is a no-fail flood-fill puzzle. Tapping anywhere on the board resolves to a nearby square and gives its color and symbol to the connected region growing from the top-left corner. There is no move limit or wrong choice; filling the board creates a gentle completion moment that remains until the child chooses a new board.
 
 ### Peekaboo Pockets
 
@@ -61,4 +61,4 @@ node --test
 
 ## Near-term direction
 
-Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). The immediate priority is forgiving Color Splash input, followed by deeper Peekaboo and Bloom interactions, then a direct-manipulation construction experiment. Real-world observation remains necessary before treating any product hypothesis as validated.
+Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). Color Splash's forgiving-input slice is implemented and awaits device observation; deeper Peekaboo and Bloom interactions follow, then a direct-manipulation construction experiment. Real-world observation remains necessary before treating any product hypothesis as validated.

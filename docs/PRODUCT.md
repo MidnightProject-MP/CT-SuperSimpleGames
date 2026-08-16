@@ -31,7 +31,7 @@ Bloom supports exposure to cause and effect, colors, spatial position, relative 
 
 ## Color Splash: second product slice
 
-Color Splash presents a 4×4 board using four color-and-symbol identities. Tapping any square changes the connected region anchored at the top-left to that square's identity, absorbing adjacent matches. There is no move limit, wrong choice, score, or automatic restart. A completed board holds its state until the child taps again. The compact grid keeps every square comfortably tappable even on a short landscape phone.
+Color Splash presents a 4×4 board using four color-and-symbol identities. Tapping anywhere inside the visible board resolves to a nearby square, changes the connected region anchored at the top-left to that square's identity, and absorbs adjacent matches. A local response and traveling color make the resolved choice visible. Repeating the current identity traces the connected region rather than appearing ignored. There is no move limit, wrong choice, score, or automatic restart. A completed board holds its state until the child activates an explicit large new-board control. Three stable designed boards introduce legible spatial structures before later rounds use procedural variation.
 
 Color Splash supports exposure to color and symbol matching, connected regions, cause and effect, and simple multi-step planning. It does **not** assess reasoning or claim that completion demonstrates mastery.
 
@@ -53,9 +53,11 @@ Mechanical checks:
 - sound-off play retains complete visible feedback;
 - the application shell is available offline after a successful first load;
 - reduced-motion mode removes ambient and sparkle motion and shortens growth motion.
-- every generated Color Splash board contains all four identities and is solvable without a move limit;
+- every designed and generated Color Splash board contains all four identities and is solvable without a move limit;
 - flood moves never shrink the connected corner region or mutate the prior board;
-- Color Splash completion waits for input before starting another board.
+- decorative board gaps resolve deterministically to a nearby square;
+- repeated/current-color input visibly acknowledges the connected region;
+- Color Splash completion waits for the explicit new-board control before starting another board.
 - each Peekaboo round contains three unique familiar objects and three distinct non-color patterns;
 - pocket discovery is monotonic, opening and closing never mutates prior state, and discovering all pockets never blocks further play;
 
@@ -86,4 +88,4 @@ Observation checks before public release:
 
 ## Next decision
 
-The ordered implementation and validation sequence now lives in `ROADMAP.md`. The immediate priority is to remove apparent missed touches from Color Splash, then deepen Peekaboo and Bloom before adding a direct-manipulation construction experiment. Comparative observation remains necessary before treating these hypotheses as validated, but an unavailable real-world observation step should not prevent bounded, reversible technical prototypes from advancing. Do not extract a generalized framework merely because the pages share controls.
+The ordered implementation and validation sequence now lives in `ROADMAP.md`. Color Splash's forgiving-input implementation awaits device observation; the next implementation priority is to deepen Peekaboo, followed by Bloom and a direct-manipulation construction experiment. Comparative observation remains necessary before treating these hypotheses as validated, but an unavailable real-world observation step should not prevent bounded, reversible technical prototypes from advancing. Do not extract a generalized framework merely because the pages share controls.

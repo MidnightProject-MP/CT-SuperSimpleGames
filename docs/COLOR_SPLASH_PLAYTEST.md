@@ -16,7 +16,7 @@ Allow up to five minutes, ending immediately when the child disengages or shows 
 4. Do not coach toward completion, count moves, correct choices, or praise performance.
 5. Observe whether the first five taps cause a legible response from the sparkling top-left region.
 6. Let repeated colors, palm touches, rapid taps, and imprecise contact occur naturally; do not manufacture stress.
-7. If the board is completed, observe whether the caregiver and child notice the held completion state and whether one further tap starts a new board.
+7. If the board is completed, observe whether the caregiver and child notice the held completion state and discover the large new-board control without prompting.
 
 ## Observation sheet
 
@@ -26,13 +26,15 @@ Allow up to five minutes, ending immediately when the child disengages or shows 
 | Device and orientation | |
 | Self-directed first tap time | |
 | Needed one neutral invitation? | |
-| First five taps produced a visible corner change? | |
+| First five taps produced immediate local feedback? | |
 | Child watched or returned to the top-left region? | |
+| Child appeared to connect the traveling color with the corner change? | |
 | Repeated/imprecise/rapid taps remained satisfying? | |
+| Touch in or near a grid gap resolved understandably? | |
 | Apparent dead tap, failure, or frustration | |
 | Sound, motion, brightness, or pattern concern | |
 | Board completed? Completion recognized? | |
-| New board discovered with one tap? | |
+| New-board control discovered without prompting? | |
 | Natural stop behavior | |
 | Caregiver’s description of the game | |
 | One factual observation | |
@@ -43,10 +45,11 @@ Allow up to five minutes, ending immediately when the child disengages or shows 
 Hold and revise before adding another mechanic unless:
 
 - at least three of four children tap the board within 10 seconds without instruction or after at most one neutral invitation;
-- the first five taps always produce immediate, understandable feedback without a perceived wrong choice;
+- the first five taps always produce immediate local feedback without a perceived wrong choice;
 - repeated, imprecise, and rapid taps never freeze, navigate away, or appear broken;
+- touches in decorative grid gaps resolve without apparent failure or confusing jumps;
 - no child shows repeated sensory distress and every child can disengage naturally;
 - caregivers recognize that the sparkling top-left area is changing;
-- when completion occurs, it is recognizable and another board begins with one tap.
+- when completion occurs, it is recognizable and the explicit new-board control is discoverable without coaching.
 
 Compare these observations with Bloom rather than ranking children or optimizing session length. The useful question is which interaction style is discoverable, comfortable, and worth returning to.

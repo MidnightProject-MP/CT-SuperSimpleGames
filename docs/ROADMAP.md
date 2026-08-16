@@ -47,7 +47,7 @@ The collection demonstrates polish and safety. Its main limitation is that most 
 
 ## Milestone 1 — Color Splash: forgiving intent
 
-**Status: ready**
+**Status: implemented; automated verification complete, device observation pending**
 
 **Objective:** Make Color Splash about colors, symbols, and connected shapes rather than tapping precision.
 
@@ -195,4 +195,3 @@ Avoid imitation tests, escalating tempo, audio dependence, automatic performance
 ## Portfolio rule
 
 A new game earns a permanent place only when it introduces a distinct form of agency or curiosity. Content themes, visual reskins, larger grids, and additional random variants do not by themselves justify another launcher card.
-
