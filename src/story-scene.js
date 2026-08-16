@@ -119,6 +119,16 @@ export function createSceneState(sceneId = "garden") {
   return createState(pack.id, pack.defaultKind, [], 1);
 }
 
+export function serializeSceneState(state) {
+  const current = normalizeState(state);
+  return createState(current.sceneId, current.selected, current.objects, current.nextId, current.interactions);
+}
+
+export function restoreSceneState(snapshot) {
+  const current = normalizeState(snapshot);
+  return createState(current.sceneId, current.selected, current.objects, current.nextId, current.interactions);
+}
+
 export function selectScenePack(state, sceneId) {
   normalizeState(state);
   return createSceneState(sceneId);

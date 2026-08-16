@@ -14,10 +14,14 @@ import {
   neighborDistanceForLayout,
   planGardenInteraction,
   planGardenMerge,
+  restoreGardenState,
+  serializeGardenState,
   moveGardenVisitor
 } from "./game.js";
 import { createTonePlayer } from "./audio.js";
+import { setupFreshStart } from "./fresh-start.js";
 import { createPointerSampler } from "./interaction.js";
+import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 
 const garden = document.querySelector("#garden");
@@ -38,6 +42,7 @@ const pointerSampler = createPointerSampler();
 let resizeFrame;
 let visitorState = null;
 let dismissedVisitorKey = null;
+const GARDEN_STORAGE_KEY = "supersimplegames.bloom.creation";
 
 const VISITOR_TONES = Object.freeze({ bee: 739.99, butterfly: 622.25, bird: 554.37 });
 
@@ -92,6 +97,47 @@ function renderVisitor() {
 function renderSoundState() {
   soundToggle.setAttribute("aria-pressed", String(soundEnabled));
   soundToggle.setAttribute("aria-label", soundEnabled ? "Turn sound off" : "Turn sound on");
+}
+
+function persistGarden() {
+  if (garden.clientWidth <= 0 || garden.clientHeight <= 0) return false;
+  return saveLocalState(GARDEN_STORAGE_KEY, serializeGardenState(gardenBlooms.values(), bloomCount, garden.clientWidth, garden.clientHeight));
+}
+
+function restoreGarden() {
+  const saved = loadLocalState(GARDEN_STORAGE_KEY);
+  if (!saved || garden.clientWidth <= 0 || garden.clientHeight <= 0) return false;
+  try {
+    const restored = restoreGardenState(saved, garden.clientWidth, garden.clientHeight);
+    bloomCount = restored.nextId;
+    for (const bloom of restored.blooms) {
+      gardenBlooms.set(bloom.id, bloom);
+      const flower = makeFlower(bloom);
+      bloomElements.set(bloom.id, flower);
+      blooms.append(flower);
+    }
+    invitation.classList.toggle("hidden", restored.blooms.length > 0);
+    renderNeighborhoods();
+    return true;
+  } catch {
+    clearLocalState(GARDEN_STORAGE_KEY);
+    return false;
+  }
+}
+
+function freshGarden() {
+  bloomCount = 0;
+  gardenBlooms.clear();
+  bloomElements.clear();
+  gardenLinks.length = 0;
+  gardenCanopies.length = 0;
+  blooms.replaceChildren();
+  visitorLayer.replaceChildren();
+  visitorState = null;
+  dismissedVisitorKey = null;
+  invitation.classList.remove("hidden");
+  clearLocalState(GARDEN_STORAGE_KEY);
+  announcement.textContent = "A fresh garden is ready";
 }
 
 function petalTransform(index, total) {
@@ -324,9 +370,11 @@ function interactAt(x, y, flower) {
   });
   if (plan.action === "create") {
     createAt(x, y);
+    persistGarden();
     return;
   }
   tendBloom(plan.id);
+  persistGarden();
 }
 
 function reflowBlooms() {
@@ -349,7 +397,7 @@ function reflowBlooms() {
 }
 
 garden.addEventListener("pointerdown", (event) => {
-  if (event.target.closest("a, button")) return;
+  if (event.target.closest("a, button, .fresh-dialog")) return;
   event.preventDefault();
   garden.setPointerCapture?.(event.pointerId);
   interactAt(event.clientX, event.clientY, event.target.closest(".bloom"));
@@ -416,12 +464,15 @@ document.addEventListener("visibilitychange", () => {
 });
 
 addEventListener("pagehide", tonePlayer.stop);
+addEventListener("pagehide", persistGarden);
 addEventListener("resize", () => {
   cancelAnimationFrame(resizeFrame);
   resizeFrame = requestAnimationFrame(reflowBlooms);
 });
 
 renderSoundState();
+restoreGarden();
+setupFreshStart({ onConfirm: freshGarden });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   const workerUrl = new URL("../sw.js", import.meta.url);

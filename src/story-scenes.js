@@ -5,6 +5,8 @@ import {
   moveSceneObject,
   placeSceneObject,
   relationshipsForScene,
+  restoreSceneState,
+  serializeSceneState,
   selectSceneKind,
   selectNextSceneKind,
   selectScenePack,
@@ -12,6 +14,8 @@ import {
 } from "./story-scene.js";
 import { STORY_PACKS, getStoryPack, storyCastItem } from "./story-packs.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
+import { setupFreshStart } from "./fresh-start.js";
+import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
 
 const stage = document.querySelector("#scene-stage");
 const objectLayer = document.querySelector("#object-layer");
@@ -72,7 +76,14 @@ const PALETTES = Object.freeze({
   armor: Object.freeze([["#7d91a8","#d8f2ff","#29385f"],["#4f96dc","#ffd85c","#29385f"],["#ef5d6c","#fff4cf","#603a32"],["#8f72d8","#e9e5fb","#493a73"],["#39a776","#fff4cf","#254b42"]]),
 });
 
+const STORY_STORAGE_KEY = "supersimplegames.story.creation";
 let state = createSceneState();
+try {
+  const saved = loadLocalState(STORY_STORAGE_KEY);
+  if (saved) state = restoreSceneState(saved);
+} catch {
+  clearLocalState(STORY_STORAGE_KEY);
+}
 let soundEnabled = loadSoundPreference();
 let drag = null;
 let suppressClickFor = null;
@@ -219,6 +230,16 @@ function applyResult(result) {
   message.textContent = text;
   announcement.textContent = text;
   tonePlayer.play(currentItem(result.object.kind).tone * (related ? 1.18 : 1));
+  saveLocalState(STORY_STORAGE_KEY, serializeSceneState(state));
+}
+
+function freshStory() {
+  state = createSceneState(state.sceneId);
+  clearLocalState(STORY_STORAGE_KEY);
+  renderPalette();
+  renderScene();
+  message.textContent = `Tap the ${currentPack().label.toLowerCase()} to add ${currentItem(state.selected).plural.toLowerCase()}!`;
+  announcement.textContent = "A fresh story is ready";
 }
 
 palette.addEventListener("click", (event) => {
@@ -230,6 +251,7 @@ palette.addEventListener("click", (event) => {
   message.textContent = `Tap the ${currentPack().label.toLowerCase()} to add ${plural}!`;
   announcement.textContent = `${plural} selected`;
   tonePlayer.play(currentItem(tool.dataset.kind).tone);
+  saveLocalState(STORY_STORAGE_KEY, serializeSceneState(state));
 });
 
 function closeBackgroundPicker() {
@@ -274,6 +296,7 @@ backgroundConfirm.addEventListener("click", () => {
   renderScene();
   message.textContent = `Tap the ${currentPack().label.toLowerCase()} to add ${currentItem(state.selected).plural.toLowerCase()}!`;
   announcement.textContent = `Started ${currentPack().label}. The previous scene was cleared.`;
+  saveLocalState(STORY_STORAGE_KEY, serializeSceneState(state));
   closeBackgroundPicker();
 });
 
@@ -359,6 +382,7 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") void tonePlayer.suspend();
 });
 addEventListener("pagehide", tonePlayer.stop);
+addEventListener("pagehide", () => saveLocalState(STORY_STORAGE_KEY, serializeSceneState(state)));
 
 stage.dataset.scene = state.sceneId;
 backgroundButton.textContent = currentPack().label;
@@ -366,6 +390,7 @@ updateStageLabel();
 renderPalette();
 renderSoundState();
 renderScene();
+setupFreshStart({ onConfirm: freshStory });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   const workerUrl = new URL("../sw.js", import.meta.url);

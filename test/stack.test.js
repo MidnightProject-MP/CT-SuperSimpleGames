@@ -8,11 +8,21 @@ import {
   matchesStackIdea,
   relationshipsFor,
   resolveStackLayout,
+  restoreStackState,
+  serializeStackState,
   settlePiece,
   structuresFor,
   tapPiece,
   unintendedOverlapsFor
 } from "../src/stack.js";
+
+test("a stack creation serializes minimally and restores through current definitions", () => {
+  const moved = settlePiece(createStackState(), "sky", { x: 0.52, y: 0.6 }).state;
+  const saved = serializeStackState(moved);
+  assert.deepEqual(Object.keys(saved.pieces[0]), ["id", "x", "y", "placed", "moves"]);
+  assert.deepEqual(restoreStackState(JSON.parse(JSON.stringify(saved))), moved);
+  assert.throws(() => restoreStackState({ pieces: saved.pieces.slice(1) }), RangeError);
+});
 
 test("stack state starts bounded, distinct, and reusable", () => {
   const state = createStackState();

@@ -60,6 +60,62 @@ export function createBloom(index, x, y, width, height) {
   };
 }
 
+function bloomSizeFor(id, tier, stage) {
+  const baseSize = tier === 0 ? 92 + (id % 3) * 24 : tier === 1 ? 150 : MAX_BLOOM_SIZE;
+  const offsets = [0, BLOOM_GROWTH_STEP, BLOOM_GROWTH_STEP * 2, Math.round(BLOOM_GROWTH_STEP * 0.65), Math.round(BLOOM_GROWTH_STEP * 1.35)];
+  return { baseSize, size: Math.min(MAX_BLOOM_SIZE, baseSize + offsets[stage]) };
+}
+
+export function serializeGardenState(items, nextId, width, height) {
+  if (!Number.isFinite(width) || width <= 0 || !Number.isFinite(height) || height <= 0
+    || !Number.isInteger(nextId) || nextId < 0) throw new TypeError("garden snapshot requires valid bounds and next ID");
+  const blooms = [...items];
+  if (blooms.length > MAX_BLOOMS) throw new RangeError("garden snapshot exceeds its bloom limit");
+  return Object.freeze({
+    nextId,
+    blooms: Object.freeze(blooms.map((bloom) => Object.freeze({
+      id: bloom.id,
+      x: bloom.x / width,
+      y: bloom.y / height,
+      color: bloom.color.name,
+      tier: bloom.tier,
+      stage: bloom.stage,
+      visits: bloom.visits,
+      sourceIds: Object.freeze([...(bloom.sourceIds || [bloom.id])]),
+    })))
+  });
+}
+
+export function restoreGardenState(snapshot, width, height) {
+  if (!snapshot || !Array.isArray(snapshot.blooms) || !Number.isInteger(snapshot.nextId) || snapshot.nextId < 0
+    || !Number.isFinite(width) || width <= 0 || !Number.isFinite(height) || height <= 0) {
+    throw new TypeError("invalid garden snapshot");
+  }
+  if (snapshot.blooms.length > MAX_BLOOMS) throw new RangeError("garden snapshot exceeds its bloom limit");
+  const ids = new Set();
+  const blooms = snapshot.blooms.map((saved) => {
+    const color = COLORS.find(({ name }) => name === saved?.color);
+    if (!saved || !Number.isInteger(saved.id) || saved.id < 0 || ids.has(saved.id) || !color
+      || !Number.isFinite(saved.x) || saved.x < 0 || saved.x > 1 || !Number.isFinite(saved.y) || saved.y < 0 || saved.y > 1
+      || !Number.isInteger(saved.tier) || saved.tier < 0 || saved.tier > MAX_BLOOM_TIER
+      || !Number.isInteger(saved.stage) || saved.stage < 0 || saved.stage >= BLOOM_STAGES.length
+      || !Number.isInteger(saved.visits) || saved.visits < 0 || !Array.isArray(saved.sourceIds)
+      || saved.sourceIds.length !== 3 ** saved.tier || new Set(saved.sourceIds).size !== saved.sourceIds.length
+      || saved.sourceIds.some((id) => !Number.isInteger(id) || id < 0)) throw new TypeError("garden snapshot contains an invalid bloom");
+    ids.add(saved.id);
+    const { baseSize, size } = bloomSizeFor(saved.id, saved.tier, saved.stage);
+    const position = clampPosition(saved.x * width, saved.y * height, width, height, size * 0.43);
+    return Object.freeze({
+      id: saved.id, ...position, size, baseSize,
+      petals: saved.tier === 1 ? 9 : saved.tier === 2 ? 12 : 5 + (saved.id % 4),
+      color, tier: saved.tier, mergedCount: saved.sourceIds.length,
+      sourceIds: Object.freeze([...saved.sourceIds]), stage: saved.stage, visits: saved.visits,
+    });
+  });
+  if (blooms.some(({ id }) => id >= snapshot.nextId)) throw new RangeError("garden next ID must follow every bloom ID");
+  return Object.freeze({ nextId: snapshot.nextId, blooms: Object.freeze(blooms) });
+}
+
 export function planGardenMerge(items, maxDistance, { width, height } = {}) {
   if (!Number.isFinite(maxDistance) || maxDistance <= 0) throw new RangeError("merge distance must be positive");
   const blooms = [...items].sort((left, right) => left.id - right.id);

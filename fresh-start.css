@@ -1,0 +1,33 @@
+.world-actions { display: flex; align-items: center; gap: 8px; pointer-events: auto; }
+.fresh-start-button {
+  display: grid; min-width: 58px; min-height: 58px; padding: 8px 12px; place-items: center;
+  border: 2px solid rgba(255,255,255,.9); border-radius: 999px; color: inherit;
+  background: rgba(255,255,255,.84); box-shadow: 0 6px 0 rgba(42,60,90,.14),0 10px 24px rgba(38,74,90,.12);
+  font-size: 14px; line-height: 1; cursor: pointer;
+}
+.fresh-start-button::before { content: "↻"; display: block; font-size: 25px; line-height: .75; }
+.fresh-start-button:focus-visible, .fresh-dialog button:focus-visible { outline: 5px solid currentColor; outline-offset: 4px; }
+.fresh-dialog {
+  position: fixed; z-index: 300; inset: 0; display: grid; padding: 20px; place-items: center;
+  color: #29385f; background: rgba(31,45,65,.42); backdrop-filter: blur(5px); pointer-events: auto;
+}
+.fresh-dialog[hidden] { display: none; }
+.fresh-dialog-panel {
+  width: min(92vw,480px); padding: 24px; border: 5px solid white; border-radius: 30px;
+  background: #fffbea; box-shadow: 0 18px 50px rgba(25,38,60,.3); text-align: center;
+}
+.fresh-dialog-panel h2 { margin: 0 0 8px; font-size: clamp(25px,6vw,34px); }
+.fresh-dialog-panel p { margin: 0 0 20px; font-size: clamp(17px,4vw,21px); line-height: 1.25; }
+.fresh-dialog-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.fresh-dialog-actions button { min-height: 64px; padding: 8px; border: 3px solid white; border-radius: 18px; color: #29385f; background: #dceeff; cursor: pointer; }
+.fresh-dialog-actions .fresh-confirm { color: white; background: #5671cb; }
+@media (orientation: landscape) and (max-height: 520px) {
+  .fresh-start-button { min-width: 46px; min-height: 46px; padding: 5px 8px; font-size: 11px; }
+  .fresh-start-button::before { font-size: 20px; }
+  .fresh-dialog-panel { padding: 16px; }
+}
+@media (max-width: 420px) {
+  .world-actions { gap: 0; }
+  .fresh-start-button { position: fixed; top: max(84px,calc(env(safe-area-inset-top) + 72px)); right: max(16px,env(safe-area-inset-right)); }
+}
+@media (prefers-reduced-motion: reduce) { .fresh-dialog { backdrop-filter: none; } }

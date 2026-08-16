@@ -1,5 +1,7 @@
 import { createTonePlayer } from "./audio.js";
-import { STACK_IDEAS, STACK_PIECES, createStackState, matchesStackIdea, resolveStackLayout, settlePiece, tapPiece } from "./stack.js";
+import { STACK_IDEAS, STACK_PIECES, createStackState, matchesStackIdea, resolveStackLayout, restoreStackState, serializeStackState, settlePiece, tapPiece } from "./stack.js";
+import { setupFreshStart } from "./fresh-start.js";
+import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 
 const buildArea = document.querySelector("#build-area");
@@ -14,7 +16,14 @@ const ideaPicture = document.querySelector("#idea-picture");
 const hideIdeaButton = document.querySelector("#hide-idea");
 const showIdeaButton = document.querySelector("#show-idea");
 
+const STACK_STORAGE_KEY = "supersimplegames.stack.creation";
 let state = createStackState();
+try {
+  const saved = loadLocalState(STACK_STORAGE_KEY);
+  if (saved) state = restoreStackState(saved);
+} catch {
+  clearLocalState(STACK_STORAGE_KEY);
+}
 let soundEnabled = loadSoundPreference();
 let drag = null;
 let suppressClickFor = null;
@@ -121,6 +130,16 @@ function applyResult(result) {
   const lift = result.relations.length ? 1.15 : 1;
   tonePlayer.play(definition.tone * lift);
   acknowledgeIdea();
+  saveLocalState(STACK_STORAGE_KEY, serializeStackState(state));
+}
+
+function freshStack() {
+  state = createStackState();
+  acknowledgedIdeas.clear();
+  clearLocalState(STACK_STORAGE_KEY);
+  renderPieces();
+  message.textContent = "Tap or move a piece!";
+  announcement.textContent = "A fresh building space is ready";
 }
 
 function normalizedPoint(event) {
@@ -206,6 +225,7 @@ addEventListener("resize", () => {
   state = resolveStackLayout(state, currentLayout());
   renderPieces();
   acknowledgeIdea();
+  saveLocalState(STACK_STORAGE_KEY, serializeStackState(state));
 });
 
 ideaCard.addEventListener("click", () => {
@@ -234,10 +254,13 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") void tonePlayer.suspend();
 });
 addEventListener("pagehide", tonePlayer.stop);
+addEventListener("pagehide", () => saveLocalState(STACK_STORAGE_KEY, serializeStackState(state)));
 
+state = resolveStackLayout(state, currentLayout());
 createPieces();
 renderSoundState();
 renderIdea();
+setupFreshStart({ onConfirm: freshStack });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   const workerUrl = new URL("../sw.js", import.meta.url);

@@ -10,12 +10,22 @@ import {
   moveSceneObject,
   placeSceneObject,
   relationshipsForScene,
+  restoreSceneState,
+  serializeSceneState,
   selectSceneKind,
   selectNextSceneKind,
   selectScenePack,
   touchSceneObject,
 } from "../src/story-scene.js";
 import { STORY_PACKS, validateStoryPack } from "../src/story-packs.js";
+
+test("a bounded story serializes and restores without weakening validation", () => {
+  const placed = placeSceneObject(createSceneState(), { x: 0.4, y: 0.6 }).state;
+  const saved = serializeSceneState(placed);
+  assert.deepEqual(restoreSceneState(JSON.parse(JSON.stringify(saved))), placed);
+  assert.throws(() => restoreSceneState({ ...saved, nextId: 0 }), TypeError);
+  assert.throws(() => restoreSceneState({ ...saved, objects: [...saved.objects, ...saved.objects] }), TypeError);
+});
 
 test("a story scene starts immediately ready to place a flower", () => {
   const state = createSceneState();

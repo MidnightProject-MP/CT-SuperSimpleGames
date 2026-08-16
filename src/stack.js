@@ -205,6 +205,18 @@ export function createStackState() {
   })));
 }
 
+export function serializeStackState(state) {
+  const pieces = normalizeState(state);
+  return Object.freeze({
+    pieces: Object.freeze(pieces.map(({ id, x, y, placed, moves }) => Object.freeze({ id, x, y, placed, moves })))
+  });
+}
+
+export function restoreStackState(snapshot) {
+  const pieces = normalizeState(snapshot);
+  return createState(pieces);
+}
+
 export function relationshipsFor(state, id, layout) {
   const pieces = normalizeState(state);
   const piece = pieceById(pieces, id);

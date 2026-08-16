@@ -17,9 +17,31 @@ import {
   neighborDistanceForLayout,
   planGardenInteraction,
   planGardenMerge,
+  restoreGardenState,
+  serializeGardenState,
   moveGardenVisitor,
   trimToLimit
 } from "../src/game.js";
+
+test("a garden snapshot uses normalized positions and restores current bloom definitions", () => {
+  let bloom = createBloom(2, 200, 300, 400, 600);
+  bloom = growBloom(bloom, { width: 400, height: 600 });
+  const saved = serializeGardenState([bloom], 3, 400, 600);
+  assert.equal(saved.blooms[0].x, 0.5);
+  assert.equal(saved.blooms[0].color, "orange");
+  const restored = restoreGardenState(JSON.parse(JSON.stringify(saved)), 800, 1200);
+  assert.equal(restored.nextId, 3);
+  assert.equal(restored.blooms[0].x, 400);
+  assert.equal(restored.blooms[0].stage, 1);
+  assert.equal(restored.blooms[0].color, COLORS[2]);
+});
+
+test("garden restoration rejects malformed, duplicate, and unbounded snapshots", () => {
+  const saved = serializeGardenState([createBloom(0, 100, 100, 500, 500)], 1, 500, 500);
+  assert.throws(() => restoreGardenState({ ...saved, nextId: 0 }, 500, 500), RangeError);
+  assert.throws(() => restoreGardenState({ ...saved, blooms: [saved.blooms[0], saved.blooms[0]] }, 500, 500), TypeError);
+  assert.throws(() => restoreGardenState({ ...saved, blooms: Array(MAX_BLOOMS + 1).fill(saved.blooms[0]) }, 500, 500), RangeError);
+});
 
 test("clampPosition keeps a bloom fully inside the viewport", () => {
   assert.deepEqual(clampPosition(-20, 900, 320, 640, 50), { x: 50, y: 590 });

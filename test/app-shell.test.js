@@ -105,3 +105,14 @@ test("Color Splash completion remains available to assistive technology", () => 
   assert.ok(celebration, "Color Splash has no completion message");
   assert.doesNotMatch(celebration, /aria-hidden="true"/i);
 });
+
+test("open-ended creations share non-destructive home and confirmed fresh-start controls", () => {
+  for (const page of ["games/bloom/index.html", "games/stack-settle/index.html", "games/story-scenes/index.html"]) {
+    const html = readFileSync(resolve(root, page), "utf8");
+    assert.match(html, /<a\b[^>]+href="\.\.\/\.\.\/"[^>]+aria-label="All games"/i, `${page} has no non-destructive home control`);
+    assert.match(html, /id="fresh-start"[^>]+aria-haspopup="dialog"/i, `${page} has no fresh-start control`);
+    assert.match(html, /id="fresh-dialog"[^>]+role="alertdialog"[^>]+aria-modal="true"/i, `${page} has no modal confirmation`);
+    assert.match(html, /id="fresh-cancel"[^>]*>Keep playing</i, `${page} cannot preserve the current creation`);
+    assert.match(html, /id="fresh-confirm"[^>]*>Start fresh</i, `${page} cannot confirm clearing`);
+  }
+});

@@ -39,7 +39,7 @@ Stop for user input only when progress requires credentials, external authority,
 
 ## Next phase — Familiar World
 
-**Status: agreed product direction; implementation pending**
+**Status: in progress; shared control and bounded preservation foundation implemented**
 
 Before the remaining isolated Round 3 expansions, make the collection feel like six places in one familiar world. This is not a metagame, progression layer, or shared reward system. It is a small set of dependable meanings that children can recognize, predict, and carry from one experience to another.
 
@@ -75,6 +75,8 @@ The child's working surface is a place, not a moving target.
 6. Add one caregiver-triggered, non-automatic closing ritual that leaves the product at rest.
 7. Observe whether children transfer meanings, recognize and predict a resident, recover saved work, avoid accidental resets, and disengage naturally.
 8. Resume per-game Round 3 work only where the shared direction strengthens rather than blurs the experience.
+
+**Foundation progress (2026-08-16):** Delivery steps 1 and 2 are implemented. Home remains a non-destructive route to the launcher. Bloom, Stack & Settle, and Story Scenes now restore one versioned, size-bounded local creation and expose the same overlay “Fresh” control with “Keep playing” and “Start fresh” choices. Bloom stores normalized placement and semantic flower state; Stack stores only five canonical piece records; Story Scenes stores one validated pack, bounded cast, and bounded interaction set. Restricted storage, malformed JSON, incompatible versions, invalid game state, and oversized payloads all fall back safely without preventing play. Transient effects, audio activity, visitors, idea acknowledgements, and engagement history are not preserved. Deterministic tests cover these contracts; rendered, device, caregiver, and child evidence remain pending and must not be inferred from implementation.
 
 ### Evidence gates
 

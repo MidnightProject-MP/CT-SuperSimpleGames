@@ -11,6 +11,7 @@
     <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="../../assets/icon-192.png" />
     <link rel="stylesheet" href="../../story-scenes.css" />
+    <link rel="stylesheet" href="../../fresh-start.css" />
     <title>Story Scenes · SuperSimpleGames</title>
   </head>
   <body>
@@ -20,10 +21,13 @@
           <span class="story-brand-mark" aria-hidden="true">‹</span>
           <span>Story Scenes</span>
         </a>
+        <div class="world-actions">
+        <button id="fresh-start" class="fresh-start-button" type="button" aria-haspopup="dialog" aria-controls="fresh-dialog">Fresh</button>
         <button id="sound-toggle" class="story-sound" type="button" aria-pressed="true" aria-label="Turn sound off">
           <svg class="sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.5 3a4.5 4.5 0 0 0-2-4v8a4.5 4.5 0 0 0 2-4Zm-2-7.7v2.1a6.5 6.5 0 0 1 0 11.2v2.1a8.5 8.5 0 0 0 0-15.4Z"/></svg>
           <svg class="sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm11.5 3 2.2-2.2 1.4 1.4-2.2 2.2 2.2 2.2-1.4 1.4-2.2-2.2-2.2 2.2-1.4-1.4 2.2-2.2-2.2-2.2 1.4-1.4 2.2 2.2Z"/></svg>
         </button>
+        </div>
       </header>
 
       <button id="background-button" class="background-button" type="button" aria-expanded="false">Garden weather</button>
@@ -48,6 +52,9 @@
 
       <nav id="story-palette" class="story-palette" aria-label="Choose what to add"></nav>
       <div id="announcement" class="sr-only" aria-live="polite"></div>
+      <section id="fresh-dialog" class="fresh-dialog" role="alertdialog" aria-modal="true" aria-labelledby="fresh-title" hidden>
+        <div class="fresh-dialog-panel"><h2 id="fresh-title">Start a fresh story?</h2><p>This story will go away.</p><div class="fresh-dialog-actions"><button id="fresh-cancel" type="button">Keep playing</button><button id="fresh-confirm" class="fresh-confirm" type="button">Start fresh</button></div></div>
+      </section>
     </main>
     <noscript>Story Scenes needs JavaScript to play.</noscript>
     <script type="module" src="../../src/story-scenes.js"></script>
