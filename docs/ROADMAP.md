@@ -188,7 +188,7 @@ Advance this concept when prior play shows that broad dragging is comfortable or
 
 ## Milestone 7 — Story Scenes
 
-**Status: conditional product direction**
+**Status: bounded technical prototype implemented; intentionally absent from the launcher; rendered, device, and child observation pending**
 
 **Objective:** Evolve the strongest parts of Bloom, Peekaboo, and Stack & Settle into open-ended symbolic storytelling.
 
@@ -199,6 +199,8 @@ Advance this concept when prior play shows that broad dragging is comfortable or
 - There is no health, combat score, fixed winner, inventory economy, or predetermined narrative.
 
 Advance this concept only after earlier milestones clarify whether children understand mode selection, object revisiting, dragging, and relational consequences. Story Scenes should be a synthesis of proven interactions, not Bloom with a larger toolbar.
+
+Prototype note: one garden scene now defaults to immediate flower placement and offers four oversized object families: flowers, friends, clouds, and suns. New placements cycle through five variants, existing objects can be changed or broadly moved, and nearby pairs produce four stable relationships: watering, warming, greeting, and a rainbow. The scene is capped at 16 objects; further placement tends a nearby object of the selected kind instead of deleting work. Background selection, additional casts, and launcher promotion remain deliberately excluded until observation shows that selecting and then placing is understandable.
 
 ## Milestone 8 — Temporal and cooperative play
 

@@ -11,6 +11,7 @@ The first caregiver-observation protocol is in [docs/PLAYTEST.md](./docs/PLAYTES
 Color Splash has its own focused protocol in [docs/COLOR_SPLASH_PLAYTEST.md](./docs/COLOR_SPLASH_PLAYTEST.md).
 Peekaboo Pockets has a reversible-discovery protocol in [docs/PEEKABOO_PLAYTEST.md](./docs/PEEKABOO_PLAYTEST.md).
 Stack & Settle has a direct-manipulation protocol in [docs/STACK_SETTLE_PLAYTEST.md](./docs/STACK_SETTLE_PLAYTEST.md).
+The unlisted Story Scenes prototype has a focused composition protocol in [docs/STORY_SCENES_PLAYTEST.md](./docs/STORY_SCENES_PLAYTEST.md).
 Cross-game observations are normalized in [docs/COMPARATIVE_PLAYTEST.md](./docs/COMPARATIVE_PLAYTEST.md).
 Uncommitted future directions are captured separately in [docs/IDEAS.md](./docs/IDEAS.md).
 The broader interaction landscape and third-game decision are recorded in [docs/CONCEPTS.md](./docs/CONCEPTS.md).
@@ -32,6 +33,10 @@ Peekaboo Pockets is an open-and-close search game. A large visual target invites
 ### Stack & Settle
 
 Stack & Settle is a no-fail construction toy with five oversized reusable pieces. Tapping places or rearranges a piece, while broad dragging offers direct control. Pieces magnetically settle on the floor, stack, sit side by side, or let the ball nest inside the curved piece. Every arrangement remains movable and there is nothing to complete.
+
+### Story Scenes prototype
+
+Story Scenes is an intentionally unlisted garden-scene experiment. It combines four large object-family choices, tap-anywhere placement, five predictable variants, revisitable objects, broad movement, and a few discoverable relationships. It remains outside the launcher until real-world observation shows that selecting and then placing stays simple for the intended audience.
 
 The first slice establishes these product principles:
 
@@ -66,4 +71,4 @@ node --test
 
 ## Near-term direction
 
-Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). The deeper three-game slices and the Stack & Settle construction prototype are implemented and await device observation. The next milestone is comparative portfolio review; later prototypes remain conditional and must not be described as child-validated without real-world observation.
+Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). The four launched games await comparative device and child observation. Story Scenes is available only as a bounded technical prototype; launcher promotion and content expansion remain conditional and must not be described as child-validated without real-world observation.

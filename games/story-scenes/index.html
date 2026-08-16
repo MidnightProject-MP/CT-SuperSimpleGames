@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; connect-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'none'; worker-src 'self'; manifest-src 'self'" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#7bcbea" />
+    <meta name="description" content="Make a tiny garden story with friendly objects that notice one another." />
+    <link rel="manifest" href="../../manifest.webmanifest" />
+    <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../../assets/icon-192.png" />
+    <link rel="stylesheet" href="../../story-scenes.css" />
+    <title>Story Scenes · SuperSimpleGames</title>
+  </head>
+  <body>
+    <main class="story-game">
+      <header class="story-topbar">
+        <a class="story-brand" href="../../" aria-label="All games">
+          <span class="story-brand-mark" aria-hidden="true">‹</span>
+          <span>Story Scenes</span>
+        </a>
+        <button id="sound-toggle" class="story-sound" type="button" aria-pressed="true" aria-label="Turn sound off">
+          <svg class="sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.5 3a4.5 4.5 0 0 0-2-4v8a4.5 4.5 0 0 0 2-4Zm-2-7.7v2.1a6.5 6.5 0 0 1 0 11.2v2.1a8.5 8.5 0 0 0 0-15.4Z"/></svg>
+          <svg class="sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm11.5 3 2.2-2.2 1.4 1.4-2.2 2.2 2.2 2.2-1.4 1.4-2.2-2.2-2.2 2.2-1.4-1.4 2.2-2.2-2.2-2.2 1.4-1.4 2.2 2.2Z"/></svg>
+        </button>
+      </header>
+
+      <section id="scene-stage" class="scene-stage" tabindex="0" aria-label="Garden story scene. Tap empty space or press Enter to add the selected kind.">
+        <div class="distant-cloud distant-cloud-one" aria-hidden="true"></div>
+        <div class="distant-cloud distant-cloud-two" aria-hidden="true"></div>
+        <div class="garden-hill garden-hill-back" aria-hidden="true"></div>
+        <div class="garden-hill garden-hill-front" aria-hidden="true"></div>
+        <div id="relation-layer" class="relation-layer" aria-hidden="true"></div>
+        <div id="object-layer" class="object-layer"></div>
+        <p id="story-message" class="story-message" aria-live="polite">Tap the garden to grow a flower!</p>
+      </section>
+
+      <nav id="story-palette" class="story-palette" aria-label="Choose what to add">
+        <button class="story-tool" type="button" data-kind="flower" aria-pressed="true" aria-label="Choose flowers">
+          <span class="mini-art flower-art" aria-hidden="true"><i></i><b></b></span>
+          <span>Flowers</span>
+        </button>
+        <button class="story-tool" type="button" data-kind="friend" aria-pressed="false" aria-label="Choose friends">
+          <span class="mini-art friend-art" aria-hidden="true"><i></i><b></b></span>
+          <span>Friends</span>
+        </button>
+        <button class="story-tool" type="button" data-kind="cloud" aria-pressed="false" aria-label="Choose clouds">
+          <span class="mini-art cloud-art" aria-hidden="true"><i></i><b></b></span>
+          <span>Clouds</span>
+        </button>
+        <button class="story-tool" type="button" data-kind="sun" aria-pressed="false" aria-label="Choose suns">
+          <span class="mini-art sun-art" aria-hidden="true"><i></i><b></b></span>
+          <span>Suns</span>
+        </button>
+      </nav>
+      <div id="announcement" class="sr-only" aria-live="polite"></div>
+    </main>
+    <noscript>Story Scenes needs JavaScript to play.</noscript>
+    <script type="module" src="../../src/story-scenes.js"></script>
+  </body>
+</html>

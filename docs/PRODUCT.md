@@ -47,6 +47,12 @@ Stack & Settle presents five oversized, reusable pieces in one bounded construct
 
 Stack & Settle supports exposure to above/below, beside, inside, relative size, arrangement, revision, and turn-taking. It does **not** assess coordination, construction, balance, or spatial reasoning. Its larger purpose is to test direct manipulation and child-authored revision, forms of agency not present in the first three games.
 
+## Story Scenes: unlisted technical prototype
+
+Story Scenes explores whether the existing creation, revisiting, direct-manipulation, and relational mechanics can become a tiny child-authored narrative. One garden starts with flowers selected so the first empty-space tap works immediately. Four oversized object-family controls select flowers, friends, clouds, or suns; successive placements cycle through five variants. Existing objects remain touchable and broadly movable. Nearby weather and flowers produce watering or warming, nearby friends greet, and a nearby sun and cloud make a rainbow.
+
+The prototype remains absent from the launcher. It does not yet establish that young children understand selecting a family and then placing it, distinguish changing an object from moving it, or intentionally discover and repeat relationships. It has no background selector or additional themed casts because those would add content before the central mode and storytelling hypotheses are observed.
+
 ## Acceptance evidence
 
 Mechanical checks:
@@ -77,6 +83,9 @@ Mechanical checks:
 - every released piece settles within horizontal bounds and into a supported floor, stack, or nest state;
 - ball-and-nest, stacked, and side-by-side relationships are deterministic and do not consume pieces;
 - interrupted drags preserve the prior arrangement and never consume the next tap;
+- Story Scenes defaults to flower placement, cycles exactly five variants per object family, and keeps every object revisitable;
+- Story Scenes relationships depend only on stable nearby pairs and never consume or replace their objects;
+- Story Scenes remains bounded at 16 objects and revisits nearby work instead of deleting it at the limit;
 
 Observation checks before public release:
 
@@ -105,4 +114,4 @@ Observation checks before public release:
 
 ## Next decision
 
-The ordered implementation and validation sequence now lives in `ROADMAP.md`. The deeper Color Splash, Peekaboo, Bloom, and Stack & Settle slices await device and child observation. Comparative portfolio review is the next milestone. An unavailable real-world observation step should not prevent bounded, reversible technical prototypes from advancing, but those prototypes must not be described as child-validated. Do not extract a generalized framework merely because the pages share controls.
+The ordered implementation and validation sequence now lives in `ROADMAP.md`. The deeper Color Splash, Peekaboo, Bloom, and Stack & Settle slices await device and child observation. Comparative portfolio review is the next validation milestone. An unlisted Story Scenes technical prototype now tests selection, placement, revisiting, and relational storytelling without claiming those interactions are child-validated. Do not expand its cast, add background selection, or extract a generalized framework merely because the pages share controls.

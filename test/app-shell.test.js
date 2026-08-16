@@ -4,7 +4,14 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
-const pages = ["index.html", "games/bloom/index.html", "games/color-splash/index.html", "games/peekaboo/index.html", "games/stack-settle/index.html"];
+const pages = [
+  "index.html",
+  "games/bloom/index.html",
+  "games/color-splash/index.html",
+  "games/peekaboo/index.html",
+  "games/stack-settle/index.html",
+  "games/story-scenes/index.html"
+];
 
 test("manifest icons exist at their declared sizes", () => {
   const manifest = JSON.parse(readFileSync(resolve(root, "manifest.webmanifest"), "utf8"));
