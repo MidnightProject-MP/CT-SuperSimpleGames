@@ -31,7 +31,7 @@ Bloom supports exposure to cause and effect, colors, spatial position, relative 
 
 ## Color Splash: second product slice
 
-Color Splash presents a 4×4 board using four color-and-symbol identities. Tapping anywhere inside the visible board resolves to a nearby square, changes the connected region anchored at the top-left to that square's identity, and absorbs adjacent matches. A local response and traveling color make the resolved choice visible. Repeating the current identity traces the connected region rather than appearing ignored. There is no move limit, wrong choice, score, or automatic restart. A completed board holds its state until the child activates an explicit large new-board control. Three stable designed boards introduce legible spatial structures before later rounds use procedural variation.
+Color Splash begins with enlarged four-cell boards using two to four color-and-symbol identities, then moves to 4×4 boards using four. Tapping anywhere inside the visible board resolves to a nearby square, changes the connected region anchored at the top-left to that square's identity, and absorbs adjacent matches. A local response and traveling color make the resolved choice visible. Repeating the current identity traces the connected region rather than appearing ignored. There is no move limit, wrong choice, score, or automatic restart. A completed board holds its state until the child activates an explicit large new-board control. Stable bridge, islands, stripes, rings, path, and pockets families introduce legible spatial structures before later rounds use procedural variation.
 
 Color Splash supports exposure to color and symbol matching, connected regions, cause and effect, and simple multi-step planning. It does **not** assess reasoning or claim that completion demonstrates mastery.
 
@@ -74,7 +74,7 @@ Mechanical checks:
 - sound-off play retains complete visible feedback;
 - the application shell is available offline after a successful first load;
 - reduced-motion mode removes ambient and sparkle motion and shortens growth motion.
-- every designed and generated Color Splash board contains all four identities and is solvable without a move limit;
+- every Color Splash board contains its declared identity set, remains distinguishable by symbol as well as color, and is solvable without a move limit;
 - flood moves never shrink the connected corner region or mutate the prior board;
 - decorative board gaps resolve deterministically to a nearby square;
 - repeated/current-color input visibly acknowledges the connected region;

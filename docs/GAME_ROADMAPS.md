@@ -201,6 +201,8 @@ The child currently receives a forgiving board touch, a growing corner region, d
 
 ### CS-0 — Explainable input and board engine
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** technical foundation supporting all Color Splash milestones.
 
 - Represent designed boards, identity sets, anchors, and completion rules through validated declarative board definitions.
@@ -212,6 +214,8 @@ The child currently receives a forgiving board touch, a growing corner region, d
 **Gate:** Every accepted input can identify the resolved cell, selected identity, prior region, and resulting region without relying on timing.
 
 ### CS-1 — Puzzle families
+
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
 
 **Kind:** core gameplay improvement; Round 1.
 
@@ -226,6 +230,8 @@ The child currently receives a forgiving board touch, a growing corner region, d
 **Learning exposure:** connectedness, grouping, boundaries, and simple multi-step cause.
 
 **Gate:** A child can still complete every board through experimentation; no family depends on reading or color alone.
+
+**Implementation note:** The board sequence now begins with three enlarged four-cell teaching boards, then presents stable bridge, islands, stripes, rings, path, and pockets families before deterministic mixed boards. Definitions validate dimensions, identities, family, and labels. Every accepted move produces a pure explanation of its resolved cell, identity, prior region, and resulting region; symbols continue to pair with color, and rapid animation classes are interrupted before current state is rendered.
 
 ### CS-2 — Reversible planning
 

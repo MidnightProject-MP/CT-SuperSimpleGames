@@ -134,6 +134,22 @@ export function floodFill(board, nextColor) {
   };
 }
 
+export function resolveFloodChoice(board, selectedIndex) {
+  const current = createBoard(board);
+  if (!Number.isInteger(selectedIndex) || selectedIndex < 0 || selectedIndex >= current.cells.length) {
+    throw new RangeError("selectedIndex must identify a board cell");
+  }
+  const priorCaptured = floodRegion(current);
+  const selectedIdentity = current.cells[selectedIndex];
+  const result = floodFill(current, selectedIdentity);
+  return {
+    ...result,
+    selectedIndex,
+    selectedIdentity,
+    priorCaptured
+  };
+}
+
 export function isSolved(board) {
   const current = createBoard(board);
   return current.cells.every((color) => color === current.cells[0]);

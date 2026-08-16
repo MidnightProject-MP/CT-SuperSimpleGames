@@ -1,9 +1,9 @@
 import { createTonePlayer } from "./audio.js";
 import { COLORS } from "./game.js";
 import { nearestTargetIndex } from "./color-input.js";
-import { floodFill, floodRegion } from "./flood.js";
+import { floodRegion, resolveFloodChoice } from "./flood.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
-import { createSplashBoard, SPLASH_HEIGHT, SPLASH_WIDTH } from "./splash-boards.js";
+import { createSplashBoard } from "./splash-boards.js";
 
 const GRID_COLORS = COLORS.slice(0, 4);
 const SYMBOLS = ["●", "◆", "≡", "✦"];
@@ -49,7 +49,10 @@ function applyTileAppearance(tile, colorIndex, captured) {
 
 function createTiles() {
   const fragment = document.createDocumentFragment();
-  for (let index = 0; index < SPLASH_WIDTH * SPLASH_HEIGHT; index += 1) {
+  boardElement.style.setProperty("--board-width", String(board.width));
+  boardElement.style.setProperty("--board-height", String(board.height));
+  boardElement.classList.toggle("teaching-board", board.cells.length === 4);
+  for (let index = 0; index < board.cells.length; index += 1) {
     const tile = document.createElement("button");
     tile.className = "color-cell";
     tile.type = "button";
@@ -75,8 +78,8 @@ function renderBoard(animated = []) {
   for (const tile of boardElement.querySelectorAll(".color-cell")) {
     const index = Number(tile.dataset.index);
     applyTileAppearance(tile, board.cells[index], captured.has(index));
+    tile.classList.remove("splashing", "pressed");
     if (!animatedIndices.has(index)) continue;
-    tile.classList.remove("splashing");
     void tile.offsetWidth;
     tile.classList.add("splashing");
   }
@@ -86,11 +89,12 @@ function newRound({ playSound = false } = {}) {
   round += 1;
   board = createSplashBoard({ round, seed: nextSeed() });
   complete = false;
-  prompt.textContent = "Tap a color!";
+  prompt.textContent = board.label;
   celebration.hidden = true;
   boardElement.classList.remove("complete");
+  createTiles();
   renderBoard();
-  announcement.textContent = "New color board";
+  announcement.textContent = `New ${board.label.toLowerCase()} board`;
   if (playSound) tonePlayer.play(GRID_COLORS[board.cells[0]].tone);
 }
 
@@ -153,8 +157,8 @@ boardElement.addEventListener("click", (event) => {
     return;
   }
 
-  const colorIndex = board.cells[Number(tile.dataset.index)];
-  const result = floodFill(board, colorIndex);
+  const result = resolveFloodChoice(board, Number(tile.dataset.index));
+  const colorIndex = result.selectedIdentity;
   tonePlayer.play(GRID_COLORS[colorIndex].tone);
   pulseTile(tile);
   showColorTravel(tile, colorIndex);
@@ -188,7 +192,6 @@ document.addEventListener("visibilitychange", () => {
 });
 addEventListener("pagehide", tonePlayer.stop);
 
-createTiles();
 newRound();
 renderSoundState();
 

@@ -26,7 +26,7 @@ Bloom is a relational color garden. Tapping or dragging empty space creates brig
 
 ### Color Splash
 
-Color Splash is a no-fail flood-fill puzzle. Tapping anywhere on the board resolves to a nearby square and gives its color and symbol to the connected region growing from the top-left corner. There is no move limit or wrong choice; filling the board creates a gentle completion moment that remains until the child chooses a new board.
+Color Splash is a no-fail flood-fill puzzle. Tapping anywhere on the board resolves to a nearby square and gives its color and symbol to the connected region growing from the top-left corner. Enlarged four-cell boards introduce the rule before bridge, island, stripe, ring, path, and pocket patterns invite different kinds of connected-region play. There is no move limit or wrong choice; filling the board creates a gentle completion moment that remains until the child chooses a new board.
 
 ### Peekaboo Pockets
 

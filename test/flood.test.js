@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createBoard, floodFill, floodRegion, generateBoard, isSolved } from "../src/flood.js";
+import { createBoard, floodFill, floodRegion, generateBoard, isSolved, resolveFloodChoice } from "../src/flood.js";
 
 function board(cells, width = 3, colorCount = 4) {
   return createBoard({ width, height: cells.length / width, colorCount, cells });
@@ -39,6 +39,17 @@ test("choosing the anchor color is a safe immutable no-op", () => {
   assert.deepEqual(result.changed, []);
   assert.notEqual(result.board.cells, current.cells);
   assert.deepEqual([...result.board.cells], [...current.cells]);
+});
+
+test("a resolved choice explains its cell, identity, and before-and-after regions", () => {
+  const current = board([0, 1, 1, 2], 2, 3);
+  const result = resolveFloodChoice(current, 1);
+  assert.equal(result.selectedIndex, 1);
+  assert.equal(result.selectedIdentity, 1);
+  assert.deepEqual(result.priorCaptured, [0]);
+  assert.deepEqual(result.captured, [0, 1, 2]);
+  assert.deepEqual([...current.cells], [0, 1, 1, 2]);
+  assert.throws(() => resolveFloodChoice(current, 4), RangeError);
 });
 
 test("solved state handles single-cell, uniform, and mixed boards", () => {

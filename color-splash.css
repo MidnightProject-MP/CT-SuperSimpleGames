@@ -113,7 +113,8 @@ button { font: inherit; }
   --board-size: min(88vw, calc(100svh - 155px), 420px);
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(var(--board-width, 4), 1fr);
+  grid-template-rows: repeat(var(--board-height, 4), 1fr);
   gap: clamp(4px, 1.4vw, 8px);
   width: var(--board-size);
   height: var(--board-size);
@@ -124,6 +125,14 @@ button { font: inherit; }
   box-shadow: 0 11px 0 rgba(75,57,137,.18), 0 18px 38px rgba(57,43,113,.16);
   touch-action: manipulation;
 }
+
+.color-board.teaching-board {
+  --board-size: min(78vw, calc(100svh - 175px), 340px);
+  gap: clamp(8px, 2vw, 14px);
+  padding: clamp(11px, 3vw, 18px);
+}
+
+.color-board.teaching-board .cell-symbol { font-size: clamp(36px, 13vw, 70px); }
 
 .color-cell {
   position: relative;
