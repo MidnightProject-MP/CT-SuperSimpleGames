@@ -53,11 +53,11 @@ Story Scenes explores whether creation, revisiting, direct manipulation, and sta
 
 The storytelling world is available from the launcher for testing. Its availability does not establish that young children understand selecting a family and then placing it, distinguish changing an object from moving it, understand the setting transition, or intentionally discover and repeat relationships. Those questions remain for rendered, device, caregiver, and child observation.
 
-## Together Tones: available technical prototype
+## Together Tones: available temporal-play world
 
-Together Tones explores temporal order and informal turn-taking through four oversized visual voices. Every activation creates a complete visible response whether sound is enabled or not. Repeating the same voice creates an echo response; moving to a different voice connects the last pair. A four-bead trail shows recent order without asking the child to copy it. Only one brief generated tone plays at a time, and muting never removes the visual state.
+Together Tones explores temporal order and informal turn-taking through four oversized visual voices. Every activation creates a complete visible response whether sound is enabled or not. Repeating the same voice creates an echo response; moving to a different voice connects the last pair. A four-bead trail shows recent order without asking the child to copy it. Recent repetition, alternation, three-voice, and four-voice patterns briefly form stable rings, an arc, a triangle, or a loop. Only one brief generated tone plays at a time, and muting never removes the visual state.
 
-The prototype is available from the launcher for testing. It does not claim to teach rhythm, musical concepts, memory, or cooperation. It specifically excludes automatic playback, imitation prompts, tempo changes, accuracy, scores, performance recording, and completion. Its question is whether stable visual voices and a tiny shared history invite comfortable variation or natural alternating turns.
+The temporal-play world is available from the launcher for testing. It does not claim to teach rhythm, musical concepts, memory, or cooperation. It specifically excludes automatic playback, imitation prompts, tempo changes, accuracy, scores, performance recording, and completion. Its question is whether stable visual voices, geometric motifs, and a tiny shared history invite comfortable variation or natural alternating turns.
 
 ## Acceptance evidence
 

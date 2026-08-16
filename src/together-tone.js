@@ -17,6 +17,7 @@ function createState(levels, trail, pair) {
     levels: freezeLevels(levels),
     trail: Object.freeze([...trail]),
     pair: freezePair(pair),
+    motif: motifForTrail(trail),
   });
 }
 
@@ -45,7 +46,20 @@ function normalizeState(state) {
     || (expectedPair && (state.pair[0] !== expectedPair[0] || state.pair[1] !== expectedPair[1]))) {
     throw new RangeError("together tones pair does not match its recent trail");
   }
+  if (state.motif !== motifForTrail(state.trail)) throw new RangeError("together tones motif does not match its trail");
   return { levels, trail: [...state.trail], pair: state.pair ? [...state.pair] : null };
+}
+
+export function motifForTrail(trail) {
+  if (!Array.isArray(trail) || trail.some((id) => !VOICE_SET.has(id))) throw new RangeError("motif trail contains an unknown voice");
+  const lastFour = trail.slice(-4);
+  if (lastFour.length === 4 && new Set(lastFour).size === 4) return "loop";
+  const lastThree = trail.slice(-3);
+  if (lastThree.length === 3 && new Set(lastThree).size === 3) return "triangle";
+  if (lastThree.length === 3 && lastThree[0] === lastThree[2] && lastThree[0] !== lastThree[1]) return "alternation";
+  const lastTwo = trail.slice(-2);
+  if (lastTwo.length === 2 && lastTwo[0] === lastTwo[1]) return "repetition";
+  return null;
 }
 
 export function createToneState() {
@@ -69,5 +83,6 @@ export function activateVoice(state, id) {
     previous,
     mode,
     level: levels[id],
+    motif: nextState.motif,
   });
 }

@@ -6,6 +6,7 @@ import {
   TRAIL_LIMIT,
   activateVoice,
   createToneState,
+  motifForTrail,
 } from "../src/together-tone.js";
 
 test("together tones starts silent, bounded, and immutable", () => {
@@ -14,9 +15,18 @@ test("together tones starts silent, bounded, and immutable", () => {
   assert.equal(Object.values(state.levels).every((level) => level === 0), true);
   assert.deepEqual(state.trail, []);
   assert.equal(state.pair, null);
+  assert.equal(state.motif, null);
   assert.equal(Object.isFrozen(state), true);
   assert.equal(Object.isFrozen(state.levels), true);
   assert.equal(Object.isFrozen(state.trail), true);
+});
+
+test("recent sequences produce stable visual motifs without goals", () => {
+  assert.equal(motifForTrail(["berry", "berry"]), "repetition");
+  assert.equal(motifForTrail(["berry", "sunny", "berry"]), "alternation");
+  assert.equal(motifForTrail(["berry", "sunny", "sky"]), "triangle");
+  assert.equal(motifForTrail(["berry", "sunny", "sky", "leaf"]), "loop");
+  assert.equal(motifForTrail(["berry"]), null);
 });
 
 test("the first voice says hello without inventing a partner", () => {

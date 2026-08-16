@@ -9,6 +9,7 @@ const link = document.querySelector("#harmony-link");
 const message = document.querySelector("#tone-message");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
+const motif = document.querySelector("#tone-motif");
 
 const VOICES = Object.freeze({
   berry: Object.freeze({ label: "Berry", frequency: 293.66 }),
@@ -20,6 +21,8 @@ const VOICES = Object.freeze({
 let state = createToneState();
 let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
+const suppressedClicks = new Map();
+let motifTimer = null;
 
 function renderSoundState() {
   soundToggle.setAttribute("aria-pressed", String(soundEnabled));
@@ -39,7 +42,7 @@ function renderTrail() {
     : "No recent tones");
 }
 
-function renderLink() {
+function renderLink(animate = true) {
   if (!state.pair) {
     link.hidden = true;
     return;
@@ -57,8 +60,27 @@ function renderLink() {
   link.dataset.from = state.pair[0];
   link.dataset.to = state.pair[1];
   link.classList.remove("fresh");
-  void link.offsetWidth;
-  link.classList.add("fresh");
+  if (animate) {
+    void link.offsetWidth;
+    link.classList.add("fresh");
+  }
+}
+
+function renderMotif() {
+  if (motifTimer !== null) clearTimeout(motifTimer);
+  motif.dataset.motif = state.motif || "none";
+  const path = motif.querySelector(".motif-path");
+  path.setAttribute("d", state.motif === "alternation" ? "M15 70 Q50 10 85 70 Q50 45 15 70"
+    : state.motif === "triangle" ? "M50 12 L88 82 L12 82 Z"
+      : state.motif === "loop" ? "M18 18 L82 18 L82 82 L18 82 Z" : "");
+  motif.classList.remove("fresh");
+  if (!state.motif) return;
+  void motif.offsetWidth;
+  motif.classList.add("fresh");
+  motifTimer = setTimeout(() => {
+    motif.dataset.motif = "none";
+    motifTimer = null;
+  }, 900);
 }
 
 function animatePad(id, mode) {
@@ -77,6 +99,7 @@ function applyVoice(id) {
   state = result.state;
   renderTrail();
   renderLink();
+  renderMotif();
   animatePad(id, result.mode);
   const label = VOICES[id].label;
   const text = result.mode === "hello"
@@ -89,9 +112,23 @@ function applyVoice(id) {
   tonePlayer.play(VOICES[id].frequency * (1 + (result.level * 0.035)));
 }
 
+board.addEventListener("pointerdown", (event) => {
+  const pad = event.target.closest(".voice-pad");
+  if (!pad || event.pointerType === "mouse" || event.button !== 0) return;
+  event.preventDefault();
+  suppressedClicks.set(pad.dataset.id, performance.now() + 900);
+  applyVoice(pad.dataset.id);
+});
+
 board.addEventListener("click", (event) => {
   const pad = event.target.closest(".voice-pad");
-  if (pad) applyVoice(pad.dataset.id);
+  if (!pad) return;
+  const expires = suppressedClicks.get(pad.dataset.id) || 0;
+  if (event.detail !== 0 && performance.now() < expires) {
+    suppressedClicks.delete(pad.dataset.id);
+    return;
+  }
+  applyVoice(pad.dataset.id);
 });
 
 soundToggle.addEventListener("click", () => {
@@ -102,7 +139,7 @@ soundToggle.addEventListener("click", () => {
   if (soundEnabled) tonePlayer.play(440);
 });
 
-addEventListener("resize", renderLink);
+addEventListener("resize", () => renderLink(false));
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") void tonePlayer.suspend();
 });

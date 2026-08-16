@@ -38,6 +38,8 @@ Development should proceed in rounds so every game becomes more distinctive befo
 
 ### Round 1 — Strengthen the core worlds
 
+**Status:** implemented and automatically verified across all six games; rendered, device, caregiver, and child observation pending.
+
 Implement the first gameplay milestone for each game, including the technical foundation required by that milestone:
 
 1. `BL-1` Growth stories
@@ -634,6 +636,8 @@ The child currently receives four stable visual voices, five bounded visual leve
 
 ### TT-0 — Low-latency input and audio safety
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** technical foundation supporting all Together Tones milestones.
 
 - Move ordinary touch acknowledgement as close to pointer-down as platform behavior safely permits while preventing duplicate click activation.
@@ -646,6 +650,8 @@ The child currently receives four stable visual voices, five bounded visual leve
 **Gate:** Every activation produces immediate local visual evidence, and no input rate can accumulate tones, nodes, trail items, or animations without bound.
 
 ### TT-1 — Visual motifs
+
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
 
 **Kind:** core gameplay improvement; Round 1.
 
@@ -661,6 +667,8 @@ The child currently receives four stable visual voices, five bounded visual leve
 **Learning exposure:** repetition, alternation, sequence, same/different, and simple geometry.
 
 **Gate:** A single arbitrary touch remains complete; motifs cannot become hidden goals or variable rewards.
+
+**Implementation note:** Touch and pen input now activate on pointer-down with bounded per-voice click suppression, while mouse, keyboard, and assistive click activation retain the ordinary path. The pure phrase engine derives four stable recent-pattern motifs: nested rings for repetition, a returning arc for A-B-A, a triangle for three distinct voices, and a loop for four distinct voices. One reused motif layer appears briefly and then leaves the existing four-bead history; reduced motion keeps the form visible without animation. Resize recomputes link geometry without replaying its entrance effect, and audio and trail state remain strictly bounded.
 
 ### TT-2 — Touchable recent history
 

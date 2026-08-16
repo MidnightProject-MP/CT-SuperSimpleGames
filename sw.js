@@ -1,4 +1,4 @@
-const CACHE_NAME = "supersimplegames-v18";
+const CACHE_NAME = "supersimplegames-v19";
 const APP_SHELL = [
   "./",
   "./index.html",

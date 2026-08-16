@@ -13,7 +13,7 @@ Color Splash has its own focused protocol in [docs/COLOR_SPLASH_PLAYTEST.md](./d
 Peekaboo Pockets has a reversible-discovery protocol in [docs/PEEKABOO_PLAYTEST.md](./docs/PEEKABOO_PLAYTEST.md).
 Stack & Settle has a direct-manipulation protocol in [docs/STACK_SETTLE_PLAYTEST.md](./docs/STACK_SETTLE_PLAYTEST.md).
 Story Scenes has a focused composition protocol in [docs/STORY_SCENES_PLAYTEST.md](./docs/STORY_SCENES_PLAYTEST.md).
-The Together Tones prototype has a focused temporal and turn-taking protocol in [docs/TOGETHER_TONES_PLAYTEST.md](./docs/TOGETHER_TONES_PLAYTEST.md).
+Together Tones has a focused temporal and turn-taking protocol in [docs/TOGETHER_TONES_PLAYTEST.md](./docs/TOGETHER_TONES_PLAYTEST.md).
 Cross-game observations are normalized in [docs/COMPARATIVE_PLAYTEST.md](./docs/COMPARATIVE_PLAYTEST.md).
 Uncommitted future directions are captured separately in [docs/IDEAS.md](./docs/IDEAS.md).
 The broader interaction landscape and third-game decision are recorded in [docs/CONCEPTS.md](./docs/CONCEPTS.md).
@@ -40,9 +40,9 @@ Stack & Settle is a no-fail construction toy with five oversized reusable pieces
 
 Story Scenes is a symbolic storytelling world with garden, town, and castle settings. Each supplies four large object families, tap-anywhere placement, five predictable variants, revisitable objects, broad movement, and repeatable theme relationships. Changing the setting requires an explicit preview and confirmation so an incidental tap cannot erase a story. It is available for testing but is not yet child-validated.
 
-### Together Tones prototype
+### Together Tones
 
-Together Tones is a temporal-play experiment available from the launcher. Four large visual voices respond independently, repeated choices echo, different consecutive choices connect, and four colored beads preserve a tiny recent history. Sound is optional, only one brief tone plays at a time, and there is no sequence to copy or performance to complete.
+Together Tones is a temporal-play world with four large visual voices. Repeated choices echo, different consecutive choices connect, and four colored beads preserve a tiny recent history. Short patterns make stable visual forms—rings, a returning arc, a triangle, or a loop—without becoming goals to copy. Sound is optional, only one brief tone plays at a time, and there is no performance to complete.
 
 The first slice establishes these product principles:
 
@@ -77,4 +77,4 @@ node --test
 
 ## Near-term direction
 
-Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). All six experiences are available from the launcher for testing. Content expansion and validation claims remain conditional on real-world observation; Together Tones remains the most explicitly prototype-stage experience.
+Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). All six experiences are available from the launcher for testing. Content expansion and validation claims remain conditional on real-world observation.
