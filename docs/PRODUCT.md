@@ -53,6 +53,12 @@ Story Scenes explores whether the existing creation, revisiting, direct-manipula
 
 The prototype remains absent from the launcher. It does not yet establish that young children understand selecting a family and then placing it, distinguish changing an object from moving it, or intentionally discover and repeat relationships. It has no background selector or additional themed casts because those would add content before the central mode and storytelling hypotheses are observed.
 
+## Together Tones: unlisted technical prototype
+
+Together Tones explores temporal order and informal turn-taking through four oversized visual voices. Every activation creates a complete visible response whether sound is enabled or not. Repeating the same voice creates an echo response; moving to a different voice connects the last pair. A four-bead trail shows recent order without asking the child to copy it. Only one brief generated tone plays at a time, and muting never removes the visual state.
+
+The prototype remains absent from the launcher. It does not claim to teach rhythm, musical concepts, memory, or cooperation. It specifically excludes automatic playback, imitation prompts, tempo changes, accuracy, scores, performance recording, and completion. Its question is whether stable visual voices and a tiny shared history invite comfortable variation or natural alternating turns.
+
 ## Acceptance evidence
 
 Mechanical checks:
@@ -86,6 +92,9 @@ Mechanical checks:
 - Story Scenes defaults to flower placement, cycles exactly five variants per object family, and keeps every object revisitable;
 - Story Scenes relationships depend only on stable nearby pairs and never consume or replace their objects;
 - Story Scenes remains bounded at 16 objects and revisits nearby work instead of deleting it at the limit;
+- Together Tones retains at most four recent actions, five visual levels per voice, and one active pair;
+- repeating and alternating voices have deterministic visual consequences without requiring sound;
+- every Together Tones action stops the prior generated tone before starting another, so audio cannot accumulate;
 
 Observation checks before public release:
 
@@ -114,4 +123,4 @@ Observation checks before public release:
 
 ## Next decision
 
-The ordered implementation and validation sequence now lives in `ROADMAP.md`. The deeper Color Splash, Peekaboo, Bloom, and Stack & Settle slices await device and child observation. Comparative portfolio review is the next validation milestone. An unlisted Story Scenes technical prototype now tests selection, placement, revisiting, and relational storytelling without claiming those interactions are child-validated. Do not expand its cast, add background selection, or extract a generalized framework merely because the pages share controls.
+The ordered implementation and validation sequence now lives in `ROADMAP.md`. The four launched games await comparative device and child observation. Story Scenes and Together Tones remain unlisted technical prototypes for relational storytelling and temporal/cooperative play. Do not expand their content or promote them until their central interaction hypotheses are observed, and do not extract a generalized framework merely because the pages share controls.

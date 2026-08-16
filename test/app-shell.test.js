@@ -10,7 +10,8 @@ const pages = [
   "games/color-splash/index.html",
   "games/peekaboo/index.html",
   "games/stack-settle/index.html",
-  "games/story-scenes/index.html"
+  "games/story-scenes/index.html",
+  "games/together-tones/index.html"
 ];
 
 test("manifest icons exist at their declared sizes", () => {

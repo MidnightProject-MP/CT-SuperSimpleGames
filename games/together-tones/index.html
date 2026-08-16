@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; connect-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'none'; worker-src 'self'; manifest-src 'self'" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#5346a8" />
+    <meta name="description" content="Take turns making gentle tones and colorful connections." />
+    <link rel="manifest" href="../../manifest.webmanifest" />
+    <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../../assets/icon-192.png" />
+    <link rel="stylesheet" href="../../together-tones.css" />
+    <title>Together Tones · SuperSimpleGames</title>
+  </head>
+  <body>
+    <main class="tones-game">
+      <header class="tones-topbar">
+        <a class="tones-brand" href="../../" aria-label="All games">
+          <span class="tones-brand-mark" aria-hidden="true">‹</span>
+          <span>Together Tones</span>
+        </a>
+        <button id="sound-toggle" class="tones-sound" type="button" aria-pressed="true" aria-label="Turn sound off">
+          <svg class="sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.5 3a4.5 4.5 0 0 0-2-4v8a4.5 4.5 0 0 0 2-4Zm-2-7.7v2.1a6.5 6.5 0 0 1 0 11.2v2.1a8.5 8.5 0 0 0 0-15.4Z"/></svg>
+          <svg class="sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm11.5 3 2.2-2.2 1.4 1.4-2.2 2.2 2.2 2.2-1.4 1.4-2.2-2.2-2.2 2.2-1.4-1.4 2.2-2.2-2.2-2.2 1.4-1.4 2.2 2.2Z"/></svg>
+        </button>
+      </header>
+
+      <section id="tones-stage" class="tones-stage" aria-label="Four tone friends">
+        <div id="harmony-link" class="harmony-link" aria-hidden="true"></div>
+        <div id="tone-board" class="tone-board">
+          <button class="voice-pad berry-pad" type="button" data-id="berry" aria-label="Berry tone">
+            <span class="voice-art berry-art" aria-hidden="true"><i></i><b></b></span>
+          </button>
+          <button class="voice-pad sunny-pad" type="button" data-id="sunny" aria-label="Sunny tone">
+            <span class="voice-art sunny-art" aria-hidden="true"><i></i><b></b></span>
+          </button>
+          <button class="voice-pad sky-pad" type="button" data-id="sky" aria-label="Sky tone">
+            <span class="voice-art sky-art" aria-hidden="true"><i></i><b></b></span>
+          </button>
+          <button class="voice-pad leaf-pad" type="button" data-id="leaf" aria-label="Leaf tone">
+            <span class="voice-art leaf-art" aria-hidden="true"><i></i><b></b></span>
+          </button>
+        </div>
+        <div class="tone-center">
+          <div id="tone-trail" class="tone-trail" aria-label="Recent tones"></div>
+          <p id="tone-message" class="tone-message" aria-live="polite">Touch a friend!</p>
+        </div>
+      </section>
+      <div id="announcement" class="sr-only" aria-live="polite"></div>
+    </main>
+    <noscript>Together Tones needs JavaScript to play.</noscript>
+    <script type="module" src="../../src/together-tones.js"></script>
+  </body>
+</html>
