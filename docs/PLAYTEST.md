@@ -4,6 +4,8 @@
 
 Test whether Bloom is discoverable, comfortable, forgiving, and understood as open-ended play. This is not a test of whether Bloom teaches or measures developmental mastery.
 
+**Evidence status:** protocol only; no completed sessions are recorded. Record any session and its decision consequence in `EVIDENCE.md`.
+
 Use four caregiver–child pairs, ideally two children aged 18–24 months and two aged 25–36 months. Treat every result as formative observation, not generalizable research.
 
 ## Before each session
@@ -75,7 +77,7 @@ Do not ask whether Bloom taught colors or another concept.
 
 ## Decision thresholds
 
-Proceed to a distinct second-concept experiment only if:
+Treat the current Bloom interaction hypothesis as supported for further iteration only if:
 
 - at least three of four children begin within 60 seconds, with no more than one neutral invitation;
 - all four receive understandable visible feedback from ordinary and imprecise touches, without repeated apparent failure;
@@ -86,4 +88,4 @@ Proceed to a distinct second-concept experiment only if:
 
 Hold and revise Bloom if any session reveals severe sensory distress, a crash, navigation away, a network dependency, resisted disengagement, or repeated apparent failure. Also hold if discoverability, comfort, or caregiver-understanding thresholds are missed. Change the implicated variable and repeat the same small protocol.
 
-If the thresholds pass, test a game built around a distinct concept such as matching or relative size. Do not extract a shared framework until a second game demonstrates what is genuinely shared.
+If the thresholds pass, record the observation and its limits in `EVIDENCE.md`, then use the current portfolio roadmap to choose the next bounded experiment. Do not infer a learning outcome or generalize beyond the observed sessions.

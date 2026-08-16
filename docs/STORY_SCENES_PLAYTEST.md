@@ -4,6 +4,8 @@
 
 Test whether young children can move from immediate default flower placement to deliberately choosing, placing, revisiting, and combining a tiny cast. This is an observation of interaction clarity and child-authored play, not an assessment of imagination, language, categorization, or narrative ability.
 
+**Evidence status:** protocol only; no completed sessions are recorded. Record any session and its decision consequence in `EVIDENCE.md`.
+
 Use the consent, privacy, device-locking, assent, and immediate-stop rules in `PLAYTEST.md`. Story Scenes is available from the launcher, but treat four caregiver–child sessions as directional evidence only.
 
 ## Session

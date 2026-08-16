@@ -116,7 +116,7 @@ Observation checks before public release:
 - caregivers understand the experience's value without inflated educational claims;
 - the game remains interesting on a later day, not only during first exposure.
 
-## Explicit non-goals for the first slice
+## Explicit non-goals
 
 - A content platform, progression system, scoring, rewards economy, or generalized game framework.
 - Accounts, cloud sync, telemetry, personalization, advertising, or monetization.
@@ -132,8 +132,10 @@ Observation checks before public release:
 - [FTC COPPA guidance](https://www.ftc.gov/business-guidance/resources/complying-coppa-frequently-asked-questions)
 - [American Academy of Pediatrics policy on digital ecosystems](https://publications.aap.org/pediatrics/article/157/2/e2025075320/206129/Digital-Ecosystems-Children-and-Adolescents-Policy)
 
-## Next decision
+## Current portfolio boundary
 
-The agreed next portfolio phase is **Familiar World**, defined in `ROADMAP.md`; the ordered expansion plan for every experience remains in `GAME_ROADMAPS.md`. Stabilize shared control meanings, bounded preservation, and the play surface—especially Color Splash—before continuing isolated Round 3 expansion. All six experiences remain available from the launcher for testing. Implement one bounded roadmap milestone at a time and make it available for observation; availability is not validation. Do not compound additional content when the underlying interaction remains unclear, and do not extract a generalized framework merely because the pages share controls.
+All six experiences are public and mechanically verified, but none is child-validated. Availability supports observation; it does not establish comprehension, comfort, developmental benefit, or voluntary return.
 
-The first Familiar World foundation is implemented: Home never clears work; Bloom, Stack & Settle, and Story Scenes restore one bounded local creation; and their shared Fresh control always requires explicit confirmation. Saved state remains on the device, contains no identity or engagement history, is validated against the current game model, and safely falls back to a new creation when unavailable or incompatible. Finite games continue to begin as fresh rounds and use their existing in-game replay semantics.
+The Familiar World foundation is implemented: Home never clears work; Bloom, Stack & Settle, and Story Scenes restore one bounded local creation; and their shared Fresh control requires explicit confirmation. Saved state remains on the device, contains no identity or engagement history, is validated against the current game model, and safely falls back when unavailable or incompatible. Finite games begin as fresh rounds and retain deliberate in-game replay.
+
+Color Splash now keeps one rendered board frame across ordinary play, Back one, completion, and New board. The current cross-game decision and sequencing live only in `ROADMAP.md`; detailed per-game candidates live in `GAME_ROADMAPS.md`; evidence and meaningful feedback provenance live in `EVIDENCE.md`.

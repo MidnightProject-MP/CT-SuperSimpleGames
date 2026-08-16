@@ -2,6 +2,8 @@
 
 ## Purpose
 
+**Evidence status:** protocol only; no completed sessions are recorded. Record any session and its decision consequence in `EVIDENCE.md`.
+
 Test whether children discover tap placement or broad dragging, understand that pieces remain movable, explore more than one spatial relationship, and experience magnetic settling as helpful rather than surprising. This is not an assessment of construction, balance, coordination, or spatial ability.
 
 Use the consent, privacy, device-locking, assent, and immediate-stop rules in `PLAYTEST.md`. Treat four caregiver–child sessions as formative observations only.

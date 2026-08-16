@@ -1,4 +1,4 @@
-# Four-game comparative evidence plan
+# Core four-game comparative observation protocol
 
 ## Purpose
 
@@ -12,6 +12,8 @@ The individual protocols remain authoritative for each game:
 - `STACK_SETTLE_PLAYTEST.md`
 
 This document only defines what can be compared after those sessions.
+
+This is a protocol, not an evidence record. Completed observations and their consequences belong in `EVIDENCE.md`.
 
 ## Protect the observation
 
@@ -60,4 +62,4 @@ For each game independently:
 - **Hold** when apparent failure, sensory distress, unsafe navigation, resisted disengagement, or caregiver concern occurs. Do not compensate with rewards, coaching, or more stimulation.
 - **Retire the mechanic** when its value depends on precision, adult explanation, repeated correction, or engagement pressure that conflicts with the product philosophy.
 
-Across games, invest next in the interaction that reveals a distinct, repeatable form of comfortable agency—not simply the longest sessions or most taps. Preserve unresolved concepts in `CONCEPTS.md` and `IDEAS.md`; later mechanics should remain bounded prototypes until observation shows which interaction questions are still unanswered.
+Across games, invest next in the interaction that reveals a distinct, repeatable form of comfortable agency—not simply the longest sessions or most taps. Preserve uncommitted concepts in `IDEAS.md`; use `CONCEPTS.md` only for historical rationale, and record actual findings in `EVIDENCE.md`.

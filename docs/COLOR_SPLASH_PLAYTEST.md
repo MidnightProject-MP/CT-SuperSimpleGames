@@ -4,6 +4,8 @@
 
 Test whether children discover the direct board-tap interaction, perceive the growing top-left region, remain comfortable with the feedback, and can leave or begin another board without friction. This does not test or claim reasoning, color, or planning mastery.
 
+**Evidence status:** protocol only; no completed sessions are recorded. Record any session and its decision consequence in `EVIDENCE.md`.
+
 Use the same consent, privacy, device-locking, assent, and immediate-stop rules in `PLAYTEST.md`. Treat four caregiver–child sessions as formative observations only.
 
 ## Session

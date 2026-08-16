@@ -2,6 +2,8 @@
 
 ## Purpose
 
+**Evidence status:** protocol only; no completed sessions are recorded. Record any session and its decision consequence in `EVIDENCE.md`.
+
 Test whether children notice the visual target, discover opening and closing, experience the clue as playful rather than incorrect, understand that contents remain in stable pockets, revisit the scene voluntarily, and remain comfortable. This is not a memory, object-permanence, or developmental assessment.
 
 Use the consent, privacy, device-locking, assent, and immediate-stop rules in `PLAYTEST.md`. Treat four caregiver–child sessions as formative observations only. A caregiver should stay beside the child and may respond naturally, but should not turn the game into a quiz.

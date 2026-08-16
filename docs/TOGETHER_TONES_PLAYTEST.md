@@ -2,6 +2,8 @@
 
 ## Purpose
 
+**Evidence status:** protocol only; no completed sessions are recorded. Record any session and its decision consequence in `EVIDENCE.md`.
+
 Test whether four stable visual voices invite comfortable repetition, intentional variation, and informal turn-taking without sound dependence, imitation demands, or engagement pressure. This is not an assessment of rhythm, memory, music, attention, or cooperation.
 
 Use the consent, privacy, device-locking, assent, and immediate-stop rules in `PLAYTEST.md`. Together Tones is available from the launcher, but treat four caregiver–child sessions as directional evidence only.

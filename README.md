@@ -4,19 +4,7 @@
 
 SuperSimpleGames is a mobile-first collection of playful, no-fail experiences for toddlers. Each game should reward exploration while quietly reinforcing an early developmental concept.
 
-The product intent lives in [INCEPTION.md](./INCEPTION.md).
-Current hypotheses and validation criteria live in [docs/PRODUCT.md](./docs/PRODUCT.md).
-The ordered implementation plan lives in [docs/ROADMAP.md](./docs/ROADMAP.md).
-Detailed technical and gameplay expansion milestones for every experience live in [docs/GAME_ROADMAPS.md](./docs/GAME_ROADMAPS.md).
-The first caregiver-observation protocol is in [docs/PLAYTEST.md](./docs/PLAYTEST.md).
-Color Splash has its own focused protocol in [docs/COLOR_SPLASH_PLAYTEST.md](./docs/COLOR_SPLASH_PLAYTEST.md).
-Peekaboo Pockets has a reversible-discovery protocol in [docs/PEEKABOO_PLAYTEST.md](./docs/PEEKABOO_PLAYTEST.md).
-Stack & Settle has a direct-manipulation protocol in [docs/STACK_SETTLE_PLAYTEST.md](./docs/STACK_SETTLE_PLAYTEST.md).
-Story Scenes has a focused composition protocol in [docs/STORY_SCENES_PLAYTEST.md](./docs/STORY_SCENES_PLAYTEST.md).
-Together Tones has a focused temporal and turn-taking protocol in [docs/TOGETHER_TONES_PLAYTEST.md](./docs/TOGETHER_TONES_PLAYTEST.md).
-Cross-game observations are normalized in [docs/COMPARATIVE_PLAYTEST.md](./docs/COMPARATIVE_PLAYTEST.md).
-Uncommitted future directions are captured separately in [docs/IDEAS.md](./docs/IDEAS.md).
-The broader interaction landscape and third-game decision are recorded in [docs/CONCEPTS.md](./docs/CONCEPTS.md).
+Start with the [documentation map](./docs/README.md). It distinguishes current product truth, the active roadmap, detailed per-game plans, evidence, observation protocols, exploratory ideas, and historical decisions. The founding intent remains in [INCEPTION.md](./INCEPTION.md).
 
 ## Games
 
@@ -44,7 +32,7 @@ Story Scenes is a symbolic storytelling world with garden, town, and castle sett
 
 Together Tones is a temporal-play world with four large visual voices. Repeated choices echo, different consecutive choices connect, and four colored beads preserve a tiny recent history. Short patterns make stable visual forms—rings, a returning arc, a triangle, or a loop—without becoming goals to copy. Sound is optional, only one brief tone plays at a time, and there is no performance to complete.
 
-The first slice establishes these product principles:
+The collection follows these product principles:
 
 - every ordinary interaction produces a satisfying response;
 - controls and targets are large, forgiving, and resilient to repeated input;
@@ -77,4 +65,4 @@ node --test
 
 ## Near-term direction
 
-Follow the ordered milestones in [docs/ROADMAP.md](./docs/ROADMAP.md). All six experiences are available from the launcher for testing. Content expansion and validation claims remain conditional on real-world observation.
+Follow the current milestone in [docs/ROADMAP.md](./docs/ROADMAP.md). All six experiences are available from the launcher. Implementation, rendered inspection, device observation, caregiver feedback, and child observation are recorded as distinct evidence layers.

@@ -19,6 +19,19 @@ Each game should provide a different kind of agency and a different route into e
 
 “Learning” means exposure through understandable play. It never means a quiz, a mastery claim, a performance score, or pressure to produce an adult-defined answer.
 
+## Current per-game frontier
+
+This table is the quick index for this document. “Next candidate” means the next unimplemented milestone within that game, not permission to bypass the portfolio sequence in `ROADMAP.md`.
+
+| Experience | Implemented through | Next per-game candidate |
+|---|---|---|
+| Bloom | `BL-3A` merge-three garden growth | `BL-4` garden seasons and themes |
+| Color Splash | `CS-2` reversible planning, plus stable-frame correction | `CS-3` two growing corners |
+| Peekaboo Pockets | `PP-2` legible clue chains | `PP-3` child hides, caregiver seeks |
+| Stack & Settle | `STK-2` open-ended idea cards | `STK-3` themed construction kits |
+| Story Scenes | `SCN-2A` toddler-first variation and compositional castle | `SCN-3` roles and child-directed sides |
+| Together Tones | `TT-2` touchable recent history | `TT-3` tone qualities and visible comparison |
+
 ## Rules shared by every roadmap
 
 1. Preserve immediate play. A new child should still receive a complete response from the first ordinary touch.
@@ -67,11 +80,11 @@ Proceed after each Round 1 mechanic is technically verified and any obvious inte
 
 ### Round 3 — Deepen social and conceptual play
 
-The cross-game **Familiar World** phase in `ROADMAP.md` now precedes the remaining isolated work in this round. Bloom's first garden visitors are already implemented; further Round 3 mechanics should wait until the shared control, preservation, spatial-stability, and recurring-resident contracts are coherent.
+The cross-game **Familiar World** phase in `ROADMAP.md` precedes the remaining isolated work in this round. Its shared control, bounded preservation, and Color Splash spatial-stability steps are implemented. The recurring-resident pilot is next; `ROADMAP.md` remains authoritative for when isolated Round 3 work resumes.
 
 Use observation to choose the strongest order within this round:
 
-- garden visitors and simple ecological relationships;
+- the active recurring-resident pilot from `ROADMAP.md`;
 - two-anchor Color Splash boards;
 - child-hides/caregiver-seeks Peekaboo;
 - themed construction kits;
@@ -839,3 +852,4 @@ A milestone is implemented only when:
 - When observation contradicts a roadmap assumption, revise the next milestone rather than defending the plan.
 - If a mechanic only works with instruction, precision, pressure, or reward escalation, simplify it or retire it.
 - When repeated implementation mechanics become stable across multiple games, consider a small shared primitive. Do not create a generalized engine in anticipation of reuse.
+- Record consequential feedback and observation provenance in `EVIDENCE.md`; roadmap status is not evidence.
