@@ -1,5 +1,5 @@
 import { createTonePlayer } from "./audio.js";
-import { activateVoice, createToneState } from "./together-tone.js";
+import { activateVoice, createToneState, reactivateTrail } from "./together-tone.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 
 const board = document.querySelector("#tone-board");
@@ -30,10 +30,15 @@ function renderSoundState() {
 }
 
 function renderTrail() {
-  const dots = state.trail.map((id) => {
-    const dot = document.createElement("span");
+  const dots = state.trail.map((id, index) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
     dot.className = `trail-dot ${id}-dot`;
-    dot.setAttribute("aria-hidden", "true");
+    dot.dataset.index = String(index);
+    dot.dataset.id = id;
+    dot.style.setProperty("--trail-order", index);
+    dot.setAttribute("aria-label", `Play recent ${VOICES[id].label} tone; position ${index + 1} of ${state.trail.length}`);
+    dot.innerHTML = '<span aria-hidden="true"></span>';
     return dot;
   });
   trail.replaceChildren(...dots);
@@ -94,8 +99,8 @@ function animatePad(id, mode) {
   }
 }
 
-function applyVoice(id) {
-  const result = activateVoice(state, id);
+function applyResult(result) {
+  const { id } = result;
   state = result.state;
   renderTrail();
   renderLink();
@@ -111,6 +116,17 @@ function applyVoice(id) {
   announcement.textContent = text;
   tonePlayer.play(VOICES[id].frequency * (1 + (result.level * 0.035)));
 }
+
+function applyVoice(id) {
+  applyResult(activateVoice(state, id));
+}
+
+trail.addEventListener("click", (event) => {
+  const bead = event.target.closest(".trail-dot");
+  if (!bead) return;
+  const result = reactivateTrail(state, Number(bead.dataset.index));
+  applyResult(result);
+});
 
 board.addEventListener("pointerdown", (event) => {
   const pad = event.target.closest(".voice-pad");

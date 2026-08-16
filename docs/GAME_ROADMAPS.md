@@ -52,6 +52,8 @@ Implement the first gameplay milestone for each game, including the technical fo
 
 ### Round 2 — Add revision and intentional experimentation
 
+**Status:** implemented and automatically verified across all six games; rendered, device, caregiver, and child observation pending.
+
 Proceed after each Round 1 mechanic is technically verified and any obvious interaction failures are corrected:
 
 1. `BL-2` Garden neighborhoods
@@ -695,6 +697,8 @@ The child currently receives four stable visual voices, five bounded visual leve
 
 ### TT-2 — Touchable recent history
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** revision mechanic; Round 2.
 
 - Make each of the four recent beads a large enough touch target without shrinking the primary voices.
@@ -707,6 +711,8 @@ The child currently receives four stable visual voices, five bounded visual leve
 **Learning exposure:** recent order, before/after, and revision.
 
 **Gate:** History remains secondary to the four main voices and usable with sound muted.
+
+**Implementation note:** The four recent marks are now 48-pixel buttons with colored inner beads that grow slightly from oldest to newest. Touching any bead deterministically reactivates its voice once and moves that action to the newest trail position. It uses the same bounded voice, motif, audio, and visual response as a primary pad and never plays the rest of the trail.
 
 ### TT-3 — Tone qualities and visible comparison
 

@@ -7,6 +7,7 @@ import {
   activateVoice,
   createToneState,
   motifForTrail,
+  reactivateTrail,
 } from "../src/together-tone.js";
 
 test("together tones starts silent, bounded, and immutable", () => {
@@ -61,6 +62,24 @@ test("the recent trail retains only four actions", () => {
   }
   assert.equal(state.trail.length, TRAIL_LIMIT);
   assert.deepEqual(state.trail, ["sky", "leaf", "berry", "sky"]);
+});
+
+test("touching a recent bead reactivates it once as the newest action", () => {
+  let state = createToneState();
+  for (const id of ["berry", "sunny", "sky"]) state = activateVoice(state, id).state;
+  const replayed = reactivateTrail(state, 0);
+  assert.equal(replayed.id, "berry");
+  assert.equal(replayed.fromHistory, true);
+  assert.equal(replayed.originalIndex, 0);
+  assert.deepEqual(replayed.state.trail, ["berry", "sunny", "sky", "berry"]);
+  assert.deepEqual(state.trail, ["berry", "sunny", "sky"]);
+});
+
+test("recent bead reactivation rejects missing positions", () => {
+  const state = activateVoice(createToneState(), "leaf").state;
+  assert.throws(() => reactivateTrail(state, -1), RangeError);
+  assert.throws(() => reactivateTrail(state, 1), RangeError);
+  assert.throws(() => reactivateTrail(state, 0.5), RangeError);
 });
 
 test("voice levels cycle without accumulating unbounded state", () => {

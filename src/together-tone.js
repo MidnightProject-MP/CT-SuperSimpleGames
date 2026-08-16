@@ -86,3 +86,12 @@ export function activateVoice(state, id) {
     motif: nextState.motif,
   });
 }
+
+export function reactivateTrail(state, index) {
+  const current = normalizeState(state);
+  if (!Number.isInteger(index) || index < 0 || index >= current.trail.length) {
+    throw new RangeError("recent tone index is out of range");
+  }
+  const result = activateVoice(state, current.trail[index]);
+  return Object.freeze({ ...result, fromHistory: true, originalIndex: index });
+}

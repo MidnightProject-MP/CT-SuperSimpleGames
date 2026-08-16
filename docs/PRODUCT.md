@@ -55,7 +55,7 @@ The storytelling world is available from the launcher for testing. Its availabil
 
 ## Together Tones: available temporal-play world
 
-Together Tones explores temporal order and informal turn-taking through four oversized visual voices. Every activation creates a complete visible response whether sound is enabled or not. Repeating the same voice creates an echo response; moving to a different voice connects the last pair. A four-bead trail shows recent order without asking the child to copy it. Recent repetition, alternation, three-voice, and four-voice patterns briefly form stable rings, an arc, a triangle, or a loop. Only one brief generated tone plays at a time, and muting never removes the visual state.
+Together Tones explores temporal order and informal turn-taking through four oversized visual voices. Every activation creates a complete visible response whether sound is enabled or not. Repeating the same voice creates an echo response; moving to a different voice connects the last pair. A four-bead trail shows recent order without asking the child to copy it; each bead is independently touchable and reactivates that one voice as the newest action. Recent repetition, alternation, three-voice, and four-voice patterns briefly form stable rings, an arc, a triangle, or a loop. Only one brief generated tone plays at a time, and muting never removes the visual state.
 
 The temporal-play world is available from the launcher for testing. It does not claim to teach rhythm, musical concepts, memory, or cooperation. It specifically excludes automatic playback, imitation prompts, tempo changes, accuracy, scores, performance recording, and completion. Its question is whether stable visual voices, geometric motifs, and a tiny shared history invite comfortable variation or natural alternating turns.
 
@@ -92,7 +92,7 @@ Mechanical checks:
 - Story Scenes defaults to flower placement, cycles exactly five variants per object family, and keeps every object revisitable;
 - Story Scenes relationships depend on stable nearby pairs, retain only one bounded reversible interaction per pair, and never consume or replace their objects;
 - Story Scenes remains bounded at 16 objects and revisits nearby work instead of deleting it at the limit;
-- Together Tones retains at most four recent actions, five visual levels per voice, and one active pair;
+- Together Tones retains at most four recent actions, lets each history bead reactivate exactly one voice, keeps five visual levels per voice, and maintains one active pair;
 - repeating and alternating voices have deterministic visual consequences without requiring sound;
 - every Together Tones action stops the prior generated tone before starting another, so audio cannot accumulate;
 
