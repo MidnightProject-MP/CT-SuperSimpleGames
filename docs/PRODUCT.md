@@ -1,0 +1,71 @@
+# Product direction
+
+This document turns the intent in `INCEPTION.md` into explicit, testable hypotheses. It should change when observation provides better evidence.
+
+## Audience hypothesis
+
+Bloom is initially designed for children roughly 18–36 months old playing with a nearby caregiver. That range is a hypothesis, not a release claim; toddlers' motor, language, sensory, and attention needs vary substantially.
+
+## Core safety invariant
+
+Unrestricted tapping inside SuperSimpleGames must never expose an action with adult consequences: no purchase, message, call, account change, permission grant, settings change, destructive action, or navigation into another service. This is the central meaning of “safe” for the product.
+
+That invariant has a device boundary. A web app cannot prevent operating-system gestures or secure the rest of a phone. When a caregiver hands over a device that contains sensitive apps or accounts, use the operating system's single-app control—[Guided Access on iPhone or iPad](https://support.apple.com/en-us/111795) or [screen pinning on Android](https://support.google.com/android/answer/9455138)—or use a dedicated non-sensitive device. Never market the game itself as device lockdown.
+
+## Experience principles
+
+1. **Play starts immediately.** No account, onboarding flow, start button, or reading is required.
+2. **Exploration succeeds.** Ordinary taps and imprecise drags create immediate positive feedback. There are no penalties, dead ends, or precision requirements.
+3. **Stimulation stays bounded.** Motion is local and brief, only one generated tone plays at a time, and visual objects have a hard limit.
+4. **Meaning is multimodal.** Color is paired with position, size, petal count, animation, and optional sound rather than carrying instructions alone.
+5. **Every in-product path stays inside play.** There are no external links, ads, purchases, permissions, or attractive navigation controls.
+6. **Privacy is the default.** There are no accounts, analytics, identifiers, third-party SDKs, or data transmission.
+7. **Accessibility is part of resilience.** The app supports keyboard activation and assistive labels, leaves browser zoom available, exposes a sound toggle, and respects reduced-motion preferences.
+8. **Engagement is not the objective.** Do not add streaks, nagging, notifications, variable rewards, or autoplay. Caregiver-observed delight and repeat interest matter more than session length.
+
+## Bloom: first product slice
+
+Every tap grows a large flower at or near the contact point. Flowers cycle through named colors and vary in size and petal count. A short synthesized tone reinforces each result; a visible sound control disables it. Dragging produces a deliberately rate-limited trail. The garden retains only the newest 24 flowers.
+
+Bloom supports exposure to cause and effect, colors, spatial position, relative size, and variation. It does **not** claim to teach or assess mastery of those concepts.
+
+## Acceptance evidence
+
+Mechanical checks:
+
+- portrait and landscape phone layouts fit without scrolling or clipping;
+- the first interaction is available without a network call or permission;
+- 30 rapid taps do not freeze, navigate, stack audio, or grow the DOM without bound;
+- generated flower positions remain within the visible viewport;
+- sound-off play retains complete visible feedback;
+- the application shell is available offline after a successful first load;
+- reduced-motion mode removes ambient and sparkle motion and shortens growth motion.
+
+Observation checks before public release:
+
+- most children in the intended audience discover the primary action without verbal instruction;
+- missed, repeated, simultaneous, and palm touches never look like failure;
+- motion and sound remain comfortable for the child and nearby caregiver;
+- children can disengage without the experience resisting or nagging;
+- caregivers understand the experience's value without inflated educational claims;
+- the game remains interesting on a later day, not only during first exposure.
+
+## Explicit non-goals for the first slice
+
+- A launcher, game catalog, content platform, progression system, scoring, or rewards economy.
+- Accounts, cloud sync, telemetry, personalization, advertising, or monetization.
+- Device-lockdown claims. A web app cannot suppress operating-system gestures, notifications, or the Home action.
+- Spoken color names until consistent, warm, locally bundled recordings are available.
+
+## Evidence informing the constraints
+
+- [Apple accessibility guidance](https://developer.apple.com/design/human-interface-guidelines/accessibility)
+- [Android accessibility guidance](https://developer.android.com/guide/topics/ui/accessibility/views/apps-views)
+- [W3C guidance on pointer cancellation](https://www.w3.org/WAI/WCAG22/Understanding/pointer-cancellation)
+- [W3C guidance on animation from interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions)
+- [FTC COPPA guidance](https://www.ftc.gov/business-guidance/resources/complying-coppa-frequently-asked-questions)
+- [American Academy of Pediatrics policy on digital ecosystems](https://publications.aap.org/pediatrics/article/157/2/e2025075320/206129/Digital-Ecosystems-Children-and-Adolescents-Policy)
+
+## Next decision
+
+The next meaningful investment is observed playtesting, not a second game. If Bloom's interaction thesis survives observation, choose a second game that tests a distinct concept—such as matching or size—before extracting shared framework code.
