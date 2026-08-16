@@ -1,10 +1,12 @@
 import { createTonePlayer } from "./audio.js";
 import {
+  compositionsForScene,
   createSceneState,
   moveSceneObject,
   placeSceneObject,
   relationshipsForScene,
   selectSceneKind,
+  selectNextSceneKind,
   selectScenePack,
   touchSceneObject,
 } from "./story-scene.js";
@@ -65,9 +67,9 @@ const PALETTES = Object.freeze({
   bus: Object.freeze([["#ffd85c","#a9e7f5","#47224f"],["#ef5d6c","#fff4cf","#603a32"],["#4f96dc","#d8f2ff","#29385f"],["#39a776","#fff4cf","#254b42"],["#8f72d8","#e9e5fb","#493a73"]]),
   home: Object.freeze([["#ef5d6c","#fff4cf","#603a32"],["#4f96dc","#ffd85c","#29385f"],["#39a776","#fff4cf","#254b42"],["#8f72d8","#f0c49d","#493a73"],["#f29b38","#d8f2ff","#70462f"]]),
   dragon: Object.freeze([["#68bd74","#ffd85c","#47224f"],["#8f72d8","#ff9b62","#493a73"],["#4f96dc","#d8f2ff","#29385f"],["#ef5d6c","#fff4cf","#603a32"],["#39a776","#c68aeb","#254b42"]]),
-  knight: Object.freeze([["#7d91a8","#d8f2ff","#29385f"],["#4f96dc","#ffd85c","#29385f"],["#ef5d6c","#fff4cf","#603a32"],["#8f72d8","#e9e5fb","#493a73"],["#39a776","#fff4cf","#254b42"]]),
-  royal: Object.freeze([["#ed6f71","#ffd85c","#603a32"],["#4f96dc","#fff4cf","#29385f"],["#8f72d8","#f0c49d","#493a73"],["#39a776","#ffd85c","#254b42"],["#f29b38","#d8f2ff","#70462f"]]),
-  castle: Object.freeze([["#8f72d8","#ffd85c","#493a73"],["#7d91a8","#d8f2ff","#29385f"],["#ef5d6c","#fff4cf","#603a32"],["#4f96dc","#ffd85c","#29385f"],["#39a776","#fff4cf","#254b42"]]),
+  person: Object.freeze([["#ed6f71","#f2b58d","#603a32"],["#4f96dc","#9c694e","#2e211f"],["#8f72d8","#f0c49d","#bb6b39"],["#39a776","#754733","#241f23"],["#f29b38","#d99670","#70462f"]]),
+  horse: Object.freeze([["#a86d43","#f1c08f","#493224"],["#ece1cf","#fff8e8","#635a52"],["#6f4a38","#d89b66","#2f241f"],["#d4975c","#ffe0ad","#70462f"],["#8b78a7","#d9caed","#493a73"]]),
+  armor: Object.freeze([["#7d91a8","#d8f2ff","#29385f"],["#4f96dc","#ffd85c","#29385f"],["#ef5d6c","#fff4cf","#603a32"],["#8f72d8","#e9e5fb","#493a73"],["#39a776","#fff4cf","#254b42"]]),
 });
 
 let state = createSceneState();
@@ -91,6 +93,10 @@ function applyPalette(element, object) {
 
 function currentPack() { return getStoryPack(state.sceneId); }
 function currentItem(kind) { return storyCastItem(currentPack(), kind); }
+
+function updateStageLabel() {
+  stage.setAttribute("aria-label", `${currentPack().label} story scene. Tap empty space or press Enter to add the highlighted kind.`);
+}
 
 function createObjectElement(object, motionId, motion) {
   const button = document.createElement("button");
@@ -141,6 +147,19 @@ function markRelated(relationship) {
   relationLayer.append(decoration);
 }
 
+function markComposition(composition) {
+  for (const id of composition.participants) {
+    objectLayer.querySelector(`[data-id="${id}"]`)?.classList.add("combination-part");
+  }
+  const discovery = document.createElement("span");
+  discovery.className = `scene-combination combination-${composition.type}`;
+  discovery.style.setProperty("--relation-x", composition.x);
+  discovery.style.setProperty("--relation-y", composition.y);
+  discovery.setAttribute("aria-hidden", "true");
+  discovery.append(document.createElement("i"), document.createElement("b"));
+  relationLayer.append(discovery);
+}
+
 function renderScene(focusId, motion) {
   objectLayer.replaceChildren(...state.objects.map((object) => createObjectElement(object, focusId, motion)));
   relationLayer.replaceChildren();
@@ -151,6 +170,7 @@ function renderScene(focusId, motion) {
     if (!visiblePhase.has(relationship.second)) visiblePhase.set(relationship.second, relationship.phase);
     markRelated(relationship);
   }
+  for (const composition of compositionsForScene(state, currentLayout())) markComposition(composition);
   for (const [id, phase] of visiblePhase) objectLayer.querySelector(`[data-id="${id}"]`)?.classList.add(`interaction-${phase}`);
   if (focusId) objectLayer.querySelector(`[data-id="${focusId}"]`)?.focus({ preventScroll: true });
 }
@@ -188,10 +208,14 @@ function relationMessage(relationships) {
 
 function applyResult(result) {
   state = result.state;
+  const compositions = compositionsForScene(state, currentLayout())
+    .filter(({ participants }) => participants.includes(result.object.id));
+  if (result.action !== "moved") state = selectNextSceneKind(state);
   renderScene(result.object.id, result.action === "placed" ? "arrived" : result.action === "changed" ? "changed" : null);
+  renderPalette();
   const related = relationMessage(result.relationships);
   const action = result.action === "placed" ? "joined the story" : result.action === "moved" ? "moved" : "changed";
-  const text = related || `The ${currentItem(result.object.kind).label} ${action}!`;
+  const text = compositions.at(-1)?.message || related || `The ${currentItem(result.object.kind).label} ${action}!`;
   message.textContent = text;
   announcement.textContent = text;
   tonePlayer.play(currentItem(result.object.kind).tone * (related ? 1.18 : 1));
@@ -203,7 +227,7 @@ palette.addEventListener("click", (event) => {
   state = selectSceneKind(state, tool.dataset.kind);
   renderPalette();
   const plural = tool.querySelector("span:last-child").textContent.toLowerCase();
-  message.textContent = `Tap the garden to add ${plural}!`;
+  message.textContent = `Tap the ${currentPack().label.toLowerCase()} to add ${plural}!`;
   announcement.textContent = `${plural} selected`;
   tonePlayer.play(currentItem(tool.dataset.kind).tone);
 });
@@ -245,6 +269,7 @@ backgroundConfirm.addEventListener("click", () => {
   state = selectScenePack(state, pendingSceneId);
   stage.dataset.scene = state.sceneId;
   backgroundButton.textContent = currentPack().label;
+  updateStageLabel();
   renderPalette();
   renderScene();
   message.textContent = `Tap the ${currentPack().label.toLowerCase()} to add ${currentItem(state.selected).plural.toLowerCase()}!`;
@@ -337,6 +362,7 @@ addEventListener("pagehide", tonePlayer.stop);
 
 stage.dataset.scene = state.sceneId;
 backgroundButton.textContent = currentPack().label;
+updateStageLabel();
 renderPalette();
 renderSoundState();
 renderScene();

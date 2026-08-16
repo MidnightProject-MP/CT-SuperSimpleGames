@@ -126,6 +126,13 @@ export function selectSceneKind(state, kind) {
   return createState(current.sceneId, kind, current.objects, current.nextId, current.interactions);
 }
 
+export function selectNextSceneKind(state) {
+  const current = normalizeState(state);
+  const cast = getStoryPack(current.sceneId).cast;
+  const index = cast.findIndex(({ kind }) => kind === current.selected);
+  return createState(current.sceneId, cast[(index + 1) % cast.length].kind, current.objects, current.nextId, current.interactions);
+}
+
 function nearbyRelationships(state, layout) {
   const current = normalizeState(state);
   const pack = getStoryPack(current.sceneId);
@@ -185,6 +192,53 @@ export function relationshipsForScene(state, layout) {
       turns: interaction.turns,
     });
   }));
+}
+
+export function compositionsForScene(state, layout) {
+  const current = normalizeState(state);
+  if (current.sceneId !== "castle") return Object.freeze([]);
+
+  const people = current.objects.filter(({ kind }) => kind === "person");
+  const horses = current.objects.filter(({ kind }) => kind === "horse");
+  const armor = current.objects.filter(({ kind }) => kind === "armor");
+  const dragons = current.objects.filter(({ kind }) => kind === "dragon");
+  const compositions = [];
+
+  for (const person of people) {
+    const horse = horses.find((candidate) => distance(person, candidate, layout) <= RELATION_DISTANCE);
+    const suit = armor.find((candidate) => distance(person, candidate, layout) <= RELATION_DISTANCE);
+    if (horse && suit) {
+      const dragon = dragons.find((candidate) => distance(person, candidate, layout) <= RELATION_DISTANCE);
+      const participants = dragon ? [person, horse, suit, dragon] : [person, horse, suit];
+      compositions.push(Object.freeze({
+        type: dragon ? "royal-rescue" : "armored-rider",
+        participants: Object.freeze(participants.map(({ id }) => id)),
+        x: participants.reduce((sum, object) => sum + object.x, 0) / participants.length,
+        y: participants.reduce((sum, object) => sum + object.y, 0) / participants.length,
+        message: dragon
+          ? "The brave friends greet the dragon, and the royal friend comes out to join them!"
+          : "Armor, horse, and person become an armored rider!",
+      }));
+    } else if (horse) {
+      compositions.push(Object.freeze({
+        type: "rider",
+        participants: Object.freeze([person.id, horse.id]),
+        x: (person.x + horse.x) / 2,
+        y: (person.y + horse.y) / 2,
+        message: "Person and horse become a rider!",
+      }));
+    } else if (suit) {
+      compositions.push(Object.freeze({
+        type: "armored-hero",
+        participants: Object.freeze([person.id, suit.id]),
+        x: (person.x + suit.x) / 2,
+        y: (person.y + suit.y) / 2,
+        message: "The person puts on the armor!",
+      }));
+    }
+    if (compositions.length >= MAX_SCENE_RELATIONSHIPS) break;
+  }
+  return Object.freeze(compositions);
 }
 
 function updateState(current, objects, nextId, layout, cycleForId = null) {

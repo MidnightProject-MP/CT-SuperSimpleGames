@@ -46,14 +46,14 @@ export const STORY_PACKS = Object.freeze([
     relationship("car", "home", "arrived", "The car stops at home!", "The car waits by the home.", "The car heads out again!"),
     relationship("bus", "home", "arrived", "The bus stops at home!", "The bus waits by the home.", "The bus starts the return trip!")
   ]),
-  pack("castle", "Castle tale", "dragon", [
-    cast("dragon", "dragon", "Dragons", 311.13), cast("knight", "knight", "Knights", 392),
-    cast("royal", "royal friend", "Royal friends", 523.25), cast("castle", "castle", "Castles", 349.23)
+  pack("castle", "Castle tale", "person", [
+    cast("person", "person", "People", 392), cast("horse", "horse", "Horses", 349.23),
+    cast("armor", "armor", "Armor", 523.25), cast("dragon", "dragon", "Dragons", 311.13)
   ], [
-    relationship("dragon", "castle", "glowing", "The dragon warms the castle!", "The dragon's glow rests.", "A cool breeze reaches the castle!"),
-    relationship("knight", "royal", "greeting", "The friends walk together!", "The friends pause together.", "The friends turn around together!"),
-    relationship("royal", "castle", "arrived", "Welcome to the castle!", "The royal friend waits at the gate.", "The royal friend heads out again!"),
-    relationship("dragon", "knight", "meeting", "Dragon and knight meet!", "Dragon and knight wait.", "Dragon and knight change direction!")
+    relationship("person", "horse", "riding", "The person climbs onto the horse!", "Horse and rider take a rest.", "Horse and rider turn around!"),
+    relationship("person", "armor", "armored", "The person puts on the armor!", "The shiny armor rests.", "The armor opens again!"),
+    relationship("horse", "armor", "saddled", "The horse carries the shiny armor!", "The horse waits beside the armor.", "The horse circles the armor!"),
+    relationship("dragon", "person", "meeting", "The person and dragon meet!", "The person and dragon wait.", "The person and dragon make a new plan!")
   ])
 ]);
 

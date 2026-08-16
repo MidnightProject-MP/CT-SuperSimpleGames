@@ -546,7 +546,7 @@ The child currently receives five reusable pieces, tap-complete placement, broad
 
 Story Scenes should become the collection’s symbolic-play and narrative world. Its pleasure comes from choosing a small cast, placing characters and objects, changing what they are doing, and discovering causal relationships that remain under the child’s direction.
 
-The child currently receives one garden, four object families, five variants, tap placement, revisiting, broad movement, and four proximity relationships. Preserve immediate default placement and the bounded, reversible scene.
+The child currently receives three settings, four object families per setting, five variants, toddler-first automatic palette rotation, exact palette selection, tap placement, revisiting, broad movement, persistent pair relationships, and one reversible compositional castle story. Preserve immediate default placement and the bounded, reversible scene.
 
 ### Concepts Story Scenes can expose
 
@@ -614,6 +614,27 @@ The child currently receives one garden, four object families, five variants, ta
 **Gate:** Every state remains understandable with sound off and reduced motion, and every object remains directly usable afterward.
 
 **Implementation note:** Every nearby pair now owns one bounded, immutable interaction record with active, paused, and reversed phases. Theme-specific messages and persistent visual states make the story beat visible. Touching either participant cycles the shared phase, while moving a participant away removes that pairing and lets a new nearby partner begin a fresh interaction. Relationship records remain capped with the scene and never create autonomous motion.
+
+### SCN-2A — Toddler-first variation and compositional castle
+
+**Status:** implemented and automatically verified; rendered, device, caregiver, and child observation pending.
+
+**Kind:** interaction correction and bounded narrative-combination pilot.
+
+- After every ordinary placement or object tap, highlight the next object family automatically; retain the oversized palette for exact selection.
+- In Castle tale, use four concrete ingredients in a stable order: person, horse, armor, and dragon.
+- Let nearby ingredients create a visible, deterministic sequence: rider, armored hero, armored rider, then a calm royal-rescue tableau.
+- Keep every source object present, movable, and independently usable. Separating the ingredients reverses the composition without penalty or lost work.
+- Treat the dragon encounter as greeting, negotiation, and reunion rather than combat, damage, or defeat.
+- Keep the castle as part of the stable setting so the four palette positions remain large enough for toddler use.
+
+**Experience question:** Does automatic rotation turn repeated scene taps into understandable variety, and do children intentionally bring ingredients together after encountering one composition?
+
+**Learning exposure:** categories, combination, part and whole, sequence, transformation, helping, and story causality.
+
+**Gate:** Palette movement must not move the play surface; compositions must be legible with sound off and reduced motion; no ingredient may be consumed, locked, or made difficult to separate.
+
+**Implementation note:** Exact palette selection remains available, but ordinary placement and revisiting now rotate the highlight through each scene's stable four-item cast. Castle tale uses person, horse, armor, and dragon. Pure proximity recipes derive rider, armored hero, armored rider, and royal-rescue tableaux from current positions; moving any ingredient away deterministically reveals the earlier composition or the original pieces. The composite artwork is layered above dimmed-but-touchable ingredients, and the final royal friend emerges as a calm story response. Runtime rendering, touch-device clarity, and child comprehension remain unverified.
 
 ### SCN-3 — Roles and child-directed sides
 

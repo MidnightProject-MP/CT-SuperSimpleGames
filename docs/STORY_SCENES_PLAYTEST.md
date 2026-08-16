@@ -13,7 +13,7 @@ Allow up to five minutes and stop immediately when the child disengages or shows
 1. Open Story Scenes directly without explaining the palette. Flowers are already selected.
 2. Wait roughly 15 seconds for a self-directed action.
 3. If needed, offer once: “You can touch the garden.” Do not name a desired object or demonstrate a combination.
-4. Observe whether the child continues placing flowers, selects another family, or touches an existing object.
+4. Observe whether automatic palette rotation produces varied objects without explanation, whether the child follows the changing highlight, and whether they select an exact family or touch an existing object.
 5. If the child has not noticed the palette after several successful placements, the caregiver may say once: “There are more things here.” Do not point to a particular choice.
 6. Do not demonstrate rainbows, watering, warming, greetings, or dragging. Record whether a relationship is encountered and then intentionally repeated.
 7. The caregiver may narrate or take one natural turn only if the child invites shared play.
@@ -28,12 +28,16 @@ Allow up to five minutes and stop immediately when the child disengages or shows
 | Needed one neutral invitation? | |
 | First five actions all produced clear feedback? | |
 | Continued with default flowers? | |
+| Automatic highlight change noticed or followed? | |
+| Repeated scene taps produced useful variety? | |
 | Selected another family without demonstration? | |
 | Selection visibly carried into the next placement? | |
 | Touched an existing object? | |
 | Changed or moved an existing object intentionally? | |
 | Encountered a relationship? Which one? | |
 | Repeated or tested a relationship intentionally? | |
+| In Castle tale, encountered a rider, armor, or rescue composition? | |
+| Brought ingredients together or separated them intentionally? | |
 | Caregiver language or turn-taking arose naturally? | |
 | Palette obscured play or created accidental selection? | |
 | Apparent failure, sensory discomfort, or accidental navigation | |

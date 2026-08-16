@@ -5,11 +5,13 @@ import {
   INTERACTION_PHASES,
   SCENE_KINDS,
   VARIANT_COUNT,
+  compositionsForScene,
   createSceneState,
   moveSceneObject,
   placeSceneObject,
   relationshipsForScene,
   selectSceneKind,
+  selectNextSceneKind,
   selectScenePack,
   touchSceneObject,
 } from "../src/story-scene.js";
@@ -32,6 +34,17 @@ test("selecting every scene kind is immutable and bounded to the cast", () => {
   assert.ok(SCENE_KINDS.includes("dragon"));
 });
 
+test("ordinary placement can advance through every cast family while exact selection remains available", () => {
+  const initial = createSceneState("castle");
+  const horse = selectNextSceneKind(initial);
+  const armor = selectNextSceneKind(horse);
+  const dragon = selectNextSceneKind(armor);
+  assert.deepEqual([initial.selected, horse.selected, armor.selected, dragon.selected, selectNextSceneKind(dragon).selected],
+    ["person", "horse", "armor", "dragon", "person"]);
+  assert.equal(selectSceneKind(dragon, "horse").selected, "horse");
+  assert.equal(initial.selected, "person");
+});
+
 test("three validated packs start empty with distinct four-family vocabularies", () => {
   for (const pack of STORY_PACKS) {
     assert.equal(validateStoryPack(pack), pack);
@@ -52,9 +65,35 @@ test("town and castle packs produce their own repeatable relationships", () => {
 
   let castle = createSceneState("castle");
   castle = placeSceneObject(castle, { x: 0.4, y: 0.55 }).state;
-  castle = selectSceneKind(castle, "castle");
+  castle = selectSceneKind(castle, "horse");
   castle = placeSceneObject(castle, { x: 0.55, y: 0.55 }).state;
-  assert.equal(relationshipsForScene(castle)[0].type, "glowing");
+  assert.equal(relationshipsForScene(castle)[0].type, "riding");
+});
+
+test("castle ingredients form reversible rider, armor, and royal-rescue compositions", () => {
+  let state = createSceneState("castle");
+  const person = placeSceneObject(state, { x: 0.42, y: 0.56 });
+  state = selectSceneKind(person.state, "horse");
+  const horse = placeSceneObject(state, { x: 0.54, y: 0.56 });
+  assert.equal(compositionsForScene(horse.state)[0].type, "rider");
+
+  state = selectSceneKind(horse.state, "armor");
+  const armor = placeSceneObject(state, { x: 0.48, y: 0.48 });
+  assert.equal(compositionsForScene(armor.state)[0].type, "armored-rider");
+
+  state = selectSceneKind(armor.state, "dragon");
+  const dragon = placeSceneObject(state, { x: 0.58, y: 0.48 });
+  const rescue = compositionsForScene(dragon.state)[0];
+  assert.equal(rescue.type, "royal-rescue");
+  assert.equal(rescue.participants.length, 4);
+  assert.equal(Object.isFrozen(rescue.participants), true);
+
+  state = moveSceneObject(dragon.state, dragon.object.id, { x: 0.9, y: 0.85 }).state;
+  assert.equal(compositionsForScene(state)[0].type, "armored-rider");
+  state = moveSceneObject(state, armor.object.id, { x: 0.1, y: 0.85 }).state;
+  assert.equal(compositionsForScene(state)[0].type, "rider");
+  state = moveSceneObject(state, horse.object.id, { x: 0.9, y: 0.2 }).state;
+  assert.deepEqual(compositionsForScene(state), []);
 });
 
 test("placements cycle five variants and stay inside broad scene bounds", () => {
