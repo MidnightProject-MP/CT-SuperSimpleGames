@@ -296,6 +296,9 @@ button { font: inherit; }
   transform-origin: 0 50%;
   pointer-events: none;
 }
+.bloom-link[data-type="harmony"] { height: 9px; background: rgba(255,255,255,.48); box-shadow: 0 0 0 3px rgba(255,238,143,.2); }
+.bloom-link[data-type="alternating"] { height: 7px; background: repeating-linear-gradient(90deg,rgba(255,255,255,.5) 0 12px,rgba(255,225,135,.4) 12px 24px); }
+.garden-canopy { position: absolute; z-index: 2; width: 210px; height: 94px; border: 6px solid rgba(255,255,255,.2); border-bottom: 0; border-radius: 110px 110px 0 0; background: rgba(105,190,114,.1); transform: translate(-50%,-42%); pointer-events: none; }
 
 .bloom.tended { animation: bloom-tended 420ms ease-out; }
 .bloom.greet-left { animation: bloom-greet-left 430ms ease-in-out; }

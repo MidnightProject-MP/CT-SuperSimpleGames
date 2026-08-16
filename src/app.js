@@ -6,6 +6,7 @@ import {
   clampPosition,
   createBloom,
   growBloom,
+  gardenNeighborhoods,
   nearestBloom,
   neighborDistanceForLayout,
   planGardenInteraction
@@ -24,6 +25,7 @@ let bloomCount = 0;
 const gardenBlooms = new Map();
 const bloomElements = new Map();
 const gardenLinks = [];
+const gardenCanopies = [];
 let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 const pointerSampler = createPointerSampler();
@@ -104,21 +106,38 @@ function updateLinks() {
   for (const link of gardenLinks) updateLink(link);
 }
 
-function connectBlooms(first, second) {
+function createNeighborhoodLink(first, second, type) {
   const link = document.createElement("i");
   link.className = "bloom-link";
   link.dataset.first = String(first.id);
   link.dataset.second = String(second.id);
+  link.dataset.type = type;
   blooms.prepend(link);
   gardenLinks.push(link);
   updateLink(link);
 
-  const firstFlower = bloomElements.get(first.id);
-  const secondFlower = bloomElements.get(second.id);
-  const firstClass = first.x <= second.x ? "greet-right" : "greet-left";
-  const secondClass = first.x <= second.x ? "greet-left" : "greet-right";
-  animateFlower(secondFlower, secondClass);
-  firstFlower.addEventListener("animationend", () => animateFlower(firstFlower, firstClass), { once: true });
+}
+
+function renderNeighborhoods() {
+  for (const element of gardenLinks) element.remove();
+  for (const element of gardenCanopies) element.remove();
+  gardenLinks.length = 0;
+  gardenCanopies.length = 0;
+  const reach = neighborDistanceForLayout(garden.clientWidth, garden.clientHeight);
+  const neighborhoods = gardenNeighborhoods(gardenBlooms.values(), reach);
+  for (const relationship of neighborhoods.links) {
+    createNeighborhoodLink(gardenBlooms.get(relationship.first), gardenBlooms.get(relationship.second), relationship.type);
+  }
+  for (const canopy of neighborhoods.canopies) {
+    const group = canopy.ids.map((id) => gardenBlooms.get(id));
+    const element = document.createElement("i");
+    element.className = "garden-canopy";
+    element.style.left = `${group.reduce((sum, bloom) => sum + bloom.x, 0) / group.length}px`;
+    element.style.top = `${group.reduce((sum, bloom) => sum + bloom.y, 0) / group.length}px`;
+    blooms.prepend(element);
+    gardenCanopies.push(element);
+  }
+  return neighborhoods;
 }
 
 function animateFlower(flower, className = "tended") {
@@ -162,9 +181,16 @@ function createAt(x, y) {
   bloomElements.set(bloom.id, flower);
   blooms.append(flower);
   addSparkles(bloom);
+  const neighborhoods = renderNeighborhoods();
   if (neighbor) {
-    connectBlooms(bloom, neighbor);
-    announcement.textContent = `${bloom.color.name} flower grew beside another flower`;
+    const relationship = neighborhoods.links.find(({ first, second }) => (
+      (first === bloom.id && second === neighbor.id) || (first === neighbor.id && second === bloom.id)
+    ));
+    const firstClass = bloom.x <= neighbor.x ? "greet-right" : "greet-left";
+    const secondClass = bloom.x <= neighbor.x ? "greet-left" : "greet-right";
+    animateFlower(bloomElements.get(neighbor.id), secondClass);
+    flower.addEventListener("animationend", () => animateFlower(flower, firstClass), { once: true });
+    announcement.textContent = `${bloom.color.name} flower made ${relationship?.type === "harmony" ? "a matching harmony" : "an alternating rhythm"}`;
   } else {
     announcement.textContent = `${bloom.color.name} flower`;
   }
@@ -178,11 +204,12 @@ function tendBloom(id) {
   gardenBlooms.set(id, bloom);
   const flower = bloomElements.get(id);
   updateFlower(flower, bloom);
-  updateLinks();
+  const neighborhoods = renderNeighborhoods();
   animateFlower(flower);
   addSparkles(bloom);
   const stage = BLOOM_STAGES[bloom.stage];
-  announcement.textContent = `${bloom.color.name} flower, ${stage.label}`;
+  const inCanopy = neighborhoods.canopies.some(({ ids }) => ids.includes(bloom.id));
+  announcement.textContent = `${bloom.color.name} flower, ${stage.label}${inCanopy ? ", under a shared canopy" : ""}`;
   tonePlayer.play(bloom.color.tone * stage.toneFactor);
 }
 
@@ -215,7 +242,7 @@ function reflowBlooms() {
     flower.style.top = `${position.y}px`;
     gardenBlooms.set(id, { ...gardenBlooms.get(id), ...position });
   }
-  updateLinks();
+  renderNeighborhoods();
 }
 
 garden.addEventListener("pointerdown", (event) => {

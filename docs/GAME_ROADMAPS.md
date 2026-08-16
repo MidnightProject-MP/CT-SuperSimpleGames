@@ -132,6 +132,8 @@ The child currently receives immediate creation, color and size variation, broad
 
 ### BL-2 — Garden neighborhoods
 
+**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+
 **Kind:** new relational mechanic; Round 2.
 
 - Let close groups form one of a few legible neighborhood patterns: matching colors harmonize, alternating colors form a visible rhythm, and three nearby mature blooms form a calm shared canopy.
@@ -144,6 +146,8 @@ The child currently receives immediate creation, color and size variation, broad
 **Learning exposure:** grouping, same/different, alternation, near/far, and part/whole.
 
 **Gate:** Dense gardens remain visually readable; a relationship never obscures the individual flowers that caused it.
+
+**Implementation note:** Neighborhoods are now derived deterministically from current garden state after creation, tending, and resize. Nearby matching colors receive a soft harmony line, differing colors an alternating rhythm, and mutually nearby full-stage triples a low-contrast shared canopy. All forms remain editable as flowers change, with explicit caps of 32 links and four canopies; dense and order-independent behavior is tested.
 
 ### BL-3 — Garden visitors
 

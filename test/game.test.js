@@ -8,6 +8,7 @@ import {
   clampPosition,
   createBloom,
   growBloom,
+  gardenNeighborhoods,
   nearestBloom,
   neighborDistanceForLayout,
   planGardenInteraction,
@@ -16,6 +17,28 @@ import {
 
 test("clampPosition keeps a bloom fully inside the viewport", () => {
   assert.deepEqual(clampPosition(-20, 900, 320, 640, 50), { x: 50, y: 590 });
+});
+
+test("garden neighborhoods deterministically expose harmony, alternation, and mature canopies", () => {
+  const blooms = [
+    { ...createBloom(0, 100, 100, 500, 500), stage: 2 },
+    { ...createBloom(COLORS.length, 180, 100, 500, 500), stage: 2 },
+    { ...createBloom(1, 140, 165, 500, 500), stage: 2 },
+    { ...createBloom(2, 450, 450, 500, 500), stage: 2 }
+  ];
+  const result = gardenNeighborhoods(blooms, 120);
+  assert.ok(result.links.some(({ first, second, type }) => first === 0 && second === COLORS.length && type === "harmony"));
+  assert.ok(result.links.some(({ type }) => type === "alternating"));
+  assert.deepEqual(result.canopies[0].ids, [0, 1, COLORS.length]);
+  assert.deepEqual(gardenNeighborhoods([...blooms].reverse(), 120), result);
+});
+
+test("garden neighborhood effects obey explicit budgets", () => {
+  const blooms = Array.from({ length: 12 }, (_, index) => ({ ...createBloom(index, 200, 200, 500, 500), stage: 2 }));
+  const result = gardenNeighborhoods(blooms, 200, { maxLinks: 7, maxCanopies: 2 });
+  assert.equal(result.links.length, 7);
+  assert.equal(result.canopies.length, 2);
+  assert.throws(() => gardenNeighborhoods(blooms, 0), RangeError);
 });
 
 test("createBloom cycles colors and varies size and petal count predictably", () => {

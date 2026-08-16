@@ -3,6 +3,8 @@ export const MAX_BLOOM_SIZE = 164;
 export const BLOOM_GROWTH_STEP = 12;
 export const NEIGHBOR_DISTANCE = 170;
 export const MAX_SPARKS = 24;
+export const MAX_GARDEN_LINKS = 32;
+export const MAX_GARDEN_CANOPIES = 4;
 
 export const BLOOM_STAGES = Object.freeze([
   Object.freeze({ name: "fresh", label: "fresh bloom", toneFactor: 1 }),
@@ -52,6 +54,45 @@ export function neighborDistanceForLayout(width, height) {
     throw new RangeError("layout must have positive finite dimensions");
   }
   return Math.min(190, Math.max(120, Math.min(width, height) * 0.34));
+}
+
+export function gardenNeighborhoods(items, maxDistance, {
+  maxLinks = MAX_GARDEN_LINKS,
+  maxCanopies = MAX_GARDEN_CANOPIES
+} = {}) {
+  const blooms = [...items].sort((left, right) => left.id - right.id);
+  if (!Number.isFinite(maxDistance) || maxDistance <= 0) throw new RangeError("maxDistance must be positive");
+  if (!Number.isInteger(maxLinks) || maxLinks < 0 || !Number.isInteger(maxCanopies) || maxCanopies < 0) {
+    throw new RangeError("neighborhood budgets must be non-negative integers");
+  }
+  const distance = (first, second) => Math.hypot(first.x - second.x, first.y - second.y);
+  const links = [];
+  for (let firstIndex = 0; firstIndex < blooms.length && links.length < maxLinks; firstIndex += 1) {
+    for (let secondIndex = firstIndex + 1; secondIndex < blooms.length && links.length < maxLinks; secondIndex += 1) {
+      const first = blooms[firstIndex];
+      const second = blooms[secondIndex];
+      if (distance(first, second) > maxDistance) continue;
+      links.push(Object.freeze({
+        first: first.id,
+        second: second.id,
+        type: first.color.name === second.color.name ? "harmony" : "alternating"
+      }));
+    }
+  }
+  const mature = blooms.filter((bloom) => bloom.stage === 2);
+  const canopies = [];
+  for (let a = 0; a < mature.length && canopies.length < maxCanopies; a += 1) {
+    for (let b = a + 1; b < mature.length && canopies.length < maxCanopies; b += 1) {
+      for (let c = b + 1; c < mature.length && canopies.length < maxCanopies; c += 1) {
+        const group = [mature[a], mature[b], mature[c]];
+        if (distance(group[0], group[1]) <= maxDistance && distance(group[0], group[2]) <= maxDistance
+          && distance(group[1], group[2]) <= maxDistance) {
+          canopies.push(Object.freeze({ ids: Object.freeze(group.map(({ id }) => id)), type: "canopy" }));
+        }
+      }
+    }
+  }
+  return Object.freeze({ links: Object.freeze(links), canopies: Object.freeze(canopies) });
 }
 
 export function trimToLimit(items, limit = MAX_BLOOMS) {
