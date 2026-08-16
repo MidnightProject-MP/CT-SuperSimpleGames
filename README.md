@@ -7,6 +7,7 @@ SuperSimpleGames is a mobile-first collection of playful, no-fail experiences fo
 The product intent lives in [INCEPTION.md](./INCEPTION.md).
 Current hypotheses and validation criteria live in [docs/PRODUCT.md](./docs/PRODUCT.md).
 The ordered implementation plan lives in [docs/ROADMAP.md](./docs/ROADMAP.md).
+Detailed technical and gameplay expansion milestones for every experience live in [docs/GAME_ROADMAPS.md](./docs/GAME_ROADMAPS.md).
 The first caregiver-observation protocol is in [docs/PLAYTEST.md](./docs/PLAYTEST.md).
 Color Splash has its own focused protocol in [docs/COLOR_SPLASH_PLAYTEST.md](./docs/COLOR_SPLASH_PLAYTEST.md).
 Peekaboo Pockets has a reversible-discovery protocol in [docs/PEEKABOO_PLAYTEST.md](./docs/PEEKABOO_PLAYTEST.md).

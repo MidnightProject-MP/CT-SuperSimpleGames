@@ -123,4 +123,4 @@ Observation checks before public release:
 
 ## Next decision
 
-The ordered implementation and validation sequence now lives in `ROADMAP.md`. All six experiences are available from the launcher for testing. Story Scenes and Together Tones remain technical prototypes for relational storytelling and temporal/cooperative play; availability is not validation. Do not expand their content until their central interaction hypotheses are observed, and do not extract a generalized framework merely because the pages share controls.
+The portfolio sequence lives in `ROADMAP.md`, and the ordered expansion plan for every experience lives in `GAME_ROADMAPS.md`. All six experiences are available from the launcher for testing. Implement one bounded roadmap milestone at a time and make it available for observation; availability is not validation. Do not compound additional content when the underlying interaction remains unclear, and do not extract a generalized framework merely because the pages share controls.

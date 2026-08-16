@@ -2,6 +2,8 @@
 
 This roadmap is the durable execution plan for SuperSimpleGames. It translates the product principles in `PRODUCT.md` and the exploratory directions in `IDEAS.md` into ordered, independently shippable milestones.
 
+Detailed specialization and expansion milestones for each available experience live in `GAME_ROADMAPS.md`. This portfolio roadmap remains authoritative for shared principles, evidence boundaries, and cross-game sequencing.
+
 The order is intentional. Improve the clarity and depth of the existing collection before adding experiences, then add one genuinely new form of agency at a time. Findings may change a later milestone, but adding content alone is not a reason to change the order.
 
 ## Governing direction
