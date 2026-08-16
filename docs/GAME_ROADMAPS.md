@@ -31,6 +31,7 @@ Each game should provide a different kind of agency and a different route into e
 8. Keep state, motion, sound, and generated objects strictly bounded.
 9. Continue to prohibit scores, streaks, timers, lives, locked content, rarity, autoplay, nagging, analytics, accounts, advertising, and external actions.
 10. Availability is not validation. A roadmap milestone may be public for testing while its child, device, and caregiver evidence remains pending.
+11. Every finite or round-based experience must offer an obvious in-game replay after its restful completion pause. Open-ended creations must offer a deliberate, confirmed fresh start when clearing prior work would be destructive.
 
 ## Delivery cadence
 
@@ -372,6 +373,8 @@ The child currently receives three stable containers, one visual target, two fri
 **Gate:** Children who do not infer the clue remain fully successful explorers; the clue must not resemble a locked instruction.
 
 **Implementation note:** The lively empty-container clue now carries a fragment of the target container’s stable pattern plus a clear left or right mark. Touching it repeats a brief directional response and accessible description without moving the target, closing containers, or changing discovery. The descriptor is derived purely from immutable round state and remains identical before and after target discovery.
+
+**Replay improvement:** Finding the target now reveals a large “Hide again” control. It starts a fresh search in the next theme without requiring a trip through the launcher, while leaving the found round available until the child deliberately chooses it.
 
 ### PP-3 — Child hides, caregiver seeks
 

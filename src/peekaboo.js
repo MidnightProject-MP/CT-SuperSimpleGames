@@ -19,8 +19,10 @@ const targetArt = document.querySelector("#target-art use");
 const message = document.querySelector("#peek-message");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
+const newSearchButton = document.querySelector("#new-search");
 
-let round = createSearchRound({ seed: nextSeed() });
+let sceneCursor;
+let round = createNextRound();
 let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 
@@ -32,6 +34,13 @@ function nextSeed() {
   } catch {
     return Date.now() >>> 0;
   }
+}
+
+function createNextRound() {
+  let seed = nextSeed();
+  sceneCursor = sceneCursor === undefined ? seed % 4 : (sceneCursor + 1) % 4;
+  seed = (seed - (seed % 4) + sceneCursor) >>> 0;
+  return createSearchRound({ seed });
 }
 
 function renderSoundState() {
@@ -110,6 +119,7 @@ function renderTarget() {
     ? `${target.name} found; the pockets remain open for play`
     : `Find the ${target.name}`);
   playfield.classList.toggle("target-found", round.targetFound);
+  newSearchButton.hidden = !round.targetFound;
 }
 
 function animatePocket(pocket, opening) {
@@ -244,6 +254,17 @@ soundToggle.addEventListener("click", () => {
   saveSoundPreference(soundEnabled);
   renderSoundState();
   if (soundEnabled) tonePlayer.play(440);
+});
+
+newSearchButton.addEventListener("click", () => {
+  round = createNextRound();
+  playfield.classList.remove("reunion", "target-found");
+  message.classList.remove("complete");
+  message.textContent = "Who is hiding now?";
+  createPockets();
+  renderTarget();
+  announcement.textContent = `New ${getSearchScene(round).label.toLowerCase()} search. Three hiding places.`;
+  tonePlayer.play(getPocketItem(getTargetItemId(round)).tone);
 });
 
 document.addEventListener("visibilitychange", () => {

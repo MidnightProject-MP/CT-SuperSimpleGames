@@ -18,6 +18,7 @@ SuperSimpleGames should grow from a collection of simple reactions into a small 
 - Replay comes from expressing agency differently in a stable world, not from pursuing a more valuable reward.
 - Games support shared attention and turn-taking without quizzes or required adult instruction.
 - Completion creates a restful pause rather than pressure to begin another round.
+- After that pause, finite games provide a clear in-game replay action; open-ended games require deliberate confirmation before clearing child-created work.
 - Scores, streaks, timers, unlocks, rare rewards, autoplay, nagging, analytics, accounts, and external consequences remain out of scope.
 
 ## Execution protocol
