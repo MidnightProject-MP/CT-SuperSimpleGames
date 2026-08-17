@@ -27,7 +27,7 @@ This table is the quick index for this document. “Next candidate” means the 
 |---|---|---|
 | Bloom | `BL-3A` merge-three garden growth | `BL-4` garden seasons and themes |
 | Color Splash | `CS-2` reversible planning, plus stable-frame correction | `CS-3` two growing corners |
-| Peekaboo Pockets | `PP-2` legible clue chains | `PP-3` child hides, caregiver seeks |
+| Peekaboo Pockets | `PP-2` clues plus `PP-4` themed reunion slice | `PP-3` child hides, caregiver seeks |
 | Stack & Settle | `STK-2` idea cards, plus Familiar World bridge resident | `STK-3` themed construction kits |
 | Story Scenes | `SCN-2A` toddler-first variation and compositional castle | `SCN-3` roles and child-directed sides |
 | Together Tones | `TT-2` touchable recent history | `TT-3` tone qualities and visible comparison |
@@ -80,11 +80,11 @@ Proceed after each Round 1 mechanic is technically verified and any obvious inte
 
 ### Round 3 — Deepen social and conceptual play
 
-The cross-game **Familiar World** phase in `ROADMAP.md` precedes the remaining isolated work in this round. Shared control, bounded preservation, Color Splash spatial stability, and the first recurring-resident pilot are implemented. One shared relationship meaning is next; `ROADMAP.md` remains authoritative for when isolated Round 3 work resumes.
+The cross-game **Familiar World** phase in `ROADMAP.md` precedes the remaining isolated work in this round. Shared control, bounded preservation, Color Splash spatial stability, the first recurring resident, and the shared “together” meaning are implemented. A caregiver-triggered closing ritual is next; `ROADMAP.md` remains authoritative for when isolated Round 3 work resumes.
 
 Use observation to choose the strongest order within this round:
 
-- the active shared-relationship slice from `ROADMAP.md`;
+- the active closing-ritual slice from `ROADMAP.md`;
 - two-anchor Color Splash boards;
 - child-hides/caregiver-seeks Peekaboo;
 - themed construction kits;
@@ -362,7 +362,7 @@ The child currently receives a forgiving board touch, a growing corner region, d
 
 Peekaboo should become the collection’s search-and-evidence world. Its pleasure comes from wondering, revealing, retaining stable locations, using gentle clues, and sharing the roles of hider and finder.
 
-The child currently receives three stable containers, one visual target, two friends, one lively clue, reversible opening, independent emerged objects, and a reunion. Preserve stable locations and the emotional neutrality of every reveal.
+The child currently receives three stable containers, one visual target, two friends, one lively clue, reversible opening, independent emerged objects, and one scene-specific together relationship. Preserve stable locations and the emotional neutrality of every reveal.
 
 ### Concepts Peekaboo can expose
 
@@ -447,12 +447,16 @@ The child currently receives three stable containers, one visual target, two fri
 
 ### PP-4 — Interactive reunions
 
+**Status:** first scene-specific reunion action implemented and automatically verified; sea reunion rendered in portrait and all four themes exercised in short landscape; physical-device and child observation pending.
+
 **Kind:** gameplay expansion.
 
 - Give revealed sets one or two deterministic reunion actions beyond greeting: animals cuddle or follow; vehicles park side by side; weather friends combine; sea creatures swim together.
 - Let the child redirect or repeat the reunion by touching either participant.
 - Keep all containers reversible after the relationship appears.
 - Use quantities such as one friend, two friends, and three open homes visually, without completion pressure.
+
+**Implementation note:** Opening both non-clue friends now derives exactly one local relationship from stable round state. A connector joins the emerged friends at their rendered resting centers; animals snuggle, vehicles move, weather friends float, and sea friends swim. Touching either participant repeats the scene-specific motion and accessible description. Closing either container removes the connector immediately, and reopening restores it without moving an item or changing the target. This is the first Familiar World “together” slice, not a generalized relationship engine.
 
 ### PP-5 — Four-place search
 

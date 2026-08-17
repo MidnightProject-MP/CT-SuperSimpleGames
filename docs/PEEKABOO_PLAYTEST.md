@@ -17,7 +17,7 @@ Allow up to five minutes, ending as soon as the child disengages or shows discom
 3. If needed, offer once: “You can touch a pocket.” Do not identify a particular pocket or demonstrate all three.
 4. Observe the first six actions, including repeated taps on one pocket, touching an emerged friend, and movement to another pocket.
 5. Observe whether the child notices the large target and whether opening the clue pocket appears satisfying, neutral, confusing, or disappointing.
-6. When two friends are open, observe whether their shared greeting is noticed or intentionally repeated.
+6. When two friends are open, observe whether their scene-specific together action is noticed or intentionally repeated. Do not label the connector or ask the child to make them interact.
 7. Do not verbally quiz “Where is…?”, test recall, praise correctness, or prompt the child to open every pocket. The visual target supplies the invitation.
 8. The caregiver may naturally name an object or say “open,” “closed,” “in,” or “out.” Record whether this becomes shared attention rather than required instruction.
 9. If the target or all pockets are discovered, observe whether the child continues, revisits, or stops naturally.
@@ -36,7 +36,9 @@ Allow up to five minutes, ending as soon as the child disengages or shows discom
 | Repeated opening/closing observed? | |
 | Child revisited a previously opened pocket? | |
 | Child touched an emerged friend independently? | |
-| Shared greeting noticed or intentionally repeated? | |
+| Together connector noticed without prompting? | |
+| Scene-specific reunion repeated intentionally? | |
+| Closing one home made the relationship's disappearance understandable? | |
 | Child appeared to anticipate a stable object? | |
 | Target found? Did play remain open afterward? | |
 | All three discovered without coaching? | |
@@ -60,7 +62,7 @@ Hold and revise before adding another mechanic unless:
 - opening the clue never appears to be a broken, empty, or punished choice;
 - the target remains in one stable location and finding it does not force an ending;
 - emerged friends remain understandable as separate touch targets without making the pouches harder to operate;
-- shared greetings remain brief, legible, and non-blocking;
+- together relationships remain brief, legible, reversible, and non-blocking;
 - no child shows repeated sensory distress, a perceived wrong choice, a freeze, or accidental navigation;
 - caregivers describe opening, closing, peeking, or finding rather than assuming a scored memory test;
 - every child disengages naturally and the experience does not prompt continued play.

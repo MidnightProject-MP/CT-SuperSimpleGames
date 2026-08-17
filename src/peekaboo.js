@@ -5,6 +5,7 @@ import {
   getPocketContentId,
   getSearchClue,
   getSearchScene,
+  getSearchTogether,
   getTargetItemId,
   searchGreetingPair,
   toggleSearchPocket
@@ -20,6 +21,16 @@ const message = document.querySelector("#peek-message");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
 const newSearchButton = document.querySelector("#new-search");
+const togetherLink = document.createElement("div");
+togetherLink.className = "together-link";
+togetherLink.hidden = true;
+togetherLink.setAttribute("aria-hidden", "true");
+const TOGETHER_CLASSES = Object.freeze([
+  "together-snuggle-left", "together-snuggle-right",
+  "together-travel-left", "together-travel-right",
+  "together-float-left", "together-float-right",
+  "together-swim-left", "together-swim-right"
+]);
 
 let sceneCursor;
 let round = createNextRound();
@@ -78,8 +89,43 @@ function createPockets() {
     station.append(friend, pocket);
     fragment.append(station);
   }
-  pocketRow.replaceChildren(fragment);
+  pocketRow.replaceChildren(togetherLink, fragment);
   renderPockets();
+  renderTogether();
+}
+
+function positionTogetherLink(pair) {
+  const first = pocketRow.querySelector(`.pocket-station[data-index="${pair[0]}"]`);
+  const second = pocketRow.querySelector(`.pocket-station[data-index="${pair[1]}"]`);
+  if (!first || !second) return;
+  const rowBounds = pocketRow.getBoundingClientRect();
+  const firstBounds = first.getBoundingClientRect();
+  const secondBounds = second.getBoundingClientRect();
+  const friendHeight = first.querySelector(".pocket-friend").offsetHeight;
+  const firstX = firstBounds.left + (firstBounds.width / 2) - rowBounds.left;
+  const secondX = secondBounds.left + (secondBounds.width / 2) - rowBounds.left;
+  togetherLink.style.left = `${Math.min(firstX, secondX)}px`;
+  togetherLink.style.top = `${(firstBounds.height * 0.75) - (friendHeight * 1.2)}px`;
+  togetherLink.style.width = `${Math.abs(secondX - firstX)}px`;
+}
+
+function renderTogether({ replay = false } = {}) {
+  const together = getSearchTogether(round);
+  togetherLink.hidden = !together;
+  if (!together) {
+    togetherLink.removeAttribute("data-relationship");
+    togetherLink.classList.remove("replaying");
+    for (const friend of pocketRow.querySelectorAll(".pocket-friend")) friend.classList.remove(...TOGETHER_CLASSES);
+    return null;
+  }
+  togetherLink.dataset.relationship = together.id;
+  positionTogetherLink(together.pair);
+  if (replay) {
+    togetherLink.classList.remove("replaying");
+    void togetherLink.offsetWidth;
+    togetherLink.classList.add("replaying");
+  }
+  return together;
 }
 
 function renderPockets() {
@@ -133,17 +179,19 @@ function animatePocket(pocket, opening) {
 
 function animateFriend(index, className = "saying-hello") {
   const friend = pocketRow.querySelector(`.pocket-friend[data-index="${index}"]`);
-  friend.classList.remove("saying-hello", "greeting-left", "greeting-right", "clue-left", "clue-right");
+  friend.classList.remove(
+    "saying-hello", "clue-left", "clue-right",
+    ...TOGETHER_CLASSES
+  );
   void friend.offsetWidth;
   friend.classList.add(className);
 }
 
-function animateGreeting(pair) {
-  const [firstIndex, secondIndex] = pair;
-  const leftIndex = Math.min(firstIndex, secondIndex);
-  const rightIndex = Math.max(firstIndex, secondIndex);
-  animateFriend(leftIndex, "greeting-right");
-  animateFriend(rightIndex, "greeting-left");
+function animateTogether(together) {
+  const [leftIndex, rightIndex] = together.pair;
+  animateFriend(leftIndex, `together-${together.id}-left`);
+  animateFriend(rightIndex, `together-${together.id}-right`);
+  renderTogether({ replay: true });
 }
 
 function playFriend(index) {
@@ -160,11 +208,13 @@ function playFriend(index) {
     return;
   }
   if (pair) {
-    animateGreeting(pair);
-    const partnerIndex = pair.find((value) => value !== index);
-    const partner = getPocketItem(getPocketContentId(round, partnerIndex));
-    message.textContent = `${item.name} and ${partner.name} say hello!`;
-    announcement.textContent = `${item.name} and ${partner.name} greet each other`;
+    const together = getSearchTogether(round);
+    animateTogether(together);
+    const [firstIndex, secondIndex] = together.pair;
+    const first = getPocketItem(getPocketContentId(round, firstIndex));
+    const second = getPocketItem(getPocketContentId(round, secondIndex));
+    message.textContent = `${first.name} and ${second.name} ${together.action}!`;
+    announcement.textContent = `${first.name} and ${second.name} ${together.action}`;
     return;
   }
   animateFriend(index);
@@ -179,6 +229,7 @@ function toggle(index) {
   const item = result.contentId ? getPocketItem(result.contentId) : POCKET_CLUE;
   renderPockets();
   renderTarget();
+  const together = renderTogether();
   animatePocket(pocket, result.open);
   const tone = result.completedNow ? item.tone * 1.25 : result.open ? item.tone : item.tone * 0.78;
   tonePlayer.play(tone);
@@ -207,10 +258,13 @@ function toggle(index) {
     }
     const pair = searchGreetingPair(round, index);
     if (pair) {
-      animateGreeting(pair);
-      const partnerIndex = pair.find((value) => value !== index);
-      const partner = getPocketItem(getPocketContentId(round, partnerIndex));
-      message.textContent = `${item.name} meets ${partner.name}!`;
+      animateTogether(together);
+      const [firstIndex, secondIndex] = together.pair;
+      const first = getPocketItem(getPocketContentId(round, firstIndex));
+      const second = getPocketItem(getPocketContentId(round, secondIndex));
+      message.textContent = `${first.name} and ${second.name} ${together.action}!`;
+      announcement.textContent = `${first.name} and ${second.name} ${together.action}`;
+      return;
     } else {
       message.textContent = `${item.name}!`;
     }
@@ -271,6 +325,10 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") void tonePlayer.suspend();
 });
 addEventListener("pagehide", tonePlayer.stop);
+addEventListener("resize", () => {
+  const together = getSearchTogether(round);
+  if (together) positionTogetherLink(together.pair);
+});
 
 createPockets();
 renderTarget();

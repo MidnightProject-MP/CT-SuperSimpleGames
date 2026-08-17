@@ -4,6 +4,7 @@ import {
   createSearchRound,
   getPocketContentId,
   getSearchClue,
+  getSearchTogether,
   getTargetItemId,
   searchGreetingPair,
   toggleSearchPocket
@@ -72,6 +73,23 @@ test("greetings include only open non-empty friends", () => {
   assert.equal(searchGreetingPair(round, friendIndices[0]), null);
   round = toggleSearchPocket(round, friendIndices[1]).state;
   assert.deepEqual(searchGreetingPair(round, friendIndices[1]), [friendIndices[1], friendIndices[0]]);
+});
+
+test("two open friends derive one scene-specific together action", () => {
+  for (const sceneId of ["animals", "vehicles", "weather", "sea"]) {
+    let round = createSearchRound({ seed: 31, sceneId });
+    const friendIndices = [0, 1, 2].filter((index) => index !== round.emptyIndex);
+    assert.equal(getSearchTogether(round), null);
+    round = toggleSearchPocket(round, friendIndices[0]).state;
+    assert.equal(getSearchTogether(round), null);
+    round = toggleSearchPocket(round, friendIndices[1]).state;
+    const together = getSearchTogether(round);
+    assert.deepEqual(together.pair, friendIndices);
+    assert.match(together.action, /together$/);
+    assert.equal(Object.isFrozen(together), true);
+    round = toggleSearchPocket(round, friendIndices[0]).state;
+    assert.equal(getSearchTogether(round), null);
+  }
 });
 
 test("invalid search inputs are rejected", () => {

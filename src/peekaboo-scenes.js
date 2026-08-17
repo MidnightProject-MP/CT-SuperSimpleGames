@@ -1,6 +1,10 @@
 import { ITEM_CATALOG, PATTERN_CATALOG, POCKET_COUNT } from "./pockets.js";
 
-function scene(id, label, containerName, itemIds, patternIds) {
+function together(id, action) {
+  return Object.freeze({ id, action });
+}
+
+function scene(id, label, containerName, itemIds, patternIds, relationship) {
   return Object.freeze({
     id,
     label,
@@ -8,15 +12,15 @@ function scene(id, label, containerName, itemIds, patternIds) {
     itemIds: Object.freeze(itemIds),
     patternIds: Object.freeze(patternIds),
     emergence: "rise",
-    relationship: "greet"
+    relationship
   });
 }
 
 export const PEEKABOO_SCENES = Object.freeze([
-  scene("animals", "Cozy animals", "bed", ["cat", "bear", "bird", "duck"], ["checks", "hearts", "dots"]),
-  scene("vehicles", "Busy vehicles", "garage", ["car", "bus", "plane", "boat"], ["stripes", "checks", "zigzags"]),
-  scene("weather", "Sky friends", "cloud", ["sun", "moon", "star", "cloud"], ["stars", "waves", "dots"]),
-  scene("sea", "Sea friends", "shell", ["fish", "whale", "octopus", "turtle"], ["waves", "rings", "dots"])
+  scene("animals", "Cozy animals", "bed", ["cat", "bear", "bird", "duck"], ["checks", "hearts", "dots"], together("snuggle", "snuggle together")),
+  scene("vehicles", "Busy vehicles", "garage", ["car", "bus", "plane", "boat"], ["stripes", "checks", "zigzags"], together("travel", "move together")),
+  scene("weather", "Sky friends", "cloud", ["sun", "moon", "star", "cloud"], ["stars", "waves", "dots"], together("float", "float together")),
+  scene("sea", "Sea friends", "shell", ["fish", "whale", "octopus", "turtle"], ["waves", "rings", "dots"], together("swim", "swim together"))
 ]);
 
 export function validatePeekabooScene(value) {
@@ -31,7 +35,8 @@ export function validatePeekabooScene(value) {
   if (new Set(value.patternIds).size < POCKET_COUNT || value.patternIds.some((id) => !PATTERN_CATALOG.includes(id))) {
     throw new RangeError("scene patterns must be distinct catalog identities");
   }
-  if (value.emergence !== "rise" || value.relationship !== "greet") throw new RangeError("scene behavior is invalid");
+  if (value.emergence !== "rise" || !value.relationship || !["snuggle", "travel", "float", "swim"].includes(value.relationship.id)
+    || typeof value.relationship.action !== "string" || !value.relationship.action) throw new RangeError("scene behavior is invalid");
   return value;
 }
 

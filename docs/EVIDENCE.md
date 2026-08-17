@@ -21,7 +21,7 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 | Child observation | No structured SuperSimpleGames child sessions are recorded in the repository. |
 | Caregiver report | No structured caregiver reports are recorded in the repository. |
 | Product-owner feedback | Substantial hands-on feedback has shaped replay, forgiving input, spatial stability, construction, persistence, merging, and storytelling. Key decisions are summarized below. |
-| Rendered inspection | Color Splash state transitions, Bloom restoration/Fresh flow, and Stack's bridge-resident flow were exercised in the in-app browser on 2026-08-16. Details below. Other game/device matrices remain incomplete. |
+| Rendered inspection | Color Splash state transitions, Bloom restoration/Fresh flow, Stack's bridge-resident flow, and Peekaboo's themed reunions were exercised in the in-app browser on 2026-08-16. Details below. Other game/device matrices remain incomplete. |
 | Deterministic verification | The current suite covers game-state bounds, input resolution, offline shell, safety policy, persistence fallback, control contracts, and layout-source invariants. Exact results belong to CI for each commit. |
 | Deployment verification | GitHub Verify and Pages runs and public release markers were confirmed for the current foundation releases. |
 
@@ -67,6 +67,16 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 - Initial orientation testing exposed a real defect: pieces survived reflow, but the bridge relationship collapsed into a stack, so the bird disappeared. The implementation now records layout context and reconstructs recognized bridge supports and top across live resize and saved restoration.
 - After correction, the bridge and bird remained in bounds at 640×360: bird `(277.66, 121.29, 84×84)`, beam `(251.26, 172.80, 136.8×43.2)`, with both supports below. Reload preserved the same relationship and produced no console warnings or errors.
 - Rendered inspection also found the short-landscape status message overlapping the title control; reserving a narrower centered lane removed the overlap. Physical touch ease, child recognition of the recurring bird, and intentional bridge reproduction remain unobserved.
+
+### 2026-08-16 — Peekaboo themed “together” reunions
+
+**Method:** In-app browser against the local static app at 390×844 portrait and 640×360 short landscape; direct opening/closing, semantic friend touches, screenshots, rendered rectangles, all-theme cycling, and console inspection.
+
+- Two open sea friends produced one `swim` relationship, a visible connector, and the message “fish and turtle swim together.” Touching either friend replayed the bounded motion; closing one shell hid the connector and reopening restored it.
+- The initial connector was logically correct but rendered across the container flaps. Measuring emerged-friend centers moved it to the stable resting line: in portrait the link center was `y=440.01` and friend centers were `y=439.62`; in short landscape the link center was `y=164.00` and friend centers were `y=164.09`.
+- Cycling the same rendered flow exercised all four declarations: sea `swim`, animals `snuggle`, vehicles `travel`, and weather `float`. Each remained derived from the same two-open-friends state and produced a scene-specific visible message.
+- Short-landscape inspection found the status pill extending 3.6 px below the viewport. Reducing the reserved container row by 4 px moved its bottom to `359.6` in a 360 px viewport. No console warnings or errors were observed.
+- Physical touch comfort, whether children perceive the connector as “together,” and whether that meaning transfers from other games remain unobserved.
 
 ## External guidance boundary
 

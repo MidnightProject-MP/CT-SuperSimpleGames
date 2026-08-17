@@ -5,11 +5,11 @@ This is the authoritative cross-game execution order. `PRODUCT.md` owns the prod
 ## Current position
 
 - **Active phase:** Familiar World
-- **Next milestone:** introduce one coherent shared relationship meaning
+- **Next milestone:** caregiver-triggered closing ritual
 - **Last reconciled:** 2026-08-16
-- **Current milestone state:** recurring-resident pilot implemented and rendered
+- **Current milestone state:** first shared relationship meaning implemented and rendered
 
-The collection has six distinct playable worlds. The shared control, preservation, spatial-stability, and first recurring-resident foundations are implemented. The next useful question is whether a small relationship meaning can remain coherent across worlds without flattening their distinct forms of play.
+The collection has six distinct playable worlds. Shared control, preservation, spatial stability, the first recurring resident, and the first shared relationship meaning are implemented. The next useful question is whether a caregiver can deliberately bring an experience to rest without creating an automatic stopping prompt or taking control away from the child.
 
 ## Governing direction
 
@@ -33,28 +33,28 @@ This phase gives the six games a few transferable meanings without creating prog
 2. **Bounded preservation — implemented.** Bloom, Stack & Settle, and Story Scenes restore one versioned local creation. Fresh requires “Keep playing” or “Start fresh.” Invalid, incompatible, oversized, or unavailable storage cannot prevent play.
 3. **Stable Color Splash frame — implemented and rendered.** Prompt, board, and Back one own fixed grid rows; teaching boards and later boards share one outer frame; completion overlays the board. Automated checks and rendered 390×844 portrait and 640×360 short-landscape checks pass. Physical touch-device and child evidence remain pending.
 4. **Recurring resident pilot — implemented and rendered.** A child-built Stack & Settle bridge deterministically invites Bloom's spotted bird. It has one recognizable identity, four bounded local responses, no collection state, and no effect on the construction. The bridge and bird survive portrait-to-landscape reflow; rebuilding the condition can invite it again. Child recognition and intentional reproduction remain unobserved.
+5. **Shared “together” meaning — implemented and rendered.** Two open Peekaboo friends derive one visible connector and a scene-specific reunion: snuggle, move, float, or swim. Either friend repeats it; closing either home removes it. This aligns with existing Bloom links, Story relationships, and Together Tones pairs without sharing state or forcing identical animation. Child transfer of the meaning remains unobserved.
 
 Implementation detail and evidence belong in `PRODUCT.md`, `GAME_ROADMAPS.md`, and `EVIDENCE.md`; this roadmap records only sequencing and decision state.
 
-### Next: one shared relationship meaning
+### Next: milestone 6 — caregiver-triggered closing ritual
 
-Choose one existing meaning—such as home, together, rain, sun, repetition, or rest—that already fits at least two games. Make its consequence locally consistent while preserving each host game's agency.
+Add one calm, deliberate way for a caregiver to signal that play is resting. It must not become an automatic prompt, countdown, session limit, reward summary, or child-facing demand to stop.
 
 The smallest coherent slice must:
 
-- be understandable from visible local state rather than labels or prior memory;
-- produce a related consequence, not necessarily identical artwork or motion;
-- remain optional, bounded, reversible, and complete sound-off;
-- avoid a generalized relationship engine until repeated implementations justify one;
-- be verified in the affected games without expanding the bird to a third world.
+- require an intentional caregiver gesture or control unlikely to be triggered by ordinary play;
+- settle motion and sound immediately while leaving child-authored work intact;
+- offer a clear return to play and preserve the existing Home/Fresh meanings;
+- avoid recording time, enforcing a duration, praising disengagement, or implying the child failed to finish;
+- work consistently in one pilot game before any collection-wide rollout.
 
-The resident pilot remains deliberately limited to Bloom and Stack until child observation can distinguish familiarity from decoration or reward-seeking.
+The first candidate should be an open-ended world where visible work can remain peacefully on screen. The ritual must be tested for accidental activation, spatial stability, sound-off meaning, reduced motion, and safe restoration.
 
 ### Then
 
-5. Add one caregiver-triggered, non-automatic closing ritual that leaves the product at rest.
-6. Observe whether children transfer control meanings, recognize and reproduce a resident condition, recover saved work, avoid accidental resets, and disengage naturally.
-7. Resume the strongest per-game Round 3 milestone from `GAME_ROADMAPS.md`; choose using current evidence, not document age.
+7. Observe whether children transfer control and relationship meanings, recognize and reproduce a resident condition, recover saved work, avoid accidental resets, and disengage naturally.
+8. Resume the strongest per-game Round 3 milestone from `GAME_ROADMAPS.md`; choose using current evidence, not document age.
 
 ## Spatial stability and zoom
 

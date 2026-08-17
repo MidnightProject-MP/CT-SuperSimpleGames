@@ -9,7 +9,9 @@ test("four coherent local scenes define containers, content, and bounded behavio
     assert.equal(validatePeekabooScene(scene), scene);
     assert.ok(scene.itemIds.length >= 3);
     assert.equal(scene.emergence, "rise");
-    assert.equal(scene.relationship, "greet");
+    assert.ok(["snuggle", "travel", "float", "swim"].includes(scene.relationship.id));
+    assert.match(scene.relationship.action, /together$/);
+    assert.equal(Object.isFrozen(scene.relationship), true);
   }
 });
 
@@ -31,4 +33,5 @@ test("an explicit scene can be selected and malformed scenes are rejected", () =
   assert.equal(getSearchScene(createSearchRound({ seed: 9, sceneId: "sea" })).id, "sea");
   assert.throws(() => getPeekabooScene("missing"), RangeError);
   assert.throws(() => validatePeekabooScene({ ...PEEKABOO_SCENES[0], itemIds: ["cat", "cat", "bird"] }), RangeError);
+  assert.throws(() => validatePeekabooScene({ ...PEEKABOO_SCENES[0], relationship: { id: "score", action: "win" } }), RangeError);
 });

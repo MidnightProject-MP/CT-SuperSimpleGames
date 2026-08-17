@@ -18,7 +18,7 @@ Color Splash is a no-fail flood-fill puzzle. Tapping anywhere on the board resol
 
 ### Peekaboo Pockets
 
-Peekaboo Pockets is an open-and-close search game. A large visual target invites the child to explore three stable themed homes: cozy animal beds, vehicle garages, weather clouds, or sea-creature shells. Two hold familiar friends and one holds a playful clue. Friends visibly emerge, remain touchable, and greet one another. Every home responds and finding the target enriches the scene without ending play.
+Peekaboo Pockets is an open-and-close search game. A large visual target invites the child to explore three stable themed homes: cozy animal beds, vehicle garages, weather clouds, or sea-creature shells. Two hold familiar friends and one holds a playful clue. Friends visibly emerge, remain touchable, and form a repeatable themed relationship: animals snuggle, vehicles move, sky friends float, and sea friends swim together. Closing either home removes the relationship without moving anyone. Every home responds and finding the target enriches the scene without ending play.
 
 ### Stack & Settle
 

@@ -111,3 +111,19 @@ export function searchGreetingPair(state, index) {
   if (partners.length === 0) return null;
   return Object.freeze([pocketIndex, partners[0].partnerIndex]);
 }
+
+export function getSearchTogether(state) {
+  const current = normalizeSearchState(state);
+  const pair = current.pockets.open
+    .map((isOpen, index) => ({ isOpen, index }))
+    .filter(({ isOpen, index }) => isOpen && index !== current.emptyIndex)
+    .map(({ index }) => index)
+    .sort((left, right) => left - right);
+  if (pair.length < 2) return null;
+  const relationship = getPeekabooScene(current.sceneId).relationship;
+  return Object.freeze({
+    pair: Object.freeze(pair),
+    id: relationship.id,
+    action: relationship.action
+  });
+}
