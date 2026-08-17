@@ -28,7 +28,7 @@ This table is the quick index for this document. “Next candidate” means the 
 | Bloom | `BL-3A` merge-three garden growth | `BL-4` garden seasons and themes |
 | Color Splash | `CS-2` reversible planning, plus stable-frame correction | `CS-3` two growing corners |
 | Peekaboo Pockets | `PP-2` legible clue chains | `PP-3` child hides, caregiver seeks |
-| Stack & Settle | `STK-2` open-ended idea cards | `STK-3` themed construction kits |
+| Stack & Settle | `STK-2` idea cards, plus Familiar World bridge resident | `STK-3` themed construction kits |
 | Story Scenes | `SCN-2A` toddler-first variation and compositional castle | `SCN-3` roles and child-directed sides |
 | Together Tones | `TT-2` touchable recent history | `TT-3` tone qualities and visible comparison |
 
@@ -80,11 +80,11 @@ Proceed after each Round 1 mechanic is technically verified and any obvious inte
 
 ### Round 3 — Deepen social and conceptual play
 
-The cross-game **Familiar World** phase in `ROADMAP.md` precedes the remaining isolated work in this round. Its shared control, bounded preservation, and Color Splash spatial-stability steps are implemented. The recurring-resident pilot is next; `ROADMAP.md` remains authoritative for when isolated Round 3 work resumes.
+The cross-game **Familiar World** phase in `ROADMAP.md` precedes the remaining isolated work in this round. Shared control, bounded preservation, Color Splash spatial stability, and the first recurring-resident pilot are implemented. One shared relationship meaning is next; `ROADMAP.md` remains authoritative for when isolated Round 3 work resumes.
 
 Use observation to choose the strongest order within this round:
 
-- the active recurring-resident pilot from `ROADMAP.md`;
+- the active shared-relationship slice from `ROADMAP.md`;
 - two-anchor Color Splash boards;
 - child-hides/caregiver-seeks Peekaboo;
 - themed construction kits;
@@ -477,7 +477,7 @@ The child currently receives three stable containers, one visual target, two fri
 
 Stack & Settle should become the collection’s construction and spatial-problem-solving world. Its pleasure comes from arranging a small reusable set, seeing pieces form stable relationships, revising a structure, and optionally pursuing a visual idea without losing free play.
 
-The child currently receives five reusable pieces, tap-complete placement, broad dragging, floor/stack/nest settling, side-by-side responses, and recoverable arrangements. Preserve magnetic forgiveness and the absence of collapse as punishment.
+The child currently receives five reusable pieces, tap-complete placement, broad dragging, floor/stack/nest settling, side-by-side responses, recoverable arrangements, and one deterministic spotted bird invited by a bridge. Preserve magnetic forgiveness and the absence of collapse as punishment.
 
 ### Concepts Stack & Settle can expose
 
@@ -490,7 +490,7 @@ The child currently receives five reusable pieces, tap-complete placement, broad
 
 ### STK-0 — Generalized settling engine
 
-**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+**Status:** implemented and automatically verified; bridge creation and orientation preservation rendered in portrait and short landscape; physical-device and child observation pending.
 
 **Kind:** technical foundation supporting all Stack milestones.
 
@@ -507,7 +507,7 @@ The child currently receives five reusable pieces, tap-complete placement, broad
 
 ### STK-1 — Structural relationships
 
-**Status:** implemented and automatically verified; rendered, device, and child observation pending.
+**Status:** implemented and automatically verified; bridge creation and resident response rendered in portrait and short landscape; physical-device and child observation pending.
 
 **Kind:** core gameplay improvement; Round 1.
 
@@ -523,7 +523,7 @@ The child currently receives five reusable pieces, tap-complete placement, broad
 
 **Gate:** Near-miss placements still settle safely and remain interesting; recognition cannot be the only satisfying outcome.
 
-**Implementation note:** Every piece now declares bounded construction capabilities for support, resting, spanning, covering, and nesting. The bridge beam is at least 50% wider than every other piece. Broad beam drops search nearby same-level support pairs, accept an off-center release within a forgiving reach, and settle at the pair midpoint without overlap. Pure structure recognition identifies bridges, shelters, and enclosures without consuming or locking pieces. Local responses acknowledge a discovered structure per placement, and randomized portrait/landscape placement tests protect identity, bounds, and recoverability. Rendered and device confirmation that the correction feels easier remains pending.
+**Implementation note:** Every piece now declares bounded construction capabilities for support, resting, spanning, covering, and nesting. The bridge beam is at least 50% wider than every other piece. Broad beam drops search nearby same-level support pairs, accept an off-center release within a forgiving reach, and settle at the pair midpoint without overlap. Pure structure recognition identifies bridges, shelters, and enclosures without consuming or locking pieces. Recognized bridges now preserve their support/top relationship across live and saved orientation changes. A bridge derives one recurring spotted bird locally; four touches move it among bounded positions and send it home without changing the build. Dismantling the bridge resets the invitation. Local responses acknowledge a discovered structure per placement, and randomized portrait/landscape placement tests protect identity, bounds, and recoverability. Physical-device ease and child comprehension remain pending.
 
 ### STK-2 — Open-ended idea cards
 

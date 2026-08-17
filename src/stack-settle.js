@@ -1,11 +1,12 @@
 import { createTonePlayer } from "./audio.js";
-import { STACK_IDEAS, STACK_PIECES, createStackState, matchesStackIdea, resolveStackLayout, restoreStackState, serializeStackState, settlePiece, tapPiece } from "./stack.js";
+import { STACK_IDEAS, STACK_PIECES, STACK_RESIDENT_TOUCHES, createStackState, matchesStackIdea, moveStackResident, resolveStackLayout, restoreStackState, serializeStackState, settlePiece, stackResidentFor, tapPiece } from "./stack.js";
 import { setupFreshStart } from "./fresh-start.js";
 import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 
 const buildArea = document.querySelector("#build-area");
 const piecesElement = document.querySelector("#pieces");
+const residentLayer = document.querySelector("#resident-layer");
 const message = document.querySelector("#stack-message");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
@@ -18,9 +19,14 @@ const showIdeaButton = document.querySelector("#show-idea");
 
 const STACK_STORAGE_KEY = "supersimplegames.stack.creation";
 let state = createStackState();
+let previousLayout = null;
 try {
   const saved = loadLocalState(STACK_STORAGE_KEY);
-  if (saved) state = restoreStackState(saved);
+  if (saved) {
+    state = restoreStackState(saved);
+    if (Number.isFinite(saved.layout?.width) && saved.layout.width >= 100 && saved.layout.width <= 10000
+      && Number.isFinite(saved.layout?.height) && saved.layout.height >= 100 && saved.layout.height <= 10000) previousLayout = saved.layout;
+  }
 } catch {
   clearLocalState(STACK_STORAGE_KEY);
 }
@@ -29,8 +35,64 @@ let drag = null;
 let suppressClickFor = null;
 let ideaIndex = 0;
 let ideaVisible = true;
+let residentState = null;
+let dismissedResidentKey = null;
 const acknowledgedIdeas = new Set();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
+
+function residentKey(resident) {
+  return resident ? resident.anchorIds.join("-") : null;
+}
+
+function createResidentElement() {
+  const button = document.createElement("button");
+  const art = document.createElement("span");
+  button.type = "button";
+  button.className = "stack-resident";
+  button.setAttribute("aria-label", "The spotted bird is perched on your bridge; touch to say hello");
+  art.className = "stack-resident-art";
+  art.setAttribute("aria-hidden", "true");
+  art.append(document.createElement("i"), document.createElement("i"), document.createElement("i"));
+  button.append(art);
+  return button;
+}
+
+function placeResident() {
+  const element = residentLayer.querySelector(".stack-resident");
+  if (!element || !residentState) return;
+  const point = moveStackResident(residentState.resident, residentState.visits, currentLayout());
+  element.style.left = `${point.x * 100}%`;
+  element.style.top = `${point.y * 100}%`;
+}
+
+function renderResident({ announce = false } = {}) {
+  const resident = stackResidentFor(state, currentLayout());
+  const key = residentKey(resident);
+  if (!resident) {
+    residentState = null;
+    dismissedResidentKey = null;
+    residentLayer.replaceChildren();
+    return;
+  }
+  if (key === dismissedResidentKey) {
+    residentState = null;
+    residentLayer.replaceChildren();
+    return;
+  }
+  if (residentState?.key === key) {
+    residentState = { ...residentState, resident };
+    placeResident();
+    return;
+  }
+  residentState = { key, resident, visits: 0 };
+  residentLayer.replaceChildren(createResidentElement());
+  placeResident();
+  if (announce) {
+    message.textContent = "The spotted bird found your bridge!";
+    announcement.textContent = "The spotted bird came from the garden and perched on your bridge.";
+    tonePlayer.play(554.37, 0.16);
+  }
+}
 
 function renderIdea() {
   const idea = STACK_IDEAS[ideaIndex];
@@ -130,7 +192,8 @@ function applyResult(result) {
   const lift = result.relations.length ? 1.15 : 1;
   tonePlayer.play(definition.tone * lift);
   acknowledgeIdea();
-  saveLocalState(STACK_STORAGE_KEY, serializeStackState(state));
+  renderResident({ announce: true });
+  saveLocalState(STACK_STORAGE_KEY, serializeStackState(state, currentLayout()));
 }
 
 function freshStack() {
@@ -138,6 +201,7 @@ function freshStack() {
   acknowledgedIdeas.clear();
   clearLocalState(STACK_STORAGE_KEY);
   renderPieces();
+  renderResident();
   message.textContent = "Tap or move a piece!";
   announcement.textContent = "A fresh building space is ready";
 }
@@ -222,10 +286,37 @@ soundToggle.addEventListener("click", () => {
 });
 
 addEventListener("resize", () => {
-  state = resolveStackLayout(state, currentLayout());
+  const nextLayout = currentLayout();
+  state = resolveStackLayout(state, nextLayout, previousLayout || nextLayout);
+  previousLayout = nextLayout;
   renderPieces();
+  renderResident();
   acknowledgeIdea();
-  saveLocalState(STACK_STORAGE_KEY, serializeStackState(state));
+  saveLocalState(STACK_STORAGE_KEY, serializeStackState(state, nextLayout));
+});
+
+residentLayer.addEventListener("click", (event) => {
+  const resident = event.target.closest(".stack-resident");
+  if (!resident || !residentState) return;
+  const visits = residentState.visits + 1;
+  if (visits >= STACK_RESIDENT_TOUCHES) {
+    dismissedResidentKey = residentState.key;
+    residentState = null;
+    resident.classList.add("leaving");
+    resident.addEventListener("animationend", () => residentLayer.replaceChildren(), { once: true });
+    message.textContent = "The spotted bird flew home!";
+    announcement.textContent = "The spotted bird flew home. Your bridge is still here.";
+    tonePlayer.play(476, 0.16);
+    return;
+  }
+  residentState = { ...residentState, visits };
+  placeResident();
+  resident.classList.remove("visiting");
+  void resident.offsetWidth;
+  resident.classList.add("visiting");
+  message.textContent = "Hop, little bird!";
+  announcement.textContent = "The spotted bird hops along your bridge.";
+  tonePlayer.play(554.37 * (1 + visits * 0.025), 0.12);
 });
 
 ideaCard.addEventListener("click", () => {
@@ -254,10 +345,13 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") void tonePlayer.suspend();
 });
 addEventListener("pagehide", tonePlayer.stop);
-addEventListener("pagehide", () => saveLocalState(STACK_STORAGE_KEY, serializeStackState(state)));
+addEventListener("pagehide", () => saveLocalState(STACK_STORAGE_KEY, serializeStackState(state, currentLayout())));
 
-state = resolveStackLayout(state, currentLayout());
+const initialLayout = currentLayout();
+state = resolveStackLayout(state, initialLayout, previousLayout || initialLayout);
+previousLayout = initialLayout;
 createPieces();
+renderResident();
 renderSoundState();
 renderIdea();
 setupFreshStart({ onConfirm: freshStack });

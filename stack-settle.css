@@ -50,6 +50,16 @@ button { font: inherit; }
 .cloud-two { top: 29%; right: -7%; transform: scale(.74); }
 .settle-floor { position: absolute; z-index: 1; top: 79%; width: 100%; height: 6px; background: rgba(70,143,74,.38); box-shadow: 0 5px rgba(255,255,255,.35); }
 .pieces { position: absolute; z-index: 5; inset: 0; }
+.resident-layer { position: absolute; z-index: 18; inset: 0; pointer-events: none; }
+.stack-resident { position: absolute; width: 84px; height: 84px; padding: 0; border: 0; border-radius: 50%; background: transparent; transform: translate(-50%,-50%); pointer-events: auto; cursor: pointer; touch-action: manipulation; }
+.stack-resident:focus-visible { outline: 6px solid #29385f; outline-offset: 4px; }
+.stack-resident-art { position: absolute; inset: 8px; filter: drop-shadow(0 6px 3px rgba(51,35,111,.22)); }
+.stack-resident-art i { position: absolute; display: block; }
+.stack-resident-art i:first-child { left: 9px; top: 17px; width: 50px; height: 39px; border: 4px solid white; border-radius: 55% 60% 48% 52%; background: radial-gradient(circle at 36% 35%,#fff1a0 0 5%,transparent 6%),radial-gradient(circle at 52% 62%,#fff1a0 0 5%,transparent 6%),radial-gradient(circle at 68% 34%,#fff1a0 0 5%,#58a9d7 6%); }
+.stack-resident-art i:nth-child(2) { right: 0; top: 28px; width: 19px; height: 13px; background: #f2a43b; clip-path: polygon(0 0,100% 50%,0 100%); }
+.stack-resident-art i:nth-child(3) { left: 20px; top: 42px; width: 28px; height: 20px; border-radius: 80% 20%; background: #397ca8; transform: rotate(13deg); }
+.stack-resident.visiting { animation: resident-hop 420ms ease-out; }
+.stack-resident.leaving { animation: resident-leave 620ms ease-in forwards; pointer-events: none; }
 
 .idea-dock { position: absolute; z-index: 24; top: max(154px,calc(env(safe-area-inset-top) + 142px)); left: max(12px,env(safe-area-inset-left)); width: min(29vw,180px); }
 .idea-card { position: relative; display: grid; width: 100%; min-height: 190px; padding: 12px 13px; gap: 4px; place-items: center; border: 3px solid rgba(255,255,255,.94); border-radius: 25px; color: #29385f; background: rgba(255,255,255,.82); box-shadow: 0 7px 0 rgba(42,85,99,.16),0 13px 26px rgba(38,74,90,.13); cursor: pointer; }
@@ -118,13 +128,15 @@ button { font: inherit; }
 @keyframes piece-greet { 0%,100% { transform: translate(-50%,-50%) rotate(0); } 35% { transform: translate(-50%,-56%) rotate(-5deg); } 68% { transform: translate(-50%,-53%) rotate(5deg); } }
 @keyframes structure-found { 0%,100% { filter: brightness(1); } 45% { filter: brightness(1.25); transform: translate(-50%,-56%) scale(1.06); } }
 @keyframes idea-found { 0%,100% { transform: scale(1); } 45% { transform: scale(1.07) rotate(-2deg); background: #fff7b8; } }
+@keyframes resident-hop { 0%,100% { transform: translate(-50%,-50%) rotate(0); } 45% { transform: translate(-50%,-68%) rotate(-5deg); } }
+@keyframes resident-leave { to { transform: translate(120%,-180%) rotate(12deg) scale(.72); opacity: 0; } }
 
 @media (orientation: landscape) and (max-height: 520px) {
   .stack-topbar { padding: max(5px,env(safe-area-inset-top)) 10px 4px; }
   .stack-brand { min-height: 46px; padding: 3px 11px 3px 5px; }
   .stack-brand-mark { width: 36px; height: 36px; font-size: 31px; }
   .stack-sound { width: 46px; height: 46px; padding: 10px; }
-  .stack-message { top: max(5px,env(safe-area-inset-top)); min-width: 180px; padding-block: 3px; font-size: clamp(14px,4.5vh,18px); }
+  .stack-message { top: max(5px,env(safe-area-inset-top)); left: 59%; width: min(38vw,280px); min-width: 180px; padding-block: 3px; font-size: clamp(14px,4.5vh,18px); }
   .idea-dock { top: max(57px,calc(env(safe-area-inset-top) + 52px)); width: 132px; }
   .idea-card { min-height: 128px; padding: 5px 8px; gap: 1px; border-radius: 18px; }
   .idea-heading, .idea-next, .idea-card small { display: none; }
@@ -133,5 +145,5 @@ button { font: inherit; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stack-piece.settled, .stack-piece.related, .stack-piece.structure-found, .idea-card.idea-matched { animation-duration: 1ms; }
+  .stack-piece.settled, .stack-piece.related, .stack-piece.structure-found, .idea-card.idea-matched, .stack-resident.visiting, .stack-resident.leaving { animation-duration: 1ms; }
 }

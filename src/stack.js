@@ -1,5 +1,6 @@
 export const FLOOR_Y = 0.79;
 export const BUILD_TOP = 0.12;
+export const STACK_RESIDENT_TOUCHES = 4;
 
 export const STACK_PIECES = Object.freeze([
   Object.freeze({ id: "berry", kind: "block", width: 0.14, height: 0.18, tone: 392.0, supports: true, restsOn: true, spans: false, covers: false, nestsWith: Object.freeze([]) }),
@@ -175,11 +176,40 @@ function resolvePlacement(pieces, moving, candidate, layout, ignoredIds = new Se
   return Object.freeze({ x: moving.x, y: moving.y, settledAs: "waiting", collisionResolved: true });
 }
 
-export function resolveStackLayout(state, layout) {
+export function resolveStackLayout(state, layout, previousLayout = layout) {
   const source = normalizeState(state);
-  const placed = source.filter((piece) => piece.placed)
-    .sort((left, right) => right.y - left.y || STACK_PIECES.findIndex(({ id }) => id === left.id) - STACK_PIECES.findIndex(({ id }) => id === right.id));
+  layoutMetrics(previousLayout);
+  const priorBridges = structuresFor(state, previousLayout).filter((structure) => structure.type === "bridge");
+  const reservedIds = new Set(priorBridges.flatMap((bridge) => [bridge.top, ...bridge.supports]));
   const resolved = [];
+
+  for (const bridge of priorBridges) {
+    const top = pieceById(source, bridge.top);
+    const supports = bridge.supports.map((id) => pieceById(source, id)).sort((left, right) => left.x - right.x);
+    const [left, right] = supports;
+    const topSize = dimensions(top, layout);
+    const leftSize = dimensions(left, layout);
+    const rightSize = dimensions(right, layout);
+    const metrics = layoutMetrics(layout);
+    const center = clamp(top.x, topSize.width / 2, 1 - topSize.width / 2);
+    const minimumSeparation = ((leftSize.width + rightSize.width) / 2) + ((0.015 * metrics.unit) / metrics.width);
+    const maximumSeparation = topSize.width * 0.9;
+    const separation = clamp(Math.abs(right.x - left.x), minimumSeparation, maximumSeparation);
+    const leftX = clamp(center - (separation / 2), leftSize.width / 2, 1 - leftSize.width / 2);
+    const rightX = clamp(center + (separation / 2), rightSize.width / 2, 1 - rightSize.width / 2);
+    const leftY = FLOOR_Y - (leftSize.height / 2);
+    const rightY = FLOOR_Y - (rightSize.height / 2);
+    const supportTop = Math.min(leftY - (leftSize.height / 2), rightY - (rightSize.height / 2));
+    resolved.push(
+      { ...left, x: leftX, y: leftY },
+      { ...right, x: rightX, y: rightY },
+      { ...top, x: center, y: supportTop - (topSize.height / 2) }
+    );
+  }
+
+  const placed = source.filter((piece) => piece.placed)
+    .filter((piece) => !reservedIds.has(piece.id))
+    .sort((left, right) => right.y - left.y || STACK_PIECES.findIndex(({ id }) => id === left.id) - STACK_PIECES.findIndex(({ id }) => id === right.id));
   for (const piece of placed) {
     const nestingPartner = resolved.find((other) => canNest(piece, other) && layoutDistance(piece, other, layout) < 0.075);
     const ignoredIds = nestingPartner ? new Set([nestingPartner.id]) : new Set();
@@ -205,11 +235,16 @@ export function createStackState() {
   })));
 }
 
-export function serializeStackState(state) {
+export function serializeStackState(state, layout) {
   const pieces = normalizeState(state);
-  return Object.freeze({
+  const snapshot = {
     pieces: Object.freeze(pieces.map(({ id, x, y, placed, moves }) => Object.freeze({ id, x, y, placed, moves })))
-  });
+  };
+  if (layout !== undefined) {
+    const metrics = layoutMetrics(layout);
+    snapshot.layout = Object.freeze({ width: metrics.width, height: metrics.height });
+  }
+  return Object.freeze(snapshot);
 }
 
 export function restoreStackState(snapshot) {
@@ -274,6 +309,36 @@ export function structuresFor(state, layout) {
     }
   }
   return Object.freeze(structures);
+}
+
+export function stackResidentFor(state, layout) {
+  const pieces = normalizeState(state);
+  const bridge = structuresFor(state, layout).find((structure) => structure.type === "bridge");
+  if (!bridge) return null;
+  const top = pieceById(pieces, bridge.top);
+  const topSize = dimensions(top, layout);
+  return Object.freeze({
+    type: "bird",
+    label: "the spotted bird",
+    x: top.x,
+    y: clamp(top.y - (topSize.height * 0.72), BUILD_TOP + 0.04, FLOOR_Y - 0.08),
+    anchorIds: Object.freeze([bridge.top, ...bridge.supports])
+  });
+}
+
+export function moveStackResident(resident, visit, layout) {
+  if (!resident || resident.type !== "bird" || !Number.isFinite(resident.x) || !Number.isFinite(resident.y)
+    || !Array.isArray(resident.anchorIds) || resident.anchorIds.length !== 3) {
+    throw new TypeError("invalid stack resident");
+  }
+  if (!Number.isInteger(visit) || visit < 0) throw new RangeError("resident visit must be non-negative");
+  const metrics = layoutMetrics(layout);
+  const offsets = Object.freeze([[0, 0], [34, -12], [-30, -8], [14, 18]]);
+  const [offsetX, offsetY] = offsets[visit % offsets.length];
+  return Object.freeze({
+    x: clamp(resident.x + (offsetX / metrics.width), 0.06, 0.94),
+    y: clamp(resident.y + (offsetY / metrics.height), BUILD_TOP + 0.02, FLOOR_Y - 0.04)
+  });
 }
 
 function connectedCount(state, relationType, layout) {

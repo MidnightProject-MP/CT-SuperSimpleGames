@@ -22,7 +22,7 @@ Peekaboo Pockets is an open-and-close search game. A large visual target invites
 
 ### Stack & Settle
 
-Stack & Settle is a no-fail construction toy with five oversized reusable pieces. Tapping places or rearranges a piece, while broad dragging offers direct control. Pieces magnetically settle on the floor, stack, sit side by side, nest, or form forgiving bridges, shelters, and enclosures. The bridge beam is visibly longer and can find a nearby pair of supports from a broad drop. Every arrangement remains movable and there is nothing to complete.
+Stack & Settle is a no-fail construction toy with five oversized reusable pieces. Tapping places or rearranges a piece, while broad dragging offers direct control. Pieces magnetically settle on the floor, stack, sit side by side, nest, or form forgiving bridges, shelters, and enclosures. The bridge beam is visibly longer and can find a nearby pair of supports from a broad drop. A bridge invites Bloom's spotted bird to perch, hop locally, and leave without changing the build. Every arrangement remains movable and there is nothing to complete.
 
 ### Story Scenes
 

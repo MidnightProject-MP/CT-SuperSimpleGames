@@ -5,11 +5,11 @@ This is the authoritative cross-game execution order. `PRODUCT.md` owns the prod
 ## Current position
 
 - **Active phase:** Familiar World
-- **Next milestone:** pilot one recurring resident outside Bloom
+- **Next milestone:** introduce one coherent shared relationship meaning
 - **Last reconciled:** 2026-08-16
-- **Behavior baseline:** commit `408f751`
+- **Current milestone state:** recurring-resident pilot implemented and rendered
 
-The collection has six distinct playable worlds. The shared control and preservation foundation is implemented, and Color Splash now uses a stable board frame. The next useful question is whether one deterministic resident can recur across worlds without becoming a reward, distraction, or metagame.
+The collection has six distinct playable worlds. The shared control, preservation, spatial-stability, and first recurring-resident foundations are implemented. The next useful question is whether a small relationship meaning can remain coherent across worlds without flattening their distinct forms of play.
 
 ## Governing direction
 
@@ -32,27 +32,26 @@ This phase gives the six games a few transferable meanings without creating prog
 1. **Shared control meanings — implemented.** Home leaves without clearing. Again replays a finite experience. Different changes a bounded prompt without erasing unrelated work. Fresh is reserved for destructive clearing.
 2. **Bounded preservation — implemented.** Bloom, Stack & Settle, and Story Scenes restore one versioned local creation. Fresh requires “Keep playing” or “Start fresh.” Invalid, incompatible, oversized, or unavailable storage cannot prevent play.
 3. **Stable Color Splash frame — implemented and rendered.** Prompt, board, and Back one own fixed grid rows; teaching boards and later boards share one outer frame; completion overlays the board. Automated checks and rendered 390×844 portrait and 640×360 short-landscape checks pass. Physical touch-device and child evidence remain pending.
+4. **Recurring resident pilot — implemented and rendered.** A child-built Stack & Settle bridge deterministically invites Bloom's spotted bird. It has one recognizable identity, four bounded local responses, no collection state, and no effect on the construction. The bridge and bird survive portrait-to-landscape reflow; rebuilding the condition can invite it again. Child recognition and intentional reproduction remain unobserved.
 
 Implementation detail and evidence belong in `PRODUCT.md`, `GAME_ROADMAPS.md`, and `EVIDENCE.md`; this roadmap records only sequencing and decision state.
 
-### Next: recurring resident pilot
+### Next: one shared relationship meaning
 
-Introduce the existing bird into one additional world only where a visible child-created condition makes its arrival understandable and reproducible.
+Choose one existing meaning—such as home, together, rain, sun, repetition, or rest—that already fits at least two games. Make its consequence locally consistent while preserving each host game's agency.
 
-The smallest coherent pilot must:
+The smallest coherent slice must:
 
-- reuse a recognizable visual identity without requiring memory or explanation;
-- arrive because of stable local state, never elapsed time, rarity, or random reward;
-- remain non-collectible, bounded, optional, and locally responsive;
-- preserve the host game's distinct agency and complete sound-off behavior;
-- leave without deleting or rearranging child-authored work;
-- be verified in rendered portrait and short landscape before release.
+- be understandable from visible local state rather than labels or prior memory;
+- produce a related consequence, not necessarily identical artwork or motion;
+- remain optional, bounded, reversible, and complete sound-off;
+- avoid a generalized relationship engine until repeated implementations justify one;
+- be verified in the affected games without expanding the bird to a third world.
 
-Do not add the bird to several games at once. One additional world is enough to learn whether recurrence feels familiar or merely decorative.
+The resident pilot remains deliberately limited to Bloom and Stack until child observation can distinguish familiarity from decoration or reward-seeking.
 
 ### Then
 
-4. Introduce shared relationship meanings only where they fit existing agency—such as home, bridge, rain, sun, repetition, together, and rest.
 5. Add one caregiver-triggered, non-automatic closing ritual that leaves the product at rest.
 6. Observe whether children transfer control meanings, recognize and reproduce a resident condition, recover saved work, avoid accidental resets, and disengage naturally.
 7. Resume the strongest per-game Round 3 milestone from `GAME_ROADMAPS.md`; choose using current evidence, not document age.

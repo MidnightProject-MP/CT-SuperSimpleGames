@@ -1,16 +1,20 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  BUILD_TOP,
   FLOOR_Y,
   STACK_PIECES,
   STACK_IDEAS,
+  STACK_RESIDENT_TOUCHES,
   createStackState,
   matchesStackIdea,
+  moveStackResident,
   relationshipsFor,
   resolveStackLayout,
   restoreStackState,
   serializeStackState,
   settlePiece,
+  stackResidentFor,
   structuresFor,
   tapPiece,
   unintendedOverlapsFor
@@ -18,10 +22,12 @@ import {
 
 test("a stack creation serializes minimally and restores through current definitions", () => {
   const moved = settlePiece(createStackState(), "sky", { x: 0.52, y: 0.6 }).state;
-  const saved = serializeStackState(moved);
+  const saved = serializeStackState(moved, { width: 390, height: 844 });
   assert.deepEqual(Object.keys(saved.pieces[0]), ["id", "x", "y", "placed", "moves"]);
+  assert.deepEqual(saved.layout, { width: 390, height: 844 });
   assert.deepEqual(restoreStackState(JSON.parse(JSON.stringify(saved))), moved);
   assert.throws(() => restoreStackState({ pieces: saved.pieces.slice(1) }), RangeError);
+  assert.throws(() => serializeStackState(moved, { width: 0, height: 844 }), RangeError);
 });
 
 test("stack state starts bounded, distinct, and reusable", () => {
@@ -116,6 +122,39 @@ test("a broad beam drop finds a nearby compatible support pair", () => {
   assert.deepEqual(unintendedOverlapsFor(bridge.state), []);
 });
 
+test("the spotted bird visits only a child-built bridge", () => {
+  const layout = { width: 390, height: 844 };
+  const initial = createStackState();
+  assert.equal(stackResidentFor(initial, layout), null);
+
+  let state = settlePiece(initial, "berry", { x: 0.38, y: 0.7 }, layout).state;
+  state = settlePiece(state, "nest", { x: 0.62, y: 0.7 }, layout).state;
+  const residentBeforeBridge = stackResidentFor(state, layout);
+  assert.equal(residentBeforeBridge, null);
+
+  state = settlePiece(state, "sky", { x: 0.5, y: 0.48 }, layout).state;
+  const resident = stackResidentFor(state, layout);
+  assert.deepEqual(resident.anchorIds, ["sky", "berry", "nest"]);
+  assert.equal(resident.type, "bird");
+  assert.equal(resident.x, state.pieces.find(({ id }) => id === "sky").x);
+  assert.ok(resident.y >= BUILD_TOP && resident.y < state.pieces.find(({ id }) => id === "sky").y);
+  assert.equal(STACK_RESIDENT_TOUCHES, 4);
+});
+
+test("the bridge bird has four bounded local visit positions", () => {
+  const layout = { width: 800, height: 320 };
+  let state = settlePiece(createStackState(), "berry", { x: 0.44, y: 0.7 }, layout).state;
+  state = settlePiece(state, "nest", { x: 0.56, y: 0.7 }, layout).state;
+  state = settlePiece(state, "sky", { x: 0.5, y: 0.48 }, layout).state;
+  const resident = stackResidentFor(state, layout);
+  const positions = Array.from({ length: STACK_RESIDENT_TOUCHES }, (_, visit) => moveStackResident(resident, visit, layout));
+  assert.equal(new Set(positions.map(({ x, y }) => `${x}:${y}`)).size, STACK_RESIDENT_TOUCHES);
+  assert.equal(positions.every(({ x, y }) => x >= 0.06 && x <= 0.94 && y >= BUILD_TOP && y < FLOOR_Y), true);
+  assert.deepEqual(moveStackResident(resident, STACK_RESIDENT_TOUCHES, layout), positions[0]);
+  assert.throws(() => moveStackResident(resident, -1, layout), RangeError);
+  assert.throws(() => moveStackResident({ ...resident, type: "bee" }, 0, layout), TypeError);
+});
+
 test("idea matching recognizes broad structural relationships without changing state", () => {
   const initial = createStackState();
   let bridgeState = settlePiece(initial, "berry", { x: 0.38, y: 0.7 }).state;
@@ -161,6 +200,21 @@ test("orientation changes reflow collisions without losing any piece", () => {
   const landscape = resolveStackLayout(state, { width: 800, height: 320 });
   assert.equal(landscape.pieces.filter(({ placed }) => placed).length, 2);
   assert.deepEqual(unintendedOverlapsFor(landscape, { width: 800, height: 320 }), []);
+});
+
+test("orientation changes preserve an existing bridge and its resident", () => {
+  const portrait = { width: 390, height: 844 };
+  const landscape = { width: 640, height: 360 };
+  let state = settlePiece(createStackState(), "berry", { x: 0.38, y: 0.7 }, portrait).state;
+  state = settlePiece(state, "nest", { x: 0.62, y: 0.7 }, portrait).state;
+  state = settlePiece(state, "sky", { x: 0.5, y: 0.48 }, portrait).state;
+  assert.ok(structuresFor(state, portrait).some(({ type }) => type === "bridge"));
+
+  const reflowed = resolveStackLayout(state, landscape, portrait);
+  assert.equal(reflowed.pieces.filter(({ placed }) => placed).length, 3);
+  assert.ok(structuresFor(reflowed, landscape).some(({ type }) => type === "bridge"));
+  assert.equal(stackResidentFor(reflowed, landscape)?.type, "bird");
+  assert.deepEqual(unintendedOverlapsFor(reflowed, landscape), []);
 });
 
 test("nearby floor pieces form a side-by-side relation", () => {

@@ -18,8 +18,9 @@ Allow up to five minutes, ending immediately when the child disengages or shows 
 4. Observe whether the child taps, drags, or uses both. Tap-only play is complete and should not be treated as a lesser strategy.
 5. Observe whether magnetic movement to the floor, another piece, or the nest remains understandable.
 6. If two broad supports appear, observe whether the child brings the visibly longer beam near them and whether bridge snapping helps without surprising them. Do not suggest a bridge.
-7. Do not correct arrangements, rebuild a fallen tower, ask for a named structure, or praise height or precision.
-8. The caregiver may take one natural turn if invited by the child. Record whether turn-taking emerges without becoming instruction.
+7. If a bridge invites the spotted bird, observe whether the child notices it, touches it, or later changes the build to invite it again. Do not name the condition or suggest recreating it.
+8. Do not correct arrangements, rebuild a fallen tower, ask for a named structure, or praise height or precision.
+9. The caregiver may take one natural turn if invited by the child. Record whether turn-taking emerges without becoming instruction.
 
 ## Observation sheet
 
@@ -38,6 +39,9 @@ Allow up to five minutes, ending immediately when the child disengages or shows 
 | Longer beam recognized as a spanning piece? | |
 | Bridge formed or attempted without coaching? | |
 | Bridge snap helped rather than relocated unexpectedly? | |
+| Spotted bird noticed without prompting? | |
+| Bird touched, ignored, or treated as a reward? | |
+| Bridge condition intentionally reproduced? | |
 | Magnetic settling appeared helpful or surprising? | |
 | Caregiver turn-taking arose naturally? | |
 | Apparent rejection, collapse, or frustration | |

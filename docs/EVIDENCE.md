@@ -21,7 +21,7 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 | Child observation | No structured SuperSimpleGames child sessions are recorded in the repository. |
 | Caregiver report | No structured caregiver reports are recorded in the repository. |
 | Product-owner feedback | Substantial hands-on feedback has shaped replay, forgiving input, spatial stability, construction, persistence, merging, and storytelling. Key decisions are summarized below. |
-| Rendered inspection | Color Splash state transitions and Bloom restoration/Fresh flow were exercised in the in-app browser on 2026-08-16. Details below. Other game/device matrices remain incomplete. |
+| Rendered inspection | Color Splash state transitions, Bloom restoration/Fresh flow, and Stack's bridge-resident flow were exercised in the in-app browser on 2026-08-16. Details below. Other game/device matrices remain incomplete. |
 | Deterministic verification | The current suite covers game-state bounds, input resolution, offline shell, safety policy, persistence fallback, control contracts, and layout-source invariants. Exact results belong to CI for each commit. |
 | Deployment verification | GitHub Verify and Pages runs and public release markers were confirmed for the current foundation releases. |
 
@@ -57,6 +57,16 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 - Keep playing preserved the bloom; confirmed Start fresh removed it.
 - The non-destructive choice received initial focus and the active garden remained visually behind the modal.
 - Equivalent rendered flows in Stack & Settle and Story Scenes remain to be exercised.
+
+### 2026-08-16 — Stack bridge resident and orientation reflow
+
+**Method:** In-app browser against the local static app at 390×844 portrait and 640×360 short landscape; direct pointer drags, semantic resident touches, screenshots, rendered rectangles, reload, and console inspection.
+
+- Broadly dragging the block and nest into supports and the beam above them produced a recognized bridge and one spotted bird. The bird's silhouette and colors match Bloom's resident, while its arrival message explicitly relates it to the bridge.
+- Three touches kept the bird present and moved it locally. The fourth removed only the bird; all three bridge pieces retained identical positions. Removing and returning a support invited it again.
+- Initial orientation testing exposed a real defect: pieces survived reflow, but the bridge relationship collapsed into a stack, so the bird disappeared. The implementation now records layout context and reconstructs recognized bridge supports and top across live resize and saved restoration.
+- After correction, the bridge and bird remained in bounds at 640×360: bird `(277.66, 121.29, 84×84)`, beam `(251.26, 172.80, 136.8×43.2)`, with both supports below. Reload preserved the same relationship and produced no console warnings or errors.
+- Rendered inspection also found the short-landscape status message overlapping the title control; reserving a narrower centered lane removed the overlap. Physical touch ease, child recognition of the recurring bird, and intentional bridge reproduction remain unobserved.
 
 ## External guidance boundary
 
