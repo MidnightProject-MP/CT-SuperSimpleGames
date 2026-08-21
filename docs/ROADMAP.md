@@ -6,8 +6,8 @@ This is the authoritative cross-game execution order. `PRODUCT.md` owns the prod
 
 - **Active phase:** Experiential simplification
 - **Next milestone:** mechanic reachability and child-facing clutter reduction
-- **Last reconciled:** 2026-08-16
-- **Current milestone state:** six-world baseline and first Familiar World relationships implemented; hands-on feedback requires revision before further expansion
+- **Last reconciled:** 2026-08-21
+- **Current milestone state:** Milestone 6A implemented, trace-guarded in CI, and rendered-verified; awaiting product-owner hands-on reproduction before advancing
 
 The collection has six distinct playable worlds. Shared control, preservation, spatial stability, the first recurring resident, and the first shared relationship meaning are implemented. The current need is not another layer of features. It is to ensure that existing depth is reachable, visible controls earn their attention cost, and the six worlds feel simpler to a child as their underlying systems become more capable.
 
@@ -44,17 +44,9 @@ Implementation detail and evidence belong in `PRODUCT.md`, `GAME_ROADMAPS.md`, a
 
 ### Milestone 6A — make existing depth reachable
 
-Bloom's second-tier merge is mechanically implemented, but deliberate product-owner use did not reproduce it. Treat that as a revision signal, not as a request for instructions.
+Bloom's second-tier merge was mechanically implemented but unreachable through ordinary play. Deterministic traces located the cause in supply arithmetic (post-cap freeze plus rigid color cycling) rather than merge radius, and the owner set a ~50-tap reachability target with aggressive decluttering. The revision ships: multi-color merging, ancestry-color rainbow trees, three-tree send-off dissolution, tending pull, midpoint planting, and bouquet gathering. Seeded ordinary-play traces now reach the first bouquet by tap 50 in ~98% of runs, a tree by tap 100 in ≥93%, and a send-off every ~130 taps; rendered headless-Edge traces confirm arrivals at taps 50–130 on both reference viewports. CI guards these rates.
 
-The smallest coherent slice must:
-
-- establish a deterministic way to exercise representative ordinary placement traces and distinguish first-tier from second-tier encounter rates;
-- revise the merge relationship so the flowering-tree result is realistically reachable without adding a child-facing move mode, objective, counter, or hint system;
-- keep transformations bounded, legible, reversible where practical, and effective at reducing clutter;
-- preserve the garden's immediate tap response, tending, visitors, spatial stability, sound-off meaning, and reduced-motion behavior;
-- verify pure behavior and then exercise the result in the rendered browser at representative portrait and short-landscape viewports.
-
-**Decision gate:** advance only when a person can encounter and deliberately reproduce both merge tiers through ordinary play. This does not imply child comprehension or validation.
+**Decision gate:** advance only when the product owner encounters and deliberately reproduces bouquets, trees, and a rainbow tree through hands-on ordinary play on a device. This does not imply child comprehension or validation.
 
 ### Milestone 6B — remove management friction from Story Scenes
 

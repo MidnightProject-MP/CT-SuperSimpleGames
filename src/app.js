@@ -5,15 +5,21 @@ import {
   MAX_BLOOMS,
   MAX_SPARKS,
   GARDEN_VISITOR_TOUCHES,
+  TREE_DISSOLUTION_DISTANCE_FACTOR,
   clampPosition,
   createBloom,
   growBloom,
   gardenNeighborhoods,
   gardenVisitorFor,
+  isRainbowTree,
   nearestBloom,
   neighborDistanceForLayout,
+  planBloomPull,
+  planBloomSettle,
+  planBouquetGather,
   planGardenInteraction,
   planGardenMerge,
+  planTreeDissolution,
   restoreGardenState,
   serializeGardenState,
   moveGardenVisitor
@@ -283,11 +289,13 @@ function addSparkles(bloom) {
 }
 
 function createAt(x, y) {
-  const bloom = createBloom(bloomCount, x, y, garden.clientWidth, garden.clientHeight);
+  const reach = neighborDistanceForLayout(garden.clientWidth, garden.clientHeight);
+  let bloom = createBloom(bloomCount, x, y, garden.clientWidth, garden.clientHeight);
   bloomCount += 1;
+  bloom = planBloomSettle(bloom, gardenBlooms.values(), { reach, width: garden.clientWidth, height: garden.clientHeight }) ?? bloom;
   invitation.classList.add("hidden");
   const neighbor = nearestBloom(gardenBlooms.values(), bloom.x, bloom.y, {
-    maxDistance: neighborDistanceForLayout(garden.clientWidth, garden.clientHeight)
+    maxDistance: reach
   });
   gardenBlooms.set(bloom.id, bloom);
   const flower = makeFlower(bloom);
@@ -295,11 +303,16 @@ function createAt(x, y) {
   blooms.append(flower);
   addSparkles(bloom);
   const merged = mergeNearbyBlooms();
+  const dissolved = dissolveTrees();
+  if (dissolved) {
+    renderNeighborhoods();
+    announcement.textContent = "the flowering trees drifted away";
+    tonePlayer.play(880 * 1.26);
+    return;
+  }
   if (merged) {
     renderNeighborhoods();
-    const tier = BLOOM_TIERS[merged.tier];
-    announcement.textContent = `${merged.mergedCount} flowers became a ${tier.label}!`;
-    tonePlayer.play(merged.color.tone * (1 + merged.tier * 0.14));
+    announceMerge(merged);
     return;
   }
   const neighborhoods = renderNeighborhoods();
@@ -318,40 +331,89 @@ function createAt(x, y) {
   tonePlayer.play(bloom.color.tone);
 }
 
+function announceMerge(merged) {
+  if (isRainbowTree(merged)) {
+    announcement.textContent = "a rainbow tree!";
+    tonePlayer.play(880 * 1.26);
+    addSparkles(merged);
+    addSparkles(merged);
+    return;
+  }
+  const tier = BLOOM_TIERS[merged.tier];
+  announcement.textContent = `${merged.mergedCount} flowers became a ${tier.label}!`;
+  tonePlayer.play(merged.color.tone * (1 + merged.tier * 0.14));
+}
+
 function mergeNearbyBlooms() {
   let finalBloom = null;
-  let plan = planGardenMerge(gardenBlooms.values(), neighborDistanceForLayout(garden.clientWidth, garden.clientHeight), {
-    width: garden.clientWidth,
-    height: garden.clientHeight,
-  });
+  const reach = neighborDistanceForLayout(garden.clientWidth, garden.clientHeight);
+  const options = { width: garden.clientWidth, height: garden.clientHeight };
+  let plan = planGardenMerge(gardenBlooms.values(), reach, options);
   while (plan) {
     for (const id of plan.ids) {
       gardenBlooms.delete(id);
       bloomElements.get(id)?.remove();
       bloomElements.delete(id);
     }
-    gardenBlooms.set(plan.bloom.id, plan.bloom);
-    const flower = makeFlower(plan.bloom);
-    flower.classList.add("merged");
-    bloomElements.set(plan.bloom.id, flower);
-    blooms.append(flower);
-    addSparkles(plan.bloom);
-    finalBloom = plan.bloom;
-    plan = planGardenMerge(gardenBlooms.values(), neighborDistanceForLayout(garden.clientWidth, garden.clientHeight), {
+    const placed = planBouquetGather(plan.bloom, gardenBlooms.values(), {
+      reach,
       width: garden.clientWidth,
-      height: garden.clientHeight,
-    });
+      height: garden.clientHeight
+    }) ?? plan.bloom;
+    gardenBlooms.set(placed.id, placed);
+    const flower = makeFlower(placed);
+    flower.classList.add("merged");
+    bloomElements.set(placed.id, flower);
+    blooms.append(flower);
+    addSparkles(placed);
+    finalBloom = placed;
+    plan = planGardenMerge(gardenBlooms.values(), reach, options);
   }
   return finalBloom;
+}
+
+function dissolveTrees() {
+  const distance = neighborDistanceForLayout(garden.clientWidth, garden.clientHeight) * TREE_DISSOLUTION_DISTANCE_FACTOR;
+  let dissolvedAny = false;
+  for (;;) {
+    const ids = planTreeDissolution(gardenBlooms.values(), { distance });
+    if (!ids) break;
+    for (const id of ids) {
+      const tree = gardenBlooms.get(id);
+      if (tree) addSparkles(tree);
+      gardenBlooms.delete(id);
+      bloomElements.get(id)?.remove();
+      bloomElements.delete(id);
+    }
+    dissolvedAny = true;
+  }
+  return dissolvedAny;
 }
 
 function tendBloom(id) {
   const current = gardenBlooms.get(id);
   if (!current) return;
-  const bloom = growBloom(current, { width: garden.clientWidth, height: garden.clientHeight });
+  const grown = growBloom(current, { width: garden.clientWidth, height: garden.clientHeight });
+  const bloom = planBloomPull(grown, gardenBlooms.values(), {
+    width: garden.clientWidth,
+    height: garden.clientHeight
+  }) ?? grown;
   gardenBlooms.set(id, bloom);
   const flower = bloomElements.get(id);
   updateFlower(flower, bloom);
+  const merged = mergeNearbyBlooms();
+  const dissolved = dissolveTrees();
+  if (dissolved) {
+    renderNeighborhoods();
+    announcement.textContent = "the flowering trees drifted away";
+    tonePlayer.play(880 * 1.26);
+    return;
+  }
+  if (merged) {
+    renderNeighborhoods();
+    announceMerge(merged);
+    return;
+  }
   const neighborhoods = renderNeighborhoods();
   animateFlower(flower);
   addSparkles(bloom);

@@ -7,6 +7,11 @@ export const MAX_GARDEN_LINKS = 32;
 export const MAX_GARDEN_CANOPIES = 4;
 export const GARDEN_VISITOR_TOUCHES = 4;
 export const MAX_BLOOM_TIER = 2;
+export const BLOOM_PULL_STEP = 60;
+export const BLOOM_INHERIT_RADIUS_FACTOR = 1.5;
+export const BLOOM_GATHER_RADIUS_FACTOR = 3.5;
+export const BLOOM_GATHER_SETTLE_FACTOR = 0.8;
+export const TREE_DISSOLUTION_DISTANCE_FACTOR = 2;
 
 export const BLOOM_TIERS = Object.freeze([
   Object.freeze({ name: "flower", label: "flower" }),
@@ -52,12 +57,17 @@ export function createBloom(index, x, y, width, height) {
     baseSize: size,
     petals: 5 + (index % 4),
     color,
+    colors: Object.freeze([color.name]),
     tier: 0,
     mergedCount: 1,
     sourceIds: Object.freeze([index]),
     stage: 0,
     visits: 0
   };
+}
+
+export function isRainbowTree(bloom) {
+  return (bloom?.tier ?? 0) === MAX_BLOOM_TIER && Array.isArray(bloom.colors) && bloom.colors.length === COLORS.length;
 }
 
 function bloomSizeFor(id, tier, stage) {
@@ -78,6 +88,7 @@ export function serializeGardenState(items, nextId, width, height) {
       x: bloom.x / width,
       y: bloom.y / height,
       color: bloom.color.name,
+      colors: Object.freeze([...(bloom.colors || [bloom.color.name])]),
       tier: bloom.tier,
       stage: bloom.stage,
       visits: bloom.visits,
@@ -103,12 +114,18 @@ export function restoreGardenState(snapshot, width, height) {
       || saved.sourceIds.length !== 3 ** saved.tier || new Set(saved.sourceIds).size !== saved.sourceIds.length
       || saved.sourceIds.some((id) => !Number.isInteger(id) || id < 0)) throw new TypeError("garden snapshot contains an invalid bloom");
     ids.add(saved.id);
+    const colorNames = saved.colors ?? [saved.color];
+    if (!Array.isArray(colorNames) || colorNames.length !== new Set(colorNames).size
+      || colorNames.length < 1 || colorNames.length > Math.min(COLORS.length, 3 ** saved.tier)
+      || colorNames.some((name) => !COLORS.some(({ name: known }) => known === name))) {
+      throw new TypeError("garden snapshot contains invalid bloom colors");
+    }
     const { baseSize, size } = bloomSizeFor(saved.id, saved.tier, saved.stage);
     const position = clampPosition(saved.x * width, saved.y * height, width, height, size * 0.43);
     return Object.freeze({
       id: saved.id, ...position, size, baseSize,
       petals: saved.tier === 1 ? 9 : saved.tier === 2 ? 12 : 5 + (saved.id % 4),
-      color, tier: saved.tier, mergedCount: saved.sourceIds.length,
+      color, colors: Object.freeze([...colorNames]), tier: saved.tier, mergedCount: saved.sourceIds.length,
       sourceIds: Object.freeze([...saved.sourceIds]), stage: saved.stage, visits: saved.visits,
     });
   });
@@ -116,8 +133,14 @@ export function restoreGardenState(snapshot, width, height) {
   return Object.freeze({ nextId: snapshot.nextId, blooms: Object.freeze(blooms) });
 }
 
-export function planGardenMerge(items, maxDistance, { width, height } = {}) {
+export function planGardenMerge(items, maxDistance, { width, height, reachForTier } = {}) {
   if (!Number.isFinite(maxDistance) || maxDistance <= 0) throw new RangeError("merge distance must be positive");
+  if (reachForTier !== undefined && typeof reachForTier !== "function") throw new TypeError("per-tier merge reach must be a function");
+  const reachFor = (tier) => {
+    const reach = typeof reachForTier === "function" ? reachForTier(tier) : maxDistance;
+    if (!Number.isFinite(reach) || reach <= 0) throw new RangeError("per-tier merge distance must be positive");
+    return reach;
+  };
   const blooms = [...items].sort((left, right) => left.id - right.id);
   for (const bloom of blooms) {
     const tier = bloom?.tier ?? 0;
@@ -132,12 +155,13 @@ export function planGardenMerge(items, maxDistance, { width, height } = {}) {
     const tier = first.tier ?? 0;
     if (tier >= MAX_BLOOM_TIER) continue;
     for (let secondIndex = firstIndex + 1; secondIndex < blooms.length; secondIndex += 1) {
+      const reach = reachFor(tier);
       const second = blooms[secondIndex];
-      if ((second.tier ?? 0) !== tier || second.color.name !== first.color.name || distance(first, second) > maxDistance) continue;
+      if ((second.tier ?? 0) !== tier || distance(first, second) > reach) continue;
       for (let thirdIndex = secondIndex + 1; thirdIndex < blooms.length; thirdIndex += 1) {
         const third = blooms[thirdIndex];
-        if ((third.tier ?? 0) !== tier || third.color.name !== first.color.name
-          || distance(first, third) > maxDistance || distance(second, third) > maxDistance) continue;
+        if ((third.tier ?? 0) !== tier
+          || distance(first, third) > reach || distance(second, third) > reach) continue;
         const group = [first, second, third];
         const nextTier = tier + 1;
         const size = nextTier === 1 ? 150 : MAX_BLOOM_SIZE;
@@ -149,6 +173,7 @@ export function planGardenMerge(items, maxDistance, { width, height } = {}) {
           ? clampPosition(center.x, center.y, width, height, size * 0.43)
           : center;
         const sourceIds = group.flatMap((bloom) => bloom.sourceIds || [bloom.id]).sort((left, right) => left - right);
+        const colors = [...new Set(group.flatMap((bloom) => bloom.colors || [bloom.color.name]))].sort();
         const bloom = Object.freeze({
           ...third,
           ...position,
@@ -159,6 +184,7 @@ export function planGardenMerge(items, maxDistance, { width, height } = {}) {
           tier: nextTier,
           mergedCount: group.reduce((sum, item) => sum + (item.mergedCount || 1), 0),
           sourceIds: Object.freeze(sourceIds),
+          colors: Object.freeze(colors),
           stage: 0,
           visits: 0,
         });
@@ -169,6 +195,108 @@ export function planGardenMerge(items, maxDistance, { width, height } = {}) {
   return null;
 }
 
+export function planBloomPull(bloom, items, {
+  step = BLOOM_PULL_STEP,
+  width,
+  height
+} = {}) {
+  if (!bloom || !Number.isFinite(bloom.x) || !Number.isFinite(bloom.y) || !Number.isFinite(bloom.size) || !bloom.color) {
+    throw new TypeError("bloom pull requires a valid bloom");
+  }
+  if (!Number.isFinite(step) || step <= 0) throw new RangeError("pull step must be positive");
+  const tier = bloom.tier ?? 0;
+  if (tier >= MAX_BLOOM_TIER) return null;
+  let kin = null;
+  let kinDistance = Infinity;
+  for (const other of items) {
+    if (!other || !Number.isFinite(other.x) || !Number.isFinite(other.y)) {
+      throw new TypeError("bloom pull requires valid garden blooms");
+    }
+    if (other.id === bloom.id) continue;
+    if (tier === 0 ? other.color?.name !== bloom.color.name : (other.tier ?? 0) !== tier) continue;
+    const gap = Math.hypot(other.x - bloom.x, other.y - bloom.y);
+    if (gap >= kinDistance) continue;
+    kin = other;
+    kinDistance = gap;
+  }
+  if (!kin) return null;
+  const stop = Math.max(24, bloom.size * 0.45);
+  const travel = Math.min(step, Math.max(0, kinDistance - stop));
+  if (travel <= 0) return null;
+  const angle = Math.atan2(kin.y - bloom.y, kin.x - bloom.x);
+  const position = Number.isFinite(width) && Number.isFinite(height)
+    ? clampPosition(bloom.x + Math.cos(angle) * travel, bloom.y + Math.sin(angle) * travel, width, height, bloom.size * 0.43)
+    : { x: bloom.x + Math.cos(angle) * travel, y: bloom.y + Math.sin(angle) * travel };
+  return Object.freeze({ ...bloom, ...position });
+}
+
+export function planBloomSettle(fresh, items, { reach, width, height } = {}) {
+  if (!fresh || !Number.isFinite(fresh.x) || !Number.isFinite(fresh.y) || !Number.isFinite(fresh.size) || !fresh.color) {
+    throw new TypeError("bloom settle requires a valid fresh bloom");
+  }
+  if (!Number.isFinite(reach) || reach <= 0) throw new RangeError("settle reach must be positive");
+  const kin = [];
+  for (const other of items) {
+    if (!other || !Number.isFinite(other.x) || !Number.isFinite(other.y) || !other.color) {
+      throw new TypeError("bloom settle requires valid garden blooms");
+    }
+    if (other.id === fresh.id || other.color?.name !== fresh.color.name) continue;
+    if (Math.hypot(other.x - fresh.x, other.y - fresh.y) <= reach) kin.push(other);
+    if (kin.length === 2) break;
+  }
+  if (kin.length < 2) return null;
+  const centered = { x: (kin[0].x + kin[1].x) / 2, y: (kin[0].y + kin[1].y) / 2 };
+  const position = Number.isFinite(width) && Number.isFinite(height)
+    ? clampPosition(centered.x, centered.y, width, height, fresh.size * 0.43)
+    : centered;
+  return Object.freeze({ ...fresh, ...position });
+}
+
+export function planBouquetGather(bouquet, items, { reach, width, height } = {}) {
+  if (!bouquet || !Number.isFinite(bouquet.x) || !Number.isFinite(bouquet.y) || !Number.isFinite(bouquet.size)) {
+    throw new TypeError("bouquet gather requires a valid bouquet");
+  }
+  if (!Number.isFinite(reach) || reach <= 0) throw new RangeError("gather reach must be positive");
+  if ((bouquet.tier ?? 0) !== 1) return null;
+  let nearest = null;
+  let nearestGap = Infinity;
+  for (const other of items) {
+    if (!other || !Number.isFinite(other.x) || !Number.isFinite(other.y)) {
+      throw new TypeError("bouquet gather requires valid garden blooms");
+    }
+    if (other.id === bouquet.id || (other.tier ?? 0) !== 1) continue;
+    const gap = Math.hypot(other.x - bouquet.x, other.y - bouquet.y);
+    if (gap < nearestGap) {
+      nearest = other;
+      nearestGap = gap;
+    }
+  }
+  if (!nearest || nearestGap > reach * BLOOM_GATHER_RADIUS_FACTOR || nearestGap <= reach * BLOOM_GATHER_SETTLE_FACTOR) return null;
+  const angle = Math.atan2(nearest.y - bouquet.y, nearest.x - bouquet.x);
+  const travel = nearestGap - reach * BLOOM_GATHER_SETTLE_FACTOR;
+  const drifted = { x: bouquet.x + Math.cos(angle) * travel, y: bouquet.y + Math.sin(angle) * travel };
+  const position = Number.isFinite(width) && Number.isFinite(height)
+    ? clampPosition(drifted.x, drifted.y, width, height, bouquet.size * 0.43)
+    : drifted;
+  return Object.freeze({ ...bouquet, ...position });
+}
+
+export function planTreeDissolution(items, { distance } = {}) {
+  if (distance !== undefined && (!Number.isFinite(distance) || distance <= 0)) throw new RangeError("dissolution distance must be positive");
+  const trees = [...items].filter((bloom) => (bloom?.tier ?? 0) === MAX_BLOOM_TIER).sort((left, right) => left.id - right.id);
+  const limit = distance === undefined ? Infinity : distance;
+  for (let a = 0; a < trees.length; a += 1) {
+    for (let b = a + 1; b < trees.length; b += 1) {
+      for (let c = b + 1; c < trees.length; c += 1) {
+        const group = [trees[a], trees[b], trees[c]];
+        const close = group.every((one) => group.every((other) => one === other
+          || Math.hypot(one.x - other.x, one.y - other.y) <= limit));
+        if (close) return Object.freeze(group.map(({ id }) => id));
+      }
+    }
+  }
+  return null;
+}
 export function neighborDistanceForLayout(width, height) {
   if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) {
     throw new RangeError("layout must have positive finite dimensions");
