@@ -151,6 +151,11 @@ function petalTransform(index, total) {
   return `rotate(${angle}deg) translateY(-78%)`;
 }
 
+function paletteFor(bloom) {
+  const names = Array.isArray(bloom.colors) && bloom.colors.length ? bloom.colors : [bloom.color.name];
+  return names.map((name) => COLORS.find(({ name: known }) => known === name) ?? bloom.color);
+}
+
 function makeFlower(bloom) {
   const flower = document.createElement("div");
   flower.className = "bloom";
@@ -167,10 +172,14 @@ function makeFlower(bloom) {
   flower.dataset.tier = String(bloom.tier || 0);
   flower.setAttribute("role", "presentation");
 
+  const palette = paletteFor(bloom);
   for (let i = 0; i < bloom.petals; i += 1) {
     const petal = document.createElement("i");
+    const tone = palette[i % palette.length];
     petal.className = "petal";
     petal.style.transform = petalTransform(i, bloom.petals);
+    petal.style.setProperty("--petal", tone.petal);
+    petal.style.setProperty("--petal-light", tone.light);
     flower.append(petal);
   }
 
