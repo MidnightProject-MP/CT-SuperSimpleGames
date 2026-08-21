@@ -1,7 +1,7 @@
 import { createTonePlayer } from "./audio.js";
 import { COLORS } from "./game.js";
 import { nearestTargetIndex } from "./color-input.js";
-import { floodRegion, planReversibleFloodChoice, resolveFloodChoice, restoreFloodBoard } from "./flood.js";
+import { floodRegion, resolveFloodChoice } from "./flood.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { createSplashBoard } from "./splash-boards.js";
 
@@ -10,16 +10,12 @@ const SYMBOLS = ["●", "◆", "≡", "✦"];
 
 const boardElement = document.querySelector("#color-board");
 const prompt = document.querySelector("#splash-prompt");
-const celebration = document.querySelector("#celebration");
-const newBoardButton = document.querySelector("#new-board");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
-const undoButton = document.querySelector("#undo-move");
 
 let board;
 let complete = false;
 let round = 0;
-let previousBoard = null;
 let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 
@@ -31,6 +27,18 @@ function nextSeed() {
   } catch {
     return (Date.now() ^ (round * 0x9e3779b9)) >>> 0;
   }
+}
+
+function boardSizeForViewport() {
+  const bounds = boardElement.getBoundingClientRect();
+  const targetCell = Math.max(64, Math.min(110, Math.round(Math.min(bounds.width, window.innerHeight) / 7)));
+  const width = Number.isFinite(bounds.width) && bounds.width > 0
+    ? Math.max(4, Math.min(12, Math.floor(bounds.width / targetCell)))
+    : 4;
+  const height = Number.isFinite(bounds.height) && bounds.height > 40
+    ? Math.max(4, Math.min(16, Math.floor(bounds.height / targetCell)))
+    : 6;
+  return { width, height };
 }
 
 function renderSoundState() {
@@ -101,12 +109,10 @@ function previewChoice(tile) {
 
 function newRound({ playSound = false } = {}) {
   round += 1;
-  board = createSplashBoard({ round, seed: nextSeed() });
+  const size = boardSizeForViewport();
+  board = createSplashBoard({ round, seed: nextSeed(), width: size.width, height: size.height });
   complete = false;
-  previousBoard = null;
-  undoButton.hidden = true;
   prompt.textContent = board.label;
-  celebration.hidden = true;
   boardElement.classList.remove("complete");
   createTiles();
   renderBoard();
@@ -157,25 +163,24 @@ function resolveTile(event) {
 function finishRound(colorIndex) {
   complete = true;
   prompt.textContent = "All filled!";
-  celebration.hidden = false;
   boardElement.classList.add("complete");
-  undoButton.hidden = true;
-  announcement.textContent = "All squares filled. Tap the board for a new one.";
+  announcement.textContent = "All squares filled. Tap anywhere for a new board.";
   tonePlayer.play(GRID_COLORS[colorIndex].tone * 1.25);
 }
 
-boardElement.addEventListener("click", (event) => {
+document.addEventListener("click", (event) => {
+  if (event.target.closest("a, #sound-toggle")) return;
   const tile = resolveTile(event);
-  if (!tile) return;
 
   if (complete) {
-    pulseTile(tile);
-    announcement.textContent = "The color board is filled. Use the new board button when you are ready.";
+    if (tile) pulseTile(tile);
+    newRound({ playSound: true });
     return;
   }
 
+  if (!tile) return;
   clearPreview();
-  const result = planReversibleFloodChoice(board, Number(tile.dataset.index));
+  const result = resolveFloodChoice(board, Number(tile.dataset.index));
   const colorIndex = result.selectedIdentity;
   tonePlayer.play(GRID_COLORS[colorIndex].tone);
   pulseTile(tile);
@@ -190,8 +195,6 @@ boardElement.addEventListener("click", (event) => {
   }
 
   board = result.board;
-  previousBoard = result.previousBoard;
-  undoButton.hidden = false;
   renderBoard(result.captured);
   announcement.textContent = `${GRID_COLORS[colorIndex].name} grows to ${result.captured.length} squares`;
   if (result.solved) finishRound(colorIndex);
@@ -204,20 +207,6 @@ boardElement.addEventListener("pointerover", (event) => {
 boardElement.addEventListener("pointerleave", clearPreview);
 boardElement.addEventListener("focusin", (event) => previewChoice(event.target.closest(".color-cell")));
 boardElement.addEventListener("focusout", clearPreview);
-
-undoButton.addEventListener("click", () => {
-  if (!previousBoard || complete) return;
-  board = restoreFloodBoard(board, previousBoard);
-  previousBoard = null;
-  undoButton.hidden = true;
-  clearPreview();
-  renderBoard(floodRegion(board));
-  prompt.textContent = "Try another color";
-  announcement.textContent = "Back one step. Try another color.";
-  tonePlayer.play(GRID_COLORS[board.cells[0]].tone * 0.9);
-});
-
-newBoardButton.addEventListener("click", () => newRound({ playSound: true }));
 
 soundToggle.addEventListener("click", () => {
   soundEnabled = !soundEnabled;

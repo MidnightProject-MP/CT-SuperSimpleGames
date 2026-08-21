@@ -99,11 +99,12 @@ test("the launcher exposes every available game and prototype", () => {
   ]);
 });
 
-test("Color Splash completion remains available to assistive technology", () => {
+test("Color Splash completion stays assistive and restarts from ordinary input", () => {
   const html = readFileSync(resolve(root, "games/color-splash/index.html"), "utf8");
-  const celebration = html.match(/<div\s+id="celebration"[^>]*>/i)?.[0];
-  assert.ok(celebration, "Color Splash has no completion message");
-  assert.doesNotMatch(celebration, /aria-hidden="true"/i);
+  assert.doesNotMatch(html, /id="celebration"|id="new-board"|id="undo-move"/i, "completion must not depend on special controls");
+  const controller = readFileSync(resolve(root, "src/color-splash.js"), "utf8");
+  assert.match(controller, /All squares filled\. Tap anywhere for a new board\./);
+  assert.match(controller, /if \(complete\) \{[\s\S]{0,120}?newRound\(/);
 });
 
 test("open-ended creations share non-destructive home and confirmed fresh-start controls", () => {

@@ -62,7 +62,7 @@ export function validateSplashDefinition(value) {
   return board;
 }
 
-export function createSplashBoard({ round, seed }) {
+export function createSplashBoard({ round, seed, width = 4, height = 4 }) {
   if (!Number.isInteger(round) || round < 1) throw new RangeError("round must be a positive integer");
 
   if (round <= DESIGNED_SPLASH_BOARDS.length) {
@@ -70,9 +70,13 @@ export function createSplashBoard({ round, seed }) {
     return { ...validateSplashDefinition(selected), family: selected.family, label: selected.label };
   }
 
+  for (const value of [width, height]) {
+    if (!Number.isInteger(value) || value < 4 || value > 16) throw new RangeError("board size must be an integer from 4 to 16");
+  }
+
   const board = generateBoard({
-    width: 4,
-    height: 4,
+    width,
+    height,
     colorCount: SPLASH_COLOR_COUNT,
     seed
   });
