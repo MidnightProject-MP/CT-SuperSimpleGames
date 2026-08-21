@@ -423,36 +423,35 @@ button { font: inherit; }
   position: fixed;
   inset: 0;
   z-index: 80;
-  background: radial-gradient(circle at 50% 118%, rgba(255, 255, 255, 0.94) 30%, rgba(255, 255, 255, 0.72));
-  display: grid;
-  place-items: end center;
   overflow: hidden;
+  background: radial-gradient(circle at 50% 118%, rgba(255, 255, 255, 0.94) 30%, rgba(255, 255, 255, 0.72));
   animation: rainbowVeil 3.4s ease forwards;
 }
 
 .rainbow-rise {
-  position: relative;
-  width: min(168vw, 920px);
-  aspect-ratio: 2 / 1;
-  margin-bottom: 12vh;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: min(200vw, 1080px);
+  aspect-ratio: 1;
+  translate: -50% 50%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle closest-side,
+    rgba(255, 251, 209, 0.95) 0 24%,
+    #ff8fbe 24% 37%,
+    #bca7ff 37% 50%,
+    #70caf9 50% 63%,
+    #fff07a 63% 76%,
+    #ffb067 76% 89%,
+    #ff8c7f 89% 100%
+  );
   animation: rainbowLift 1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.rainbow-rise i {
-  --d: 96%;
-  position: absolute;
-  bottom: calc(var(--d) / -2);
-  left: 50%;
-  width: var(--d);
-  aspect-ratio: 1;
-  transform: translateX(-50%);
-  border: 13px solid var(--c, #ef4545);
-  border-radius: 50%;
-}
-
 @keyframes rainbowLift {
-  from { transform: translateY(52%); }
-  to { transform: translateY(0); }
+  from { translate: -50% 68%; }
+  to { translate: -50% 50%; }
 }
 
 @keyframes rainbowVeil {

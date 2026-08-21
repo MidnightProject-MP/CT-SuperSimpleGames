@@ -98,6 +98,7 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 - The cutscene rendered with all six bands at full opacity during its hold (portrait, tap 210 of a fresh garden); other seeds formed trees without six-color ancestry, which is expected variance rather than a defect.
 - The rendered layer caught a real interaction defect before release: `animationend` bubbles from the inner rise animation, which dismissed the overlay after one second instead of after the veil. The dismissal now filters on the veil's animation name.
 - Maskable launcher icon padding was reduced from near-full safe-zone fill to ~91% after owner feedback that the flower looked oversized on Android.
+- Owner feedback on the first cutscene build ("separate color circles, not a rainbow spanning left to right") was correct: the original bands were six bordered rings with percentage gaps and no clipping. The arch is now one hard-stop radial-gradient disc whose center sits below the viewport; a paused-animation rendered screenshot confirmed six contiguous edge-to-edge bands at full hold.
 
 ## External guidance boundary
 

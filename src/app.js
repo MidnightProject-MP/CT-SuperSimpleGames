@@ -364,12 +364,6 @@ function playRainbowFanfare() {
   overlay.setAttribute("role", "presentation");
   const rise = document.createElement("div");
   rise.className = "rainbow-rise";
-  COLORS.forEach((color, index) => {
-    const band = document.createElement("i");
-    band.style.setProperty("--c", color.petal);
-    band.style.setProperty("--d", `${96 - index * 12}%`);
-    rise.append(band);
-  });
   overlay.append(rise);
   let closed = false;
   const dismiss = () => {
