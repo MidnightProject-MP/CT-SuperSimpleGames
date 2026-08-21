@@ -163,24 +163,26 @@ test("moving a participant redirects the story to a new nearby partner", () => {
   const third = placeSceneObject(second.state, { x: 0.8, y: 0.7 });
   state = touchSceneObject(third.state, first.object.id).state;
   assert.equal(relationshipsForScene(state)[0].phase, "paused");
-  state = moveSceneObject(state, first.object.id, { x: 0.72, y: 0.7 }).state;
+  state = moveSceneObject(state, first.object.id, { x: 0.9, y: 0.7 }).state;
   const relationship = relationshipsForScene(state)[0];
   assert.equal(relationship.phase, "active");
   assert.ok([relationship.first, relationship.second].includes(third.object.id));
 });
 
 test("relationship reach follows visible distance across orientations", () => {
+  const portraitLayout = { width: 320, height: 640 };
   let portrait = selectSceneKind(createSceneState(), "sun");
-  portrait = placeSceneObject(portrait, { x: 0.3, y: 0.3 }).state;
+  portrait = placeSceneObject(portrait, { x: 0.3, y: 0.3 }, portraitLayout).state;
   portrait = selectSceneKind(portrait, "cloud");
-  portrait = placeSceneObject(portrait, { x: 0.5, y: 0.3 }).state;
-  assert.equal(relationshipsForScene(portrait, { width: 320, height: 640 }).length, 1);
+  portrait = placeSceneObject(portrait, { x: 0.5, y: 0.3 }, portraitLayout).state;
+  assert.equal(relationshipsForScene(portrait, portraitLayout).length, 1);
 
+  const landscapeLayout = { width: 800, height: 320 };
   let landscape = selectSceneKind(createSceneState(), "sun");
-  landscape = placeSceneObject(landscape, { x: 0.3, y: 0.3 }).state;
+  landscape = placeSceneObject(landscape, { x: 0.3, y: 0.3 }, landscapeLayout).state;
   landscape = selectSceneKind(landscape, "cloud");
-  landscape = placeSceneObject(landscape, { x: 0.38, y: 0.3 }).state;
-  assert.equal(relationshipsForScene(landscape, { width: 800, height: 320 }).length, 1);
+  landscape = placeSceneObject(landscape, { x: 0.38, y: 0.3 }, landscapeLayout).state;
+  assert.equal(relationshipsForScene(landscape, landscapeLayout).length, 1);
   assert.throws(() => relationshipsForScene(landscape, { width: 0, height: 320 }), RangeError);
 });
 
@@ -223,4 +225,45 @@ test("invalid states, IDs, and coordinates are rejected", () => {
   assert.throws(() => moveSceneObject(state, "missing", { x: 0.3, y: 0.4 }), RangeError);
   assert.throws(() => relationshipsForScene({ selected: "flower", objects: [], nextId: 0 }), TypeError);
   assert.throws(() => relationshipsForScene({ ...state, interactions: [{ key: "bad", first: "missing", second: "also-missing", phase: "active", turns: 0 }] }), TypeError);
+});
+
+test("a newly related object snaps snugly beside its partner", () => {
+  let state = selectSceneKind(createSceneState(), "sun");
+  const sun = placeSceneObject(state, { x: 0.3, y: 0.3 });
+  state = selectSceneKind(sun.state, "cloud");
+  const cloud = placeSceneObject(state, { x: 0.44, y: 0.3 });
+  const settled = cloud.state.objects.find(({ id }) => id === cloud.object.id);
+  assert.ok(Math.abs(settled.x - 0.45) < 0.0001);
+  assert.ok(Math.abs(settled.y - 0.3) < 0.0001);
+});
+
+test("moving an object near a partner snaps it to a fixed friendly gap", () => {
+  let state = selectSceneKind(createSceneState(), "friend");
+  const first = placeSceneObject(state, { x: 0.2, y: 0.7 });
+  const second = placeSceneObject(first.state, { x: 0.8, y: 0.7 });
+  const moved = moveSceneObject(second.state, first.object.id, { x: 0.66, y: 0.72 });
+  const settled = moved.state.objects.find(({ id }) => id === first.object.id);
+  const partner = moved.state.objects.find(({ id }) => id === second.object.id);
+  const gap = Math.hypot(settled.x - partner.x, settled.y - partner.y);
+  assert.ok(Math.abs(gap - 0.15) < 0.002, `gap was ${gap}`);
+  assert.equal(moved.relationships.length, 1);
+});
+
+test("composition anchors sit clear of their participants", () => {
+  let state = selectScenePack(createSceneState(), "castle");
+  state = selectSceneKind(state, "person");
+  state = placeSceneObject(state, { x: 0.5, y: 0.5 }).state;
+  state = selectSceneKind(state, "horse");
+  state = placeSceneObject(state, { x: 0.62, y: 0.5 }).state;
+  let compositions = compositionsForScene(state);
+  assert.equal(compositions[0].type, "rider");
+  assert.ok(compositions[0].y > 0.62);
+
+  let high = selectScenePack(createSceneState(), "castle");
+  high = selectSceneKind(high, "person");
+  high = placeSceneObject(high, { x: 0.5, y: 0.85 }).state;
+  high = selectSceneKind(high, "horse");
+  high = placeSceneObject(high, { x: 0.62, y: 0.85 }).state;
+  compositions = compositionsForScene(high);
+  assert.equal(compositions[0].y, 0.59);
 });

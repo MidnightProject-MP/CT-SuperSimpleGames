@@ -11,6 +11,40 @@ const MAX_X = 0.92;
 const MIN_Y = 0.16;
 const MAX_Y = 0.88;
 const RELATION_DISTANCE = 0.32;
+const SNAP_GAP = 0.15;
+
+function unitVectorFromPartner(object, partner, layout) {
+  const metrics = layoutMetrics(layout);
+  let dx = ((object.x - partner.x) * metrics.width) / metrics.unit;
+  let dy = ((object.y - partner.y) * metrics.height) / metrics.unit;
+  const length = Math.hypot(dx, dy);
+  if (length < 0.0001) return { dx: 0.62, dy: -0.78 };
+  return { dx: dx / length, dy: dy / length };
+}
+
+function snapBesidePartner(objects, objectId, partnerId, layout) {
+  const object = objects.find(({ id }) => id === objectId);
+  const partner = objects.find(({ id }) => id === partnerId);
+  if (!object || !partner) return objects;
+  const metrics = layoutMetrics(layout);
+  const { dx, dy } = unitVectorFromPartner(object, partner, layout);
+  return objects.map((candidate) => candidate.id === objectId
+    ? {
+      ...candidate,
+      x: clamp(partner.x + ((dx * SNAP_GAP) * metrics.unit) / metrics.width, MIN_X, MAX_X),
+      y: clamp(partner.y + ((dy * SNAP_GAP) * metrics.unit) / metrics.height, MIN_Y, MAX_Y),
+    }
+    : candidate);
+}
+
+function snapIfRelated(current, objects, objectId, nextIdValue, layout) {
+  const preliminary = createState(current.sceneId, current.selected, objects, nextIdValue, current.interactions);
+  const relationship = nearbyRelationships(preliminary, layout)
+    .find((candidate) => candidate.first === objectId || candidate.second === objectId);
+  if (!relationship) return objects;
+  const partnerId = relationship.first === objectId ? relationship.second : relationship.first;
+  return snapBesidePartner(objects, objectId, partnerId, layout);
+}
 
 function clamp(value, minimum, maximum) {
   return Math.min(Math.max(value, minimum), maximum);
@@ -224,35 +258,44 @@ export function compositionsForScene(state, layout) {
     if (horse && suit) {
       const dragon = dragons.find((candidate) => distance(person, candidate, layout) <= RELATION_DISTANCE);
       const participants = dragon ? [person, horse, suit, dragon] : [person, horse, suit];
+      const anchor = anchorClearOfParticipants(participants, layout);
       compositions.push(Object.freeze({
         type: dragon ? "royal-rescue" : "armored-rider",
         participants: Object.freeze(participants.map(({ id }) => id)),
-        x: participants.reduce((sum, object) => sum + object.x, 0) / participants.length,
-        y: participants.reduce((sum, object) => sum + object.y, 0) / participants.length,
+        ...anchor,
         message: dragon
           ? "The brave friends greet the dragon, and the royal friend comes out to join them!"
           : "Armor, horse, and person become an armored rider!",
       }));
     } else if (horse) {
+      const anchor = anchorClearOfParticipants([person, horse], layout);
       compositions.push(Object.freeze({
         type: "rider",
         participants: Object.freeze([person.id, horse.id]),
-        x: (person.x + horse.x) / 2,
-        y: (person.y + horse.y) / 2,
+        ...anchor,
         message: "Person and horse become a rider!",
       }));
     } else if (suit) {
+      const anchor = anchorClearOfParticipants([person, suit], layout);
       compositions.push(Object.freeze({
         type: "armored-hero",
         participants: Object.freeze([person.id, suit.id]),
-        x: (person.x + suit.x) / 2,
-        y: (person.y + suit.y) / 2,
+        ...anchor,
         message: "The person puts on the armor!",
       }));
     }
     if (compositions.length >= MAX_SCENE_RELATIONSHIPS) break;
   }
   return Object.freeze(compositions);
+}
+
+function anchorClearOfParticipants(participants, layout) {
+  const x = clamp(participants.reduce((sum, object) => sum + object.x, 0) / participants.length, MIN_X, MAX_X);
+  const lowest = Math.max(...participants.map(({ y }) => y));
+  const highest = Math.min(...participants.map(({ y }) => y));
+  const below = clamp(lowest + 0.26, MIN_Y, MAX_Y);
+  const y = below - lowest >= 0.12 ? below : clamp(highest - 0.26, MIN_Y, MAX_Y);
+  return { x, y };
 }
 
 function updateState(current, objects, nextId, layout, cycleForId = null) {
@@ -280,9 +323,10 @@ export function moveSceneObject(state, id, point, layout) {
   const current = normalizeState(state);
   objectById(current.objects, id);
   const position = normalizePoint(point);
-  const objects = current.objects.map((object) => object.id === id
+  let objects = current.objects.map((object) => object.id === id
     ? { ...object, ...position, visits: object.visits + 1 }
     : object);
+  objects = snapIfRelated(current, objects, id, current.nextId, layout);
   const nextState = updateState(current, objects, current.nextId, layout);
   return resultFor(nextState, objectById(nextState.objects, id), "moved", layout);
 }
@@ -313,7 +357,8 @@ export function placeSceneObject(state, point, layout) {
     ...position,
     visits: 0,
   };
-  const objects = [...current.objects, object];
+  let objects = [...current.objects, object];
+  objects = snapIfRelated(current, objects, object.id, current.nextId + 1, layout);
   const nextState = updateState(current, objects, current.nextId + 1, layout);
   return resultFor(nextState, objectById(nextState.objects, object.id), "placed", layout);
 }

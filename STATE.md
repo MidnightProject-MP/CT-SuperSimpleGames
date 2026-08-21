@@ -6,7 +6,7 @@ A local-only collection of six no-fail web games for toddlers (~18–36 months) 
 
 ## Current milestone
 
-Experiential simplification — **Milestone 6A implemented, awaiting the owner's hands-on decision gate**. Bloom was revised so ordinary play reaches every layer: multi-color triple merges into bouquets (median tap ~15–18), three bouquets become a tree (median tap ~55–63; ≥93% of traces by tap 100), six-color ancestry triggers a rainbow-tree celebration, and three nearby trees dissolve in a send-off that declutters (~11–12 live objects at session end). Tending pulls blooms toward kin, planting between two blooms resolves to their midpoint, and new bouquets settle toward neighbours. CI guards these rates via seeded ordinary-play traces; headless-Edge rendered traces confirmed arrivals at taps 50–130 on both reference viewports.
+Experiential simplification — **6B implemented, awaiting owner review**. Story Scenes: setting switches are immediate with no confirm dialog; each scene parks in its own slot and restores exactly (legacy snapshots migrate losslessly; Fresh clears only the visible scene); related placements/moves snap snugly beside partners; combined tableaux render clear of participants. 156 checks pass; an 11-check rendered pass covers empty/sparse/dense/restored/reload/orientation/snap geometry. Next decision gate: owner judges directness vs. surprise and snap friendliness, then Milestone 6C begins.
 
 ## Decisions
 
@@ -31,4 +31,4 @@ Experiential simplification — **Milestone 6A implemented, awaiting the owner's
 
 ## Next action
 
-Owner plays Bloom on a device and confirms the decision gate (encounters and deliberately reproduces bouquet, tree, rainbow). On confirmation, update `EVIDENCE.md`/`ROADMAP.md` and start Milestone 6B (Story Scenes transition friction).
+Owner plays Story Scenes and judges the 6B gate: is switching more direct without scene loss ever feeling surprising, and does the snap feel friendly? On approval, close 6B in `ROADMAP.md`/`EVIDENCE.md` and start Milestone 6C (six-world clutter and stability review).

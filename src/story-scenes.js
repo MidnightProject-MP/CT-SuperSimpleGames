@@ -9,9 +9,9 @@ import {
   serializeSceneState,
   selectSceneKind,
   selectNextSceneKind,
-  selectScenePack,
   touchSceneObject,
 } from "./story-scene.js";
+import { restoreStoryWorld, serializeStoryWorld } from "./story-world.js";
 import { STORY_PACKS, getStoryPack, storyCastItem } from "./story-packs.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { setupFreshStart } from "./fresh-start.js";
@@ -28,7 +28,6 @@ const backgroundButton = document.querySelector("#background-button");
 const backgroundPicker = document.querySelector("#background-picker");
 const backgroundOptions = document.querySelector("#background-options");
 const backgroundCancel = document.querySelector("#background-cancel");
-const backgroundConfirm = document.querySelector("#background-confirm");
 
 const KEYBOARD_POINTS = Object.freeze([
   Object.freeze({ x: 0.3, y: 0.66 }),
@@ -78,17 +77,30 @@ const PALETTES = Object.freeze({
 
 const STORY_STORAGE_KEY = "supersimplegames.story.creation";
 let state = createSceneState();
+let parkedScenes = {};
 try {
   const saved = loadLocalState(STORY_STORAGE_KEY);
-  if (saved) state = restoreSceneState(saved);
+  if (saved) {
+    const world = restoreStoryWorld(saved);
+    state = world.scenes[world.active];
+    for (const [id, scene] of Object.entries(world.scenes)) {
+      if (id !== world.active) parkedScenes[id] = scene;
+    }
+  }
 } catch {
   clearLocalState(STORY_STORAGE_KEY);
 }
 let soundEnabled = loadSoundPreference();
 let drag = null;
 let suppressClickFor = null;
-let pendingSceneId = null;
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
+
+function persistStoryWorld() {
+  saveLocalState(STORY_STORAGE_KEY, serializeStoryWorld(state.sceneId, {
+    [state.sceneId]: state,
+    ...parkedScenes,
+  }));
+}
 
 function renderSoundState() {
   soundToggle.setAttribute("aria-pressed", String(soundEnabled));
@@ -230,12 +242,12 @@ function applyResult(result) {
   message.textContent = text;
   announcement.textContent = text;
   tonePlayer.play(currentItem(result.object.kind).tone * (related ? 1.18 : 1));
-  saveLocalState(STORY_STORAGE_KEY, serializeSceneState(state));
+  persistStoryWorld();
 }
 
 function freshStory() {
   state = createSceneState(state.sceneId);
-  clearLocalState(STORY_STORAGE_KEY);
+  persistStoryWorld();
   renderPalette();
   renderScene();
   message.textContent = `Tap the ${currentPack().label.toLowerCase()} to add ${currentItem(state.selected).plural.toLowerCase()}!`;
@@ -251,13 +263,12 @@ palette.addEventListener("click", (event) => {
   message.textContent = `Tap the ${currentPack().label.toLowerCase()} to add ${plural}!`;
   announcement.textContent = `${plural} selected`;
   tonePlayer.play(currentItem(tool.dataset.kind).tone);
-  saveLocalState(STORY_STORAGE_KEY, serializeSceneState(state));
+  persistStoryWorld();
 });
 
 function closeBackgroundPicker() {
   backgroundPicker.hidden = true;
   backgroundButton.setAttribute("aria-expanded", "false");
-  pendingSceneId = null;
 }
 
 function renderBackgroundOptions() {
@@ -266,11 +277,9 @@ function renderBackgroundOptions() {
     button.type = "button";
     button.dataset.sceneId = pack.id;
     button.textContent = pack.label;
-    button.setAttribute("aria-pressed", String(pack.id === pendingSceneId));
     if (pack.id === state.sceneId) button.disabled = true;
     return button;
   }));
-  backgroundConfirm.disabled = !pendingSceneId;
 }
 
 backgroundButton.addEventListener("click", () => {
@@ -281,24 +290,22 @@ backgroundButton.addEventListener("click", () => {
 backgroundOptions.addEventListener("click", (event) => {
   const option = event.target.closest("[data-scene-id]");
   if (!option || option.disabled) return;
-  pendingSceneId = option.dataset.sceneId;
-  renderBackgroundOptions();
-  announcement.textContent = `${getStoryPack(pendingSceneId).label} previewed. Choose start new story to confirm.`;
-});
-backgroundCancel.addEventListener("click", closeBackgroundPicker);
-backgroundConfirm.addEventListener("click", () => {
-  if (!pendingSceneId) return;
-  state = selectScenePack(state, pendingSceneId);
+  const targetId = option.dataset.sceneId;
+  const returning = Boolean(parkedScenes[targetId]);
+  parkedScenes[state.sceneId] = state;
+  state = parkedScenes[targetId] ?? createSceneState(targetId);
+  delete parkedScenes[targetId];
   stage.dataset.scene = state.sceneId;
   backgroundButton.textContent = currentPack().label;
   updateStageLabel();
   renderPalette();
   renderScene();
   message.textContent = `Tap the ${currentPack().label.toLowerCase()} to add ${currentItem(state.selected).plural.toLowerCase()}!`;
-  announcement.textContent = `Started ${currentPack().label}. The previous scene was cleared.`;
-  saveLocalState(STORY_STORAGE_KEY, serializeSceneState(state));
+  announcement.textContent = returning ? `Back in ${currentPack().label}. Your story waited here.` : `Welcome to ${currentPack().label}!`;
+  persistStoryWorld();
   closeBackgroundPicker();
 });
+backgroundCancel.addEventListener("click", closeBackgroundPicker);
 
 objectLayer.addEventListener("pointerdown", (event) => {
   const object = event.target.closest(".scene-object");
@@ -382,7 +389,7 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") void tonePlayer.suspend();
 });
 addEventListener("pagehide", tonePlayer.stop);
-addEventListener("pagehide", () => saveLocalState(STORY_STORAGE_KEY, serializeSceneState(state)));
+addEventListener("pagehide", () => persistStoryWorld());
 
 stage.dataset.scene = state.sceneId;
 backgroundButton.textContent = currentPack().label;

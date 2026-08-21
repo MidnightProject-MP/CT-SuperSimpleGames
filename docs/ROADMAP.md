@@ -5,9 +5,9 @@ This is the authoritative cross-game execution order. `PRODUCT.md` owns the prod
 ## Current position
 
 - **Active phase:** Experiential simplification
-- **Next milestone:** mechanic reachability and child-facing clutter reduction
+- **Next milestone:** six-world clutter and stability review (6C)
 - **Last reconciled:** 2026-08-21
-- **Current milestone state:** Milestone 6A implemented, trace-guarded in CI, and rendered-verified; awaiting product-owner hands-on reproduction before advancing
+- **Current milestone state:** 6A closed by owner gate; 6B implemented, rendered-verified, awaiting owner review
 
 The collection has six distinct playable worlds. Shared control, preservation, spatial stability, the first recurring resident, and the first shared relationship meaning are implemented. The current need is not another layer of features. It is to ensure that existing depth is reachable, visible controls earn their attention cost, and the six worlds feel simpler to a child as their underlying systems become more capable.
 
@@ -42,25 +42,17 @@ Implementation detail and evidence belong in `PRODUCT.md`, `GAME_ROADMAPS.md`, a
 
 ## Active sequence
 
-### Milestone 6A — make existing depth reachable
+### Milestone 6A — make existing depth reachable — closed 2026-08-21
 
-Bloom's second-tier merge was mechanically implemented but unreachable through ordinary play. Deterministic traces located the cause in supply arithmetic (post-cap freeze plus rigid color cycling) rather than merge radius, and the owner set a ~50-tap reachability target with aggressive decluttering. The revision ships: multi-color merging, ancestry-color rainbow trees, three-tree send-off dissolution, tending pull, midpoint planting, and bouquet gathering. Seeded ordinary-play traces now reach the first bouquet by tap 50 in ~98% of runs, a tree by tap 100 in ≥93%, and a send-off every ~130 taps; rendered headless-Edge traces confirm arrivals at taps 50–130 on both reference viewports. CI guards these rates.
+Bloom's second-tier merge was mechanically implemented but unreachable through ordinary play. Deterministic traces located the cause in supply arithmetic (post-cap freeze plus rigid color cycling) rather than merge radius, and the owner set a ~50-tap reachability target with aggressive decluttering. The revision ships: multi-color merging, ancestry-color rainbow trees with a full-screen skippable cutscene, three-tree send-off dissolution, tending pull, midpoint planting, and bouquet gathering. Seeded ordinary-play traces reach the first bouquet by tap 50 in ~98% of runs and a tree by tap 100 in ≥93%; rendered headless-Edge traces confirmed arrivals at taps 50–130 on both reference viewports; CI guards these rates.
 
-**Decision gate:** advance only when the product owner encounters and deliberately reproduces bouquets, trees, and a rainbow tree through hands-on ordinary play on a device. This does not imply child comprehension or validation.
+**Decision gate:** passed by the product owner on 2026-08-21 after hands-on reproduction of every layer.
 
-### Milestone 6B — remove management friction from Story Scenes
+### Milestone 6B — remove management friction from Story Scenes — implemented, awaiting owner review
 
-Compare the current preview-and-confirm setting manager with a direct, toddler-legible scene transition. Prefer preserving or restoring scene state underneath the interaction so a background change need not destroy work or demand an adult confirmation pattern.
+Shipped: choosing a setting now switches immediately — the preview-and-confirm dialog is gone. Each scene parks in its own slot and switching restores it exactly, so background changes never destroy work (older single-scene snapshots migrate losslessly; Fresh clears only the visible scene). Per owner feedback, related placements and moves now snap the touched object snugly beside its partner, and combined tableaux render at an anchor clear of the participants instead of overlapping them. 156 deterministic checks pass, including world round-trip, legacy migration, snap-gap, and anchor validation; an 11-check rendered headless-Edge pass covers empty, sparse, dense, parked-restore, reload persistence, orientation change, and rendered snap geometry.
 
-The smallest coherent slice must:
-
-- make an ordinary setting action produce an immediate, visible result;
-- keep automatic object-family rotation and exact palette choice understandable and spatially stable;
-- prevent accidental permanent loss without placing a modal decision in the ordinary child path;
-- keep casts bounded and make every remaining visible control earn its space;
-- exercise empty, sparse, full, restored, and orientation-changed scenes in the rendered browser.
-
-**Decision gate:** retain the simpler transition only if it is more direct without making scene loss surprising or causing the active surface to move.
+**Decision gate:** retain this transition only if the owner finds it more direct without scene loss ever feeling surprising; confirm the snap distance feels friendly rather than grabby.
 
 ### Milestone 6C — six-world clutter and stability review
 
