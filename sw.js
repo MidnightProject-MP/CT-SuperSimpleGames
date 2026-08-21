@@ -1,4 +1,4 @@
-const CACHE_NAME = "supersimplegames-v36";
+const CACHE_NAME = "supersimplegames-v37";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -50,6 +50,9 @@ const APP_SHELL = [
   "./assets/icon-192.png",
   "./assets/icon-512.png",
   "./assets/icon.svg",
+  "./assets/icon-maskable.svg",
+  "./assets/icon-maskable-192.png",
+  "./assets/icon-maskable-512.png",
   "./assets/pocket-friends.svg"
 ];
 
