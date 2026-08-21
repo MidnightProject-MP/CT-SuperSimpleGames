@@ -91,6 +91,14 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 - Two harness defects were caught by this layer before shipping: garden restoration resurrected prior-run state through `pagehide` persistence (fixed by stubbing storage), and header navigation links intercepted taps mid-trace.
 - The rendered arrival times sit inside the deterministic trace distribution for the same seeds' model family. Child comprehension of the rainbow celebration and tree send-off remains unobserved.
 
+### 2026-08-21 — Rainbow cutscene, rendered
+
+**Method:** Same headless-Edge seeded-trace setup; runs polled for the `.rainbow-overlay` element and its computed opacity until a six-color tree formed.
+
+- The cutscene rendered with all six bands at full opacity during its hold (portrait, tap 210 of a fresh garden); other seeds formed trees without six-color ancestry, which is expected variance rather than a defect.
+- The rendered layer caught a real interaction defect before release: `animationend` bubbles from the inner rise animation, which dismissed the overlay after one second instead of after the veil. The dismissal now filters on the veil's animation name.
+- Maskable launcher icon padding was reduced from near-full safe-zone fill to ~91% after owner feedback that the flower looked oversized on Android.
+
 ## External guidance boundary
 
 The external sources cited in `PRODUCT.md` and `CONCEPTS.md` inform safety, co-play, and claim restraint. They do not establish that SuperSimpleGames teaches a developmental skill, is suitable for every child in an age band, or produces a developmental outcome.

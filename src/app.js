@@ -343,14 +343,46 @@ function createAt(x, y) {
 function announceMerge(merged) {
   if (isRainbowTree(merged)) {
     announcement.textContent = "a rainbow tree!";
-    tonePlayer.play(880 * 1.26);
-    addSparkles(merged);
+    playRainbowFanfare();
     addSparkles(merged);
     return;
   }
   const tier = BLOOM_TIERS[merged.tier];
   announcement.textContent = `${merged.mergedCount} flowers became a ${tier.label}!`;
   tonePlayer.play(merged.color.tone * (1 + merged.tier * 0.14));
+}
+
+function playRainbowFanfare() {
+  const notes = [COLORS[0].tone, COLORS[2].tone, COLORS[4].tone, 880 * 1.26];
+  notes.forEach((note, index) => {
+    setTimeout(() => tonePlayer.play(note), index * 230);
+  });
+
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const overlay = document.createElement("div");
+  overlay.className = "rainbow-overlay";
+  overlay.setAttribute("role", "presentation");
+  const rise = document.createElement("div");
+  rise.className = "rainbow-rise";
+  COLORS.forEach((color, index) => {
+    const band = document.createElement("i");
+    band.style.setProperty("--c", color.petal);
+    band.style.setProperty("--d", `${96 - index * 12}%`);
+    rise.append(band);
+  });
+  overlay.append(rise);
+  let closed = false;
+  const dismiss = () => {
+    if (closed) return;
+    closed = true;
+    overlay.remove();
+    removeEventListener("pointerdown", dismiss, true);
+  };
+  overlay.addEventListener("animationend", (event) => {
+    if (event.animationName === "rainbowVeil") dismiss();
+  });
+  addEventListener("pointerdown", dismiss, { capture: true });
+  document.body.append(overlay);
 }
 
 function mergeNearbyBlooms() {

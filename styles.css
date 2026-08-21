@@ -418,3 +418,50 @@ button { font: inherit; }
   .topbar { padding-inline: 28px; }
   .brand { font-size: 24px; }
 }
+
+.rainbow-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: radial-gradient(circle at 50% 118%, rgba(255, 255, 255, 0.94) 30%, rgba(255, 255, 255, 0.72));
+  display: grid;
+  place-items: end center;
+  overflow: hidden;
+  animation: rainbowVeil 3.4s ease forwards;
+}
+
+.rainbow-rise {
+  position: relative;
+  width: min(168vw, 920px);
+  aspect-ratio: 2 / 1;
+  margin-bottom: 12vh;
+  animation: rainbowLift 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.rainbow-rise i {
+  --d: 96%;
+  position: absolute;
+  bottom: calc(var(--d) / -2);
+  left: 50%;
+  width: var(--d);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border: 13px solid var(--c, #ef4545);
+  border-radius: 50%;
+}
+
+@keyframes rainbowLift {
+  from { transform: translateY(52%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes rainbowVeil {
+  0% { opacity: 0; }
+  9% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rainbow-overlay, .rainbow-rise { animation-duration: 0.01s; }
+}
