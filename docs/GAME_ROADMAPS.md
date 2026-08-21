@@ -25,7 +25,7 @@ This table is the quick index for this document. “Next candidate” means the 
 
 | Experience | Implemented through | Next per-game candidate |
 |---|---|---|
-| Bloom | `BL-3A` merge-three garden growth | `BL-4` garden seasons and themes |
+| Bloom | `BL-3A` mechanically implemented; second-tier reachability revision required | revise `BL-3A` before `BL-4` |
 | Color Splash | `CS-2` reversible planning, plus stable-frame correction | `CS-3` two growing corners |
 | Peekaboo Pockets | `PP-2` clues plus `PP-4` themed reunion slice | `PP-3` child hides, caregiver seeks |
 | Stack & Settle | `STK-2` idea cards, plus Familiar World bridge resident | `STK-3` themed construction kits |
@@ -44,13 +44,13 @@ This table is the quick index for this document. “Next candidate” means the 
 8. Keep state, motion, sound, and generated objects strictly bounded.
 9. Continue to prohibit scores, streaks, timers, lives, locked content, rarity, autoplay, nagging, analytics, accounts, advertising, and external actions.
 10. Availability is not validation. A roadmap milestone may be public for testing while its child, device, and caregiver evidence remains pending.
-11. Every finite or round-based experience must offer an obvious in-game replay after its restful completion pause. Open-ended creations must offer a deliberate, confirmed fresh start when clearing prior work would be destructive.
+11. Every finite or round-based experience must offer an obvious in-game replay after its restful completion pause. Protect valuable child-authored work, but make destructive friction proportional to the value and replaceability of the state. Prefer reversible or nondestructive behavior underneath a direct child interaction over routine confirmation UI.
 12. Keep user-initiated browser and accessibility zoom available, but use game-directed zoom or reframing only when changing scale materially improves the central mechanic.
 13. Keep the primary play surface spatially stable. Controls and render-state changes must not unexpectedly move, resize, or recenter it; reserve control space or overlay controls without changing child-authored geometry.
 
-## Delivery cadence
+## Historical delivery rounds
 
-Development should proceed in rounds so every game becomes more distinctive before any one game accumulates a large content catalog.
+Rounds 1 and 2 explain how the six-world baseline was built. They are retained as implementation history, not as the active portfolio sequence. `ROADMAP.md` now governs work from the current six-world reality.
 
 ### Round 1 — Strengthen the core worlds
 
@@ -78,18 +78,9 @@ Proceed after each Round 1 mechanic is technically verified and any obvious inte
 5. `SCN-2` Stateful, redirectable interactions
 6. `TT-2` Touchable recent history
 
-### Round 3 — Deepen social and conceptual play
+### Round 3 — Candidate depth, not current sequence
 
-The cross-game **Familiar World** phase in `ROADMAP.md` precedes the remaining isolated work in this round. Shared control, bounded preservation, Color Splash spatial stability, the first recurring resident, and the shared “together” meaning are implemented. A caregiver-triggered closing ritual is next; `ROADMAP.md` remains authoritative for when isolated Round 3 work resumes.
-
-Use observation to choose the strongest order within this round:
-
-- the active closing-ritual slice from `ROADMAP.md`;
-- two-anchor Color Splash boards;
-- child-hides/caregiver-seeks Peekaboo;
-- themed construction kits;
-- character roles and child-directed sides;
-- cooperative tone relationships.
+The remaining Round 3 ideas are candidates. The active portfolio work is the experiential simplification sequence in `ROADMAP.md`: Bloom reachability, Story Scenes management-friction reduction, and a six-world clutter/stability review. Only then should current evidence select among two-anchor Color Splash, child-hides/caregiver-seeks Peekaboo, themed construction kits, character roles, cooperative tone relationships, or a caregiver-layer pilot.
 
 ### Round 4 — Expand content only where the mechanic has earned it
 
@@ -103,7 +94,7 @@ Add theme packs, larger vocabularies, or more complex combinations only when chi
 
 Bloom should become a small living garden rather than a general sticker canvas. Its pleasure comes from making something grow, revisiting it, noticing variation, and discovering how nearby living things affect one another.
 
-The child currently receives immediate creation, color and size variation, broad drag trails, tending, nearby relationships, deterministic visitors, and a two-tier merge-three growth system. Preserve the absence of a toolbar or explicit objective; Story Scenes owns selection and symbolic composition.
+The child currently receives immediate creation, color and size variation, broad drag trails, tending, nearby relationships, deterministic visitors, and a mechanically implemented two-tier merge-three growth system. Product-owner use could not deliberately reproduce the second tier, so preserve the absence of a toolbar or explicit objective while revising its ordinary-play reachability before adding further Bloom depth.
 
 ### Concepts Bloom can expose
 
@@ -191,7 +182,7 @@ The child currently receives immediate creation, color and size variation, broad
 
 ### BL-3A — Merge-three garden growth
 
-**Status:** implemented and automatically verified; rendered, device, caregiver, and child observation pending.
+**Status:** mechanically implemented and automatically verified; second-tier reachability revision required after product-owner hands-on use; rendered, device, caregiver, and child observation pending.
 
 **Kind:** bounded transformation and decluttering mechanic.
 
@@ -207,7 +198,7 @@ The child currently receives immediate creation, color and size variation, broad
 
 **Gate:** A merge must be clearly visible and reproducible, must reduce the live-object count, and must never chain beyond two tiers or trigger from objects that are not mutually nearby matching-color peers.
 
-**Implementation note:** Pure merge planning selects one stable ID-ordered compatible triple, verifies all three pair distances, and produces an immutable result with its complete source IDs and represented count. Runtime merging removes the three rendered inputs together, adds one CSS-drawn bouquet or flowering tree at their bounded centroid, announces the transformation, and repeats only when that new tier itself completes another valid trio. Mechanical behavior is tested; visual legibility and child comprehension remain unverified.
+**Implementation note:** Pure merge planning selects one stable ID-ordered compatible triple, verifies all three pair distances, and produces an immutable result with its complete source IDs and represented count. Runtime merging removes the three rendered inputs together, adds one CSS-drawn bouquet or flowering tree at their bounded centroid, announces the transformation, and repeats only when that new tier itself completes another valid trio. Mechanical behavior is tested, but deliberate product-owner use could not reproduce the flowering-tree tier. The mechanic therefore remains experientially incomplete until ordinary-play reachability is revised and rendered.
 
 ### BL-4 — Garden seasons and themes
 
@@ -623,7 +614,7 @@ The child currently receives three settings, four object families per setting, p
 - **Town trip:** child, car, bus, home.
 - **Castle tale:** person, horse, armor, dragon; the castle remains in the setting and a royal friend can emerge from a composition.
 - Each background supplies only four large object families and starts with one safe default selected.
-- Changing background starts a new empty scene only after a deliberate, clearly previewed choice; never erase a scene through an incidental tap.
+- Changing background must not cause surprising permanent loss. Prefer a direct, reversible or state-preserving transition over preview-and-confirm management UI when that can keep the child's action immediate.
 - Give every scene at least three repeatable relationships unique to its theme.
 
 **Experience question:** Do children understand that the setting changes the available story vocabulary?
@@ -632,7 +623,7 @@ The child currently receives three settings, four object families per setting, p
 
 **Gate:** The background control and palette remain large in portrait and short landscape; selection does not crowd the storytelling surface.
 
-**Implementation note:** Story Scenes now loads three validated, local scene packs: Garden weather, Town trip, and Castle tale. Each pack declares exactly four large object families, per-family limits of one to three, five visual variants, labels, tones, a safe default, and at least three deterministic theme relationships. A large setting control opens a preview panel; changing scenes requires selecting a different setting and then activating a separate “Start new story” confirmation before the existing scene is cleared. Relationship effects are capped, palette contents follow the setting, and physical-distance, cast, presentation, family-limit, and relationship invariants are tested.
+**Implementation note:** Story Scenes now loads three validated, local scene packs: Garden weather, Town trip, and Castle tale. Each pack declares exactly four large object families, per-family limits of one to three, five visual variants, labels, tones, a safe default, and at least three deterministic theme relationships. The current setting control uses a preview panel and separate “Start new story” confirmation before clearing the scene. Product-owner feedback identifies this as likely adult management friction; the active roadmap will compare it with a direct state-preserving or reversible transition. Relationship effects are capped, palette contents follow the setting, and physical-distance, cast, presentation, family-limit, and relationship invariants are tested.
 
 ### SCN-2 — Stateful, redirectable interactions
 

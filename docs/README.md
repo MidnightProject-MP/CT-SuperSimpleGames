@@ -21,7 +21,7 @@ The documentation is a decision system, not a stack of equally authoritative not
 - When an idea ships, remove its competing speculative description from `IDEAS.md`.
 - When a plan is superseded, replace the active plan; preserve only decision-relevant history in `EVIDENCE.md` or `CONCEPTS.md`. Git preserves the rest.
 - Label evidence by source: child observation, caregiver report, product-owner feedback, rendered inspection, deterministic verification, deployment verification, or external guidance.
-- Implementation permits “implemented” claims. Only relevant observation permits “observed,” “understood,” “comfortable,” or “child-validated” claims.
+- Implementation permits “mechanically implemented” claims. Rendered reachability, ordinary-play reproducibility, physical-device comfort, caregiver interpretation, and child understanding are separate evidence layers; do not infer one from another.
 - At milestone boundaries and after material feedback, ask: **What has changed since this plan was formed, what new evidence have I received, and does the project’s documented understanding still reflect what I now know?**
 
 This reconciliation should remain lightweight: correct stale truth, record consequential evidence, and continue building.

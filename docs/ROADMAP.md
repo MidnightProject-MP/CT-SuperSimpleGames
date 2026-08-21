@@ -4,12 +4,12 @@ This is the authoritative cross-game execution order. `PRODUCT.md` owns the prod
 
 ## Current position
 
-- **Active phase:** Familiar World
-- **Next milestone:** caregiver-triggered closing ritual
+- **Active phase:** Experiential simplification
+- **Next milestone:** mechanic reachability and child-facing clutter reduction
 - **Last reconciled:** 2026-08-16
-- **Current milestone state:** first shared relationship meaning implemented and rendered
+- **Current milestone state:** six-world baseline and first Familiar World relationships implemented; hands-on feedback requires revision before further expansion
 
-The collection has six distinct playable worlds. Shared control, preservation, spatial stability, the first recurring resident, and the first shared relationship meaning are implemented. The next useful question is whether a caregiver can deliberately bring an experience to rest without creating an automatic stopping prompt or taking control away from the child.
+The collection has six distinct playable worlds. Shared control, preservation, spatial stability, the first recurring resident, and the first shared relationship meaning are implemented. The current need is not another layer of features. It is to ensure that existing depth is reachable, visible controls earn their attention cost, and the six worlds feel simpler to a child as their underlying systems become more capable.
 
 ## Governing direction
 
@@ -19,8 +19,11 @@ SuperSimpleGames should grow from simple reactions into simple, dependable world
 - Imprecise but plausible input is treated as intent, not failure.
 - Repetition reveals understandable relationships rather than more valuable rewards.
 - Children can revisit and alter earlier actions; their work is not silently erased.
+- Every object, control, state, confirmation, and rule competes with the play itself. Add one only when its child-facing value exceeds that attention cost.
+- Complexity belongs behind the experience when forgiving resolution, reversible state, stable layout, or deterministic assistance can preserve intent without exposing another mode.
+- A mechanic is not experientially available until it can be encountered and deliberately reproduced through ordinary play. Mechanical implementation, rendered reachability, and child understanding are separate claims.
 - Games remain distinct forms of agency: creation, connected-region reasoning, search, construction, storytelling, and temporal play.
-- Completion creates a restful pause. Finite games offer deliberate replay; open-ended games confirm before clearing.
+- Completion creates a restful pause. Finite games offer deliberate replay. Destructive actions receive friction proportional to the value and replaceability of what would be lost; prefer making an action reversible or nondestructive underneath the interface.
 - Scores, streaks, timers, unlocks, rare rewards, autoplay, nagging, analytics, accounts, and external consequences remain out of scope.
 
 ## Familiar World
@@ -37,24 +40,60 @@ This phase gives the six games a few transferable meanings without creating prog
 
 Implementation detail and evidence belong in `PRODUCT.md`, `GAME_ROADMAPS.md`, and `EVIDENCE.md`; this roadmap records only sequencing and decision state.
 
-### Next: milestone 6 — caregiver-triggered closing ritual
+## Active sequence
 
-Add one calm, deliberate way for a caregiver to signal that play is resting. It must not become an automatic prompt, countdown, session limit, reward summary, or child-facing demand to stop.
+### Milestone 6A — make existing depth reachable
+
+Bloom's second-tier merge is mechanically implemented, but deliberate product-owner use did not reproduce it. Treat that as a revision signal, not as a request for instructions.
 
 The smallest coherent slice must:
 
-- require an intentional caregiver gesture or control unlikely to be triggered by ordinary play;
-- settle motion and sound immediately while leaving child-authored work intact;
-- offer a clear return to play and preserve the existing Home/Fresh meanings;
-- avoid recording time, enforcing a duration, praising disengagement, or implying the child failed to finish;
-- work consistently in one pilot game before any collection-wide rollout.
+- establish a deterministic way to exercise representative ordinary placement traces and distinguish first-tier from second-tier encounter rates;
+- revise the merge relationship so the flowering-tree result is realistically reachable without adding a child-facing move mode, objective, counter, or hint system;
+- keep transformations bounded, legible, reversible where practical, and effective at reducing clutter;
+- preserve the garden's immediate tap response, tending, visitors, spatial stability, sound-off meaning, and reduced-motion behavior;
+- verify pure behavior and then exercise the result in the rendered browser at representative portrait and short-landscape viewports.
 
-The first candidate should be an open-ended world where visible work can remain peacefully on screen. The ritual must be tested for accidental activation, spatial stability, sound-off meaning, reduced motion, and safe restoration.
+**Decision gate:** advance only when a person can encounter and deliberately reproduce both merge tiers through ordinary play. This does not imply child comprehension or validation.
 
-### Then
+### Milestone 6B — remove management friction from Story Scenes
 
-7. Observe whether children transfer control and relationship meanings, recognize and reproduce a resident condition, recover saved work, avoid accidental resets, and disengage naturally.
-8. Resume the strongest per-game Round 3 milestone from `GAME_ROADMAPS.md`; choose using current evidence, not document age.
+Compare the current preview-and-confirm setting manager with a direct, toddler-legible scene transition. Prefer preserving or restoring scene state underneath the interaction so a background change need not destroy work or demand an adult confirmation pattern.
+
+The smallest coherent slice must:
+
+- make an ordinary setting action produce an immediate, visible result;
+- keep automatic object-family rotation and exact palette choice understandable and spatially stable;
+- prevent accidental permanent loss without placing a modal decision in the ordinary child path;
+- keep casts bounded and make every remaining visible control earn its space;
+- exercise empty, sparse, full, restored, and orientation-changed scenes in the rendered browser.
+
+**Decision gate:** retain the simpler transition only if it is more direct without making scene loss surprising or causing the active surface to move.
+
+### Milestone 6C — six-world clutter and stability review
+
+Review every world as a child encounters it, not merely as a set of completed mechanics. Use representative empty, active, dense, completion, replay, restored, and short-landscape states where applicable.
+
+For each visible element ask:
+
+- Does it support the central action now?
+- Is its meaning available through position, shape, motion, or consequence rather than text alone?
+- Can the same protection or assistance happen invisibly?
+- Does appearing, disappearing, or changing state move the child's working surface?
+- Does dense play settle, combine, reuse, or otherwise remain readable?
+
+Record only decision-changing rendered evidence. Correct clear interaction failures in bounded slices; do not turn the review into a visual redesign or content pass.
+
+### Then — shared grammar and caregiver architecture
+
+Reconcile Home, Again, Different, Fresh, persistence, familiar/new choices, residents, relationship meanings, wind-down, and caregiver controls as one small product grammar. The caregiver-triggered closing ritual remains a strong candidate, but should be designed within that layer rather than added as another isolated child-facing control.
+
+After that:
+
+1. Observe whether children transfer control and relationship meanings, recognize and reproduce resident conditions, recover saved work, avoid accidental resets, and disengage naturally.
+2. Choose the strongest per-game depth milestone using current evidence, not document age or the historical round order.
+3. Explore developmental complexity as caregiver-selected changes to tolerance, density, and relationship depth—not scores, locks, performance inference, or forced progression.
+4. Explore a small number of coherent visual-identity directions on representative screens before considering a collection-wide change. Do not ship a theme selector merely to support design comparison.
 
 ## Spatial stability and zoom
 
