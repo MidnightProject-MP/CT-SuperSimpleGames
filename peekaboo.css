@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   font-family: "Arial Rounded MT Bold", "Nunito", system-ui, sans-serif;
   color: #47224f;
   background: #ffe2a8;
@@ -148,7 +148,7 @@ button { font: inherit; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   width: 100%;
   gap: clamp(8px, 2.4vw, 24px);
-  touch-action: none;
+  touch-action: manipulation;
 }
 
 .together-link { position: absolute; z-index: 5; height: 14px; border: 3px solid rgba(255,255,255,.9); border-radius: 999px; transform: translateY(-50%); transform-origin: center; pointer-events: none; box-shadow: 0 4px 0 rgba(71,34,79,.12); }
@@ -210,8 +210,8 @@ button { font: inherit; }
 .pocket-friend svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .pocket-friend[data-clue-direction] { background-color: #fff7ce; background-image: var(--clue-pattern); }
 .pocket-friend[data-clue-direction]::after { position: absolute; right: -10px; bottom: -8px; display: grid; width: 42px; height: 42px; place-items: center; border: 4px solid white; border-radius: 50%; color: white; background: #6f58df; font-size: 28px; box-shadow: 0 4px rgba(75,54,169,.24); }
-.pocket-friend[data-clue-direction="left"]::after { content: "←"; right: auto; left: -10px; }
-.pocket-friend[data-clue-direction="right"]::after { content: "→"; }
+.pocket-friend[data-clue-direction="left"]::after { content: "â†"; right: auto; left: -10px; }
+.pocket-friend[data-clue-direction="right"]::after { content: "â†’"; }
 .pocket-friend[data-pattern="dots"] { --clue-pattern: radial-gradient(circle,rgba(111,88,223,.22) 0 10%,transparent 12%) 0 0/20px 20px; }
 .pocket-friend[data-pattern="checks"] { --clue-pattern: linear-gradient(90deg,rgba(111,88,223,.15) 50%,transparent 50%) 0 0/22px 22px,linear-gradient(rgba(111,88,223,.15) 50%,transparent 50%) 0 0/22px 22px; }
 .pocket-friend[data-pattern="hearts"],.pocket-friend[data-pattern="rings"],.pocket-friend[data-pattern="stars"] { --clue-pattern: radial-gradient(circle,transparent 0 24%,rgba(111,88,223,.2) 26% 38%,transparent 40%) 0 0/26px 26px; }
@@ -264,7 +264,7 @@ button { font: inherit; }
 }
 
 .pocket-flap::after {
-  content: "●";
+  content: "â—";
   position: absolute;
   left: 50%;
   bottom: 16%;
