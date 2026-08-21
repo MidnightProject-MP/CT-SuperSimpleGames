@@ -69,7 +69,7 @@ const PALETTES = Object.freeze({
   car: Object.freeze([["#ef5d6c","#a9e7f5","#47224f"],["#4f96dc","#fff4cf","#29385f"],["#ffd85c","#a9e7f5","#70462f"],["#39a776","#fff4cf","#254b42"],["#8f72d8","#d8f2ff","#493a73"]]),
   bus: Object.freeze([["#ffd85c","#a9e7f5","#47224f"],["#ef5d6c","#fff4cf","#603a32"],["#4f96dc","#d8f2ff","#29385f"],["#39a776","#fff4cf","#254b42"],["#8f72d8","#e9e5fb","#493a73"]]),
   home: Object.freeze([["#ef5d6c","#fff4cf","#603a32"],["#4f96dc","#ffd85c","#29385f"],["#39a776","#fff4cf","#254b42"],["#8f72d8","#f0c49d","#493a73"],["#f29b38","#d8f2ff","#70462f"]]),
-  dragon: Object.freeze([["#68bd74","#ffd85c","#47224f"],["#8f72d8","#ff9b62","#493a73"],["#4f96dc","#d8f2ff","#29385f"],["#ef5d6c","#fff4cf","#603a32"],["#39a776","#c68aeb","#254b42"]]),
+  dragon: Object.freeze([["#8f72d8","#ffd85c","#493a73"],["#ef5d6c","#fff4cf","#603a32"],["#7b55e7","#ff9b62","#3d2a73"],["#4f96dc","#d8f2ff","#29385f"],["#f29b38","#fff4cf","#70462f"]]),
   person: Object.freeze([["#ed6f71","#f2b58d","#603a32"],["#4f96dc","#9c694e","#2e211f"],["#8f72d8","#f0c49d","#bb6b39"],["#39a776","#754733","#241f23"],["#f29b38","#d99670","#70462f"]]),
   horse: Object.freeze([["#a86d43","#f1c08f","#493224"],["#ece1cf","#fff8e8","#635a52"],["#6f4a38","#d89b66","#2f241f"],["#d4975c","#ffe0ad","#70462f"],["#8b78a7","#d9caed","#493a73"]]),
   armor: Object.freeze([["#7d91a8","#d8f2ff","#29385f"],["#4f96dc","#ffd85c","#29385f"],["#ef5d6c","#fff4cf","#603a32"],["#8f72d8","#e9e5fb","#493a73"],["#39a776","#fff4cf","#254b42"]]),
@@ -121,6 +121,21 @@ function updateStageLabel() {
   stage.setAttribute("aria-label", `${currentPack().label} story scene. Tap empty space or press Enter to add the highlighted kind.`);
 }
 
+const DRAGON_SVG = `
+<svg class="dragon-figure" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+  <path d="M92 40 Q99 52 87 59" fill="none" stroke="var(--object-dark)" stroke-width="13" stroke-linecap="round"/>
+  <path d="M92 40 Q99 52 87 59" fill="none" stroke="var(--object-main)" stroke-width="7.5" stroke-linecap="round"/>
+  <path d="M84 56 C70 67 46 67 33 57 C23 49 21 37 26 29" fill="none" stroke="var(--object-dark)" stroke-width="18" stroke-linecap="round"/>
+  <path d="M84 56 C70 67 46 67 33 57 C23 49 21 37 26 29" fill="none" stroke="var(--object-main)" stroke-width="12" stroke-linecap="round"/>
+  <path d="M52 54 L61 31 L65 49 L75 32 L77 55 Z" fill="var(--object-detail)" stroke="var(--object-dark)" stroke-width="2.6"/>
+  <circle cx="30" cy="26" r="11" fill="var(--object-main)" stroke="var(--object-dark)" stroke-width="3.6"/>
+  <rect x="9" y="21" width="17" height="11" rx="5.5" fill="var(--object-detail)" stroke="var(--object-dark)" stroke-width="3"/>
+  <path d="M35 13 L39 3 L43 14 Z" fill="var(--object-detail)" stroke="var(--object-dark)" stroke-width="2.2"/>
+  <circle cx="28" cy="22.5" r="2.7" fill="#fff"/>
+  <circle cx="28.8" cy="22.9" r="1.35" fill="var(--object-dark)"/>
+  <path d="M31 71 Q49 77 69 72" fill="none" stroke="var(--object-detail)" stroke-width="3" stroke-linecap="round"/>
+</svg>`;
+
 function createObjectElement(object, motionId, motion) {
   const button = document.createElement("button");
   const art = document.createElement("span");
@@ -138,7 +153,11 @@ function createObjectElement(object, motionId, motion) {
   button.setAttribute("aria-label", `${currentItem(object.kind).label}, version ${object.variant + 1}; tap to change or move`);
   art.className = `scene-art ${object.kind}-art`;
   art.setAttribute("aria-hidden", "true");
-  art.append(main, detail);
+  if (object.kind === "dragon") {
+    art.innerHTML = DRAGON_SVG;
+  } else {
+    art.append(main, detail);
+  }
   button.append(art);
   applyPalette(button, object);
   return button;
@@ -209,7 +228,11 @@ function renderPalette() {
     const art = document.createElement("span");
     art.className = `mini-art ${item.kind}-art`;
     art.setAttribute("aria-hidden", "true");
-    art.append(document.createElement("i"), document.createElement("b"));
+    if (item.kind === "dragon") {
+      art.innerHTML = DRAGON_SVG;
+    } else {
+      art.append(document.createElement("i"), document.createElement("b"));
+    }
     const label = document.createElement("span");
     label.textContent = item.plural;
     tool.append(art, label);

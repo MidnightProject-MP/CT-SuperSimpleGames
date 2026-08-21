@@ -30,7 +30,6 @@
         </div>
       </header>
 
-      <button id="background-button" class="background-button" type="button" aria-expanded="false">Garden weather</button>
       <section id="background-picker" class="background-picker" aria-label="Choose a story background" hidden>
         <strong>Choose a story</strong>
         <div id="background-options" class="background-options"></div>
@@ -49,7 +48,10 @@
         <p id="story-message" class="story-message" aria-live="polite">Tap the garden to grow a flower!</p>
       </section>
 
-      <nav id="story-palette" class="story-palette" aria-label="Choose what to add"></nav>
+      <div class="story-dock">
+        <button id="background-button" class="background-button" type="button" aria-expanded="false">Garden weather</button>
+        <nav id="story-palette" class="story-palette" aria-label="Choose what to add"></nav>
+      </div>
       <div id="announcement" class="sr-only" aria-live="polite"></div>
       <section id="fresh-dialog" class="fresh-dialog" role="alertdialog" aria-modal="true" aria-labelledby="fresh-title" hidden>
         <div class="fresh-dialog-panel"><h2 id="fresh-title">Start a fresh story?</h2><p>This story will go away.</p><div class="fresh-dialog-actions"><button id="fresh-cancel" type="button">Keep playing</button><button id="fresh-confirm" class="fresh-confirm" type="button">Start fresh</button></div></div>
