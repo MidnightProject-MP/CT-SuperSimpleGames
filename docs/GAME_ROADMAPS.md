@@ -89,6 +89,7 @@ This table is the quick index for this document. “Next candidate” means the 
 11. Every finite or round-based experience must offer an obvious in-game replay after its restful completion pause. Protect valuable child-authored work, but make destructive friction proportional to the value and replaceability of the state. Prefer reversible or nondestructive behavior underneath a direct child interaction over routine confirmation UI.
 12. Keep user-initiated browser and accessibility zoom available, but use game-directed zoom or reframing only when changing scale materially improves the central mechanic.
 13. Keep the primary play surface spatially stable. Controls and render-state changes must not unexpectedly move, resize, or recenter it; reserve control space or overlay controls without changing child-authored geometry.
+14. Model toddler play faithfully in any reachability or discoverability probe: clustered bursts within attention zones, relocation between zones, drag gestures near plausible targets — never uniform random interaction. Uniform randomness validates nothing and can both falsely condemn and falsely clear mechanics; calibrate each simulation against at least one known-reachable case before trusting its verdicts.
 
 ## Historical delivery rounds
 
