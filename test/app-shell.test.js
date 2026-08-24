@@ -8,6 +8,8 @@ const pages = [
   "index.html",
   "games/bloom/index.html",
   "games/color-splash/index.html",
+  "games/memory/index.html",
+  "games/number-nibbles/index.html",
   "games/peekaboo/index.html",
   "games/stack-settle/index.html",
   "games/story-scenes/index.html",
@@ -93,7 +95,9 @@ test("the launcher exposes exactly the active portfolio", () => {
     "./games/bloom/",
     "./games/color-splash/",
     "./games/peekaboo/",
-    "./games/story-scenes/"
+    "./games/story-scenes/",
+    "./games/memory/",
+    "./games/number-nibbles/"
   ]);
 });
 

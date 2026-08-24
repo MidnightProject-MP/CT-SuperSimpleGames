@@ -83,6 +83,54 @@ body {
 .splash-card { background: linear-gradient(145deg, #d8cbff, #9de6ff); }
 .peek-card { background: linear-gradient(145deg, #ffe49a, #ffb4d2); }
 .story-card { background: linear-gradient(145deg, #d7f5c2, #9de2ef); }
+.memory-card { background: linear-gradient(145deg, #ffe1c0, #e3c2f2); }
+.numbers-card { background: linear-gradient(145deg, #c9f0d4, #ffe6ad); }
+
+.nibbles-art {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9%;
+  align-items: end;
+  padding: 14% 10%;
+}
+.nibbles-art b {
+  grid-column: 1 / -1;
+  height: 46%;
+  border: 4px solid rgba(255,255,255,.85);
+  border-radius: 40% 40% 34% 34%;
+  background: linear-gradient(180deg, #7cc99a, #479c67);
+  box-shadow: inset 0 -7px rgba(20,80,45,.18), 0 5px 0 rgba(30,95,55,.16);
+}
+.nibbles-art i {
+  width: 74%;
+  aspect-ratio: 1;
+  justify-self: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #ff9db0 0 28%, #e0446f 100%);
+  box-shadow: inset 0 -4px rgba(120,20,50,.25), 0 4px 0 rgba(150,110,40,.16);
+}
+
+.pairs-art {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10%;
+  padding: 12%;
+}
+
+.pairs-art i {
+  aspect-ratio: 3 / 4;
+  border: 4px solid rgba(255,255,255,.85);
+  border-radius: 16%;
+  box-shadow: inset 0 -6px rgba(90,45,110,.18), 0 5px 0 rgba(90,60,120,.14);
+}
+.pairs-art i:first-child {
+  transform: rotate(-7deg);
+  background: radial-gradient(circle at 32% 30%, #fff6bd 0 34%, #b47cc8 38%);
+}
+.pairs-art i:last-child {
+  transform: rotate(6deg);
+  background: linear-gradient(rgba(255,255,255,.35) 50%, transparent 50%) 0 0/30% 30%, linear-gradient(90deg, rgba(255,255,255,.35) 50%, transparent 50%) 0 0/30% 30%, #6fa7d8;
+}
 
 .card-art { position: relative; display: block; width: clamp(110px, 20vw, 170px); aspect-ratio: 1; }
 .card-copy { display: grid; gap: 5px; }

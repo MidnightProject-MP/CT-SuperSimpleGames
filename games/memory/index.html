@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; connect-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'none'; worker-src 'self'; manifest-src 'self'" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#e8a13c" />
+    <meta name="description" content="Watch the friends hide, then find the matching pairs." />
+    <link rel="manifest" href="../../manifest.webmanifest" />
+    <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../../assets/icon-192.png" />
+    <link rel="stylesheet" href="../../memory.css" />
+    <link rel="stylesheet" href="../../wind-down.css" />
+    <title>Memory · SuperSimpleGames</title>
+  </head>
+  <body>
+    <main class="memory-game">
+      <header class="memory-topbar">
+        <a class="memory-brand" href="../../" aria-label="All games">
+          <span class="memory-brand-mark" aria-hidden="true">‹</span>
+          <span>Memory</span>
+        </a>
+        <button id="sound-toggle" class="memory-sound" type="button" aria-pressed="true" aria-label="Turn sound off">
+          <svg class="sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.5 3a4.5 4.5 0 0 0-2-4v8a4.5 4.5 0 0 0 2-4Zm-2-7.7v2.1a6.5 6.5 0 0 1 0 11.2v2.1a8.5 8.5 0 0 0 0-15.4Z"/></svg>
+          <svg class="sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm11.5 3 2.2-2.2 1.4 1.4-2.2 2.2 2.2 2.2-1.4 1.4-2.2-2.2-2.2 2.2-1.4-1.4 2.2-2.2-2.2-2.2 1.4-1.4 2.2 2.2Z"/></svg>
+        </button>
+      </header>
+
+      <section id="memory-playfield" class="memory-playfield" aria-labelledby="memory-prompt">
+        <p id="memory-prompt" class="memory-prompt">Look who is hiding!</p>
+        <div id="memory-board" class="memory-board" role="group" aria-label="Four hiding cards. Find the matching pairs."></div>
+        <p id="memory-message" class="memory-message">Watch the friends!</p>
+        <button id="hide-again" class="hide-again" type="button" hidden><span aria-hidden="true">↻</span><span>Hide again</span></button>
+      </section>
+      <div id="announcement" class="sr-only" aria-live="polite"></div>
+    </main>
+    <noscript>Memory needs JavaScript to play.</noscript>
+    <script type="module" src="../../src/memory-game.js"></script>
+  </body>
+</html>

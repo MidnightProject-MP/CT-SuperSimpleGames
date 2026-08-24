@@ -1,0 +1,261 @@
+:root {
+  font-family: "Arial Rounded MT Bold", "Nunito", system-ui, sans-serif;
+  color: #23443a;
+  background: #d9f4e2;
+}
+
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+
+body {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255,255,255,.8) 0 5%, transparent 5.5%),
+    radial-gradient(circle at 82% 20%, rgba(255,255,255,.62) 0 7%, transparent 7.5%),
+    linear-gradient(165deg, #a9e8c3 0%, #e2f8e6 55%, #fff3cf 100%);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+
+button { font: inherit; }
+
+.nibbles-game {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-height: 100svh;
+  padding: max(82px, calc(env(safe-area-inset-top) + 72px)) 14px max(10px, env(safe-area-inset-bottom));
+  place-items: center;
+}
+
+.nibbles-topbar {
+  position: absolute;
+  z-index: 20;
+  inset: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: max(13px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 8px max(16px, env(safe-area-inset-left));
+  pointer-events: none;
+}
+
+.nibbles-brand,
+.nibbles-sound {
+  pointer-events: auto;
+  border: 2px solid rgba(255,255,255,.86);
+  color: #23443a;
+  background: rgba(255,255,255,.8);
+  box-shadow: 0 6px 0 rgba(35,90,60,.16), 0 10px 24px rgba(35,90,60,.12);
+  backdrop-filter: blur(10px);
+}
+
+.nibbles-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 58px;
+  padding: 8px 16px 8px 9px;
+  border-radius: 999px;
+  font-size: clamp(17px, 4.5vw, 23px);
+  letter-spacing: -.03em;
+  text-decoration: none;
+}
+
+.nibbles-brand-mark {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 50%;
+  color: white;
+  background: #59b37a;
+  box-shadow: inset 0 -3px rgba(15,70,40,.22);
+  font-size: 34px;
+  line-height: 1;
+}
+
+.nibbles-sound {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  padding: 14px;
+  place-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.nibbles-brand:active,
+.nibbles-sound:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(35,90,60,.14); }
+.nibbles-brand:focus-visible,
+.nibbles-sound:focus-visible { outline: 5px solid #23443a; outline-offset: 4px; }
+.nibbles-sound svg { width: 100%; fill: currentColor; }
+.nibbles-sound .sound-off { display: none; }
+.nibbles-sound[aria-pressed="false"] .sound-on { display: none; }
+.nibbles-sound[aria-pressed="false"] .sound-off { display: block; }
+
+.nibbles-playfield {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: clamp(12px, 3vw, 20px);
+  width: min(94vw, 480px);
+}
+
+/* The friend — a soft green blob with a big visible belly pile. */
+.creature {
+  position: relative;
+  width: clamp(190px, 52vw, 260px);
+  aspect-ratio: 1 / 0.92;
+  padding: 0;
+  border: 6px solid white;
+  border-bottom-width: 10px;
+  border-radius: 46% 46% 42% 42% / 58% 58% 40% 40%;
+  background: linear-gradient(180deg, #7cc99a 0%, #59b37a 62%, #479c67 100%);
+  box-shadow: inset -10px -14px rgba(20,80,45,.16), 0 10px 0 rgba(30,95,55,.24), 0 18px 36px rgba(30,95,55,.16);
+  cursor: pointer;
+}
+.creature:focus-visible { outline: 6px solid #23443a; outline-offset: 5px; }
+
+.creature-face { position: absolute; inset: 9% 12% auto; display: flex; justify-content: space-between; }
+
+.eye {
+  width: clamp(18px, 5vw, 26px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: white;
+  box-shadow: inset 0 -1px 0 rgba(20,60,35,.2);
+}
+.eye::after {
+  content: "";
+  display: block;
+  width: 44%;
+  aspect-ratio: 1;
+  margin: 26% 0 0 28%;
+  border-radius: 50%;
+  background: #23443a;
+  transition: transform 220ms ease;
+}
+.eye-right::after { margin-left: 30%; }
+[data-mood="delighted"] .eye::after { transform: scaleY(.55) translateY(30%); }
+[data-mood="curious"] .eye::after { transform: translateX(-8%); }
+
+.mouth {
+  position: absolute;
+  left: 50%;
+  top: 34%;
+  width: clamp(26px, 7vw, 36px);
+  height: clamp(13px, 3.6vw, 18px);
+  border-radius: 0 0 999px 999px;
+  background: #2b5a41;
+  transform: translateX(-50%);
+}
+[data-mood="delighted"] .mouth { border-radius: 999px; height: clamp(17px, 4.6vw, 24px); background: #23503a; }
+
+.creature-pile {
+  position: absolute;
+  left: 50%;
+  bottom: 12%;
+  width: 64%;
+  height: 34%;
+  transform: translateX(-50%);
+  border-radius: 40% 40% 34% 34%;
+  background: rgba(255,255,255,.32);
+}
+
+.pile-item {
+  --i: 0;
+  position: absolute;
+  bottom: 12%;
+  left: calc(8% + var(--i) * 19%);
+  width: 26%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #ff9db0 0 28%, #e0446f 100%);
+  box-shadow: inset 0 -3px rgba(120,20,50,.25), 0 3px 6px rgba(20,60,35,.2);
+  animation: item-arrive 480ms cubic-bezier(.2, 1.3, .4, 1) both;
+}
+
+@keyframes item-arrive {
+  from { opacity: 0; transform: translateY(-140%) scale(.4); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.nibble-tray {
+  position: relative;
+  display: flex;
+  gap: clamp(8px, 2.4vw, 14px);
+  min-height: 84px;
+  padding: 12px clamp(16px, 4vw, 26px);
+  align-items: center;
+  justify-content: center;
+  border: 5px solid white;
+  border-radius: 28px;
+  background: #fff6dd;
+  box-shadow: 0 8px 0 rgba(150,110,40,.2), 0 14px 28px rgba(120,90,30,.14);
+  cursor: pointer;
+}
+.nibble-tray:active { transform: translateY(4px); box-shadow: 0 4px 0 rgba(150,110,40,.2); }
+.nibble-tray:focus-visible { outline: 6px solid #23443a; outline-offset: 4px; }
+
+.tray-slot {
+  position: relative;
+  width: clamp(30px, 8vw, 40px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #ff9db0 0 28%, #e0446f 100%);
+  box-shadow: inset 0 -3px rgba(120,20,50,.25), 0 3px 0 rgba(150,110,40,.18);
+}
+.tray-slot:nth-child(2), .tray-slot:nth-child(4) { top: 5px; }
+
+.nibbles-message {
+  min-height: 1.5em;
+  margin: 0;
+  padding: 8px 18px;
+  border: 2px solid rgba(255,255,255,.72);
+  border-radius: 999px;
+  background: rgba(255,255,255,.72);
+  box-shadow: 0 4px 10px rgba(35,90,60,.1);
+  font-size: clamp(17px, 4.2vw, 22px);
+  text-align: center;
+}
+
+.mood-happy { animation: creature-happy 520ms ease-out; }
+.mood-delighted { animation: creature-delighted 600ms ease-out; }
+.mood-curious { animation: creature-curious 480ms ease-out; }
+.munching { animation: creature-munch 520ms ease-out; }
+.full-bounce { animation: creature-full 620ms ease-out; }
+
+@keyframes creature-happy { 0%,100% { transform: scale(1); } 45% { transform: scale(1.05) rotate(2deg); } }
+@keyframes creature-delighted { 0%,100% { transform: scale(1); } 30% { transform: scale(1.09) rotate(-3deg); } 65% { transform: scale(1.05) rotate(3deg); } }
+@keyframes creature-curious { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+@keyframes creature-munch { 0%,100% { transform: scale(1); } 38% { transform: scale(.97) translateY(4px); } }
+@keyframes creature-full { 0%,100% { transform: scale(1); } 30% { transform: scale(1.08); } 60% { transform: scale(1.02); } }
+
+.empty-wiggle { animation: tray-wiggle 420ms ease-out; }
+@keyframes tray-wiggle { 0%,100% { transform: rotate(0); } 30% { transform: rotate(-2deg); } 65% { transform: rotate(2deg); } }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mood-happy, .mood-delighted, .mood-curious, .munching, .full-bounce, .empty-wiggle { animation-duration: 1ms; }
+  .pile-item { animation-duration: 1ms; }
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .nibbles-playfield { grid-template-columns: 1fr 1fr; align-items: center; column-gap: clamp(14px, 4vw, 34px); width: min(94vw, 760px); }
+  .creature { grid-row: 1 / span 2; width: clamp(160px, 40vh, 230px); }
+  .nibbles-message { grid-column: 2; }
+  .nibble-tray { grid-column: 2; }
+}

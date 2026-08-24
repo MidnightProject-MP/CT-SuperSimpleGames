@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; connect-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'none'; worker-src 'self'; manifest-src 'self'" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#59b37a" />
+    <meta name="description" content="Feed a friendly friend one berry at a time and watch the pile grow." />
+    <link rel="manifest" href="../../manifest.webmanifest" />
+    <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../../assets/icon-192.png" />
+    <link rel="stylesheet" href="../../nibbles.css" />
+    <link rel="stylesheet" href="../../wind-down.css" />
+    <title>Numbers · SuperSimpleGames</title>
+  </head>
+  <body>
+    <main class="nibbles-game">
+      <header class="nibbles-topbar">
+        <a class="nibbles-brand" href="../../" aria-label="All games">
+          <span class="nibbles-brand-mark" aria-hidden="true">‹</span>
+          <span>Numbers</span>
+        </a>
+        <button id="sound-toggle" class="nibbles-sound" type="button" aria-pressed="true" aria-label="Turn sound off">
+          <svg class="sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.5 3a4.5 4.5 0 0 0-2-4v8a4.5 4.5 0 0 0 2-4Zm-2-7.7v2.1a6.5 6.5 0 0 1 0 11.2v2.1a8.5 8.5 0 0 0 0-15.4Z"/></svg>
+          <svg class="sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm11.5 3 2.2-2.2 1.4 1.4-2.2 2.2 2.2 2.2-1.4 1.4-2.2-2.2-2.2 2.2-1.4-1.4 2.2-2.2-2.2-2.2 1.4-1.4 2.2 2.2Z"/></svg>
+        </button>
+      </header>
+
+      <section id="nibbles-playfield" class="nibbles-playfield" aria-labelledby="nibbles-message">
+        <div id="creature" class="creature" data-mood="curious" role="button" tabindex="0" aria-label="Touch the friend to share berries back out">
+          <div class="creature-face" aria-hidden="true">
+            <span class="eye"></span><span class="eye eye-right"></span><span class="mouth"></span>
+          </div>
+          <div id="creature-pile" class="creature-pile" aria-hidden="true"></div>
+        </div>
+        <p id="nibbles-message" class="nibbles-message">Tap the plate to share a berry!</p>
+        <button id="nibble-tray" class="nibble-tray" aria-label="Share one more berry">
+          <span class="tray-slot"></span><span class="tray-slot"></span><span class="tray-slot"></span><span class="tray-slot"></span><span class="tray-slot"></span>
+        </button>
+      </section>
+      <div id="announcement" class="sr-only" aria-live="polite"></div>
+    </main>
+    <noscript>Numbers needs JavaScript to play.</noscript>
+    <script type="module" src="../../src/nibbles-game.js"></script>
+  </body>
+</html>

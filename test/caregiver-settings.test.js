@@ -20,7 +20,7 @@ function memoryStorage(initial = new Map()) {
 test("defaults on empty storage", () => {
   const defaults = defaultCaregiverSettings();
 
-  assert.deepEqual([...WORLD_IDS], ["bloom", "color-splash", "peekaboo", "story-scenes"]);
+  assert.deepEqual([...WORLD_IDS], ["bloom", "color-splash", "peekaboo", "story-scenes", "memory", "numbers"]);
   assert.deepEqual(defaults, { version: 1, sessionMinutes: null, level: null, hiddenWorlds: [] });
   assert.equal(Object.isFrozen(defaults), true);
   assert.deepEqual(loadCaregiverSettings(memoryStorage()), defaults);
@@ -112,7 +112,7 @@ test("visibleWorlds filters hidden worlds and preserves world order", () => {
   assert.deepEqual(visibleWorlds(defaultCaregiverSettings()), [...WORLD_IDS]);
   assert.deepEqual(
     visibleWorlds({ hiddenWorlds: ["story-scenes", "bloom", "story-scenes"] }),
-    ["color-splash", "peekaboo"]
+    ["color-splash", "peekaboo", "memory", "numbers"]
   );
   assert.deepEqual(visibleWorlds({}), [...WORLD_IDS]);
   assert.deepEqual(visibleWorlds({ hiddenWorlds: [...WORLD_IDS] }), []);
