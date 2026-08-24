@@ -79,11 +79,11 @@
 
 | Story | Outcome | State |
 |---|---|---|
-| G1 Play-surface gesture protection | One consistent policy: child-facing surfaces (launcher + every retained game) reject accidental scale/pan (`touch-action` policy plus a Safari `gesturestart` guard); caregiver page stays fully zoomable; invariant tested deterministically and verified rendered | Planned — first |
-| G2 Resident life, world-local | Color Splash's butterfly inhabits the finished board (lands on squares, relocates spatially per touch, varies response); Story Scenes' snail travels the garden edge and pauses near the child's objects; each implemented inside its own world first — shared abstraction only if proven common behavior emerges (Bloom visitors remain the quality reference, not an architecture mandate) | Planned |
-| G3 Protected completion moments | A completed Color Splash board holds briefly before any input can start the next board (the rainbow pattern); celebration and resident cannot be destroyed by the next reflexive tap | Planned |
-| G4 Child-facing control simplification | Fresh removed from Bloom and Story Scenes' play grammar — destructive resets move to the caregiver surface ("Clear saved creations"); Story Scenes setting switching becomes three direct pictorial chips in the dock (tap → immediate switch, parking preserved), removing the picker overlay and its cancel step | Planned |
-| G5 Hygiene slice | Peekaboo clue-arrow mojibake repaired; duplicate live regions deduplicated (visible message loses `aria-live`, sr-only announcement remains the single AT channel) in Peekaboo and Story Scenes; dead Color Splash control CSS removed; Color Splash cell semantics clarified for assistive tech; tone envelopes softened at note endings; small Peekaboo friend-response variety (alternating greeting motions, slight pitch variation) | Planned |
+| G1 Play-surface gesture protection | One consistent policy: child-facing surfaces (launcher + every retained game) reject accidental scale/pan (`touch-action` policy plus a Safari `gesturestart` guard); caregiver page stays fully zoomable; invariant tested deterministically and verified rendered | **Closed** 2026-08-24: `src/play-gesture.js` guard on launcher + all games; body-level `touch-action: none` policy per world CSS; deterministic contracts (`test/play-gesture.test.js`) + rendered computed-style checks across all 8 pages (caregiver stays `auto`) |
+| G2 Resident life, world-local | Color Splash's butterfly inhabits the finished board (lands on squares, relocates spatially per touch, varies response); Story Scenes' snail travels the garden edge near the child's objects; each implemented inside its own world first — shared abstraction only if proven common behavior emerges (Bloom visitors remain the quality reference, not an architecture mandate) | **Closed** 2026-08-24: butterfly derives landing spots from real board squares, alternates flap/glide per touch, flies home after three; snail derives stops from lowest-placed objects, travels with direction-facing art; `residents.js` deliberately untouched; rendered probes confirm movement, facing, and send-off |
+| G3 Protected completion moments | A completed Color Splash board holds briefly before any input can start the next board (the rainbow pattern); celebration and resident cannot be destroyed by the next reflexive tap | **Closed** 2026-08-24: 1500 ms hold verified rendered — first reflexive tap absorbed, post-hold tap starts new board |
+| G4 Child-facing control simplification | Fresh removed from Bloom and Story Scenes' play grammar — destructive resets move to the caregiver surface ("Clear saved creations"); Story Scenes setting switching becomes three direct pictorial chips in the dock (tap → immediate switch, parking preserved), removing the picker overlay and its cancel step | **Closed** 2026-08-24: chips switch directly with parking intact (rendered-verified); fresh controls/dialog retired from active worlds; caregiver creations-clearing shipped |
+| G5 Hygiene slice | Peekaboo clue-arrow mojibake repaired; duplicate live regions deduplicated (visible message loses `aria-live`, sr-only announcement remains the single AT channel); dead Color Splash control CSS removed; tone envelopes softened at note endings; small Peekaboo friend-response variety | **Closed** 2026-08-24: arrows restored to real UTF-8 glyphs (corruption source was owner commit `976b1ae`, now corrected); single live region per world; `.undo-move`/`.new-board` styles removed; release tail softened (10.55s stop contract updated); greetings alternate `friend-hello`/`friend-hello-again` motions and pitches, rendered-verified `hello → again`. Color Splash cells already carry per-square aria-labels from the stable-frame work — no further change needed |
 
 ### Epic H — Memory (portfolio replacement)
 
@@ -91,9 +91,9 @@
 
 | Story | Outcome | State |
 |---|---|---|
-| H1 Concept brief | Working definition in `GAME_ROADMAPS.md`: smallest true memory/matching loop (witnessed face-up intro → hide → find pairs), alternatives noted, success question stated | Planned |
-| H2 Playable experiment | Minimal "Memory Pairs" build: 4 oversized cards (2 pairs), witnessed intro, flip-to-match, joyful mismatch reveals, together-celebration, in-game replay; seeded deterministic round core with tests from day one; deliberately thin presentation; launcher slot swapped in as experimental | Planned — **hard evidence gate after this story**: stop for owner/child hands-on before hardening |
-| H3 Harden + widen | Polish from observation; caregiver-level widening (2→3 pairs); persistence decisions; full shell/offline treatment | Blocked on H2 gate |
+| H1 Concept brief | Working definition in `GAME_ROADMAPS.md`: smallest true memory/matching loop (witnessed face-up intro → hide → find pairs), alternatives noted, success question stated | **Closed** 2026-08-24 |
+| H2 Playable experiment | Minimal "Memory Pairs" build: 4 oversized cards (2 pairs), witnessed intro, flip-to-match, joyful mismatch reveals, together-celebration, in-game replay; seeded deterministic round core with tests from day one; deliberately thin presentation; launcher slot swapped in as experimental | **Closed** 2026-08-24: shipped behind the launcher's Memory card; deterministic core (191→196 checks green) plus rendered childlike playthrough probe (10 flips to completion). **EVIDENCE GATE ACTIVE — stopped for owner/child hands-on before any hardening or widening** |
+| H3 Harden + widen | Polish from observation; caregiver-level widening (2→3 pairs); persistence decisions; full shell/offline treatment | **Blocked on H2 gate** — do not resume without child/owner signal |
 
 ### Epic I — Numbers (portfolio replacement)
 
@@ -101,15 +101,15 @@
 
 | Story | Outcome | State |
 |---|---|---|
-| I1 Concept brief | Working definition in `GAME_ROADMAPS.md`: add-one/remove-one quantity play with visible perceptual consequence; request-free surface must stand alone | Planned |
-| I2 Playable experiment | Minimal "Number Nibbles" build: one friendly creature, tap-to-feed one item at a time (1–5), each arrival counts itself in motion/sound/pile, tapping the creature releases items back out; free add/remove is complete play; seeded core + tests; thin presentation; experimental launcher slot | Planned — **hard evidence gate after this story**: stop for owner/child hands-on before hardening |
+| I1 Concept brief | Working definition in `GAME_ROADMAPS.md`: add-one/remove-one quantity play with visible perceptual consequence; request-free surface must stand alone | **Closed** 2026-08-24 |
+| I2 Playable experiment | Minimal "Number Nibbles" build: one friendly creature, tap-to-feed one item at a time (1–5), each arrival counts itself in motion/sound/pile, tapping the creature releases items back out; free add/remove is complete play; seeded core + tests; thin presentation; experimental launcher slot | **Closed** 2026-08-24: shipped behind the launcher's Numbers card; deterministic cap/step logic tested; rendered probe feeds to three, releases, hits the celebratory cap. **EVIDENCE GATE ACTIVE — stopped for owner/child hands-on before hardening or any request layer** |
 | I3 Harden + widen | Polish from observation; caregiver-level widening; optional gentle request layer only if free play proves complete; full shell treatment | **Blocked on I2 evidence gate** |
 
 ### Epic J — Portfolio archive
 
 | Story | Outcome | State |
 |---|---|---|
-| J1 Remove Stack & Settle and Together Tones from the active portfolio | Launcher cards removed immediately (owner decision 2026-08-24: smaller launcher accepted); service-worker shell trimmed; caregiver world-visibility list reduced with safe fallback for stored settings referencing removed worlds; sources left inert in-tree pending later deletion (git retains history); roadmap sections marked retired; salvage notes recorded in `IDEAS.md` | Planned — executes first among code changes |
+| J1 Remove Stack & Settle and Together Tones from the active portfolio | Launcher cards removed immediately (owner decision 2026-08-24: smaller launcher accepted); service-worker shell trimmed; caregiver world-visibility list reduced with safe fallback for stored settings referencing removed worlds; sources left inert in-tree pending later deletion (git retains history); roadmap sections marked retired; salvage notes recorded in `IDEAS.md` | **Closed** 2026-08-24: launcher carries Bloom, Color Splash, Peekaboo, Story Scenes, Memory, Numbers; shell and caregiver list trimmed with sanitization fallback proven by tests; retirement guards added to `test/app-shell.test.js` |
 
 ### Epic E — Ownable visual identity *(deferred)*
 
@@ -127,10 +127,12 @@
 
 ## Current position and sequencing
 
-- **Active epic: G — retained-world interaction polish**, in owner-directed order G1 → (G3, G2, G4, G5). No new mechanics in retained worlds during this phase.
-- **Then:** H1/H2 (Memory experiment) and I1/I2 (Numbers experiment), each stopping at its evidence gate; J1 archive executes first among code changes so the launcher carries only intended portfolio slots from the next release.
-- E1 identity directions is deferred until Epic G completes. K proceeds opportunistically whenever hardware or participants become available.
-- Per-game Round-3 depth milestones in `GAME_ROADMAPS.md` remain **paused**; retired-world sections are inert.
+- **Epic G is complete** (all five stories closed 2026-08-24 with deterministic + rendered evidence).
+- **Epics H and I sit at their evidence gates:** Memory Pairs and Number Nibbles are live as experimental launcher slots; per owner instruction, **no hardening or widening happens until the children/owner play them**. H3/I3 resume only on that signal.
+- E1 identity directions remains deferred until the retained worlds feel excellent in real use — which now also includes observation of the two experiments.
+- K proceeds opportunistically whenever hardware or participants become available.
+
+The launcher's six slots now hold exactly the intended portfolio: Bloom, Color Splash, Peekaboo Pockets, Story Scenes, Memory (experiment), Numbers (experiment).
 
 The Familiar World foundation (shared control meanings, bounded preservation, stable Color Splash frame, "together" meaning) remains implemented and rendered-verified; Bloom's bridge-invited-bird cameo left the portfolio with Stack & Settle, while the recurring cast lives on through Bloom's visitors plus the Color Splash butterfly and Story Scenes snail.
 
