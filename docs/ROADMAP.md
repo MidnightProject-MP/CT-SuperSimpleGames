@@ -142,8 +142,8 @@
 
 ## Current position and sequencing
 
-- **Round-2 direction landed (2026-08-24):** Numbers v2 **passed its gate** on owner hands-on ("really like the new Numbers experience… preserve its core direction") — I3 hardening stays restrained. Fixed caregiver-selected levels are **superseded by Epic L**: per-game adaptive progression, envelopes documented (L1 closed), Memory prototype next (L2), then level retirement (L4), then Color Splash application (L3), Numbers deepening (L5, observation-gated).
-- **Implementation of adaptation is staged:** this roadmap revision ships first; L2 begins only after owner acceptance of the envelope design.
+- **Round-2 direction landed (2026-08-24):** Numbers v2 **passed its gate** on owner hands-on ("really like the new Numbers experience… preserve its core direction") — I3 hardening stays restrained. Fixed caregiver-selected levels are **superseded by Epic L**: per-game adaptive progression, envelopes documented (L1 closed), Memory prototype shipped (L2 closed, **gate re-armed for hands-on**), level retirement shipped (L4 closed), Color Splash application (L3) and Numbers deepening (L5) wait on that hands-on signal.
+- **Epic L acceptance was given by the owner; L2+L4 are implemented and verified.** Remaining: hands-on signal on the adapting Memory, then L3; observation for L5.
 - E1 identity directions remains deferred. K proceeds opportunistically whenever hardware or participants become available.
 
 The launcher's six slots hold exactly the intended portfolio: Bloom, Color Splash, Peekaboo Pockets, Story Scenes, Memory (validated), Numbers (validated v2).
