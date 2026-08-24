@@ -6,12 +6,13 @@ A local-only collection of six no-fail web worlds for toddlers (~18–42 months,
 
 ## Current milestone
 
-**Round-2 owner direction processed: adaptive progression replaces fixed levels; Epic L defined with envelopes documented (L1 closed) — awaiting acceptance before implementing L2 (2026-08-24).** Launcher portfolio: Bloom, Color Splash, Peekaboo Pockets, Story Scenes, Memory, Numbers. Stack & Settle and Together Tones retired from launcher/shell/settings; sources inert in-tree pending deletion.
+**Epic L in progress: adaptive envelopes designed (L1) and Memory's adaptive prototype SHIPPED (L2); fixed-level retirement (L4) next (2026-08-24).** Launcher portfolio: Bloom, Color Splash, Peekaboo Pockets, Story Scenes, Memory, Numbers. Stack & Settle and Together Tones retired from launcher/shell/settings; sources inert pending deletion at L4.
 
-- **Numbers v2 gate PASSED** on owner hands-on ("really like… preserve its core direction"); I3 hardening stays restrained.
-- **Memory gate previously passed** ("great"); H3 restrained.
+- **Numbers v2 gate PASSED** on owner hands-on ("really like… preserve its core direction"); hardening restrained.
+- **Memory gate PASSED** ("great").
 - **Epic G — interaction polish: COMPLETE**, plus launcher-scroll regression fixed (`pan-y`: menu surfaces pan, play surfaces don't).
-- **Epic L — adaptive progression:** L1 closed (per-game min/max experiences, signals, non-signals, dimensions, tempo documented in `GAME_ROADMAPS.md` § Adaptive progression envelopes; Bloom/Peekaboo/Story Scenes deliberately stable). L2 Memory prototype is the first implementation; L4 retires Default/Gentle/Rich afterward; L3 applies the pattern to Color Splash boards; L5 Numbers deepening waits on observation. Fixed-level control still present in this build until L4.
+- **Epic L:** L1 envelopes closed (see `GAME_ROADMAPS.md` § Adaptive progression envelopes; Bloom/Peekaboo/Story deliberately stable). **L2 shipped:** `supersimplegames.memory.adaptive` record drives pair count 2–3, witnessed preview 1.9→1.4s, mismatch window 1.05→0.85s, arrangement variety — EMA α=0.3, hysteresis tiers (enrich ≥0.72 / simplify ≤0.45), one notch per completed round, ~28% comfort rounds one step simpler; grown-ups "Reset playful growth" clears it. Verified: 10 dedicated unit tests + rendered probe (fresh=min, persisted-max deals six cards/three columns, completion folds evidence, reset clears). **Gate re-armed for hands-on.**
+- Fixed Default/Gentle/Rich levels remain in this build until L4 lands (next).
 
 ## Decisions
 

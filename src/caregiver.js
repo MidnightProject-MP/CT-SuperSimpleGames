@@ -3,6 +3,7 @@ import { defaultCaregiverSettings, loadCaregiverSettings, saveCaregiverSettings 
 
 const RESET_CONFIRM_MESSAGE = "Clear all SuperSimpleGames settings and saved creations on this device?";
 const CLEAR_CREATIONS_MESSAGE = "Clear saved gardens, scenes, and boards on this device? Settings stay unchanged.";
+const RESET_GROWTH_MESSAGE = "Reset playful growth? Each game will start adapting from the beginning again.";
 const SETTINGS_PREFIX = "supersimplegames.";
 const LEGACY_SOUND_STORAGE_KEY = "bloom.sound-enabled";
 
@@ -12,6 +13,8 @@ const levelButtons = [...document.querySelectorAll("[data-level]")];
 const worldInputs = [...document.querySelectorAll("input[name='world']")];
 const clearCreationsButton = document.querySelector("#clear-creations");
 const creationsMessage = document.querySelector("#creations-message");
+const resetGrowthButton = document.querySelector("#reset-growth");
+const growthMessage = document.querySelector("#growth-message");
 const resetButton = document.querySelector("#reset-all");
 const resetMessage = document.querySelector("#reset-message");
 
@@ -49,6 +52,12 @@ clearCreationsButton.addEventListener("click", () => {
   if (!globalThis.confirm(CLEAR_CREATIONS_MESSAGE)) return;
   clearCreations();
   creationsMessage.hidden = false;
+});
+
+resetGrowthButton.addEventListener("click", () => {
+  if (!globalThis.confirm(RESET_GROWTH_MESSAGE)) return;
+  clearAdaptiveGrowth();
+  growthMessage.hidden = false;
 });
 
 resetButton.addEventListener("click", () => {
@@ -103,6 +112,19 @@ function clearCreations() {
     for (let index = 0; index < storage.length; index += 1) {
       const key = storage.key(index);
       if (key != null && key.startsWith(SETTINGS_PREFIX) && key.endsWith(".creation")) doomed.push(key);
+    }
+    doomed.forEach((key) => storage.removeItem(key));
+  } catch {}
+}
+
+function clearAdaptiveGrowth() {
+  try {
+    const storage = globalThis.localStorage;
+    if (!storage) return;
+    const doomed = [];
+    for (let index = 0; index < storage.length; index += 1) {
+      const key = storage.key(index);
+      if (key != null && key.startsWith(SETTINGS_PREFIX) && key.endsWith(".adaptive")) doomed.push(key);
     }
     doomed.forEach((key) => storage.removeItem(key));
   } catch {}

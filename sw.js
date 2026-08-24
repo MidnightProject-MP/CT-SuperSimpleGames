@@ -1,4 +1,4 @@
-const CACHE_NAME = "supersimplegames-v48";
+const CACHE_NAME = "supersimplegames-v49";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -37,6 +37,7 @@ const APP_SHELL = [
   "./src/interaction.js",
   "./src/local-state.js",
   "./src/launcher.js",
+  "./src/memory-adaptive.js",
   "./src/memory-core.js",
   "./src/memory-game.js",
   "./src/nibbles-core.js",

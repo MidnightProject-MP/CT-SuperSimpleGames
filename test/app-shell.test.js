@@ -136,8 +136,9 @@ test("active worlds keep destructive resets behind the grown-ups surface", () =>
   }
   const caregiverPage = readFileSync(resolve(root, "caregiver.html"), "utf8");
   assert.match(caregiverPage, /id="clear-creations"/, "caregiver surface must own creation clearing");
+  assert.match(caregiverPage, /id="reset-growth"/, "caregiver surface must own adaptive-growth reset");
   const caregiverScript = readFileSync(resolve(root, "src/caregiver.js"), "utf8");
-  assert.match(caregiverScript, /\.creation/);
+  assert.match(caregiverScript, /\.adaptive/, "grown-ups must clear adaptive growth records");
 });
 
 test("Story Scenes switches scenes directly from dock chips without an overlay", () => {

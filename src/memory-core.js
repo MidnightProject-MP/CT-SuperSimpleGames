@@ -24,8 +24,10 @@ function shuffled(items, random) {
 /**
  * Creates a witnessed round: every token starts visible (`hidden: false`) so
  * the child can study the arrangement before the runtime hides them.
+ * `fixedLayout` skips the seeded shuffle — identical arrangement each round —
+ * which is the low-variety end of the adaptive envelope.
  */
-export function createMemoryRound({ seed, pairCount = 2, pool }) {
+export function createMemoryRound({ seed, pairCount = 2, pool, fixedLayout = false }) {
   if (!Number.isInteger(seed) || seed < 0) throw new RangeError("seed must be a non-negative integer");
   if (!Number.isInteger(pairCount) || pairCount < 2 || pairCount > 3) throw new RangeError("pairCount must be 2 or 3");
   if (!Array.isArray(pool) || pool.length < pairCount || new Set(pool).size < pairCount) {
@@ -33,7 +35,11 @@ export function createMemoryRound({ seed, pairCount = 2, pool }) {
   }
   const random = mulberry32(seed);
   const chosen = shuffled([...pool], random).slice(0, pairCount);
-  const tokens = shuffled(chosen.flatMap((itemId) => [itemId, itemId]), random)
+  const flat = chosen.flatMap((itemId) => [itemId, itemId]);
+  // Low-variety rounds interleave instead of shuffling: identical layout
+  // every round, with each pair's two halves kept far apart.
+  const ordered = fixedLayout ? [...chosen, ...chosen] : shuffled(flat, random);
+  const tokens = ordered
     .map((itemId, index) => ({ index, itemId }));
   return Object.freeze({
     seed,

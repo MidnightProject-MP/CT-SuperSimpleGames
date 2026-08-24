@@ -1,5 +1,11 @@
 import { createTonePlayer } from "./audio.js";
-import { loadCaregiverSettings, normalizeLevel } from "./caregiver-settings.js";
+import {
+  applyRound,
+  loadMemoryAdaptive,
+  saveMemoryAdaptive,
+  scoreRound,
+  serveConfig
+} from "./memory-adaptive.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { protectPlaySurface } from "./play-gesture.js";
 import {
@@ -13,8 +19,6 @@ import { getPocketItem } from "./pocket-items.js";
 import { startWindDown } from "./wind-down.js";
 
 const TOKEN_POOL = Object.freeze(["cat", "duck", "bear", "star", "sun", "flower"]);
-const WITNESS_MS = 1900;
-const MISMATCH_MS = 1050;
 
 const board = document.querySelector("#memory-board");
 const prompt = document.querySelector("#memory-prompt");
@@ -26,6 +30,11 @@ const replayButton = document.querySelector("#hide-again");
 let round;
 let witnessTimer;
 let mismatchTimer;
+// Adaptive envelope state (Epic L2): the served config carries pair count,
+// witnessed-preview duration, mismatch reveal window, and arrangement variety.
+let adaptive = loadMemoryAdaptive();
+let served = serveConfig(adaptive);
+let mismatchesThisRound = 0;
 let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 
@@ -102,7 +111,7 @@ function startWitnessPhase() {
     prompt.textContent = "Find the pairs!";
     say("The friends are hiding. Find the matching pairs.");
     tonePlayer.play(392);
-  }, WITNESS_MS);
+  }, served.config.previewMs);
 }
 
 function celebratePair(firstIndex, secondIndex) {
@@ -149,6 +158,7 @@ function handleOutcome(result, clickedIndex) {
       break;
     }
     case "mismatched": {
+      mismatchesThisRound += 1;
       const otherIndex = result.round.open.find((index) => index !== clickedIndex);
       openCardDom(clickedIndex);
       tonePlayer.play(flippedItem.tone * 0.86);
@@ -163,7 +173,7 @@ function handleOutcome(result, clickedIndex) {
             card.classList.remove("open");
           }
         }
-      }, MISMATCH_MS);
+      }, served.config.mismatchMs);
       break;
     }
     default:
@@ -173,6 +183,12 @@ function handleOutcome(result, clickedIndex) {
 
 function settleIfComplete() {
   if (!isComplete(round)) return false;
+  // One evidence update per natural round boundary — never mid-play.
+  adaptive = applyRound(adaptive, scoreRound({
+    matches: round.pairCount,
+    mismatches: mismatchesThisRound,
+  }));
+  saveMemoryAdaptive(adaptive);
   playfieldComplete();
   return true;
 }
@@ -226,9 +242,17 @@ function startRound(seed) {
   replayButton.hidden = true;
   document.querySelector("#memory-playfield").classList.remove("complete");
   message.textContent = "";
-  // H3 widening: rich level adds a third pair; gentle/default stay at two.
-  const pairCount = normalizeLevel(loadCaregiverSettings().level) === "rich" ? 3 : 2;
-  round = createMemoryRound({ seed, pairCount, pool: TOKEN_POOL });
+  mismatchesThisRound = 0;
+  // Adaptive envelope (Epic L2): the served config carries pair count,
+  // preview duration, mismatch window, and arrangement variety. Comfort
+  // rounds occasionally serve one notch simpler without moving the estimate.
+  served = serveConfig(adaptive);
+  round = createMemoryRound({
+    seed,
+    pairCount: served.config.pairs,
+    pool: TOKEN_POOL,
+    fixedLayout: !served.config.variety,
+  });
   renderBoard();
   startWitnessPhase();
 }

@@ -110,6 +110,16 @@ test("matched pairs lock open and completing all pairs finishes the round", () =
   }
 });
 
+test("fixedLayout skips the shuffle for a predictable interleaved arrangement", () => {
+  for (const seed of [1, 42, 777]) {
+    const round = createMemoryRound({ seed, pairCount: 3, pool: POOL, fixedLayout: true });
+    const ids = round.tokens.map((token) => token.itemId);
+    const kinds = [...new Set(ids)];
+    assert.equal(kinds.length, 3);
+    assert.deepEqual(ids.slice(3), ids.slice(0, 3), "each friend must appear exactly twice");
+  }
+});
+
 test("invalid construction and access are rejected", () => {
   assert.throws(() => createMemoryRound({ seed: -1, pairCount: 2, pool: POOL }));
   assert.throws(() => createMemoryRound({ seed: 1, pairCount: 4, pool: POOL }));
