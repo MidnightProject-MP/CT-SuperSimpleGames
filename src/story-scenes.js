@@ -14,6 +14,7 @@ import {
 import { restoreStoryWorld, serializeStoryWorld } from "./story-world.js";
 import { STORY_PACKS, getStoryPack, storyCastItem } from "./story-packs.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
+import { RESIDENT_TOUCHES, attachResident, storyResidentFor } from "./residents.js";
 import { setupFreshStart } from "./fresh-start.js";
 import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
 import { startWindDown } from "./wind-down.js";
@@ -94,6 +95,7 @@ try {
 let soundEnabled = loadSoundPreference();
 let drag = null;
 let suppressClickFor = null;
+let residentTouchesLeft = RESIDENT_TOUCHES;
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 
 function persistStoryWorld() {
@@ -216,6 +218,36 @@ function renderScene(focusId, motion) {
   for (const composition of compositionsForScene(state, currentLayout())) markComposition(composition);
   for (const [id, phase] of visiblePhase) objectLayer.querySelector(`[data-id="${id}"]`)?.classList.add(`interaction-${phase}`);
   if (focusId) objectLayer.querySelector(`[data-id="${focusId}"]`)?.focus({ preventScroll: true });
+  updateSceneResident();
+}
+
+function touchSceneResident(button) {
+  button.classList.remove("sliding");
+  void button.offsetWidth;
+  button.classList.add("sliding");
+  setTimeout(() => button.classList.remove("sliding"), 900);
+  residentTouchesLeft -= 1;
+  if (residentTouchesLeft <= 0) button.remove();
+}
+
+function updateSceneResident() {
+  const resident = storyResidentFor({ scene: state.sceneId, objectCount: objectLayer.children.length });
+  const existing = stage.querySelector(".story-resident");
+  if (!resident) {
+    existing?.remove();
+    return;
+  }
+  if (existing) return;
+  residentTouchesLeft = RESIDENT_TOUCHES;
+  const button = attachResident({
+    layer: stage,
+    resident,
+    className: "story-resident",
+    label: "A snail slides through the garden",
+    onTouch: touchSceneResident,
+  });
+  button.style.left = "8%";
+  button.style.bottom = "6%";
 }
 
 function renderPalette() {

@@ -64,7 +64,7 @@
 
 | Story | Outcome | State |
 |---|---|---|
-| D1 Recurring resident cast | Bird plus at most two new inhabitants appear naturally across worlds with consistent identity and bounded local responses; recognition without collection state | Planned |
+| D1 Recurring resident cast | Bird plus at most two new inhabitants appear naturally across worlds with consistent identity and bounded local responses; recognition without collection state | **Closed** 2026-08-24: butterfly (existing character) now lands on completed Color Splash boards; new snail visits Story Scenes' garden at 3+ objects; both derived deterministically, 3-touch budget, never touch work; shared `src/residents.js` primitive; 178 deterministic + rendered checks pass |
 | D2 Discoverability-tiered special relationships | Existing deeper triggers audited for whether ordinary experimentation can plausibly reveal them (`surprise → intentional reproduction`); unreachable ones redesigned or retired | **Closed** 2026-08-24: audit found every trigger discoverable except Stack's bridge + bird; beam now seeks the nearest compatible support pair (deterministic diagnosis → fix → re-probe: bird reachable at gestures 4–36 in clustered play, bridges in 6/12 simulated sessions vs 0 before); recorded in `plans/` + `EVIDENCE.md` |
 | D3 Event rhythm review | Portfolio-wide pass so special events interrupt loops with a restful pause and genuine choice, per the rainbow pattern | Merged into A3/A4 review criteria |
 
@@ -83,8 +83,8 @@
 
 ## Current position and sequencing
 
-- **Active story:** D1 recurring-resident cast expansion (Epic D) — the bird is now reachable through ordinary play; extend the cast deliberately (at most two new inhabitants, consistent identity, bounded local responses, no collection state), choosing worlds and invitation conditions from the D2 discoverability findings.
-- Then: E1 identity exploration; F proceeds opportunistically whenever hardware or participants become available.
+- **Active story:** E1 identity-directions exploration (Epic E) — prototype two or three opinionated visual alternatives (illustration system, texture, palette, typography) on representative screens via a temporary global skin; judge by the screenshot-recognition test ("could someone recognize a SuperSimpleGames screenshot without the logo?"); shipping nothing is acceptable. Epic D is complete.
+- Then: F proceeds opportunistically whenever hardware or participants become available; remaining work is observation-driven.
 - Per-game Round-3 depth milestones in `GAME_ROADMAPS.md` are **paused**: placement was decided by B3 (all six keep their place; Story Scenes depth frozen pending child observation; Stack & Settle archive trigger sits at F1).
 
 The Familiar World foundation (shared control meanings, bounded preservation, stable Color Splash frame, bridge-invited bird, "together" meaning) is implemented and rendered-verified; its open questions transfer to Epic D and Epic F.

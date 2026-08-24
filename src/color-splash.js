@@ -6,6 +6,7 @@ import { floodRegion, resolveFloodChoice } from "./flood.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { createSplashBoard, SPLASH_COLOR_COUNT } from "./splash-boards.js";
 import { startWindDown } from "./wind-down.js";
+import { RESIDENT_TOUCHES, attachResident, colorSplashResidentFor } from "./residents.js";
 
 const GRID_COLORS = COLORS.slice(0, 4);
 const SYMBOLS = ["●", "◆", "≡", "✦"];
@@ -21,6 +22,7 @@ let board;
 let complete = false;
 let round = 0;
 let soundEnabled = loadSoundPreference();
+let residentTouchesLeft = RESIDENT_TOUCHES;
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 
 function nextSeed() {
@@ -122,6 +124,7 @@ function newRound({ playSound = false } = {}) {
   renderBoard();
   announcement.textContent = `New ${board.label.toLowerCase()} board`;
   if (playSound) tonePlayer.play(GRID_COLORS[board.cells[0]].tone);
+  updateResident();
 }
 
 function pulseTile(tile) {
@@ -170,6 +173,46 @@ function finishRound(colorIndex) {
   boardElement.classList.add("complete");
   announcement.textContent = "All squares filled. Tap anywhere for a new board.";
   tonePlayer.play(GRID_COLORS[colorIndex].tone * 1.25);
+  updateResident();
+}
+
+function residentLayer() {
+  let layer = boardElement.querySelector(".cs-resident-layer");
+  if (!layer) {
+    layer = document.createElement("div");
+    layer.className = "cs-resident-layer";
+    boardElement.append(layer);
+  }
+  return layer;
+}
+
+function touchResident(button) {
+  button.classList.remove("flapping");
+  void button.offsetWidth;
+  button.classList.add("flapping");
+  setTimeout(() => button.classList.remove("flapping"), 600);
+  residentTouchesLeft -= 1;
+  if (residentTouchesLeft <= 0) button.remove();
+}
+
+function updateResident() {
+  const resident = colorSplashResidentFor({ ...board, completed: complete });
+  const layer = boardElement.querySelector(".cs-resident-layer");
+  if (!resident) {
+    layer?.querySelector(".cs-resident")?.remove();
+    return;
+  }
+  if (layer?.querySelector(".cs-resident")) return;
+  residentTouchesLeft = RESIDENT_TOUCHES;
+  const button = attachResident({
+    layer: residentLayer(),
+    resident,
+    className: "cs-resident",
+    label: "A butterfly floats by the finished board",
+    onTouch: touchResident,
+  });
+  button.style.top = "-22px";
+  button.style.right = "-22px";
 }
 
 document.addEventListener("click", (event) => {

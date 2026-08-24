@@ -6,7 +6,7 @@ A local-only collection of six no-fail web worlds for toddlers (~18–42 months,
 
 ## Current milestone
 
-Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with personas as active decision instruments (`docs/PERSONAS.md`) and disposable story execution plans in `docs/plans/`. **Epics B and C complete; D2 closed 2026-08-24.** Released: 2bf9860 (fixes + caregiver layer + wind-down, v43), 76695da (C3 gentle levels), 3b8c46b (D2 audit). The D2 bridge redesign shipped: the Stack beam now seeks the nearest compatible support pair (level tolerance widened, release-proximity requirement dropped — beam-only; roof unchanged), taking bridges from 0/12 to 6/12 simulated sessions and the bird to gestures 4–36 in rendered clustered play; shelters unaffected; 173 deterministic checks green. Next story: **D1 recurring-resident cast expansion**.
+Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with personas as active decision instruments (`docs/PERSONAS.md`) and disposable story execution plans in `docs/plans/`. **Epics B, C, and D are complete (through D1, closed 2026-08-24).** Released: 2bf9860 (fixes + caregiver layer + wind-down), 76695da (C3 gentle levels), 3b8c46b (D2 audit), 4fafdd7 (bridge redesign — bird discoverable). D1 shipped the resident cast: the Bloom butterfly lands on completed Color Splash boards and a new snail visits Story Scenes' garden at 3+ objects — both derived deterministically with a 3-touch budget via a shared `src/residents.js` primitive; 178 deterministic checks green, rendered-verified. Next story: **E1 identity-directions exploration** (Epic E).
 
 ## Decisions
 
@@ -31,4 +31,4 @@ Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with p
 
 ## Next action
 
-Run story **D1 recurring-resident cast expansion**: add at most two new inhabitants (consistent identity, bounded local responses, invitation conditions derived from ordinary play per the D2 findings, no collection state), choosing worlds that currently lack a resident; deterministic + rendered verification including discoverability probes; then commit and push.
+Run story **E1 identity-directions exploration**: prototype two or three opinionated visual alternatives on representative screens via a temporary global skin (not a product feature), judge against the screenshot-recognition test, and report directions with screenshots; shipping nothing is acceptable. Then the roadmap is observation-driven pending F1 hardware / F2 participants. Commit and push D1 immediately (owner releases for testing).
