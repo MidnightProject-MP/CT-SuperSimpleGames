@@ -46,12 +46,14 @@ export function createTonePlayer({
       oscillator.type = "sine";
       oscillator.frequency.setValueAtTime(frequency, now);
       oscillator.frequency.exponentialRampToValueAtTime(frequency * 1.12, now + 0.18);
+      // Soft attack and a gentle release tail keep note endings from clipping.
       gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(0.09, now + 0.025);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.42);
+      gain.gain.exponentialRampToValueAtTime(0.09, now + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.02, now + 0.3);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.52);
       oscillator.connect(gain).connect(context.destination);
       oscillator.start(now);
-      oscillator.stop(now + 0.45);
+      oscillator.stop(now + 0.55);
       activeTone = { oscillator, gain };
       oscillator.addEventListener?.("ended", () => {
         if (activeTone?.oscillator === oscillator) activeTone = undefined;

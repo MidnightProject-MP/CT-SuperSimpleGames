@@ -294,30 +294,6 @@ button { font: inherit; }
 .celebration span { font-size: clamp(17px, 4.5vw, 23px); }
 .celebration[hidden] { display: none; }
 
-.new-board {
-  display: flex;
-  min-height: 58px;
-  margin-top: 8px;
-  padding: 8px 20px;
-  gap: 9px;
-  align-items: center;
-  justify-content: center;
-  border: 3px solid white;
-  border-radius: 999px;
-  color: white;
-  background: #7457e8;
-  box-shadow: 0 5px 0 #4935a8;
-  cursor: pointer;
-  pointer-events: auto;
-}
-.undo-move { grid-row: 3; display: flex; min-height: 58px; margin-top: 14px; padding: 8px 20px; gap: 8px; align-items: center; border: 3px solid white; border-radius: 999px; color: #312166; background: rgba(255,255,255,.88); box-shadow: 0 5px 0 rgba(73,53,168,.28); cursor: pointer; }
-.undo-move[hidden] { display: none; }
-.undo-move span:first-child { font-size: 30px; }
-.undo-move:focus-visible { outline: 5px solid #312166; outline-offset: 4px; }
-
-.new-board:active { transform: translateY(3px); box-shadow: 0 2px 0 #4935a8; }
-.new-board:focus-visible { outline: 5px solid #312166; outline-offset: 4px; }
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -381,7 +357,6 @@ button { font: inherit; }
     border-radius: 20px;
   }
   .board-shell { grid-template-rows: auto auto 60px; }
-  .undo-move { min-height: 50px; margin-top: 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

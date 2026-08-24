@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   font-family: "Arial Rounded MT Bold", "Nunito", system-ui, sans-serif;
   color: #47224f;
   background: #ffe2a8;
@@ -212,8 +212,8 @@ button { font: inherit; }
 .pocket-friend svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .pocket-friend[data-clue-direction] { background-color: #fff7ce; background-image: var(--clue-pattern); }
 .pocket-friend[data-clue-direction]::after { position: absolute; right: -10px; bottom: -8px; display: grid; width: 42px; height: 42px; place-items: center; border: 4px solid white; border-radius: 50%; color: white; background: #6f58df; font-size: 28px; box-shadow: 0 4px rgba(75,54,169,.24); }
-.pocket-friend[data-clue-direction="left"]::after { content: "â†"; right: auto; left: -10px; }
-.pocket-friend[data-clue-direction="right"]::after { content: "â†’"; }
+.pocket-friend[data-clue-direction="left"]::after { content: "←"; right: auto; left: -10px; }
+.pocket-friend[data-clue-direction="right"]::after { content: "→"; }
 .pocket-friend[data-pattern="dots"] { --clue-pattern: radial-gradient(circle,rgba(111,88,223,.22) 0 10%,transparent 12%) 0 0/20px 20px; }
 .pocket-friend[data-pattern="checks"] { --clue-pattern: linear-gradient(90deg,rgba(111,88,223,.15) 50%,transparent 50%) 0 0/22px 22px,linear-gradient(rgba(111,88,223,.15) 50%,transparent 50%) 0 0/22px 22px; }
 .pocket-friend[data-pattern="hearts"],.pocket-friend[data-pattern="rings"],.pocket-friend[data-pattern="stars"] { --clue-pattern: radial-gradient(circle,transparent 0 24%,rgba(111,88,223,.2) 26% 38%,transparent 40%) 0 0/26px 26px; }
@@ -299,6 +299,7 @@ button { font: inherit; }
 .pocket-station.open .pocket-friend:focus-visible { outline: 6px solid #47224f; outline-offset: 3px; }
 .pocket-friend.just-emerged,
 .pocket-friend.saying-hello { animation: friend-hello 420ms ease-out; }
+.pocket-friend.saying-hello-again { animation: friend-hello-again 480ms ease-out; }
 .pocket-friend[class*="together-"] { animation-duration: 560ms; animation-timing-function: ease-in-out; }
 .pocket-friend.together-snuggle-left { animation-name: together-snuggle-left; }
 .pocket-friend.together-snuggle-right { animation-name: together-snuggle-right; }
@@ -327,6 +328,14 @@ button { font: inherit; }
 @keyframes friend-hello {
   0% { filter: brightness(1.25); }
   45% { transform: translate(-50%, -78%) scale(1.08) rotate(4deg); }
+  100% { filter: brightness(1); }
+}
+
+/* A second greeting motion so repeated hellos stay lively. */
+@keyframes friend-hello-again {
+  0% { filter: brightness(1.2); }
+  35% { transform: translate(-50%, -64%) scale(.96) rotate(-5deg); }
+  70% { transform: translate(-50%, -80%) scale(1.06) rotate(3deg); }
   100% { filter: brightness(1); }
 }
 
@@ -390,6 +399,7 @@ button { font: inherit; }
   .pocket.just-closed .pocket-body,
   .pocket-friend.just-emerged,
   .pocket-friend.saying-hello,
+  .pocket-friend.saying-hello-again,
   .pocket-friend.clue-left,
   .pocket-friend.clue-right,
   .pocket-friend[class*="together-"],

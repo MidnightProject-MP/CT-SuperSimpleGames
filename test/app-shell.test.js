@@ -146,7 +146,7 @@ test("Story Scenes switches scenes directly from dock chips without an overlay",
   assert.match(controller, /renderSceneChips\(\)/);
 });
 
-test("Color Splash reserves controls without state-dependent board dimensions", () => {
+test("Color Splash reserves a stable frame with no removed-control remnants", () => {
   const css = readFileSync(resolve(root, "color-splash.css"), "utf8");
   const runtime = readFileSync(resolve(root, "src/color-splash.js"), "utf8");
   assert.match(css, /\.board-shell\s*\{[^}]*grid-template-rows:\s*auto auto 72px/s);
@@ -155,6 +155,6 @@ test("Color Splash reserves controls without state-dependent board dimensions", 
   assert.doesNotMatch(css, /\.teaching-board\s*\{[^}]*--board-size/s);
   assert.match(css, /\.splash-prompt\s*\{[^}]*grid-row:\s*1/s);
   assert.match(css, /\.color-board\s*\{[^}]*grid-row:\s*2/s);
-  assert.match(css, /\.undo-move\s*\{[^}]*grid-row:\s*3/s);
+  assert.doesNotMatch(css, /undo-move|new-board/, "retired control styles must stay removed");
   assert.doesNotMatch(runtime, /has-undo/);
 });

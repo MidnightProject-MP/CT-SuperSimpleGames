@@ -61,7 +61,7 @@ test("muting immediately shortens the active oscillator and blocks new tones", (
   assert.equal(player.play(523.25), true);
   player.setEnabled(false);
 
-  assert.deepEqual(context.oscillator.stopCalls, [10.45, 10.025]);
+  assert.deepEqual(context.oscillator.stopCalls, [10.55, 10.025]);
   assert.equal(player.play(587.33), false);
 });
 
@@ -72,6 +72,6 @@ test("suspending stops active audio and suspends a running context", async () =>
   player.play(523.25);
   await player.suspend();
 
-  assert.deepEqual(context.oscillator.stopCalls, [10.45, 10.025]);
+  assert.deepEqual(context.oscillator.stopCalls, [10.55, 10.025]);
   assert.equal(context.suspendCalls, 1);
 });

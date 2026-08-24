@@ -37,6 +37,7 @@ const TOGETHER_CLASSES = Object.freeze([
 let sceneCursor;
 let round = createNextRound();
 let soundEnabled = loadSoundPreference();
+let greetingCount = 0;
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 
 function nextSeed() {
@@ -201,7 +202,10 @@ function playFriend(index) {
   const contentId = getPocketContentId(round, index);
   const item = contentId ? getPocketItem(contentId) : POCKET_CLUE;
   const pair = searchGreetingPair(round, index);
-  tonePlayer.play(item.tone * 1.08);
+  // Alternate two greeting motions and pitches so repeated hellos stay lively.
+  const helloVariant = greetingCount % 2 === 0;
+  greetingCount += 1;
+  tonePlayer.play(item.tone * (helloVariant ? 1.08 : 1.03));
   if (!contentId) {
     const clue = getSearchClue(round);
     animateFriend(index, `clue-${clue.direction}`);
@@ -219,7 +223,7 @@ function playFriend(index) {
     announcement.textContent = `${first.name} and ${second.name} ${together.action}`;
     return;
   }
-  animateFriend(index);
+  animateFriend(index, helloVariant ? "saying-hello" : "saying-hello-again");
   message.textContent = contentId ? `Hello, ${item.name}!` : "A little clue!";
   announcement.textContent = contentId ? `${item.name} says hello` : "The little clue wiggles";
 }
