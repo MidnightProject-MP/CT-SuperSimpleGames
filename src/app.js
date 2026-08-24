@@ -25,7 +25,6 @@ import {
   moveGardenVisitor
 } from "./game.js";
 import { createTonePlayer } from "./audio.js";
-import { loadCaregiverSettings, normalizeLevel } from "./caregiver-settings.js";
 import { createPointerSampler } from "./interaction.js";
 import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
 import { protectPlaySurface } from "./play-gesture.js";
@@ -38,7 +37,7 @@ const invitation = document.querySelector("#invitation");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
 const visitorLayer = document.querySelector("#visitor-layer");
-const maxBlooms = normalizeLevel(loadCaregiverSettings().level) === "gentle" ? 16 : MAX_BLOOMS;
+const maxBlooms = MAX_BLOOMS;
 garden.dataset.maxBlooms = String(maxBlooms);
 
 let bloomCount = 0;

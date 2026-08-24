@@ -1,4 +1,4 @@
-const CACHE_NAME = "supersimplegames-v49";
+const CACHE_NAME = "supersimplegames-v50";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -6,7 +6,6 @@ const APP_SHELL = [
   "./caregiver.css",
   "./launcher.css",
   "./styles.css",
-  "./fresh-start.css",
   "./color-splash.css",
   "./peekaboo.css",
   "./story-scenes.css",
@@ -32,7 +31,6 @@ const APP_SHELL = [
   "./src/color-input.js",
   "./src/color-splash.js",
   "./src/flood.js",
-  "./src/fresh-start.js",
   "./src/game.js",
   "./src/interaction.js",
   "./src/local-state.js",

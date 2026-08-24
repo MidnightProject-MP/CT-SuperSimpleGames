@@ -1,6 +1,5 @@
 import { createTonePlayer } from "./audio.js";
-import { choicesForLevel, createSpawnPlan, toneFor } from "./nibbles-core.js";
-import { loadCaregiverSettings } from "./caregiver-settings.js";
+import { createSpawnPlan, NUMBER_CHOICES_DEFAULT, toneFor } from "./nibbles-core.js";
 import { getPocketItem } from "./pocket-items.js";
 import { protectPlaySurface } from "./play-gesture.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
@@ -22,7 +21,9 @@ const soundToggle = document.querySelector("#sound-toggle");
 
 let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
-const choices = choicesForLevel(loadCaregiverSettings().level);
+// The visible row stays 1·2·3; widening to 4·5 returns only through the
+// adaptive envelope (L5), driven by the child's own repeated selection.
+const choices = NUMBER_CHOICES_DEFAULT;
 let timers = [];
 
 function renderSoundState() {

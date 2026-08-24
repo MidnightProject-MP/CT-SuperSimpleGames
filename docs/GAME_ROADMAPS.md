@@ -994,7 +994,7 @@ Numbers is the collection's **quantity-as-visible-number** world, rebuilt once a
 - Deterministic seeded spawn plans place each group spread across the meadow without crowding.
 - Per-item rising tones; ghost-numeral flash ties symbol to quantity.
 - Friends reuse the local pocket-friends art; sound-off play complete; reduced motion respected.
-- Caregiver rich level currently extends choices to 5 (transition until L4); afterward the row stays 1·2·3 with deepening per the Numbers envelope — numerals are never hidden.
+- The visible bubble row is 1·2·3; range widening returns only through the Numbers envelope (L5), driven by the child's own sustained selection of the maximum — numerals are never hidden.
 
 **Experience question:** do children connect the numeral they pressed with how many friends appeared — repeating taps deliberately to make "two" or "three"?
 

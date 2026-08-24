@@ -12,7 +12,7 @@ A local-only collection of six no-fail web worlds for toddlers (~18–42 months,
 - **Memory gate PASSED** ("great").
 - **Epic G — interaction polish: COMPLETE**, plus launcher-scroll regression fixed (`pan-y`: menu surfaces pan, play surfaces don't).
 - **Epic L:** L1 envelopes closed (see `GAME_ROADMAPS.md` § Adaptive progression envelopes; Bloom/Peekaboo/Story deliberately stable). **L2 shipped:** `supersimplegames.memory.adaptive` record drives pair count 2–3, witnessed preview 1.9→1.4s, mismatch window 1.05→0.85s, arrangement variety — EMA α=0.3, hysteresis tiers (enrich ≥0.72 / simplify ≤0.45), one notch per completed round, ~28% comfort rounds one step simpler; grown-ups "Reset playful growth" clears it. Verified: 10 dedicated unit tests + rendered probe (fresh=min, persisted-max deals six cards/three columns, completion folds evidence, reset clears). **Gate re-armed for hands-on.**
-- Fixed Default/Gentle/Rich levels remain in this build until L4 lands (next).
+- Fixed Default/Gentle/Rich levels **retired (L4)**: control and settings field removed with graceful fallback for stored data; Bloom unified at 24-object garden; Color Splash fixed at four identities until L3 adaptation; Numbers row stays 1·2·3 until L5. Retired Stack/Tones sources, pages, styles, and tests deleted from the tree (git retains history). Grown-ups surface now owns "Reset playful growth."
 
 ## Decisions
 

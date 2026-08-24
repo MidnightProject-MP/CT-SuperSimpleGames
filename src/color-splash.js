@@ -1,5 +1,4 @@
 import { createTonePlayer } from "./audio.js";
-import { loadCaregiverSettings, normalizeLevel } from "./caregiver-settings.js";
 import { COLORS } from "./game.js";
 import { nearestTargetIndex } from "./color-input.js";
 import { floodRegion, resolveFloodChoice } from "./flood.js";
@@ -11,8 +10,9 @@ import { protectPlaySurface } from "./play-gesture.js";
 
 const GRID_COLORS = COLORS.slice(0, 4);
 const SYMBOLS = ["●", "◆", "≡", "✦"];
-const GENTLE_IDENTITY_COUNT = 3;
-const boardIdentityCount = normalizeLevel(loadCaregiverSettings().level) === "gentle" ? GENTLE_IDENTITY_COUNT : SPLASH_COLOR_COUNT;
+// Adaptive board-mix (Epic L3) will vary complexity; identity count is fixed
+// at four until then.
+const boardIdentityCount = SPLASH_COLOR_COUNT;
 
 const boardElement = document.querySelector("#color-board");
 const prompt = document.querySelector("#splash-prompt");

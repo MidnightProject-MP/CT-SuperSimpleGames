@@ -11,9 +11,7 @@ const pages = [
   "games/memory/index.html",
   "games/number-nibbles/index.html",
   "games/peekaboo/index.html",
-  "games/stack-settle/index.html",
-  "games/story-scenes/index.html",
-  "games/together-tones/index.html"
+  "games/story-scenes/index.html"
 ];
 
 test("manifest icons exist at their declared sizes", () => {

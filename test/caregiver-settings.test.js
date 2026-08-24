@@ -5,7 +5,6 @@ import {
   WORLD_IDS,
   defaultCaregiverSettings,
   loadCaregiverSettings,
-  normalizeLevel,
   saveCaregiverSettings,
   visibleWorlds
 } from "../src/caregiver-settings.js";
@@ -21,7 +20,7 @@ test("defaults on empty storage", () => {
   const defaults = defaultCaregiverSettings();
 
   assert.deepEqual([...WORLD_IDS], ["bloom", "color-splash", "peekaboo", "story-scenes", "memory", "numbers"]);
-  assert.deepEqual(defaults, { version: 1, sessionMinutes: null, level: null, hiddenWorlds: [] });
+  assert.deepEqual(defaults, { version: 1, sessionMinutes: null, hiddenWorlds: [] });
   assert.equal(Object.isFrozen(defaults), true);
   assert.deepEqual(loadCaregiverSettings(memoryStorage()), defaults);
 });
@@ -29,7 +28,7 @@ test("defaults on empty storage", () => {
 test("save/load round-trips valid settings", () => {
   const values = new Map();
   const storage = memoryStorage(values);
-  const settings = { version: 1, sessionMinutes: 15, level: "rich", hiddenWorlds: ["bloom", "story-scenes"] };
+  const settings = { version: 1, sessionMinutes: 15, hiddenWorlds: ["bloom", "story-scenes"] };
 
   assert.equal(saveCaregiverSettings(settings, storage), true);
   assert.deepEqual(JSON.parse(values.get(CAREGIVER_STORAGE_KEY)), settings);
@@ -44,13 +43,11 @@ test("malformed JSON falls back to defaults", () => {
 
 test("each invalid field is sanitized to its default", () => {
   const cases = [
-    [{ version: 99 }, { version: 1, sessionMinutes: null, level: null, hiddenWorlds: [] }],
-    [{ sessionMinutes: 4.5 }, { version: 1, sessionMinutes: null, level: null, hiddenWorlds: [] }],
-    [{ sessionMinutes: "15" }, { version: 1, sessionMinutes: null, level: null, hiddenWorlds: [] }],
-    [{ sessionMinutes: 61 }, { version: 1, sessionMinutes: null, level: null, hiddenWorlds: [] }],
-    [{ level: "loud" }, { version: 1, sessionMinutes: null, level: null, hiddenWorlds: [] }],
-    [{ level: 7 }, { version: 1, sessionMinutes: null, level: null, hiddenWorlds: [] }],
-    [{ hiddenWorlds: "bloom" }, { version: 1, sessionMinutes: null, level: null, hiddenWorlds: [] }]
+    [{ version: 99 }, { version: 1, sessionMinutes: null, hiddenWorlds: [] }],
+    [{ sessionMinutes: 4.5 }, { version: 1, sessionMinutes: null, hiddenWorlds: [] }],
+    [{ sessionMinutes: "15" }, { version: 1, sessionMinutes: null, hiddenWorlds: [] }],
+    [{ sessionMinutes: 61 }, { version: 1, sessionMinutes: null, hiddenWorlds: [] }],
+    [{ hiddenWorlds: "bloom" }, { version: 1, sessionMinutes: null, hiddenWorlds: [] }]
   ];
 
   for (const [raw, expected] of cases) {
@@ -60,18 +57,28 @@ test("each invalid field is sanitized to its default", () => {
 });
 
 test("valid fields survive sanitization and hidden worlds dedupe to world ids", () => {
-  const raw = { version: 1, sessionMinutes: 30, level: "gentle", hiddenWorlds: ["peekaboo", "nope", 7, "peekaboo"] };
+  const raw = { version: 1, sessionMinutes: 30, hiddenWorlds: ["peekaboo", "nope", 7, "peekaboo"] };
   const storage = memoryStorage(new Map([[CAREGIVER_STORAGE_KEY, JSON.stringify(raw)]]));
 
-  assert.deepEqual(loadCaregiverSettings(storage), { version: 1, sessionMinutes: 30, level: "gentle", hiddenWorlds: ["peekaboo"] });
+  assert.deepEqual(loadCaregiverSettings(storage), { version: 1, sessionMinutes: 30, hiddenWorlds: ["peekaboo"] });
 });
 
-test("saving sanitizes before persisting and drops retired world ids", () => {
+test("retired fields and worlds are dropped from stored settings", () => {
+  const raw = { version: 1, level: "gentle", sessionMinutes: 20, hiddenWorlds: ["stack-settle"] };
+  const storage = memoryStorage(new Map([[CAREGIVER_STORAGE_KEY, JSON.stringify(raw)]]));
+
+  assert.deepEqual(
+    loadCaregiverSettings(storage),
+    { version: 1, sessionMinutes: 20, hiddenWorlds: [] }
+  );
+});
+
+test("saving sanitizes before persisting", () => {
   const values = new Map();
   const storage = memoryStorage(values);
 
-  assert.equal(saveCaregiverSettings({ version: 3, sessionMinutes: 999, level: "loud", hiddenWorlds: ["stack-settle"] }, storage), true);
-  assert.deepEqual(JSON.parse(values.get(CAREGIVER_STORAGE_KEY)), { version: 1, sessionMinutes: null, level: null, hiddenWorlds: [] });
+  assert.equal(saveCaregiverSettings({ version: 3, sessionMinutes: 999, hiddenWorlds: ["stack-settle"] }, storage), true);
+  assert.deepEqual(JSON.parse(values.get(CAREGIVER_STORAGE_KEY)), { version: 1, sessionMinutes: null, hiddenWorlds: [] });
 });
 
 test("restricted storage remains harmless", () => {
@@ -97,14 +104,6 @@ test("a restricted localStorage getter cannot prevent startup", () => {
   } finally {
     if (descriptor) Object.defineProperty(globalThis, "localStorage", descriptor);
     else delete globalThis.localStorage;
-  }
-});
-
-test("normalizeLevel keeps known levels and nulls everything else", () => {
-  assert.equal(normalizeLevel("gentle"), "gentle");
-  assert.equal(normalizeLevel("rich"), "rich");
-  for (const value of [null, undefined, "", "Gentle", "gentle ", "loud", 7, true, ["gentle"], {}]) {
-    assert.equal(normalizeLevel(value), null, JSON.stringify(value));
   }
 });
 

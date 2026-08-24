@@ -9,7 +9,6 @@ const LEGACY_SOUND_STORAGE_KEY = "bloom.sound-enabled";
 
 const soundToggle = document.querySelector("#sound-toggle");
 const sessionButtons = [...document.querySelectorAll("[data-session]")];
-const levelButtons = [...document.querySelectorAll("[data-level]")];
 const worldInputs = [...document.querySelectorAll("input[name='world']")];
 const clearCreationsButton = document.querySelector("#clear-creations");
 const creationsMessage = document.querySelector("#creations-message");
@@ -32,9 +31,9 @@ sessionButtons.forEach((button) => {
   });
 });
 
-levelButtons.forEach((button) => {
+sessionButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    update({ level: button.dataset.level || null });
+    update({ sessionMinutes: button.dataset.session ? Number(button.dataset.session) : null });
   });
 });
 
@@ -89,9 +88,6 @@ function render() {
   for (const button of sessionButtons) {
     const minutes = button.dataset.session ? Number(button.dataset.session) : null;
     button.setAttribute("aria-pressed", String(settings.sessionMinutes === minutes));
-  }
-  for (const button of levelButtons) {
-    button.setAttribute("aria-pressed", String(settings.level === (button.dataset.level || null)));
   }
   for (const input of worldInputs) {
     input.checked = !settings.hiddenWorlds.includes(input.value);

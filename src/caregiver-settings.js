@@ -1,22 +1,18 @@
 export const CAREGIVER_STORAGE_KEY = "supersimplegames.caregiver-settings";
 export const WORLD_IDS = Object.freeze(["bloom", "color-splash", "peekaboo", "story-scenes", "memory", "numbers"]);
-const LEVELS = new Set(["gentle", "rich"]);
-
-export function normalizeLevel(level) {
-  return typeof level === "string" && LEVELS.has(level) ? level : null;
-}
 
 function isValidSession(value) {
   return Number.isInteger(value) && value >= 5 && value <= 60;
 }
 
+// Records from the retired fixed-level era may still carry a `level` field;
+// sanitize silently drops it — per-game adaptation replaced that control.
 function sanitizeCaregiverSettings(raw) {
   const source = raw && typeof raw === "object" ? raw : {};
   const hidden = Array.isArray(source.hiddenWorlds) ? source.hiddenWorlds : [];
   return Object.freeze({
     version: 1,
     sessionMinutes: isValidSession(source.sessionMinutes) ? source.sessionMinutes : null,
-    level: normalizeLevel(source.level),
     hiddenWorlds: Object.freeze(WORLD_IDS.filter((id) => hidden.includes(id)))
   });
 }

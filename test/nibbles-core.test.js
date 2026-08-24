@@ -1,7 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
-  choicesForLevel,
   createSpawnPlan,
   NUMBER_CHOICES_DEFAULT,
   NUMBER_CHOICES_RICH,
@@ -11,9 +10,6 @@ import {
 test("level choices stay tiny by default and widen only for rich", () => {
   assert.deepEqual([...NUMBER_CHOICES_DEFAULT], [1, 2, 3]);
   assert.deepEqual([...NUMBER_CHOICES_RICH], [1, 2, 3, 4, 5]);
-  assert.equal(choicesForLevel("gentle"), NUMBER_CHOICES_DEFAULT);
-  assert.equal(choicesForLevel(undefined), NUMBER_CHOICES_DEFAULT);
-  assert.equal(choicesForLevel("rich"), NUMBER_CHOICES_RICH);
 });
 
 test("spawn plans are deterministic for a seed", () => {

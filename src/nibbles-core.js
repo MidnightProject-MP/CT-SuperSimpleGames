@@ -5,11 +5,8 @@
 const TONE_STEPS = Object.freeze([262.0, 330.0, 392.0, 494.0, 587.33]);
 
 export const NUMBER_CHOICES_DEFAULT = Object.freeze([1, 2, 3]);
+// Documented maximum for L5 widening; unused until adaptation earns it.
 export const NUMBER_CHOICES_RICH = Object.freeze([1, 2, 3, 4, 5]);
-
-export function choicesForLevel(level) {
-  return level === "rich" ? NUMBER_CHOICES_RICH : NUMBER_CHOICES_DEFAULT;
-}
 
 function assertCount(count) {
   if (!Number.isInteger(count) || count < 1 || count > NUMBER_CHOICES_RICH[NUMBER_CHOICES_RICH.length - 1]) {

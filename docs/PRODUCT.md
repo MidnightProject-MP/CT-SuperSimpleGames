@@ -38,7 +38,7 @@ How it behaves: evidence updates once per natural round boundary; an exponential
 
 Per-world envelopes, signals, non-signals, and tempo live in `GAME_ROADMAPS.md` § Adaptive progression envelopes. Memory adapts first (pair count, preview, mismatch window, arrangement variety); Color Splash follows (identity count, family mix). Bloom, Peekaboo Pockets, and Story Scenes are deliberately stable — they have no honest performance signal, and none will be manufactured.
 
-**Transition:** the former Default/Gentle/Rich caregiver selection still exists in this build and keeps its documented effects until story L4 removes it. After L4 the grown-ups surface offers "Reset playful growth" instead of level choice; per-game adaptation replaces global classification entirely, because abilities develop unevenly across games.
+**Retired:** the former Default/Gentle/Rich caregiver selection was removed at story L4 (2026-08-24). The grown-ups surface now offers **"Reset playful growth"** (clears each game's adaptive record so adaptation starts over) alongside the existing creations-clearing and full-reset controls. Per-game adaptation replaces global classification entirely — abilities develop unevenly across games, and no child should be summarized as "Level 2."
 
 ### Session wind-down
 
