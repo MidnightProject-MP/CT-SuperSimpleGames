@@ -65,7 +65,7 @@
 | Story | Outcome | State |
 |---|---|---|
 | D1 Recurring resident cast | Bird plus at most two new inhabitants appear naturally across worlds with consistent identity and bounded local responses; recognition without collection state | Planned |
-| D2 Discoverability-tiered special relationships | Existing deeper triggers audited for whether ordinary experimentation can plausibly reveal them (`surprise → intentional reproduction`); unreachable ones redesigned or retired | Planned after A3 |
+| D2 Discoverability-tiered special relationships | Existing deeper triggers audited for whether ordinary experimentation can plausibly reveal them (`surprise → intentional reproduction`); unreachable ones redesigned or retired | **In progress** — audit complete 2026-08-24: all triggers discoverable except Stack's bridge + bird (never fired in 160 plausible gestures; recorded in `plans/` + `EVIDENCE.md`); remaining slice: bridge-snap redesign + re-probe |
 | D3 Event rhythm review | Portfolio-wide pass so special events interrupt loops with a restful pause and genuine choice, per the rainbow pattern | Merged into A3/A4 review criteria |
 
 ### Epic E — Ownable visual identity
@@ -83,7 +83,7 @@
 
 ## Current position and sequencing
 
-- **Active story:** D2 discoverability audit of special relationships (Epic D) — using clustered-burst rendered traces, test whether each world's deeper trigger (Bloom merges/rainbow, Stack bridge + bird, Story pairs/compositions, Peekaboo clue chains, Splash board families, Tones motifs) is plausibly discoverable through ordinary play; redesign or retire triggers that experimentation cannot reveal.
+- **Active story:** D2 remaining slice — Stack & Settle bridge-snap redesign: make a beam released near two supports reliably bridge them (the beam "wants" to span), preserving the causal story, then re-probe with the clustered harness until ordinary play reaches the bird.
 - Then: D1 recurring-resident cast expansion; E1 identity exploration; F proceeds opportunistically whenever hardware or participants become available.
 - Per-game Round-3 depth milestones in `GAME_ROADMAPS.md` are **paused**: placement was decided by B3 (all six keep their place; Story Scenes depth frozen pending child observation; Stack & Settle archive trigger sits at F1).
 

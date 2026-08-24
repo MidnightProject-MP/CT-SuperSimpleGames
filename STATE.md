@@ -6,7 +6,7 @@ A local-only collection of six no-fail web worlds for toddlers (~18–42 months,
 
 ## Current milestone
 
-Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with personas as active decision instruments (`docs/PERSONAS.md`) and disposable story execution plans in `docs/plans/`. **Epics B and C are complete (B1–B4, C1–C3 closed by 2026-08-24).** Released to production: release 2bf9860 (A3/A4 fixes, caregiver layer, wind-down, planning restructure; v43, CI green, Pages verified) and the C3 level-adoption release (gentle parameters in Bloom/Color Splash/Stack/Together Tones; default byte-equivalent; Peekaboo/Story Scenes level-neutral by decision). 173 deterministic checks green. Next story: **D2 discoverability audit** of special relationships.
+Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with personas as active decision instruments (`docs/PERSONAS.md`) and disposable story execution plans in `docs/plans/`. **Epics B and C are complete (B1–B4, C1–C3 closed by 2026-08-24).** Released to production: 2bf9860 (A3/A4 fixes, caregiver layer, wind-down; v43) and 76695da (C3 gentle-level adoption) — both CI-green and live on Pages. **D2 discoverability audit done 2026-08-24; one redesign slice remains:** every deep trigger is discoverable through ordinary clustered play except Stack & Settle's bridge + bird (never fired in 160 plausible gestures across four strategies; shelters fire at gesture ~9 every run). 173 deterministic checks green. Next: bridge-snap redesign, then re-probe until clustered play reaches the bird.
 
 ## Decisions
 
@@ -31,4 +31,4 @@ Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with p
 
 ## Next action
 
-Run story **D2 discoverability audit**: clustered-burst rendered traces per world testing whether deeper triggers (merges/rainbow, bridge+bird, story pairs/compositions, clue chains, board families, motifs) are reachable through ordinary play; classify surprise→reproduction learnability; redesign or retire unreachable triggers in bounded slices. Commit and push the C3 work immediately (owner requests releases for testing).
+Run the **D2 bridge-redesign slice**: make a beam released near two supports reliably bridge them (the beam "wants" to span — widen the snap in `src/stack.js` placement logic), keep the causal story intact, re-probe with the clustered harness (`ssa-d2/probe-stack-clustered.mjs` pattern) until ordinary play reaches the bird within a normal session; verify shelters still dominate non-bridge arrangements; then commit, push, and close D2.

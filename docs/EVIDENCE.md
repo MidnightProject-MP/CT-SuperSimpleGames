@@ -132,6 +132,14 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 
 ## External research
 
+### 2026-08-24 — D2 discoverability probe (rendered)
+
+**Method:** Headless-browser probe, 390×844: per world, seeded clustered-burst and uniform tap/drag strategies (300 taps or 40 gestures per run) with DOM-signal trigger detection; Stack additionally re-probed with clustered drag targets after scattered drags failed.
+
+- Discoverable through ordinary play: Peekaboo target + reunion (3rd opening), Together Tones motifs (~4 varied taps), Story pair beats (tap 6), Stack structures/shelters (gesture ~9, every run), Bloom bouquet/tree/rainbow (CI traces; rainbow at taps 102/480 clustered), Color Splash completion (no-fail).
+- Conditionally discoverable: Story castle compositions — fired at tap 6 under favorable clustering, never in 300 spread taps; accepted for now, revisit under F2 observation.
+- **Not discoverable: Stack & Settle's bridge + bird.** 160 plausible gestures across four strategies and both seeds produced shelters every run but never a bridge; the snap's release-geometry requirements (beam above two near-paired supports near their midpoint) are not met by ordinary play. Because the spotted bird — the recurring-resident pilot — is gated behind the bridge, a bounded snap redesign is the active D2 slice.
+
 ### 2026-08-23 — Developmental-domain synthesis
 
 **Method:** Delegated web research over CDC milestones, AAP policy, Head Start ELOF, executive-function literature, transfer-deficit meta-analyses, and early-math/pattern research. Sources recorded in the session briefing; key citations below.
