@@ -6,7 +6,7 @@
 
 * { box-sizing: border-box; }
 html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
-body { user-select: none; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+body { -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
 button { font: inherit; }
 
 .stack-game { position: relative; width: 100%; min-height: 100svh; overflow: hidden; }

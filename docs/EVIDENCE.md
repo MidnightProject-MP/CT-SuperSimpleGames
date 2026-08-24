@@ -42,6 +42,7 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 | Product owner, longer-term product direction | Explore a more ownable visual identity, caregiver-selected developmental complexity, and thoughtfully designed session wind-down while keeping sophistication hidden from the child. | These remain bounded design hypotheses after the simplification milestone. Developmental depth must not become scoring, locks, opaque performance inference, or forced progression; the closing ritual moves behind caregiver-layer architecture rather than remaining the immediate build target. |
 | Product owner, hands-on Bloom play after the reachability revision, 2026-08-21 | Bouquets, trees, and the rainbow arrived within ordinary tapping ("love the new pace of merge and all the new merge results"). Owner directed the rainbow's full-screen cutscene treatment, founder-color petals, softer launcher padding, then approved moving on. | The 6A decision gate is passed and Bloom is closed for this phase. Cutscene, petals, and icon padding shipped as directed. |
 | Product owner, operating requirement | The collection needs to work in airplane mode. | Offline-shell automation remains necessary but is not sufficient evidence; a loaded installation must eventually be exercised in device airplane mode across the launcher, every game, and Home navigation. |
+| Product owner, consolidated final product and operating direction, 2026-08-23 | Design from the child's observable experience outward; clutter (gameplay and interface) degrades play; simplicity and depth are not opposites; the educational thesis needs an intentional, researched developmental territory per experience; the portfolio itself is a hypothesis to reassess (Stack & Settle and Together Tones placement explicitly uncertain); a game earns placement through delivered quality, not potential; question whether the touchscreen medium improves each activity; prefer caregiver-selected developmental levels over conventional difficulty; special events should move from surprise to intentional reproduction and create session rhythm; discoverability of triggers matters as much as determinism; protected moments should not be dismissible before unfolding; shared grammar and recurring inhabitants build continuity without collectibles; caregiver concerns belong behind a caregiver layer; stopping deserves as much design as starting; visual identity should become ownable; curation before expansion. Operating shift: human feedback is input to investigate rather than a backlog item; routine experiential gates are adjudicated by Celestan through rendered evidence and persona review instead of awaiting owner approval. | Roadmap restructured into Project → Epic → Story with personas ([`PERSONAS.md`](./PERSONAS.md)) used at decision boundaries; the 6B owner-review gate was closed by Celestan adjudication under this directive (implementation retained; surprise/snap feel remains child-observation questions); research was delegated and recorded below; portfolio composition review became an explicit Epic. |
 
 ## Rendered evidence
 
@@ -100,6 +101,58 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 - The rendered layer caught a real interaction defect before release: `animationend` bubbles from the inner rise animation, which dismissed the overlay after one second instead of after the veil. The dismissal now filters on the veil's animation name.
 - Maskable launcher icon padding was reduced from near-full safe-zone fill to ~91% after owner feedback that the flower looked oversized on Android.
 - Owner feedback on the first cutscene build ("separate color circles, not a rainbow spanning left to right") was correct: the original bands were six bordered rings with percentage gaps and no clipping. The arch is now one hard-stop radial-gradient disc whose center sits below the viewport; a paused-animation rendered screenshot confirmed six contiguous edge-to-edge bands at full hold.
+
+### 2026-08-23 — Six-world clutter/stability audit, wave 1 (story A3)
+
+**Method:** Delegated headless-browser pass over the local dev server: 7 pages (launcher + six worlds) × 2 viewports (390×844, 640×360), fresh storage per run, 25 seeded taps/drags avoiding header controls, control inventories with rect-shift detection, screenshots archived in the session temp workspace.
+
+- All 14 runs produced zero console errors, and no pre-existing element moved more than 4px when new elements appeared — the spatial-stability invariant held at the rendered layer everywhere it could be exercised.
+- The audit found two real child-experience defects that lower layers had missed, both fixed in bounded slices and re-verified (rendered geometry + 156 deterministic checks): visible text selection on the launcher under rapid taps; Story Scenes chip artwork overflowing onto its labels in short landscape (container-unit mismatch, also mildly present in portrait).
+- An ordinary messy tap reached Stack & Settle's Fresh control; the confirmation protected the build with the non-destructive choice focused — recorded as caregiver-layer (C1) input rather than a defect.
+- Restore-state flags for Color Splash/Stack/Story Scenes were measurement artifacts (count heuristic); prior rendered evidence for those flows stands.
+- Dense, completion, and overlay states and Bloom's rainbow dismissal were not exercised at 25 taps; wave 2 with seeded long traces remains before A3 closes.
+
+### 2026-08-23 — Wave 2: overlay states, Fresh friction, rainbow hold (stories A3 + A4)
+
+**Method:** Headless-browser runs over the local dev server: deliberate Fresh-dialog flow on Bloom; clustered-burst tap traces (jittered zone centers) until a real rainbow appeared; dismissal timing measured in-page.
+
+- Fresh destructive-friction flow verified rendered: dialog appears, "Keep playing" preserves the garden exactly, "Start fresh" clears it.
+- Uniformly random taps (450) reached neither a rainbow nor a Color Splash completion, while clustered-burst traces reached real rainbows at taps 102 and 480 — ordinary-play reachability depends on clustered bursts, consistent with the seeded trace model.
+- The rainbow cutscene previously dismissed on **any** pointerdown instantly (code-confirmed). A4 fix shipped: a 1500ms opening hold now absorbs touches; touches after the hold dismiss; the veil's natural self-dismiss and the reduced-motion skip are unchanged. Rendered verification on real rainbows: tap at ~400ms did not dismiss; tap after hold dismissed in 3ms; natural self-dismiss at ~3.2s. 156/156 deterministic checks pass.
+- Residual gap: Color Splash completion overlay was not reached by the harness (cell targeting limitation); prior rendered evidence for the stable frame and completion hold stands.
+
+### 2026-08-23 — Orphaned Peekaboo working-tree change reverted
+
+**Method:** Diff inspection of unattributed uncommitted changes found during A3 close-out; deterministic suite; rendered smoke check.
+
+- The tree contained an undocumented Peekaboo behavior change: the deliberate "Hide again" replay control (documented in `PRODUCT.md` acceptance evidence) was removed and replaced by a hidden tap-anywhere restart, and a mojibake regression (`"Everybodyâ€™s here!"`) plus a BOM were introduced. This was the likely source of the mojibake sighting in the first audit run.
+- **Consequence:** reverted to the committed last-verified state; selection-guard CSS additions preserved. The tap-anywhere concept is recorded as a B2-input hypothesis (it maximizes directness but silently discards the found state — the surprising-transition class 6B removed). Post-revert verification: 156/156 checks, rendered smoke clean. Unattributed working-tree changes are treated as unverified regardless of apparent intent.
+
+**Remaining uncertainty:** the change's origin is unknown (likely an interrupted delegation from a prior session); delegation mandates now restate the no-uncommitted-side-effects boundary.
+
+## External research
+
+### 2026-08-23 — Developmental-domain synthesis
+
+**Method:** Delegated web research over CDC milestones, AAP policy, Head Start ELOF, executive-function literature, transfer-deficit meta-analyses, and early-math/pattern research. Sources recorded in the session briefing; key citations below.
+
+- The 18–36 month band contains roughly three developmental regimes (<24 / 24–30 / 30–42 months) with materially different memory spans, symbolic-play readiness, and classification ability. Face-down memory exceeds most under-30-month children; matching identical *visible* pairs arrives ~28–32 months; subitizing emerges mostly at 3–4 years.
+- The video/transfer deficit peaks in year two and largely resolves by ~3; joint media engagement is the strongest documented moderator of whether screen time teaches before age 3. Responsive contingent touchscreens help, but gratuitous interactivity measurably degrades comprehension.
+- "No-fail" is professionally praised, but evidence does not support total *outcome neutrality*: gentle, non-penalizing outcome distinction carries information; uniform success animations remove it. Person-praise at toddler ages has measurable long-term costs; celebration should target events and artifacts, never the child.
+- Blanket resistance to progression is contradicted in spirit by the Four Pillars literature: challenge should widen self-paced (parameters, not unlocks). Top toddler apps score badly on exactly this pillar.
+
+**Consequence:** Personas codified as three regimes; Together Tones flagged highest-risk for under-30-month play (arbitrary sequence recall exceeds span); Story Scenes recognized as skewing toward R3; spatial/construction and connected-region work confirmed as strongest differentiation; caregiver layer and co-play affordances elevated from nicety to evidence-backed core. Feeds Epic B stories.
+
+### 2026-08-23 — Competitive and interaction-pattern landscape
+
+**Method:** Delegated web research across Sago Mini, Toca Boca, Khan Academy Kids, Busy Shapes, LEGO DUPLO World, Thinkrolls, Endless Alphabet, Peekaboo Barn, and industry consolidation history.
+
+- Portfolio consolidation precedes expansion across the industry (Toca Life → World; Sago delisted standalones; Duck Duck Moose frozen): retiring or folding weaker worlds is normal practice, not failure.
+- Proven no-levels complexity patterns exist (adaptive difficulty, mastery paths, caregiver-set levels); a gated grown-ups area with co-play prompts is table stakes; wind-down/bedtime rituals are rare and differentiating (Peekaboo Barn's night-fall ending, DUPLO's caregiver bedtime freeze).
+- Small recurring casts with one signature color/shape each create cross-game recognition, supported by parasocial-character learning research. One recognizable visual system is what makes leading products identifiable without a logo.
+- Free/ad-free/no-account positioning is scarce (Khan Academy Kids is the only major analog) and real, but sets a high polish bar.
+
+**Consequence:** Validates the archive hypotheses, wind-down epic, caregiver-layer epic, recurring-inhabitant cast, and visual-identity exploration as researched directions rather than speculative ones; informs B3 portfolio-composition criteria (medium value, regime fit, delivered quality).
 
 ## External guidance boundary
 

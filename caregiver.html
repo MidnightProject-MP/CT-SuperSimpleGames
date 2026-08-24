@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; connect-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'none'; worker-src 'self'; manifest-src 'self'" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#5d3fd3" />
+    <meta name="description" content="Adult controls for SuperSimpleGames: sound, session length, developmental level, and worlds shown." />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./assets/icon-192.png" />
+    <link rel="stylesheet" href="./caregiver.css" />
+    <title>For grown-ups — SuperSimpleGames</title>
+  </head>
+  <body>
+    <main class="caregiver">
+      <header class="caregiver-heading">
+        <a class="home-link" href="./">&larr; All games</a>
+        <h1>For grown-ups</h1>
+      </header>
+
+      <section class="panel" aria-labelledby="sound-heading">
+        <h2 id="sound-heading">Sound</h2>
+        <button id="sound-toggle" type="button" aria-pressed="true">On</button>
+      </section>
+
+      <section class="panel" aria-labelledby="session-heading">
+        <h2 id="session-heading">Session length</h2>
+        <div class="segmented" role="group" aria-label="Session length">
+          <button type="button" data-session="" aria-pressed="true">Off</button>
+          <button type="button" data-session="10" aria-pressed="false">10</button>
+          <button type="button" data-session="15" aria-pressed="false">15</button>
+          <button type="button" data-session="20" aria-pressed="false">20</button>
+          <button type="button" data-session="30" aria-pressed="false">30</button>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="level-heading">
+        <h2 id="level-heading">Developmental level</h2>
+        <div class="segmented" role="group" aria-label="Developmental level">
+          <button type="button" data-level="" aria-pressed="true">Default</button>
+          <button type="button" data-level="gentle" aria-pressed="false">Gentle</button>
+          <button type="button" data-level="rich" aria-pressed="false">Rich</button>
+        </div>
+        <p class="hint">Gentle and rich adjust how much each world offers; worlds adopt this gradually.</p>
+      </section>
+
+      <section class="panel" aria-labelledby="worlds-heading">
+        <h2 id="worlds-heading">Worlds shown</h2>
+        <ul class="world-list">
+          <li><label><input type="checkbox" name="world" value="bloom" checked /> Bloom</label></li>
+          <li><label><input type="checkbox" name="world" value="color-splash" checked /> Color Splash</label></li>
+          <li><label><input type="checkbox" name="world" value="peekaboo" checked /> Peekaboo Pockets</label></li>
+          <li><label><input type="checkbox" name="world" value="stack-settle" checked /> Stack &amp; Settle</label></li>
+          <li><label><input type="checkbox" name="world" value="story-scenes" checked /> Story Scenes</label></li>
+          <li><label><input type="checkbox" name="world" value="together-tones" checked /> Together Tones</label></li>
+        </ul>
+      </section>
+
+      <section class="panel danger" aria-labelledby="reset-heading">
+        <h2 id="reset-heading">Reset everything</h2>
+        <button id="reset-all" type="button">Clear settings and saved creations</button>
+        <p id="reset-message" class="cleared" hidden>Cleared.</p>
+      </section>
+    </main>
+    <script type="module" src="./src/caregiver.js"></script>
+  </body>
+</html>

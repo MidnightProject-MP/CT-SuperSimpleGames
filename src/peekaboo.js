@@ -11,6 +11,7 @@ import {
   toggleSearchPocket
 } from "./peekaboo-search.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
+import { startWindDown } from "./wind-down.js";
 
 const pocketRow = document.querySelector("#pocket-row");
 const playfield = document.querySelector("#peek-playfield");
@@ -333,6 +334,7 @@ addEventListener("resize", () => {
 createPockets();
 renderTarget();
 renderSoundState();
+startWindDown({ lines: { "/games/peekaboo/": "The friends are going to sleep." } });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   const workerUrl = new URL("../sw.js", import.meta.url);

@@ -1,6 +1,7 @@
 import { createTonePlayer } from "./audio.js";
 import { activateVoice, createToneState, reactivateTrail } from "./together-tone.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
+import { startWindDown } from "./wind-down.js";
 
 const board = document.querySelector("#tone-board");
 const stage = document.querySelector("#tones-stage");
@@ -164,6 +165,7 @@ addEventListener("pagehide", tonePlayer.stop);
 renderSoundState();
 renderTrail();
 renderLink();
+startWindDown({ lines: { "/games/together-tones/": "The tones are quiet." } });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   const workerUrl = new URL("../sw.js", import.meta.url);

@@ -19,9 +19,51 @@ Each game should provide a different kind of agency and a different route into e
 
 “Learning” means exposure through understandable play. It never means a quiz, a mastery claim, a performance score, or pressure to produce an adult-defined answer.
 
+## Developmental territory map (story B2, 2026-08-23)
+
+Authoritative per-world territory declarations. Regimes are defined in [`PERSONAS.md`](./PERSONAS.md): R1 pre-symbolic (<24 mo), R2 emerging representation (24–30 mo), R3 representational (30–42 mo). Every world keeps its simpler surface fully playable for younger children; depth emerges from the world, never from modes or gates.
+
+| World | Core observable activity | Territory | Surface regime | Depth regime |
+|---|---|---|---|---|
+| Bloom | Touch makes a flower; touching again grows it; nearby flowers gather into bouquets and trees | Cause and effect; color and size variation; part–whole transformation; grouping-by-three; gentle spatial planning | R1 (create + growth) | R2–R3 (tending toward merges, anticipating transformations, reproducing the rainbow) |
+| Color Splash | Tap a color; the connected corner region spreads; Back one reverses | Color/symbol matching; connected regions and boundaries; one-step prediction and revision | R1 (tap → visible spread on teaching boards) | R2–R3 (identity discrimination on 4×4 boards, planning ahead) |
+| Peekaboo Pockets | Open and close big containers; find the target; greet friends; two friends form a reunion | Hidden/visible and containment; stable location; clue→inference; thematic categories and naming | R1 (open/close, peekaboo delight) | R2–R3 (stable-location memory, clue use, category talk with caregiver) |
+| Stack & Settle | Place and rearrange five big pieces; pieces settle on supports; a bridge invites the bird | Spatial relationships (above/beside/inside); support and containment; arrangement and revision | R1–R2 (tap-place, settling responses) | R3 (intentional bridge/structure building, idea-card planning) |
+| Story Scenes | Tap adds cast members; repeated taps vary them; nearby pairs begin story beats; castle ingredients combine | Symbolic and pretend play; thematic vocabulary; reversible cause-effect pairs; composition | R1–R2 (placement variety is complete play) | R3 (narrative beats, roles, castle tableaux) |
+| Together Tones | Tap pads for tone + visual response; repeats echo; alternates link; beads replay one voice | Cause-effect with sound; same/different and repeat/change; short temporal patterns; shared turn-taking | R1 (tap → tone + light) | R2–R3 (same/different, alternation, motif shapes, caregiver turn-taking) |
+
+### Risk resolutions
+
+- **Together Tones under-30-month risk — accepted, territory clarified.** The world never demands sequence reproduction: motifs are consequences of what the child already did, and history beads replay exactly one voice. R1 receives a complete cause-effect sound toy; arbitrary recall (beyond toddler working memory) is never required. Any future TT-3 work must use meaningful chunks and echo formats, never arbitrary-sequence imitation. Portfolio *value* versus other candidates remains a B3 question.
+- **Story Scenes R3 skew — accepted, surface/depth split documented.** Symbolic substitution and multi-step scripts are R3 capacities, but the surface (tap → object appears; repeated taps vary it) is complete, satisfying play for R1–R2. Narrative depth rewards the older child without gating the younger. Caregiver mediation (naming, prompting) is the intended bridge and belongs to the caregiver-layer epic (C).
+
+### Portfolio composition verdict (story B3, 2026-08-23)
+
+Scored against delivered quality, regime fit, medium value (does the touchscreen add what the physical activity cannot?), distinct agency, and composition gaps. No child or device evidence exists yet for any world, so all verdicts carry explicit evidence triggers and remain reversible.
+
+| World | Verdict | Rationale |
+|---|---|---|
+| Bloom | **Keep — flagship** | Strongest delivered quality (owner-gated reachability, protected rainbow, CI-guarded rates); digital-native transformations physical flowers cannot do; anchors cause-effect and the special-event pattern. |
+| Color Splash | **Keep** | Most digital-native agency (flood-fill has no physical analog); connected-region reasoning is the portfolio's best research-backed differentiation; stable frame rendered-verified. |
+| Peekaboo Pockets | **Keep** | Peekaboo is developmentally ideal for the youngest regime; reversible reveal + derived reunions are digital-native; strongest joint-media-engagement lever (naming, anticipation). |
+| Story Scenes | **Keep — experimental; depth frozen** | The only symbolic-play world (research: open-ended symbolic canvases are rare and top-rated), but the highest execution burden and an R3-skewed core. No further depth milestones (SCN-3+) until child observation (F2) validates that children comprehend the family/palette and relationship grammar. Surface is verified and complete. |
+| Stack & Settle | **Keep — with explicit archive trigger** | The medium-value concern is real (screen transfer is weakest for object manipulation; physical blocks offer weight/gravity/instability the screen cannot), but touch-device ease has never been observed — archiving on an untested assumption violates evidence discipline. **Trigger:** the F1 device pass. If drag construction frustrates real toddler hands, archive or reshape toward tap-only placement (the resident pilot migrates to another world). Until then it remains the spatial-construction representative. |
+| Together Tones | **Keep — first replacement candidate** | Thinnest world by content, but its surface is a complete cause-effect sound toy for the youngest regime and temporal agency is distinct. Archive only if a B4 matching/classification concept proves stronger in explicit comparison — not before a replacement exists. |
+
+**Composition consequences:** launcher unchanged (six worlds). The confirmed portfolio gap — visible matching/classification and explicit small quantities — proceeds to B4 concept briefs. Vocabulary and spatial-talk leverage belongs to the caregiver layer (C1), not a new world. C/D sequencing unlocked: C1 (caregiver layer) is the next epic-level investment after B4.
+
+### Portfolio gap notes (inputs to B3/B4)
+
+- **Uncovered agencies:** visible matching/classification (research: identical-pair matching ~28–32 mo; sort-by-one-attribute from ~18 mo) and explicit small-quantity exposure beyond Bloom's implicit 3s/9s. Strongest candidates for a genuinely new world or a bounded reshape; briefs belong to B4 only if B3 confirms the gap. *(B3 confirmed it.)*
+- **Covered strongly:** cause-effect (all worlds), connected-region/spatial reasoning (Color Splash, Stack & Settle — the portfolio's best differentiation), symbolic play (Story Scenes), temporal pattern surface (Together Tones).
+- **Caregiver-mediated, not world-shaped:** vocabulary/language and spatial talk — highest-leverage per research, belongs to the caregiver layer (C1 co-play prompts), not a new child-facing world.
+- **Medium-value flag for B3:** Stack & Settle's physical analog (blocks) is superb, and screen transfer is weakest for object-manipulation tasks; its digital additions (deterministic settling, structure recognition, resident) must outweigh that, and touch-device ease is still unobserved (Epic F1).
+
 ## Current per-game frontier
 
 This table is the quick index for this document. “Next candidate” means the next unimplemented milestone within that game, not permission to bypass the portfolio sequence in `ROADMAP.md`.
+
+**Paused 2026-08-23:** portfolio composition is under explicit review (`ROADMAP.md` Epic B). Per-game depth candidates below are suspended until each world's territory, regime fit, and launcher placement are decided by story B3; do not begin new per-game milestones before then.
 
 | Experience | Implemented through | Next per-game candidate |
 |---|---|---|

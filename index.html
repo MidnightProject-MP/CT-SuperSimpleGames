@@ -11,6 +11,7 @@
     <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="./assets/icon-192.png" />
     <link rel="stylesheet" href="./launcher.css" />
+    <link rel="stylesheet" href="./wind-down.css" />
     <title>SuperSimpleGames</title>
   </head>
   <body>
@@ -24,48 +25,52 @@
       </header>
 
       <nav class="game-grid" aria-label="Choose a game">
-        <a class="game-card bloom-card" href="./games/bloom/">
+        <a class="game-card bloom-card" href="./games/bloom/" data-world="bloom">
           <span class="card-art bloom-art" aria-hidden="true">
             <i></i><i></i><i></i><i></i><i></i><i></i><b></b>
           </span>
           <span class="card-copy"><strong>Bloom</strong><small>Grow a garden</small></span>
         </a>
 
-        <a class="game-card splash-card" href="./games/color-splash/">
+        <a class="game-card splash-card" href="./games/color-splash/" data-world="color-splash">
           <span class="card-art splash-art" aria-hidden="true">
             <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
           </span>
           <span class="card-copy"><strong>Color Splash</strong><small>Fill the board</small></span>
         </a>
 
-        <a class="game-card peek-card" href="./games/peekaboo/">
+        <a class="game-card peek-card" href="./games/peekaboo/" data-world="peekaboo">
           <span class="card-art pocket-art" aria-hidden="true">
             <i><b>★</b></i><i><b>●</b></i><i><b>♥</b></i>
           </span>
           <span class="card-copy"><strong>Peekaboo</strong><small>Open the pockets</small></span>
         </a>
 
-        <a class="game-card stack-card" href="./games/stack-settle/">
+        <a class="game-card stack-card" href="./games/stack-settle/" data-world="stack-settle">
           <span class="card-art stack-art" aria-hidden="true">
             <i></i><i></i><i></i><b></b>
           </span>
           <span class="card-copy"><strong>Stack &amp; Settle</strong><small>Build it your way</small></span>
         </a>
 
-        <a class="game-card story-card" href="./games/story-scenes/">
+        <a class="game-card story-card" href="./games/story-scenes/" data-world="story-scenes">
           <span class="card-art story-art" aria-hidden="true">
             <i></i><i></i><i></i><b></b>
           </span>
           <span class="card-copy"><strong>Story Scenes</strong><small>Make a little world</small></span>
         </a>
 
-        <a class="game-card tones-card" href="./games/together-tones/">
+        <a class="game-card tones-card" href="./games/together-tones/" data-world="together-tones">
           <span class="card-art tones-art" aria-hidden="true">
             <i></i><i></i><i></i><i></i><b></b>
           </span>
           <span class="card-copy"><strong>Together Tones</strong><small>Tap, echo, connect</small></span>
         </a>
       </nav>
+
+      <footer class="grownups">
+        <button id="grownups-gate" type="button">For grown-ups</button>
+      </footer>
     </main>
     <script type="module" src="./src/launcher.js"></script>
   </body>

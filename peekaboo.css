@@ -14,6 +14,7 @@ body {
     linear-gradient(165deg, #ffd987 0%, #fff1c9 55%, #ffc8df 100%);
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+  -webkit-user-select: none;
   user-select: none;
 }
 

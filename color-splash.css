@@ -13,6 +13,7 @@ body {
     radial-gradient(circle at 86% 17%, rgba(255,255,255,.68) 0 7%, transparent 7.5%),
     linear-gradient(160deg, #77ddff 0%, #c9f7ff 56%, #e0d7ff 100%);
   -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
   user-select: none;
 }
 

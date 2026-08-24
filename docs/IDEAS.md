@@ -16,6 +16,19 @@ A child could place broad route marks that a friendly object follows. The intere
 
 The open question is whether tap-authored segments can make the experience complete for children who cannot sustain a drag. A continuous-line requirement would conflict with the current motor-access principles.
 
+## Gather families (matching/classification + small quantities)
+
+Story B4 brief (2026-08-23), answering the portfolio gap confirmed by B3. A cozy world of two or three large homes, each displaying one big example — a red leaf, a striped shell, a spotted mushroom. Familiar items (leaves, shells, bugs, stones in matching attribute families) arrive one at a time; the child moves or taps each item toward any home.
+
+The agency is **classification by attribute with reversible revision** — the child judges same/different, which no existing world asks for. Every placement is accepted: a matching item settles into its family row; a non-matching item sits in a visible visitor spot at the home's edge, complete and un-punished, and one tap returns it to the tray for regathering (reversible, never a rejection). When all members of a family gather, the family completes with a calm together-response — the same shared meaning already used across the collection. Homes show one, two, or three outline slots, so set size is visible before it is verbal: subitizing exposure without counting tasks.
+
+- **Regime:** R1 enjoys moving items and watching every placement respond; R2 notices same and different and begins gathering; R3 completes sets deliberately and distinguishes attributes (color, pattern, size).
+- **Surface/depth split:** placement + response is complete play; set completion and deliberate attribute sorting are the depth.
+- **No-fail mechanics:** nothing is ever wrong — a mismatched item is simply "not home yet," and the information stays visible without penalty.
+- **Together Tones comparison (B3):** both serve R1 surfaces well. This concept covers the uncovered classification/matching agency and small quantities; Together Tones covers temporal agency. If this concept earns implementation, Together Tones is the archive candidate per B3; if it fails the distinct-agency bar in review, Together Tones stays.
+
+**Open question:** can attribute differences stay exploratory rather than becoming a disguised right-answer sorter — does the pleasure survive if the child never completes a set? (If completion pressure is the core pleasure, it conflicts with the product contract and should not proceed.)
+
 ## Soft shape homes
 
 Large objects and flexible homes could explore relative size, nesting, and containment. Every placement would need a satisfying consequence, including imperfect or non-matching placement.

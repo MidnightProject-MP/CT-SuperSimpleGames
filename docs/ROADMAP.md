@@ -1,104 +1,104 @@
 # Product roadmap
 
-This is the authoritative cross-game execution order. `PRODUCT.md` owns the product contract; `GAME_ROADMAPS.md` owns detailed per-game possibilities; `EVIDENCE.md` owns what has actually been observed or verified.
+**Document roles:** this file owns Project, Epic, and Story *intent and outcomes only*. [`PRODUCT.md`](./PRODUCT.md) owns current product truth; [`GAME_ROADMAPS.md`](./GAME_ROADMAPS.md) owns per-game depth candidates; [`PERSONAS.md`](./PERSONAS.md) owns the working models applied at decision boundaries; [`EVIDENCE.md`](./EVIDENCE.md) owns what has been observed and its provenance. Disposable Story execution plans live in [`plans/`](./plans/) while their story is active.
 
-## Current position
+## Project
 
-- **Active phase:** Experiential simplification
-- **Next milestone:** six-world clutter and stability review (6C)
-- **Last reconciled:** 2026-08-21
-- **Current milestone state:** 6A closed by owner gate; 6B implemented, rendered-verified, awaiting owner review
+**SuperSimpleGames** is a local-only collection of no-fail web worlds for toddlers playing with a nearby caregiver: safe under unrestricted tapping, playable offline after first load, private by design, with no accounts, analytics, or external consequences.
 
-The collection has six distinct playable worlds. Shared control, preservation, spatial stability, the first recurring resident, and the first shared relationship meaning are implemented. The current need is not another layer of features. It is to ensure that existing depth is reachable, visible controls earn their attention cost, and the six worlds feel simpler to a child as their underlying systems become more capable.
+**Thesis (revised 2026-08-23):** each experience occupies an intentional, researched developmental territory rather than "educational in disguise" generally. The audience spans roughly three regimes (<24 / 24–30 / 30–42 months; see [`PERSONAS.md`](./PERSONAS.md)), and each world declares which regime(s) it serves while degrading gracefully downward. Sophistication lives underneath the experience: a young child receives simple cause and effect while an older child discovers relationships, patterns, memory demands, prediction, and intentional reproduction. Depth emerges from the world, never from more interface.
 
-## Governing direction
+**Standing constraints:** no scores, streaks, timers shown to children, unlocks, rare rewards, autoplay, nagging, analytics, accounts, ads, purchases, or external actions; no reading required; complete with sound off and reduced motion; local-only persistence; every world safe under unrestricted tapping.
 
-SuperSimpleGames should grow from simple reactions into simple, dependable worlds.
+**Direction principles:**
 
-- The first ordinary action is effortless and immediately acknowledged.
-- Imprecise but plausible input is treated as intent, not failure.
-- Repetition reveals understandable relationships rather than more valuable rewards.
-- Children can revisit and alter earlier actions; their work is not silently erased.
-- Every object, control, state, confirmation, and rule competes with the play itself. Add one only when its child-facing value exceeds that attention cost.
-- Complexity belongs behind the experience when forgiving resolution, reversible state, stable layout, or deterministic assistance can preserve intent without exposing another mode.
-- A mechanic is not experientially available until it can be encountered and deliberately reproduced through ordinary play. Mechanical implementation, rendered reachability, and child understanding are separate claims.
-- Games remain distinct forms of agency: creation, connected-region reasoning, search, construction, storytelling, and temporal play.
-- Completion creates a restful pause. Finite games offer deliberate replay. Destructive actions receive friction proportional to the value and replaceability of what would be lost; prefer making an action reversible or nondestructive underneath the interface.
-- Scores, streaks, timers, unlocks, rare rewards, autoplay, nagging, analytics, accounts, and external consequences remain out of scope.
+- Design from the child's observable experience outward. `tap → something happens` beats `tap → management interface → decision → confirmation`. Complexity lives behind the experience.
+- Every control, state, confirmation, and rule competes with play itself and must earn its attention cost. Imprecise input is treated as intent, not failure.
+- A mechanic is experientially real only when ordinary messy play can encounter it and deliberately reproduce it. Implementation, rendered reachability, and child understanding are separate claims; the browser is a sense organ for verifying the second claim.
+- Special moments move `surprise → curiosity → causal understanding → intentional reproduction`, are discoverable through experimentation, interrupt play to create rhythm (`ordinary play → discovery → event → pause → choice`), and are protected: an accidental tap must not dismiss them before they have unfolded — briefly and without frustration.
+- No-fail does not mean no-information: gentle, non-penalizing outcome distinction is welcome; celebration targets events and artifacts, never the child's traits.
+- Developmental complexity widens through caregiver-selected parameters of the same world (tolerance, density, relationship depth, quantities) — never locks, gates, or performance inference.
+- A world earns its launcher place through delivered quality against the personas and the medium test ("does the touchscreen add what the physical activity cannot?"), not through implementation effort. Curate before expand; archiving a good experiment is legitimate.
+- Recurring inhabitants and shared meanings build continuity ("there's the bird again"), never a collection economy.
+- Caregiver concerns (duration, sound, accessibility, level, resets, wind-down) live behind a caregiver layer; stopping deserves as much design as starting.
 
-## Familiar World
+**Planning discipline:** Project → Epic → Story carry intent only. When a story is selected, inspect current reality, then write a separate execution plan in `plans/` — that plan may be detailed and is rewritten freely as implementation reveals better paths; the story remains the committed outcome. Completed or abandoned plans are deleted; git retains history. Do not decompose future stories into tasks prematurely.
 
-This phase gives the six games a few transferable meanings without creating progression, currency, collectibles, or a shared reward layer.
+## Epics and stories
 
-### Completed foundation
+### Epic A — Reachable simplicity
 
-1. **Shared control meanings — implemented.** Home leaves without clearing. Again replays a finite experience. Different changes a bounded prompt without erasing unrelated work. Fresh is reserved for destructive clearing.
-2. **Bounded preservation — implemented.** Bloom, Stack & Settle, and Story Scenes restore one versioned local creation. Fresh requires “Keep playing” or “Start fresh.” Invalid, incompatible, oversized, or unavailable storage cannot prevent play.
-3. **Stable Color Splash frame — implemented and rendered.** Prompt, board, and Back one own fixed grid rows; teaching boards and later boards share one outer frame; completion overlays the board. Automated checks and rendered 390×844 portrait and 640×360 short-landscape checks pass. Physical touch-device and child evidence remain pending.
-4. **Recurring resident pilot — implemented and rendered.** A child-built Stack & Settle bridge deterministically invites Bloom's spotted bird. It has one recognizable identity, four bounded local responses, no collection state, and no effect on the construction. The bridge and bird survive portrait-to-landscape reflow; rebuilding the condition can invite it again. Child recognition and intentional reproduction remain unobserved.
-5. **Shared “together” meaning — implemented and rendered.** Two open Peekaboo friends derive one visible connector and a scene-specific reunion: snuggle, move, float, or swim. Either friend repeats it; closing either home removes it. This aligns with existing Bloom links, Story relationships, and Together Tones pairs without sharing state or forcing identical animation. Child transfer of the meaning remains unobserved.
+*Existing depth must be reachable, clutter removed, and moments protected across all six worlds.*
 
-Implementation detail and evidence belong in `PRODUCT.md`, `GAME_ROADMAPS.md`, and `EVIDENCE.md`; this roadmap records only sequencing and decision state.
+| Story | Outcome | State |
+|---|---|---|
+| A1 Bloom merge reachability | Ordinary play reliably reaches bouquets, trees, and the rainbow; decluttering instead of feature layers | **Closed** 2026-08-21 (owner gate passed) |
+| A2 Story Scenes management friction | Setting switches immediate, scenes park and restore exactly, snap feels friendly | **Closed** 2026-08-23 by Celestan adjudication under the operating agreement: rendered verification passed; residual surprise/snap-feel questions transferred to Epic F observation |
+| A3 Six-world clutter and stability review | Every world reviewed as a persona encounters it (empty, active, dense, completion, replay, restored, short landscape); clear interaction failures corrected in bounded slices; findings recorded | **Closed** 2026-08-23: wave 1 systematic audit (two corrections, rest adjudicated/deferred) + wave 2 (Fresh friction verified rendered, rainbow dismissal fixed) — all recorded in `plans/` and `EVIDENCE.md`; sole residual gap (Color Splash overlay harness reach) noted, prior evidence stands |
+| A4 Protected special moments | The rainbow celebration (and any equivalent moment) unfolds briefly before accidental input can dismiss it; self-dismiss and reduced-motion behavior preserved | **Closed** 2026-08-23: 1500ms opening hold shipped in `src/app.js`; rendered-verified on real rainbows (hold absorbs early taps, post-hold tap dismisses, natural end ~3.2s) |
 
-## Active sequence
+### Epic B — Educational thesis and portfolio composition
 
-### Milestone 6A — make existing depth reachable — closed 2026-08-21
+*Each world gets an explicit researched territory; the portfolio itself becomes a reviewed hypothesis.*
 
-Bloom's second-tier merge was mechanically implemented but unreachable through ordinary play. Deterministic traces located the cause in supply arithmetic (post-cap freeze plus rigid color cycling) rather than merge radius, and the owner set a ~50-tap reachability target with aggressive decluttering. The revision ships: multi-color merging, ancestry-color rainbow trees with a full-screen skippable cutscene, three-tree send-off dissolution, tending pull, midpoint planting, and bouquet gathering. Seeded ordinary-play traces reach the first bouquet by tap 50 in ~98% of runs and a tree by tap 100 in ≥93%; rendered headless-Edge traces confirmed arrivals at taps 50–130 on both reference viewports; CI guards these rates.
+| Story | Outcome | State |
+|---|---|---|
+| B1 Domain research synthesis | Evidence base on early numeracy, memory, classification, patterns, language, spatial reasoning, symbolic play, transfer deficit, and joint media engagement | **Closed** 2026-08-23 (delegated research recorded in `EVIDENCE.md`) |
+| B2 World territory map | Each world declares its developmental territory, regime band, and what a child actually does there; personas applied at each boundary; Together Tones' under-30-month risk and Story Scenes' R3 skew explicitly resolved (reshape, reposition, or accept) | **Closed** 2026-08-23: map recorded in `GAME_ROADMAPS.md`; both risks accepted with surface/depth splits documented and design constraints recorded; gap notes captured for B3/B4 |
+| B3 Portfolio composition recommendation | Keep / reshape / archive verdict per world using delivered quality, regime fit, and medium value (Stack & Settle touchscreen-vs-physical question; Together Tones span risk); consolidation precedent informs rather than dictates; owner informed of consequential verdicts, not asked to choose alternatives | **Closed** 2026-08-23: all six worlds keep their launcher place; Story Scenes depth frozen pending child observation; Stack & Settle carries an explicit archive trigger at the F1 device pass; Together Tones is first replacement candidate against a B4 concept; verdict recorded in `GAME_ROADMAPS.md` |
+| B4 Gap concept briefs | If B3 confirms gaps (visible matching/classification, quantity exposure, language hooks), produce briefs into `IDEAS.md`/`GAME_ROADMAPS.md` — only forms whose agency is distinct | **Closed** 2026-08-23: "Gather families" brief recorded in `IDEAS.md` (classification by attribute, reversible revision, visible 1–3 set sizes; includes the Together Tones comparison and the no-fail open question). Epic B complete |
 
-**Decision gate:** passed by the product owner on 2026-08-21 after hands-on reproduction of every layer.
+### Epic C — Caregiver layer and session rhythm
 
-### Milestone 6B — remove management friction from Story Scenes — implemented, awaiting owner review
+*Adult concerns move behind a gated adult surface; ending a session becomes designed experience.*
 
-Shipped: choosing a setting now switches immediately — the preview-and-confirm dialog is gone. Each scene parks in its own slot and switching restores it exactly, so background changes never destroy work (older single-scene snapshots migrate losslessly; Fresh clears only the visible scene). Per owner feedback, related placements and moves now snap the touched object snugly beside its partner, and combined tableaux render at an anchor clear of the participants instead of overlapping them. 156 deterministic checks pass, including world round-trip, legacy migration, snap-gap, and anchor validation; an 11-check rendered headless-Edge pass covers empty, sparse, dense, parked-restore, reload persistence, orientation change, and rendered snap geometry.
+| Story | Outcome | State |
+|---|---|---|
+| C1 Caregiver-layer architecture | One gated adult surface owning sound, session length, accessibility, developmental level, content preferences, and destructive resets; child-facing UI unchanged or simplified | **Closed** 2026-08-23: gated "For grown-ups" surface shipped (1500 ms hold gate, quick-tap inert, keyboard immediate); owns sound default, session length, developmental level, world visibility, confirmed full reset; settings validated with safe fallback; offline shell updated; 165 deterministic + 12 rendered checks pass |
+| C2 Wind-down and stopping ritual | Caregiver-set duration produces a gradual world-level wind-down (evening light, calmer motion, animals homeward, sounds simplify) and enough deliberate restart friction for the caregiver to regain control smoothly; never countdown pressure on the child | **Closed** 2026-08-23: shared wind-down engine wired into launcher + all six worlds; evening dim in the final two minutes, then a calm good-night veil with per-world line and a deliberate "Play again" sun; no countdown anywhere; reduced-motion instant states; offline shell bumped (v43); 169 deterministic + 8 rendered checks pass |
+| C3 Developmental-level widening | Caregiver-selected parameters expose more density, tolerance change, quantities, sequencing, and relationship depth inside the same worlds | Exploratory; sequenced after B2/B3 |
 
-**Decision gate:** retain this transition only if the owner finds it more direct without scene loss ever feeling surprising; confirm the snap distance feels friendly rather than grabby.
+### Epic D — Shared grammar and inhabitants
 
-### Milestone 6C — six-world clutter and stability review
+*Learn-once concepts and a small recurring cast give the collection emotional continuity.*
 
-Review every world as a child encounters it, not merely as a set of completed mechanics. Use representative empty, active, dense, completion, replay, restored, and short-landscape states where applicable.
+| Story | Outcome | State |
+|---|---|---|
+| D1 Recurring resident cast | Bird plus at most two new inhabitants appear naturally across worlds with consistent identity and bounded local responses; recognition without collection state | Planned |
+| D2 Discoverability-tiered special relationships | Existing deeper triggers audited for whether ordinary experimentation can plausibly reveal them (`surprise → intentional reproduction`); unreachable ones redesigned or retired | Planned after A3 |
+| D3 Event rhythm review | Portfolio-wide pass so special events interrupt loops with a restful pause and genuine choice, per the rainbow pattern | Merged into A3/A4 review criteria |
 
-For each visible element ask:
+### Epic E — Ownable visual identity
 
-- Does it support the central action now?
-- Is its meaning available through position, shape, motion, or consequence rather than text alone?
-- Can the same protection or assistance happen invisibly?
-- Does appearing, disappearing, or changing state move the child's working surface?
-- Does dense play settle, combine, reuse, or otherwise remain readable?
+| Story | Outcome | State |
+|---|---|---|
+| E1 Identity directions | Two or three opinionated visual alternatives (illustration system, texture, palette, typography) prototyped on representative screens via a temporary global skin; judged by the screenshot-recognition test; shipping nothing is acceptable | Planned; after A3 so corrections land first |
 
-Record only decision-changing rendered evidence. Correct clear interaction failures in bounded slices; do not turn the review into a visual redesign or content pass.
+### Epic F — Real-world validation readiness
 
-### Then — shared grammar and caregiver architecture
+| Story | Outcome | State |
+|---|---|---|
+| F1 Device passes | Physical touch-device checks (frame geometry, drag ease) and airplane-mode exercise across launcher → games → Home | Blocked: needs available hardware |
+| F2 Observation protocols | Persona-aligned session guides for caregivers; informal child/caregiver observations recorded in `EVIDENCE.md` with provenance; personas revised from what is seen | Blocked: needs available children/caregivers; protocol drafting unblocked |
 
-Reconcile Home, Again, Different, Fresh, persistence, familiar/new choices, residents, relationship meanings, wind-down, and caregiver controls as one small product grammar. The caregiver-triggered closing ritual remains a strong candidate, but should be designed within that layer rather than added as another isolated child-facing control.
+## Current position and sequencing
 
-After that:
+- **Active story:** C3 developmental-level adoption (Epic C) — worlds begin reading the caregiver-set level (default/gentle/rich) and adjusting their own parameters (density, tolerance, quantities, relationship depth) without gates, modes, or child-visible difference; adopt gradually, one parameter per world.
+- Then: D-epic sequencing (residents, discoverability), E1 identity exploration; F proceeds opportunistically whenever hardware or participants become available.
+- Per-game Round-3 depth milestones in `GAME_ROADMAPS.md` are **paused**: placement was decided by B3 (all six keep their place; Story Scenes depth frozen pending child observation; Stack & Settle archive trigger sits at F1).
 
-1. Observe whether children transfer control and relationship meanings, recognize and reproduce resident conditions, recover saved work, avoid accidental resets, and disengage naturally.
-2. Choose the strongest per-game depth milestone using current evidence, not document age or the historical round order.
-3. Explore developmental complexity as caregiver-selected changes to tolerance, density, and relationship depth—not scores, locks, performance inference, or forced progression.
-4. Explore a small number of coherent visual-identity directions on representative screens before considering a collection-wide change. Do not ship a theme selector merely to support design comparison.
+The Familiar World foundation (shared control meanings, bounded preservation, stable Color Splash frame, bridge-invited bird, "together" meaning) is implemented and rendered-verified; its open questions transfer to Epic D and Epic F.
 
-## Spatial stability and zoom
+## Spatial stability (standing invariant)
 
-The child's working surface is a place, not a moving target.
-
-- Browser and accessibility zoom remain available.
-- Game-directed zoom or reframing is used only when a mechanic materially benefits from it.
-- Controls reserve space or overlay content; appearing controls must not unexpectedly move the active surface.
-- Orientation reflow is deterministic and preserves relative meaning, identity, and work.
-- Rendered geometry is checked whenever layout state changes; HTTP availability or source inspection is not a substitute.
+The child's working surface is a place, not a moving target. Controls reserve space or overlay; appearing controls never shift active geometry; orientation reflow is deterministic and preserves meaning; game-directed zoom appears only where a mechanic requires it; rendered geometry is checked whenever layout state changes.
 
 ## Evidence and execution
 
-Incomplete child evidence does not stop bounded, reversible experimentation. It limits the claims that may be made.
+For each story:
 
-For each milestone:
+1. Reconcile first: *what did I believe when this was planned, what changed, what new evidence exists, do I still believe it?*
+2. Inspect current reality, write the story execution plan, execute through delegation where bounded, verify at the strongest available layer, record decision-changing evidence in `EVIDENCE.md`.
+3. Incomplete child evidence limits claims; it does not stop bounded, reversible experiments.
 
-1. Check `EVIDENCE.md` and ask: **What has changed since this plan was formed, what new evidence has arrived, and does the documented understanding still reflect it?**
-2. Implement the smallest coherent interaction that tests the current question.
-3. Verify deterministic state, bounds, safety, offline behavior, accessibility, and relevant rendered interactions.
-4. Record new evidence in `EVIDENCE.md`; update current truth only in its owning document.
-5. Reconcile this roadmap when evidence changes the next decision. Do not preserve obsolete active plans merely as history; Git already preserves their wording.
-
-Stop for user input only when progress requires authority, credentials, unavailable real-world participation, an irreversible decision, or a product choice whose alternatives materially change the intent.
+Stop for the human only when personal taste, unwritten product intent, authority, inaccessible real-world information, or genuinely consequential judgment materially changes the answer — and record which criterion applied. Routine experiential gates are adjudicated by Celestan using rendered evidence and persona review.

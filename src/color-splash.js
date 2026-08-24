@@ -4,6 +4,7 @@ import { nearestTargetIndex } from "./color-input.js";
 import { floodRegion, resolveFloodChoice } from "./flood.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { createSplashBoard } from "./splash-boards.js";
+import { startWindDown } from "./wind-down.js";
 
 const GRID_COLORS = COLORS.slice(0, 4);
 const SYMBOLS = ["●", "◆", "≡", "✦"];
@@ -223,6 +224,7 @@ addEventListener("pagehide", tonePlayer.stop);
 
 newRound();
 renderSoundState();
+startWindDown({ lines: { "/games/color-splash/": "The colors are resting." } });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   const workerUrl = new URL("../sw.js", import.meta.url);

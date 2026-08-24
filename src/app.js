@@ -29,6 +29,7 @@ import { setupFreshStart } from "./fresh-start.js";
 import { createPointerSampler } from "./interaction.js";
 import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
+import { startWindDown } from "./wind-down.js";
 
 const garden = document.querySelector("#garden");
 const blooms = document.querySelector("#blooms");
@@ -366,16 +367,22 @@ function playRainbowFanfare() {
   rise.className = "rainbow-rise";
   overlay.append(rise);
   let closed = false;
+  const openedAt = performance.now();
+  const minimumHoldMs = 1500;
   const dismiss = () => {
     if (closed) return;
     closed = true;
     overlay.remove();
-    removeEventListener("pointerdown", dismiss, true);
+    removeEventListener("pointerdown", dismissOnPointer, true);
+  };
+  const dismissOnPointer = () => {
+    if (performance.now() - openedAt < minimumHoldMs) return;
+    dismiss();
   };
   overlay.addEventListener("animationend", (event) => {
     if (event.animationName === "rainbowVeil") dismiss();
   });
-  addEventListener("pointerdown", dismiss, { capture: true });
+  addEventListener("pointerdown", dismissOnPointer, { capture: true });
   document.body.append(overlay);
 }
 
@@ -570,6 +577,7 @@ addEventListener("resize", () => {
 renderSoundState();
 restoreGarden();
 setupFreshStart({ onConfirm: freshGarden });
+startWindDown({ lines: { "/games/bloom/": "The garden is going to sleep." } });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   const workerUrl = new URL("../sw.js", import.meta.url);

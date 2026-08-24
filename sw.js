@@ -1,7 +1,9 @@
-const CACHE_NAME = "supersimplegames-v41";
+const CACHE_NAME = "supersimplegames-v43";
 const APP_SHELL = [
   "./",
   "./index.html",
+  "./caregiver.html",
+  "./caregiver.css",
   "./launcher.css",
   "./styles.css",
   "./fresh-start.css",
@@ -10,6 +12,7 @@ const APP_SHELL = [
   "./stack-settle.css",
   "./story-scenes.css",
   "./together-tones.css",
+  "./wind-down.css",
   "./games/bloom/",
   "./games/bloom/index.html",
   "./games/color-splash/",
@@ -24,6 +27,8 @@ const APP_SHELL = [
   "./games/together-tones/index.html",
   "./src/app.js",
   "./src/audio.js",
+  "./src/caregiver-settings.js",
+  "./src/caregiver.js",
   "./src/color-input.js",
   "./src/color-splash.js",
   "./src/flood.js",
@@ -47,6 +52,7 @@ const APP_SHELL = [
   "./src/story-world.js",
   "./src/together-tone.js",
   "./src/together-tones.js",
+  "./src/wind-down.js",
   "./manifest.webmanifest",
   "./assets/icon-192.png",
   "./assets/icon-512.png",

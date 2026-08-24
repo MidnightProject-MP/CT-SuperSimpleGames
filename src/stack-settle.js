@@ -3,6 +3,7 @@ import { STACK_IDEAS, STACK_PIECES, STACK_RESIDENT_TOUCHES, createStackState, ma
 import { setupFreshStart } from "./fresh-start.js";
 import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
+import { startWindDown } from "./wind-down.js";
 
 const buildArea = document.querySelector("#build-area");
 const piecesElement = document.querySelector("#pieces");
@@ -355,6 +356,7 @@ renderResident();
 renderSoundState();
 renderIdea();
 setupFreshStart({ onConfirm: freshStack });
+startWindDown({ lines: { "/games/stack-settle/": "The blocks are resting." } });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   const workerUrl = new URL("../sw.js", import.meta.url);

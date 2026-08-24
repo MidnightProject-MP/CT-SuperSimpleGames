@@ -9,6 +9,9 @@ html, body { min-height: 100%; margin: 0; }
 
 body {
   min-height: 100svh;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   background:
     radial-gradient(circle at 12% 12%, rgba(255,255,255,.82) 0 5%, transparent 5.5%),
     radial-gradient(circle at 88% 18%, rgba(255,255,255,.7) 0 8%, transparent 8.5%),
@@ -16,6 +19,8 @@ body {
 }
 
 .launcher {
+  display: flex;
+  flex-direction: column;
   width: min(920px, 100%);
   min-height: 100svh;
   margin: auto;
@@ -243,3 +248,40 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .game-card { transition: none; }
 }
+
+.grownups {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  padding-top: clamp(24px, 5vh, 44px);
+}
+
+#grownups-gate {
+  --hold-progress: 0;
+  position: relative;
+  padding: 6px 12px 9px;
+  border: 0;
+  border-radius: 8px;
+  color: rgba(51, 35, 111, .55);
+  background: transparent;
+  font-size: 14px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#grownups-gate::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  bottom: 3px;
+  left: 12px;
+  height: 3px;
+  border-radius: 999px;
+  background: #33236f;
+  opacity: .75;
+  transform: scaleX(var(--hold-progress));
+  transform-origin: left center;
+}
+
+#grownups-gate:focus-visible { outline: 3px solid rgba(51, 35, 111, .65); outline-offset: 3px; }
+
+.card-hidden { display: none; }
