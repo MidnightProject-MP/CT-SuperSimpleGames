@@ -1,13 +1,16 @@
 import { createTonePlayer } from "./audio.js";
+import { loadCaregiverSettings, normalizeLevel } from "./caregiver-settings.js";
 import { COLORS } from "./game.js";
 import { nearestTargetIndex } from "./color-input.js";
 import { floodRegion, resolveFloodChoice } from "./flood.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
-import { createSplashBoard } from "./splash-boards.js";
+import { createSplashBoard, SPLASH_COLOR_COUNT } from "./splash-boards.js";
 import { startWindDown } from "./wind-down.js";
 
 const GRID_COLORS = COLORS.slice(0, 4);
 const SYMBOLS = ["●", "◆", "≡", "✦"];
+const GENTLE_IDENTITY_COUNT = 3;
+const boardIdentityCount = normalizeLevel(loadCaregiverSettings().level) === "gentle" ? GENTLE_IDENTITY_COUNT : SPLASH_COLOR_COUNT;
 
 const boardElement = document.querySelector("#color-board");
 const prompt = document.querySelector("#splash-prompt");
@@ -111,7 +114,7 @@ function previewChoice(tile) {
 function newRound({ playSound = false } = {}) {
   round += 1;
   const size = boardSizeForViewport();
-  board = createSplashBoard({ round, seed: nextSeed(), width: size.width, height: size.height });
+  board = createSplashBoard({ round, seed: nextSeed(), width: size.width, height: size.height, colorCount: boardIdentityCount });
   complete = false;
   prompt.textContent = board.label;
   boardElement.classList.remove("complete");

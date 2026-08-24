@@ -25,6 +25,7 @@ import {
   moveGardenVisitor
 } from "./game.js";
 import { createTonePlayer } from "./audio.js";
+import { loadCaregiverSettings, normalizeLevel } from "./caregiver-settings.js";
 import { setupFreshStart } from "./fresh-start.js";
 import { createPointerSampler } from "./interaction.js";
 import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
@@ -37,6 +38,8 @@ const invitation = document.querySelector("#invitation");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
 const visitorLayer = document.querySelector("#visitor-layer");
+const maxBlooms = normalizeLevel(loadCaregiverSettings().level) === "gentle" ? 16 : MAX_BLOOMS;
+garden.dataset.maxBlooms = String(maxBlooms);
 
 let bloomCount = 0;
 const gardenBlooms = new Map();
@@ -470,7 +473,7 @@ function interactAt(x, y, flower) {
   invitation.classList.add("hidden");
   const plan = planGardenInteraction(gardenBlooms.values(), x, y, {
     targetId: flower ? Number(flower.dataset.id) : undefined,
-    limit: MAX_BLOOMS
+    limit: maxBlooms
   });
   if (plan.action === "create") {
     createAt(x, y);

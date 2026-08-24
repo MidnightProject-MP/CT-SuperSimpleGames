@@ -56,7 +56,7 @@
 |---|---|---|
 | C1 Caregiver-layer architecture | One gated adult surface owning sound, session length, accessibility, developmental level, content preferences, and destructive resets; child-facing UI unchanged or simplified | **Closed** 2026-08-23: gated "For grown-ups" surface shipped (1500 ms hold gate, quick-tap inert, keyboard immediate); owns sound default, session length, developmental level, world visibility, confirmed full reset; settings validated with safe fallback; offline shell updated; 165 deterministic + 12 rendered checks pass |
 | C2 Wind-down and stopping ritual | Caregiver-set duration produces a gradual world-level wind-down (evening light, calmer motion, animals homeward, sounds simplify) and enough deliberate restart friction for the caregiver to regain control smoothly; never countdown pressure on the child | **Closed** 2026-08-23: shared wind-down engine wired into launcher + all six worlds; evening dim in the final two minutes, then a calm good-night veil with per-world line and a deliberate "Play again" sun; no countdown anywhere; reduced-motion instant states; offline shell bumped (v43); 169 deterministic + 8 rendered checks pass |
-| C3 Developmental-level widening | Caregiver-selected parameters expose more density, tolerance change, quantities, sequencing, and relationship depth inside the same worlds | Exploratory; sequenced after B2/B3 |
+| C3 Developmental-level widening | Caregiver-selected parameters expose more density, tolerance change, quantities, sequencing, and relationship depth inside the same worlds | **Closed** 2026-08-24: gentle adopted where meaningful (Bloom cap 16, Color Splash 3 identities, Stack idea card hidden, Together Tones motifs omitted); default byte-equivalent to today; Peekaboo/Story Scenes level-neutral by decision; 173 deterministic + 11 rendered checks pass |
 
 ### Epic D — Shared grammar and inhabitants
 
@@ -83,8 +83,8 @@
 
 ## Current position and sequencing
 
-- **Active story:** C3 developmental-level adoption (Epic C) — worlds begin reading the caregiver-set level (default/gentle/rich) and adjusting their own parameters (density, tolerance, quantities, relationship depth) without gates, modes, or child-visible difference; adopt gradually, one parameter per world.
-- Then: D-epic sequencing (residents, discoverability), E1 identity exploration; F proceeds opportunistically whenever hardware or participants become available.
+- **Active story:** D2 discoverability audit of special relationships (Epic D) — using clustered-burst rendered traces, test whether each world's deeper trigger (Bloom merges/rainbow, Stack bridge + bird, Story pairs/compositions, Peekaboo clue chains, Splash board families, Tones motifs) is plausibly discoverable through ordinary play; redesign or retire triggers that experimentation cannot reveal.
+- Then: D1 recurring-resident cast expansion; E1 identity exploration; F proceeds opportunistically whenever hardware or participants become available.
 - Per-game Round-3 depth milestones in `GAME_ROADMAPS.md` are **paused**: placement was decided by B3 (all six keep their place; Story Scenes depth frozen pending child observation; Stack & Settle archive trigger sits at F1).
 
 The Familiar World foundation (shared control meanings, bounded preservation, stable Color Splash frame, bridge-invited bird, "together" meaning) is implemented and rendered-verified; its open questions transfer to Epic D and Epic F.

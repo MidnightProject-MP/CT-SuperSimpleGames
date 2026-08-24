@@ -1,4 +1,5 @@
 import { createTonePlayer } from "./audio.js";
+import { loadCaregiverSettings, normalizeLevel } from "./caregiver-settings.js";
 import { activateVoice, createToneState, reactivateTrail } from "./together-tone.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { startWindDown } from "./wind-down.js";
@@ -24,6 +25,7 @@ let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 const suppressedClicks = new Map();
 let motifTimer = null;
+const motifsEnabled = normalizeLevel(loadCaregiverSettings().level) !== "gentle";
 
 function renderSoundState() {
   soundToggle.setAttribute("aria-pressed", String(soundEnabled));
@@ -73,6 +75,7 @@ function renderLink(animate = true) {
 }
 
 function renderMotif() {
+  if (!motifsEnabled) return;
   if (motifTimer !== null) clearTimeout(motifTimer);
   motif.dataset.motif = state.motif || "none";
   const path = motif.querySelector(".motif-path");
@@ -165,6 +168,7 @@ addEventListener("pagehide", tonePlayer.stop);
 renderSoundState();
 renderTrail();
 renderLink();
+if (!motifsEnabled) motif.remove();
 startWindDown({ lines: { "/games/together-tones/": "The tones are quiet." } });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {

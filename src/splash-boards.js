@@ -62,12 +62,17 @@ export function validateSplashDefinition(value) {
   return board;
 }
 
-export function createSplashBoard({ round, seed, width = 4, height = 4 }) {
+export function createSplashBoard({ round, seed, width = 4, height = 4, colorCount = SPLASH_COLOR_COUNT } = {}) {
   if (!Number.isInteger(round) || round < 1) throw new RangeError("round must be a positive integer");
+  if (!Number.isInteger(colorCount) || colorCount < 2 || colorCount > SPLASH_COLOR_COUNT) {
+    throw new RangeError(`colorCount must be an integer from 2 to ${SPLASH_COLOR_COUNT}`);
+  }
 
   if (round <= DESIGNED_SPLASH_BOARDS.length) {
     const selected = DESIGNED_SPLASH_BOARDS[round - 1];
-    return { ...validateSplashDefinition(selected), family: selected.family, label: selected.label };
+    if (selected.cells.length === 4 || selected.colorCount <= colorCount) {
+      return { ...validateSplashDefinition(selected), family: selected.family, label: selected.label };
+    }
   }
 
   for (const value of [width, height]) {
@@ -77,7 +82,7 @@ export function createSplashBoard({ round, seed, width = 4, height = 4 }) {
   const board = generateBoard({
     width,
     height,
-    colorCount: SPLASH_COLOR_COUNT,
+    colorCount,
     seed
   });
   return { ...board, family: "mixed", label: "A mixed-up garden" };

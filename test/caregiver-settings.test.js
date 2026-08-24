@@ -5,6 +5,7 @@ import {
   WORLD_IDS,
   defaultCaregiverSettings,
   loadCaregiverSettings,
+  normalizeLevel,
   saveCaregiverSettings,
   visibleWorlds
 } from "../src/caregiver-settings.js";
@@ -96,6 +97,14 @@ test("a restricted localStorage getter cannot prevent startup", () => {
   } finally {
     if (descriptor) Object.defineProperty(globalThis, "localStorage", descriptor);
     else delete globalThis.localStorage;
+  }
+});
+
+test("normalizeLevel keeps known levels and nulls everything else", () => {
+  assert.equal(normalizeLevel("gentle"), "gentle");
+  assert.equal(normalizeLevel("rich"), "rich");
+  for (const value of [null, undefined, "", "Gentle", "gentle ", "loud", 7, true, ["gentle"], {}]) {
+    assert.equal(normalizeLevel(value), null, JSON.stringify(value));
   }
 });
 

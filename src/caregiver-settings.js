@@ -2,6 +2,10 @@ export const CAREGIVER_STORAGE_KEY = "supersimplegames.caregiver-settings";
 export const WORLD_IDS = Object.freeze(["bloom", "color-splash", "peekaboo", "stack-settle", "story-scenes", "together-tones"]);
 const LEVELS = new Set(["gentle", "rich"]);
 
+export function normalizeLevel(level) {
+  return typeof level === "string" && LEVELS.has(level) ? level : null;
+}
+
 function isValidSession(value) {
   return Number.isInteger(value) && value >= 5 && value <= 60;
 }
@@ -12,7 +16,7 @@ function sanitizeCaregiverSettings(raw) {
   return Object.freeze({
     version: 1,
     sessionMinutes: isValidSession(source.sessionMinutes) ? source.sessionMinutes : null,
-    level: typeof source.level === "string" && LEVELS.has(source.level) ? source.level : null,
+    level: normalizeLevel(source.level),
     hiddenWorlds: Object.freeze(WORLD_IDS.filter((id) => hidden.includes(id)))
   });
 }

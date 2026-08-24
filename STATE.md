@@ -6,7 +6,7 @@ A local-only collection of six no-fail web worlds for toddlers (~18–42 months,
 
 ## Current milestone
 
-Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with personas as active decision instruments (`docs/PERSONAS.md`) and disposable story execution plans in `docs/plans/`. **Epic B complete; C1 and C2 closed 2026-08-23.** C1 shipped the gated "For grown-ups" surface (hold gate; sound, session length, level, world visibility, confirmed reset). C2 shipped the session wind-down: caregiver-set duration produces a slow evening dim in the final two minutes, then a calm good-night veil with per-world lines and a deliberate "Play again" sun — no countdown, reduced-motion instant states, wired into launcher + all six worlds, offline shell v43. 169 deterministic + 8 rendered checks pass. Working tree holds verified uncommitted changes awaiting the next release point. Next story: **C3 developmental-level adoption**.
+Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with personas as active decision instruments (`docs/PERSONAS.md`) and disposable story execution plans in `docs/plans/`. **Epics B and C are complete (B1–B4, C1–C3 closed by 2026-08-24).** Released to production: release 2bf9860 (A3/A4 fixes, caregiver layer, wind-down, planning restructure; v43, CI green, Pages verified) and the C3 level-adoption release (gentle parameters in Bloom/Color Splash/Stack/Together Tones; default byte-equivalent; Peekaboo/Story Scenes level-neutral by decision). 173 deterministic checks green. Next story: **D2 discoverability audit** of special relationships.
 
 ## Decisions
 
@@ -31,4 +31,4 @@ Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with p
 
 ## Next action
 
-Run story **C3 developmental-level adoption**: worlds begin reading the caregiver-set level and adjusting one own parameter each (e.g., Bloom object density, Color Splash identity count on non-teaching boards, Peekaboo clue prominence) — no gates, modes, or child-visible difference; default level must reproduce today's behavior exactly. The uncommitted verified work (A3/A4 + Epic B + C1 + C2) should be committed and deployed at the next release point.
+Run story **D2 discoverability audit**: clustered-burst rendered traces per world testing whether deeper triggers (merges/rainbow, bridge+bird, story pairs/compositions, clue chains, board families, motifs) are reachable through ordinary play; classify surprise→reproduction learnability; redesign or retire unreachable triggers in bounded slices. Commit and push the C3 work immediately (owner requests releases for testing).

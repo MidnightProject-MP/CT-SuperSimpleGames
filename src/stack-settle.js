@@ -1,4 +1,5 @@
 import { createTonePlayer } from "./audio.js";
+import { loadCaregiverSettings, normalizeLevel } from "./caregiver-settings.js";
 import { STACK_IDEAS, STACK_PIECES, STACK_RESIDENT_TOUCHES, createStackState, matchesStackIdea, moveStackResident, resolveStackLayout, restoreStackState, serializeStackState, settlePiece, stackResidentFor, tapPiece } from "./stack.js";
 import { setupFreshStart } from "./fresh-start.js";
 import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
@@ -35,7 +36,7 @@ let soundEnabled = loadSoundPreference();
 let drag = null;
 let suppressClickFor = null;
 let ideaIndex = 0;
-let ideaVisible = true;
+let ideaVisible = normalizeLevel(loadCaregiverSettings().level) !== "gentle";
 let residentState = null;
 let dismissedResidentKey = null;
 const acknowledgedIdeas = new Set();
