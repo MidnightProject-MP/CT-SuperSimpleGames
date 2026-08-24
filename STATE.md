@@ -6,7 +6,7 @@ A local-only collection of six no-fail web worlds for toddlers (~18–42 months,
 
 ## Current milestone
 
-Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with personas as active decision instruments (`docs/PERSONAS.md`) and disposable story execution plans in `docs/plans/`. **Epics B, C, and D are complete (through D1, closed 2026-08-24).** Released: 2bf9860 (fixes + caregiver layer + wind-down), 76695da (C3 gentle levels), 3b8c46b (D2 audit), 4fafdd7 (bridge redesign — bird discoverable). D1 shipped the resident cast: the Bloom butterfly lands on completed Color Splash boards and a new snail visits Story Scenes' garden at 3+ objects — both derived deterministically with a 3-touch budget via a shared `src/residents.js` primitive; 178 deterministic checks green, rendered-verified. Next story: **E1 identity-directions exploration** (Epic E).
+Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with personas as active decision instruments (`docs/PERSONAS.md`) and disposable story execution plans in `docs/plans/`. **Epics B, C, and D are complete; implementation is PAUSED at owner direction (2026-08-24) pending testing feedback.** Released through d83a47a (latest: resident cast — butterfly on Color Splash completion, snail in Story Scenes garden; shell v44; 178 deterministic checks green; all CI-green and live on Pages). **E1 (identity exploration) was started and reverted to clean** — its ready execution plan (three direction specs: storybook print, toy poster, crayon handmade) is retained in `docs/plans/`. Next work requires owner input, not autonomous continuation: testing feedback on the four released iterations, the E1 direction taste call, F1 hardware, or F2 participants.
 
 ## Decisions
 
@@ -31,4 +31,4 @@ Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with p
 
 ## Next action
 
-Run story **E1 identity-directions exploration**: prototype two or three opinionated visual alternatives on representative screens via a temporary global skin (not a product feature), judge against the screenshot-recognition test, and report directions with screenshots; shipping nothing is acceptable. Then the roadmap is observation-driven pending F1 hardware / F2 participants. Commit and push D1 immediately (owner releases for testing).
+**Paused.** Resume only on: (a) testing feedback from the owner/users on the released iterations — incorporate before further feature work; (b) the owner's E1 direction taste call (plan ready in `docs/plans/`); (c) F1 hardware availability; or (d) F2 participants. Do not resume feature work merely because roadmap items remain.
