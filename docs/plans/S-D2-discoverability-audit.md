@@ -44,6 +44,8 @@ One delegated probe: per world, two strategies (clustered-burst, uniform) × two
 
 **Remaining slice (D2 continuation):** redesign the bridge snap so a beam released near two supports reliably bridges them (beam "wants" to span), preserving the causal story; then re-probe with the same harness until clustered play reaches the bird within a normal session.
 
+**Bridge redesign — shipped 2026-08-24.** Root cause (deterministic diagnosis, pure-state simulation of clustered sequences): collision resolution collapses supports to identical x (nesting/stacking), and floor-vs-stacked height differences (0.085) exceeded the strict pair level tolerance (0.051) — so a qualifying pair almost never existed when it mattered. Fix in `src/stack.js` (beam only; the roof keeps its stricter enclosure behavior): the beam now considers all placed supports, tolerates ~2.75× the level difference, widens the separation window, and drops the release-proximity rejection — the beam seeks the nearest compatible pair by distance. Results: pure simulation bridges in 6/12 sessions (first bridge at gestures 6–20; previously 0/12); rendered clustered probe reaches the bird at gesture 4 (fixed-zone) and gesture 36 (relocated zones); shelters still form normally; 173 deterministic checks green. Sessions where every support stays piled in one spot still produce no bridge — correctly, since nothing stands apart to span; continued ordinary play spreads pieces and the next beam drop bridges.
+
 ## Exit condition
 
-Audit complete 2026-08-24 (classification table above; evidence recorded). Story remains open for the bridge-redesign slice: re-probe reaching the bird through clustered play, then close.
+Met 2026-08-24: audit complete (classification table above), bridge redesign shipped and re-verified (bird reachable through ordinary clustered play; evidence in `EVIDENCE.md`). Story closed.

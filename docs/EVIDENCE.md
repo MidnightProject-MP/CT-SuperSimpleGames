@@ -132,6 +132,15 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 
 ## External research
 
+### 2026-08-24 — D2 bridge redesign (rendered + deterministic)
+
+**Method:** Pure-state simulation of clustered placement sequences logging every beam-pair rejection; then headless rendered re-probe (clustered drag gestures, isolated browser contexts).
+
+- Root cause of unreachable bridges: collision resolution collapses supports to identical x, and realistic height differences exceeded the strict pair level tolerance — a qualifying pair almost never existed during clustered play.
+- Fix (beam only): the beam now seeks the nearest compatible support pair — all placed supports considered, level tolerance ~2.75×, wider separation window, no release-proximity rejection. Roof/enclosure behavior unchanged.
+- Results: pure simulation 6/12 sessions form a bridge (first at gestures 6–20; previously 0/12); rendered clustered probe reaches the bird at gesture 4 and gesture 36; shelters unaffected; 173 deterministic checks green.
+- Residual: sessions where all supports stay piled at one spot still produce no bridge (nothing stands apart to span) — correct behavior; observation (F2) confirms real-session rates.
+
 ### 2026-08-24 — D2 discoverability probe (rendered)
 
 **Method:** Headless-browser probe, 390×844: per world, seeded clustered-burst and uniform tap/drag strategies (300 taps or 40 gestures per run) with DOM-signal trigger detection; Stack additionally re-probed with clustered drag targets after scattered drags failed.

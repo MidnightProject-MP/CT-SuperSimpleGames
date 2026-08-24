@@ -6,7 +6,7 @@ A local-only collection of six no-fail web worlds for toddlers (~18–42 months,
 
 ## Current milestone
 
-Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with personas as active decision instruments (`docs/PERSONAS.md`) and disposable story execution plans in `docs/plans/`. **Epics B and C are complete (B1–B4, C1–C3 closed by 2026-08-24).** Released to production: 2bf9860 (A3/A4 fixes, caregiver layer, wind-down; v43) and 76695da (C3 gentle-level adoption) — both CI-green and live on Pages. **D2 discoverability audit done 2026-08-24; one redesign slice remains:** every deep trigger is discoverable through ordinary clustered play except Stack & Settle's bridge + bird (never fired in 160 plausible gestures across four strategies; shelters fire at gesture ~9 every run). 173 deterministic checks green. Next: bridge-snap redesign, then re-probe until clustered play reaches the bird.
+Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with personas as active decision instruments (`docs/PERSONAS.md`) and disposable story execution plans in `docs/plans/`. **Epics B and C complete; D2 closed 2026-08-24.** Released: 2bf9860 (fixes + caregiver layer + wind-down, v43), 76695da (C3 gentle levels), 3b8c46b (D2 audit). The D2 bridge redesign shipped: the Stack beam now seeks the nearest compatible support pair (level tolerance widened, release-proximity requirement dropped — beam-only; roof unchanged), taking bridges from 0/12 to 6/12 simulated sessions and the bird to gestures 4–36 in rendered clustered play; shelters unaffected; 173 deterministic checks green. Next story: **D1 recurring-resident cast expansion**.
 
 ## Decisions
 
@@ -31,4 +31,4 @@ Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with p
 
 ## Next action
 
-Run the **D2 bridge-redesign slice**: make a beam released near two supports reliably bridge them (the beam "wants" to span — widen the snap in `src/stack.js` placement logic), keep the causal story intact, re-probe with the clustered harness (`ssa-d2/probe-stack-clustered.mjs` pattern) until ordinary play reaches the bird within a normal session; verify shelters still dominate non-bridge arrangements; then commit, push, and close D2.
+Run story **D1 recurring-resident cast expansion**: add at most two new inhabitants (consistent identity, bounded local responses, invitation conditions derived from ordinary play per the D2 findings, no collection state), choosing worlds that currently lack a resident; deterministic + rendered verification including discoverability probes; then commit and push.

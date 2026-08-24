@@ -401,8 +401,15 @@ export function settlePiece(state, id, point, layout) {
       - layoutDistance({ x, y: point.y }, right, layout))[0];
 
   const levelTolerance = (0.11 * metrics.unit) / metrics.height;
-  const spanSupports = moving.spans ? others.filter((other) => other.supports && point.y < other.y)
-    .sort((left, right) => left.x - right.x) : [];
+  const isBeam = moving.kind === "beam";
+  const spanSupports = moving.spans
+    ? others.filter((other) => other.supports && (isBeam || point.y < other.y))
+      .sort((left, right) => left.x - right.x)
+    : [];
+  const pairLevelTolerance = isBeam ? levelTolerance * 2.75 : levelTolerance;
+  const minSeparation = movingSize.width * (isBeam ? 0.3 : 0.32);
+  const maxSeparation = movingSize.width * (isBeam ? 1.15 : 1.08);
+  const midpointReach = movingSize.width * (isBeam ? Infinity : 0.82);
   const supportPairs = [];
   for (let leftIndex = 0; leftIndex < spanSupports.length; leftIndex += 1) {
     for (let rightIndex = leftIndex + 1; rightIndex < spanSupports.length; rightIndex += 1) {
@@ -410,9 +417,9 @@ export function settlePiece(state, id, point, layout) {
       const right = spanSupports[rightIndex];
       const separation = right.x - left.x;
       const midpoint = (left.x + right.x) / 2;
-      if (Math.abs(left.y - right.y) > levelTolerance
-        || separation < movingSize.width * 0.32 || separation > movingSize.width * 1.08
-        || Math.abs(midpoint - x) > movingSize.width * 0.82) continue;
+      if (Math.abs(left.y - right.y) > pairLevelTolerance
+        || separation < minSeparation || separation > maxSeparation
+        || Math.abs(midpoint - x) > midpointReach) continue;
       supportPairs.push({ left, right, midpoint, score: Math.abs(midpoint - x) + Math.abs(left.y - right.y) });
     }
   }
