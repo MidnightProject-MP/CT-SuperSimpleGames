@@ -12,7 +12,9 @@ body {
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-  touch-action: none;
+  /* Scrollable menu surface: vertical touch scrolling stays available;
+     pinch/double-tap zoom stay blocked by the gesture guard + this policy. */
+  touch-action: pan-y;
   background:
     radial-gradient(circle at 12% 12%, rgba(255,255,255,.82) 0 5%, transparent 5.5%),
     radial-gradient(circle at 88% 18%, rgba(255,255,255,.7) 0 8%, transparent 8.5%),

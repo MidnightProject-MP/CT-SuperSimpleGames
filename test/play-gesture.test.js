@@ -30,11 +30,15 @@ test("the guard blocks Safari gesture events without passive listeners", () => {
   assert.match(source, /passive: false|passive:false/);
 });
 
-test("child-facing stylesheets reject scale and pan gestures", () => {
-  for (const sheet of ["launcher.css", "styles.css", "color-splash.css", "peekaboo.css", "story-scenes.css"]) {
+test("child-facing stylesheets reject scale gestures; the scrollable menu keeps vertical panning", () => {
+  for (const sheet of ["styles.css", "color-splash.css", "peekaboo.css", "story-scenes.css", "memory.css", "nibbles.css"]) {
     const css = readFileSync(resolve(root, sheet), "utf8");
     assert.match(css, /touch-action:\s*none/, `${sheet} must set a touch-action: none policy`);
   }
+  const launcher = readFileSync(resolve(root, "launcher.css"), "utf8");
+  assert.match(launcher, /touch-action:\s*pan-y/, "launcher is a scrollable menu and must keep vertical panning");
+  assert.doesNotMatch(launcher, /touch-action:\s*(none|manipulation|auto)/, "launcher must not re-enable pinch");
+
   const caregiver = readFileSync(resolve(root, "caregiver.css"), "utf8");
   assert.doesNotMatch(caregiver, /touch-action:\s*none/, "caregiver page must stay zoomable");
   const caregiverScript = readFileSync(resolve(root, "src/caregiver.js"), "utf8");

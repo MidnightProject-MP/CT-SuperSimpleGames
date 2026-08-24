@@ -144,6 +144,14 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 
 **Consequence:** Epic G closed with both evidence layers; H2/I2 experiments shipped to their gates with rendered behavioral evidence behind them. Remaining uncertainty: everything above is automation, not a child — Memory recall participation, Numbers invite-vs-task, resident delight, and zoom-fix feel on real devices await owner/child hands-on (the active gates) and K2/K3.
 
+### 2026-08-24 — post-release regression: launcher scrolling
+
+**Source:** owner report after testing on a device — the launcher could not be scrolled to reach the games.
+
+**Cause:** G1 set `touch-action: none` on the launcher body along with the game worlds. Correct for fixed play surfaces, wrong for a scrollable menu: touch panning was dead, so only the first card row was reachable.
+
+**Fix:** launcher body policy changed to `touch-action: pan-y` — vertical touch scrolling restored, pinch/double-tap zoom still blocked by the policy plus the gesture guard. Rendered verification: launcher scrolls its full overflow (666px portrait / 360px landscape) with every last card visible, and all six worlds confirmed to fit their viewports exactly (zero trapped overflow) at 390×844 and 640×360, so `none` remains safe inside games. Deterministic contract updated so the launcher must keep `pan-y`. Lesson recorded: blanket body policies need a per-surface scroll audit before release — added as part of the gesture-policy invariant's meaning ("menu surfaces pan, play surfaces don't").
+
 ## External research
 
 ### 2026-08-24 — D2 bridge redesign (rendered + deterministic)
