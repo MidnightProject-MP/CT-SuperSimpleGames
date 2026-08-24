@@ -15,6 +15,7 @@ body {
   -webkit-tap-highlight-color: transparent;
   -webkit-user-select: none;
   user-select: none;
+  touch-action: none;
 }
 
 button { font: inherit; }
@@ -127,7 +128,7 @@ button { font: inherit; }
   border-radius: clamp(24px, 6vw, 38px);
   background: rgba(255,255,255,.62);
   box-shadow: 0 11px 0 rgba(75,57,137,.18), 0 18px 38px rgba(57,43,113,.16);
-  touch-action: manipulation;
+  touch-action: none;
 }
 
 .color-board.teaching-board {

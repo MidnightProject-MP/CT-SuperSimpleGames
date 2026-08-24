@@ -15,6 +15,7 @@ import { restoreStoryWorld, serializeStoryWorld } from "./story-world.js";
 import { STORY_PACKS, getStoryPack, storyCastItem } from "./story-packs.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { RESIDENT_TOUCHES, attachResident, storyResidentFor } from "./residents.js";
+import { protectPlaySurface } from "./play-gesture.js";
 import { setupFreshStart } from "./fresh-start.js";
 import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
 import { startWindDown } from "./wind-down.js";
@@ -454,6 +455,7 @@ renderPalette();
 renderSoundState();
 renderScene();
 setupFreshStart({ onConfirm: freshStory });
+protectPlaySurface();
 startWindDown({ lines: { "/games/story-scenes/": "The stories are going to sleep." } });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {

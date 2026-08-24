@@ -1,5 +1,5 @@
 export const CAREGIVER_STORAGE_KEY = "supersimplegames.caregiver-settings";
-export const WORLD_IDS = Object.freeze(["bloom", "color-splash", "peekaboo", "stack-settle", "story-scenes", "together-tones"]);
+export const WORLD_IDS = Object.freeze(["bloom", "color-splash", "peekaboo", "story-scenes"]);
 const LEVELS = new Set(["gentle", "rich"]);
 
 export function normalizeLevel(level) {

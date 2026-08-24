@@ -2,33 +2,32 @@
 
 ## Objective
 
-A local-only collection of six no-fail web worlds for toddlers (~18–42 months, now modeled as three developmental regimes) playing with a nearby caregiver: safe under unrestricted tapping, playable offline after first load, private by design, with no accounts, analytics, or external consequences. Each world is gaining an explicit researched developmental territory; portfolio composition itself is under review.
+A local-only collection of six no-fail web worlds for toddlers (~18–42 months, three developmental regimes) playing with a nearby caregiver: safe under unrestricted tapping, playable offline after first load, private by design, with no accounts, analytics, or external consequences. **Priority hierarchy (owner-set 2026-08-24):** child engagement and delight → immediate responsiveness → discoverability/agency → replay/variation → interaction polish → developmental value → robustness → abstraction; privacy/safety/offline/accessibility are hard constraints outside the ordering. A mechanic is finished only when its presence improves the child's experience.
 
 ## Current milestone
 
-Durable planning runs **Project → Epic → Story** (`docs/ROADMAP.md`), with personas as active decision instruments (`docs/PERSONAS.md`) and disposable story execution plans in `docs/plans/`. **Epics B, C, and D are complete; implementation is PAUSED at owner direction (2026-08-24) pending testing feedback.** Released through d83a47a (latest: resident cast — butterfly on Color Splash completion, snail in Story Scenes garden; shell v44; 178 deterministic checks green; all CI-green and live on Pages). **E1 (identity exploration) was started and reverted to clean** — its ready execution plan (three direction specs: storybook print, toy poster, crayon handmade) is retained in `docs/plans/`. Next work requires owner input, not autonomous continuation: testing feedback on the four released iterations, the E1 direction taste call, F1 hardware, or F2 participants.
+**Portfolio replan accepted by owner (2026-08-24) and in autonomous execution.** Trigger: first real child evidence (owner-relayed: children engage with Bloom; accidental pinch-zoom materially interferes; resident concept validated in Bloom but weak in Color Splash). Active portfolio: **Bloom, Color Splash, Peekaboo Pockets, Story Scenes + Memory and Numbers as experimental replacements for Stack & Settle and Together Tones** (retired from launcher immediately per owner decision; sources inert in-tree). Epic G = retained-world interaction polish (G1 gesture protection → G3 protected completion → G2 world-local resident life → G4 control simplification → G5 hygiene); Epic H/I = Memory ("Memory Pairs", matching + spatial recall) and Numbers ("Number Nibbles", quantity-as-event) playable experiments with hard stop-and-wait evidence gates after each; E1 identity deferred until G completes.
 
 ## Decisions
 
-- Planning hierarchy Project → Epic → Story carries intent only; disposable execution plans live in `docs/plans/` and are rewritten freely.
-- Routine experiential gates are self-adjudicated by Celestan through rendered evidence and persona review; the 6B owner-review gate was closed this way on 2026-08-23. Human escalation is reserved for taste, authority, inaccessible real-world information, or genuinely consequential judgment.
-- Educational-thesis research (delegated, recorded in `EVIDENCE.md` 2026-08-23) resolved the audience band into three regimes, flagged Together Tones as highest-risk for under-30-month play and Story Scenes as R3-skewed, elevated the caregiver/joint-media-engagement layer to evidence-backed core, and added the celebrate-events-not-child principle.
-- B2 territory map (2026-08-23): every world's surface is complete play for younger regimes; depth (merges, planning, narrative, patterns) serves older regimes without gates. Uncovered agencies identified for B3: visible matching/classification and explicit small quantities; vocabulary/spatial talk is caregiver-layer work (C1), not a new world.
-- Per-game Round-3 depth milestones are **paused** until story B3 decides world placement (curation before expansion).
-- Deferred by A3 with rationale: launcher short-landscape scrolling (C1/E1), Stack Fresh accidental-trigger exposure (C1), text-carried control meaning (B2 + child observation).
+- Owner direction 2026-08-24 (recorded in `EVIDENCE.md`): interaction polish outranks mechanic breadth; Memory/Numbers replace Stack/Tones (B3 keep-all-six superseded); Fresh/reset controls live behind the caregiver surface — same principle for all application-management UI; E1 waits; residents are world-local experiments first, shared abstraction only from proven common behavior (Bloom is quality reference, not architecture reference).
+- Child play surfaces reject accidental scale/pan gestures (`touch-action` policy + Safari gesture guard); caregiver page stays fully zoomable; OS accessibility zoom is the preserved path. Supersedes the old in-page browser-zoom guarantee.
+- Memory lead concept is matching + spatial recall (witnessed intro → hide → find pairs), explicitly distinct from Peekaboo search/reveal; owner revised away from the "Who's hiding?" request variant.
+- Planning hierarchy Project → Epic → Story carries intent; disposable execution plans live in `docs/plans/`; personas remain active decision instruments; routine experiential gates self-adjudicated via rendered evidence + persona review; human escalation reserved for taste, authority, inaccessible real-world information, consequential judgment.
+- Per-game Round-3 depth milestones stay paused/frozen; retired-world roadmap sections are history only.
 
 ## Open questions
 
-- Physical device availability for the touch-device pass and airplane-mode exercise (Epic F1) — now also the Stack & Settle archive trigger.
-- Child/caregiver availability for observation sessions (Epic F2) — also the Story Scenes depth-unfreeze gate.
-- Whether a B4 matching/classification concept proves stronger than Together Tones in explicit comparison.
+- Physical device availability for K2 touch-device + airplane-mode passes.
+- Child/caregiver availability for K3 observation sessions (also the Story Scenes depth-unfreeze gate).
+- H2/I2 gates: do toddlers act on remembered locations (Memory) and treat quantity change as their own doing (Numbers)? Owner/child hands-on decides before any hardening.
 
 ## Evidence gaps
 
-- Nothing is child-validated; every passing claim is mechanical, simulated, or rendered only.
-- Real-device airplane-mode exercise has never been performed.
-- Color Splash completion overlay was not reached by the wave-2 harness (cell-targeting limitation); prior rendered evidence for the stable frame and completion hold stands.
+- Only one informal child-evidence source exists (owner-relayed); structured observation still pending (K3).
+- Real-device airplane-mode exercise has never been performed (K2).
+- Rendered verification for new work uses local headless probes; physical-device feel remains unobserved everywhere.
 
 ## Next action
 
-**Paused.** Resume only on: (a) testing feedback from the owner/users on the released iterations — incorporate before further feature work; (b) the owner's E1 direction taste call (plan ready in `docs/plans/`); (c) F1 hardware availability; or (d) F2 participants. Do not resume feature work merely because roadmap items remain.
+Execute Epic G stories in order, then H1/H2 and I1/I2 experiments, stopping at each evidence gate for owner/child hands-on. Update this file at milestone boundaries; record decision-changing evidence in `EVIDENCE.md`.

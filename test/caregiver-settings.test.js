@@ -20,7 +20,7 @@ function memoryStorage(initial = new Map()) {
 test("defaults on empty storage", () => {
   const defaults = defaultCaregiverSettings();
 
-  assert.deepEqual([...WORLD_IDS], ["bloom", "color-splash", "peekaboo", "stack-settle", "story-scenes", "together-tones"]);
+  assert.deepEqual([...WORLD_IDS], ["bloom", "color-splash", "peekaboo", "story-scenes"]);
   assert.deepEqual(defaults, { version: 1, sessionMinutes: null, level: null, hiddenWorlds: [] });
   assert.equal(Object.isFrozen(defaults), true);
   assert.deepEqual(loadCaregiverSettings(memoryStorage()), defaults);
@@ -66,12 +66,12 @@ test("valid fields survive sanitization and hidden worlds dedupe to world ids", 
   assert.deepEqual(loadCaregiverSettings(storage), { version: 1, sessionMinutes: 30, level: "gentle", hiddenWorlds: ["peekaboo"] });
 });
 
-test("saving sanitizes before persisting", () => {
+test("saving sanitizes before persisting and drops retired world ids", () => {
   const values = new Map();
   const storage = memoryStorage(values);
 
   assert.equal(saveCaregiverSettings({ version: 3, sessionMinutes: 999, level: "loud", hiddenWorlds: ["stack-settle"] }, storage), true);
-  assert.deepEqual(JSON.parse(values.get(CAREGIVER_STORAGE_KEY)), { version: 1, sessionMinutes: null, level: null, hiddenWorlds: ["stack-settle"] });
+  assert.deepEqual(JSON.parse(values.get(CAREGIVER_STORAGE_KEY)), { version: 1, sessionMinutes: null, level: null, hiddenWorlds: [] });
 });
 
 test("restricted storage remains harmless", () => {
@@ -112,7 +112,7 @@ test("visibleWorlds filters hidden worlds and preserves world order", () => {
   assert.deepEqual(visibleWorlds(defaultCaregiverSettings()), [...WORLD_IDS]);
   assert.deepEqual(
     visibleWorlds({ hiddenWorlds: ["story-scenes", "bloom", "story-scenes"] }),
-    ["color-splash", "peekaboo", "stack-settle", "together-tones"]
+    ["color-splash", "peekaboo"]
   );
   assert.deepEqual(visibleWorlds({}), [...WORLD_IDS]);
   assert.deepEqual(visibleWorlds({ hiddenWorlds: [...WORLD_IDS] }), []);

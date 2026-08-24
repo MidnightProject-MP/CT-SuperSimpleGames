@@ -2,6 +2,7 @@ import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { defaultCaregiverSettings, loadCaregiverSettings, saveCaregiverSettings } from "./caregiver-settings.js";
 
 const RESET_CONFIRM_MESSAGE = "Clear all SuperSimpleGames settings and saved creations on this device?";
+const CLEAR_CREATIONS_MESSAGE = "Clear saved gardens, scenes, and boards on this device? Settings stay unchanged.";
 const SETTINGS_PREFIX = "supersimplegames.";
 const LEGACY_SOUND_STORAGE_KEY = "bloom.sound-enabled";
 
@@ -9,6 +10,8 @@ const soundToggle = document.querySelector("#sound-toggle");
 const sessionButtons = [...document.querySelectorAll("[data-session]")];
 const levelButtons = [...document.querySelectorAll("[data-level]")];
 const worldInputs = [...document.querySelectorAll("input[name='world']")];
+const clearCreationsButton = document.querySelector("#clear-creations");
+const creationsMessage = document.querySelector("#creations-message");
 const resetButton = document.querySelector("#reset-all");
 const resetMessage = document.querySelector("#reset-message");
 
@@ -40,6 +43,12 @@ worldInputs.forEach((input) => {
     }
     update({ hiddenWorlds: worldInputs.filter((other) => !other.checked).map((other) => other.value) });
   });
+});
+
+clearCreationsButton.addEventListener("click", () => {
+  if (!globalThis.confirm(CLEAR_CREATIONS_MESSAGE)) return;
+  clearCreations();
+  creationsMessage.hidden = false;
 });
 
 resetButton.addEventListener("click", () => {
@@ -84,6 +93,19 @@ function renderSound() {
   const enabled = loadSoundPreference();
   soundToggle.setAttribute("aria-pressed", String(enabled));
   soundToggle.textContent = enabled ? "On" : "Off";
+}
+
+function clearCreations() {
+  try {
+    const storage = globalThis.localStorage;
+    if (!storage) return;
+    const doomed = [];
+    for (let index = 0; index < storage.length; index += 1) {
+      const key = storage.key(index);
+      if (key != null && key.startsWith(SETTINGS_PREFIX) && key.endsWith(".creation")) doomed.push(key);
+    }
+    doomed.forEach((key) => storage.removeItem(key));
+  } catch {}
 }
 
 function clearAllStorage() {

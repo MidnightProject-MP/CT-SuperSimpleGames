@@ -20,9 +20,9 @@ That invariant has a device boundary. A web app cannot prevent operating-system 
 4. **Meaning is multimodal.** Color is paired with position, size, petal count, animation, and optional sound rather than carrying instructions alone.
 5. **Every in-product path stays inside play.** There are no external links, ads, purchases, permissions, or attractive navigation controls.
 6. **Privacy is the default.** There are no accounts, analytics, identifiers, third-party SDKs, or data transmission.
-7. **Accessibility is part of resilience.** The app supports keyboard activation and assistive labels, leaves browser zoom available, exposes a sound toggle, and respects reduced-motion preferences.
+7. **Accessibility is part of resilience.** The app supports keyboard activation and assistive labels, exposes a sound toggle, and respects reduced-motion preferences. Child play surfaces additionally reject accidental scale/pan gestures — toddler pinch/pan measurably interrupted play, so in-page pinch zoom is intentionally sacrificed there (revised 2026-08-24; OS-level accessibility zoom remains the preserved path). The caregiver page keeps full browser zoom.
 8. **Engagement is not the objective.** Do not add streaks, nagging, notifications, variable rewards, or autoplay. Caregiver-observed delight and repeat interest matter more than session length.
-9. **Spatial stability is part of legibility.** The child's active surface does not unexpectedly move, resize, or recenter when controls appear or state changes. Browser and accessibility zoom remain available; game-controlled zoom or reframing is reserved for mechanics that genuinely benefit from changing scale.
+9. **Spatial stability is part of legibility.** The child's active surface does not unexpectedly move, resize, or recenter when controls appear or state changes; accidental toddler gestures must not scale or pan it either (see principle 7). Game-controlled zoom or reframing is reserved for mechanics that genuinely benefit from changing scale.
 10. **Special moments are protected and create rhythm.** An event worth interrupting play for — such as the rainbow tree — unfolds briefly before accidental input can dismiss it, then hands the choice to continue, restart, or leave back to the child.
 11. **Celebration targets events and artifacts, never the child.** Feedback describes what happened in the world; there is no person-praise ("good job", "you're smart") in sound, text, or animation.
 
@@ -32,7 +32,7 @@ Adult concerns live behind one gated adult surface, kept away from child play. T
 
 ### Developmental level
 
-The caregiver-set level (default/gentle/rich) adjusts worlds from the inside — no gates, modes, or anything child-visible. Gentle: Bloom's garden bounds at 16 live objects instead of 24; Color Splash's generated boards use three identities instead of four; Stack & Settle's idea card starts hidden (still available); Together Tones omits the pattern-motif flourish (history beads remain). Default and rich reproduce the standard experience exactly. Peekaboo Pockets and Story Scenes are level-neutral by decision: Peekaboo already targets the youngest regime, and Story Scenes depth is frozen pending child observation.
+The caregiver-set level (default/gentle/rich) adjusts worlds from the inside — no gates, modes, or anything child-visible. Gentle: Bloom's garden bounds at 16 live objects instead of 24; Color Splash's generated boards use three identities instead of four. Default and rich reproduce the standard experience exactly. Peekaboo Pockets and Story Scenes are level-neutral by decision: Peekaboo already targets the youngest regime, and Story Scenes depth is frozen pending child observation. Memory and Numbers adopt level parameters only when their experiments harden. (The former Stack & Settle and Together Tones gentle adaptations retired with those worlds.)
 
 ### Session wind-down
 
@@ -46,9 +46,9 @@ Bloom supports exposure to cause and effect, colors, spatial position, relative 
 
 ## Color Splash: second product slice
 
-Color Splash begins with enlarged four-cell boards using two to four color-and-symbol identities, then moves to 4×4 boards using four. Tapping anywhere inside the visible board resolves to a nearby square, changes the connected region anchored at the top-left to that square's identity, and absorbs adjacent matches. A local response and traveling color make the resolved choice visible. Repeating the current identity traces the connected region rather than appearing ignored. There is no move limit, wrong choice, score, or automatic restart. A completed board holds its state until the child activates an explicit large new-board control. Stable bridge, islands, stripes, rings, path, and pockets families introduce legible spatial structures before later rounds use procedural variation.
+Color Splash begins with enlarged four-cell boards using two to four color-and-symbol identities, then moves to 4×4 boards using four. Tapping anywhere inside the visible board resolves to a nearby square, changes the connected region anchored at the top-left to that square's identity, and absorbs adjacent matches. A local response and traveling color make the resolved choice visible. Repeating the current identity traces the connected region rather than appearing ignored. There is no move limit, wrong choice, score, or automatic restart. A completed board holds its state and any tap starts a fresh board *(revisions queued under Epic G3/G2: protected opening hold after completion; butterfly inhabiting the board)*. Stable bridge, islands, stripes, rings, path, and pockets families introduce legible spatial structures before later rounds use procedural variation.
 
-Color Splash supports exposure to color and symbol matching, connected regions, cause and effect, and simple multi-step planning. It does **not** assess reasoning or claim that completion demonstrates mastery. When a board completes, the same butterfly seen in Bloom lands at the board's edge and greets three touches before flying home; a new board gently sends it on its way.
+Color Splash supports exposure to color and symbol matching, connected regions, cause and effect, and simple multi-step planning. It does **not** assess reasoning or claim that completion demonstrates mastery. When a board completes, the same butterfly seen in Bloom appears at the board's edge and greets three touches before play continues.
 
 ## Peekaboo Pockets: third product slice
 
@@ -56,23 +56,19 @@ Peekaboo Pockets presents one large visual target and three oversized containers
 
 Peekaboo Pockets supports exposure to open/closed, visible/hidden, containment, stable location, and revisiting. It does **not** assess memory or claim to teach object permanence. Its larger purpose is to test whether a reversible state change invites a different kind of curiosity and caregiver co-play from the first two games.
 
-## Stack & Settle: fourth product slice
+## Stack & Settle: retired product slice
 
-Stack & Settle presents five oversized, reusable pieces in one bounded construction scene. A tap places or rearranges a piece without requiring sustained dragging. A broad drag gives richer positioning, after which capability-defined pieces settle safely on the floor, a nearby support, two broad supports, or into the ball-and-nest relationship. The bridge beam is visibly at least half again as wide as every other piece, and it seeks the nearest compatible support pair: a beam released anywhere near two standing supports settles across their midpoint rather than requiring exact placement, height matching, or a precise release angle. Occupied drops stack onto a valid support or slide to the nearest clear space instead of visually merging. Recognized bridges survive orientation changes as structures rather than merely retaining disconnected pieces. Floor neighbors, stacks, nesting, bridges, shelters, and enclosures produce different brief responses. A bridge deterministically invites the same spotted bird seen in Bloom; it perches because of the visible structure, hops among four bounded local positions, and leaves after four touches without moving any piece. Dismantling and rebuilding the bridge can invite it again. Pieces never collapse as punishment, remain movable, and cannot be consumed or duplicated. An optional pictorial idea card suggests a bridge, tower, home, nest, or row; it can be changed or hidden and never makes other arrangements wrong. Matching an idea produces one quiet acknowledgement without scoring, advancing, locking pieces, or clearing the construction.
+Stack & Settle was removed from the launcher on 2026-08-24 by owner direction and replaced in the portfolio by Memory. Its construction agency (direct manipulation, revision) did not earn a scarce slot against the confirmed matching/recall and quantity gaps, and its archive no longer waits on device evidence. The full description of its last shipped state lives in git history; salvageable patterns are noted in `IDEAS.md`.
 
-Stack & Settle supports exposure to above/below, beside, inside, relative size, arrangement, revision, and turn-taking. It does **not** assess coordination, construction, balance, or spatial reasoning. Its larger purpose is to test direct manipulation and child-authored revision, forms of agency not present in the first three games.
+## Together Tones: retired product slice
+
+Together Tones was removed from the launcher on 2026-08-24 by owner direction and replaced in the portfolio by Numbers. Its temporal-pattern territory intentionally left the collection; its research risk for under-30-month children (arbitrary sequence recall) was never resolved by observation. The full description of its last shipped state lives in git history; salvageable patterns are noted in `IDEAS.md`.
 
 ## Story Scenes: available storytelling world
 
 Story Scenes explores whether creation, revisiting, direct manipulation, and stable relationships can become a tiny child-authored narrative. Garden weather, Town trip, and Castle tale each provide four oversized object families, five predictable visual variants, a safe initial selection, and their own repeatable relationship vocabulary. Each family declares a cast limit: singular story anchors such as the sun, bus, horse, armor, and dragon appear once, while families such as flowers, clouds, children, and friends allow a small group of up to three. Trying to add beyond a limit revisits the nearest existing member rather than adding clutter or deleting anything. An ordinary placement or object tap rotates the highlight to the next family so repeated toddler taps produce variety without requiring palette comprehension; the palette remains available for exact choice. Nearby pairs begin a persistent story beat; touching either participant cycles that shared interaction through active, paused, and reversed states, while moving one toward a new partner redirects the story. In Castle tale, person, horse, armor, and dragon can form reversible rider, armored hero, armored rider, and royal-reunion tableaux without consuming an ingredient. Existing objects remain touchable and broadly movable.
 
 The storytelling world is available from the launcher for testing. Each setting keeps its own story: the setting control offers three choices and choosing one switches immediately — no confirmation step — parking the current scene and restoring the target scene exactly as it was left, so a background change never destroys work. In the Garden weather setting, once three or more objects stand in the scene, a gentle snail slides in along the scene's edge and greets three touches before sliding home; removing objects or changing the setting sees it off. Existing objects remain touchable and broadly movable; when an ordinary placement or move relates to a nearby partner, that object settles snugly beside its partner instead of hovering at drop distance, and combined tableaux render their art clear of the participants rather than on top of them. A fresh start clears only the currently visible scene, after explicit confirmation. Its availability does not establish that young children understand selecting a family and then placing it, distinguish changing an object from moving it, understand the setting transition, or intentionally discover and repeat relationships. Those questions remain for rendered, device, caregiver, and child observation.
-
-## Together Tones: available temporal-play world
-
-Together Tones explores temporal order and informal turn-taking through four oversized visual voices. Every activation creates a complete visible response whether sound is enabled or not. Repeating the same voice creates an echo response; moving to a different voice connects the last pair. A four-bead trail shows recent order without asking the child to copy it; each bead is independently touchable and reactivates that one voice as the newest action. Recent repetition, alternation, three-voice, and four-voice patterns briefly form stable rings, an arc, a triangle, or a loop. Only one brief generated tone plays at a time, and muting never removes the visual state.
-
-The temporal-play world is available from the launcher for testing. It does not claim to teach rhythm, musical concepts, memory, or cooperation. It specifically excludes automatic playback, imitation prompts, tempo changes, accuracy, scores, performance recording, and completion. Its question is whether stable visual voices, geometric motifs, and a tiny shared history invite comfortable variation or natural alternating turns.
 
 ## Acceptance evidence
 
@@ -100,25 +96,16 @@ Mechanical checks:
 - flood moves never shrink the connected corner region or mutate the prior board;
 - decorative board gaps resolve deterministically to a nearby square;
 - repeated/current-color input visibly acknowledges the connected region;
-- Color Splash completion waits for the explicit new-board control before starting another board.
-- Color Splash reserves or overlays its Back one and New board controls so their appearance cannot shift the board, resize cells, recenter the grid, or change accepted tap geometry;
+- Color Splash completion holds its state and any subsequent tap starts a fresh board (protected-hold revision queued under Epic G3);
 - state changes preserve the active play surface's stable anchors, and game-controlled camera zoom or automatic fit changes appear only where a documented mechanic requires them;
-- user-initiated browser and accessibility zoom remains functional;
+- child play surfaces reject accidental scale/pan gestures; the caregiver page retains full browser zoom (standing constraint, revised 2026-08-24);
 - each Peekaboo search contains one stable target, two unique familiar friends, one stable clue pocket, and three distinct non-color patterns;
 - pocket discovery is monotonic, opening and closing never mutates prior state, and discovering all pockets never blocks further play;
 - every friend has a locally bundled vector illustration and remains independently touchable while emerged;
 - the target and clue indices never change in response to a choice, and target discovery is monotonic;
 - greeting partners are selected deterministically only from currently open non-clue pockets;
 - Peekaboo derives at most one together relationship from its two open friends; closing either home removes it and touching either participant can repeat it without changing round state;
-- Stack & Settle always contains exactly five distinct reusable pieces with immutable state transitions;
-- Stack & Settle permits only its explicit ball-and-nest overlap; other occupied releases and layout changes resolve to clear supported positions;
-- the Stack beam is visually distinct in width and a broad drop near a compatible support pair produces a collision-free bridge at their midpoint;
-- a recognized Stack bridge remains a bridge across saved or live orientation changes, and its resident remains derived from the structure rather than persisted as a reward;
-- Stack's spotted bird is bounded to one, responds locally for four touches, never changes the build, and cannot return until the bridge condition is broken and recreated;
-- tap-only input places and rearranges pieces without requiring a drag;
-- every released piece settles within horizontal bounds and into a supported floor, stack, or nest state;
-- ball-and-nest, stacked, and side-by-side relationships are deterministic and do not consume pieces;
-- interrupted drags preserve the prior arrangement and never consume the next tap;
+- *(retired worlds: the Stack & Settle and Together Tones acceptance blocks were removed with their portfolio retirement on 2026-08-24; git history preserves them)*;
 - Story Scenes defaults to flower placement, cycles exactly five variants per object family, and keeps every object revisitable;
 - ordinary Story Scenes placement and object revisiting rotate the highlighted family through the current four-item cast while direct palette selection remains available;
 - Story Scenes relationships depend on stable nearby pairs, retain only one bounded reversible interaction per pair, and never consume or replace their objects;
@@ -128,9 +115,6 @@ Mechanical checks:
 - choosing a story setting switches immediately with no confirmation step, parks the outgoing scene in its own slot, restores the target scene's parked state, and migrates older single-scene snapshots into this world without loss;
 - a related placement or move settles the touched object at a fixed snug gap beside its partner, within bounds and never onto it;
 - combined tableaux render at an anchor clear of their participants in both orientations;
-- Together Tones retains at most four recent actions, lets each history bead reactivate exactly one voice, keeps five visual levels per voice, and maintains one active pair;
-- repeating and alternating voices have deterministic visual consequences without requiring sound;
-- every Together Tones action stops the prior generated tone before starting another, so audio cannot accumulate;
 
 Observation checks before public release:
 
@@ -159,8 +143,10 @@ Observation checks before public release:
 
 ## Current portfolio boundary
 
-All six experiences are public and mechanically verified, but none is child-validated. Availability supports observation; it does not establish comprehension, comfort, developmental benefit, or voluntary return.
+The active portfolio is **Bloom, Color Splash, Peekaboo Pockets, and Story Scenes**, with **Memory** (matching + spatial recall) and **Numbers** (quantity as manipulation) entering as experimental replacements for Stack & Settle and Together Tones, which were removed from the launcher on 2026-08-24 by owner direction (sources left inert in-tree pending deletion). Memory and Numbers stop at playable experiments pending child/owner evidence before hardening.
 
-The Familiar World foundation, first recurring-resident pilot, and first shared relationship meaning are implemented: Home never clears work; Bloom, Stack & Settle, and Story Scenes restore one bounded local creation; and their shared Fresh control requires explicit confirmation. Saved state remains on the device, contains no identity or engagement history, is validated against the current game model, and safely falls back when unavailable or incompatible. Finite games begin as fresh rounds and retain deliberate in-game replay. Bloom's spotted bird recognizes a child-built bridge in Stack & Settle without creating a collection, unlock, or cross-game progression state. Peekaboo's themed reunions now express the same visible “together” meaning already present in Bloom links, Story relationships, and Together Tones pairs while preserving its own reveal-and-search agency.
+Bloom is the only world with direct child-engagement evidence (owner-relayed informal observation, 2026-08-24): children engage with it and accidental zoom interferes — which is why gesture protection is now a standing invariant. All other claims remain mechanical, rendered, or simulated.
 
-Color Splash now keeps one rendered board frame across ordinary play, Back one, completion, and New board. The current cross-game decision and sequencing live only in `ROADMAP.md`; detailed per-game candidates live in `GAME_ROADMAPS.md`; evidence and meaningful feedback provenance live in `EVIDENCE.md`.
+Home never clears work; Bloom and Story Scenes restore one bounded local creation; their shared Fresh control requires explicit confirmation *(relocation to the caregiver surface queued under Epic G4)*. Saved state remains on the device, contains no identity or engagement history, is validated against the current game model, and safely falls back when unavailable or incompatible. Bloom's spotted bird no longer appears in Stack & Settle (retired); the recurring cast lives through Bloom's bee/butterfly/bird visitors plus Color Splash's butterfly and Story Scenes' snail. Peekaboo's themed reunions express the shared visible "together" meaning already present in Bloom links and Story relationships while preserving its own reveal-and-search agency.
+
+Color Splash keeps one rendered board frame across ordinary play and completion. The current cross-game decision and sequencing live only in `ROADMAP.md`; detailed per-game candidates live in `GAME_ROADMAPS.md`; evidence and meaningful feedback provenance live in `EVIDENCE.md`.

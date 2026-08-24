@@ -7,6 +7,7 @@ import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { createSplashBoard, SPLASH_COLOR_COUNT } from "./splash-boards.js";
 import { startWindDown } from "./wind-down.js";
 import { RESIDENT_TOUCHES, attachResident, colorSplashResidentFor } from "./residents.js";
+import { protectPlaySurface } from "./play-gesture.js";
 
 const GRID_COLORS = COLORS.slice(0, 4);
 const SYMBOLS = ["●", "◆", "≡", "✦"];
@@ -270,6 +271,7 @@ addEventListener("pagehide", tonePlayer.stop);
 
 newRound();
 renderSoundState();
+protectPlaySurface();
 startWindDown({ lines: { "/games/color-splash/": "The colors are resting." } });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {

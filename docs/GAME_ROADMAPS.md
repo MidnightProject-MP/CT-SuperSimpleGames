@@ -13,9 +13,11 @@ Each game should provide a different kind of agency and a different route into e
 | Bloom | Living systems and visual pattern-making | color, size, growth, grouping, variation, simple quantity |
 | Color Splash | Connected-region puzzles and reversible planning | color-symbol matching, boundaries, sequence, prediction, part and whole |
 | Peekaboo Pockets | Search, evidence, containment, and perspective | hidden/visible, inside/outside, location, clues, thematic categories |
-| Stack & Settle | Construction and spatial problem solving | above/below, beside, inside, size, support, symmetry, revision |
+| Memory *(experiment)* | Matching relationships and spatial recall | same/different, recognition, witnessed location, part of a set, "where was it?" |
+| Numbers *(experiment)* | Quantity as manipulation and perception | one more / one fewer, small set sizes, concrete consequence, subitizing exposure |
 | Story Scenes | Symbolic storytelling and causal narratives | characters, settings, sequence, roles, emotion, cooperation, cause and effect |
-| Together Tones | Temporal patterns and shared turn-taking | repetition, alternation, order, high/low, same/different, anticipation |
+
+Retired from the active portfolio (2026-08-24, owner direction): **Stack & Settle** (construction/spatial arrangement) and **Together Tones** (temporal patterns). Their roadmaps below are retained as history and marked retired; their sources remain inert in-tree pending deletion.
 
 “Learning” means exposure through understandable play. It never means a quiz, a mastery claim, a performance score, or pressure to produce an adult-defined answer.
 
@@ -26,22 +28,24 @@ Authoritative per-world territory declarations. Regimes are defined in [`PERSONA
 | World | Core observable activity | Territory | Surface regime | Depth regime |
 |---|---|---|---|---|
 | Bloom | Touch makes a flower; touching again grows it; nearby flowers gather into bouquets and trees | Cause and effect; color and size variation; part–whole transformation; grouping-by-three; gentle spatial planning | R1 (create + growth) | R2–R3 (tending toward merges, anticipating transformations, reproducing the rainbow) |
-| Color Splash | Tap a color; the connected corner region spreads; Back one reverses | Color/symbol matching; connected regions and boundaries; one-step prediction and revision | R1 (tap → visible spread on teaching boards) | R2–R3 (identity discrimination on 4×4 boards, planning ahead) |
+| Color Splash | Tap a color; the connected corner region spreads | Color/symbol matching; connected regions and boundaries; one-step prediction | R1 (tap → visible spread on teaching boards) | R2–R3 (identity discrimination on 4×4 boards, planning ahead) |
 | Peekaboo Pockets | Open and close big containers; find the target; greet friends; two friends form a reunion | Hidden/visible and containment; stable location; clue→inference; thematic categories and naming | R1 (open/close, peekaboo delight) | R2–R3 (stable-location memory, clue use, category talk with caregiver) |
-| Stack & Settle | Place and rearrange five big pieces; pieces settle on supports; a bridge invites the bird | Spatial relationships (above/beside/inside); support and containment; arrangement and revision | R1–R2 (tap-place, settling responses) | R3 (intentional bridge/structure building, idea-card planning) |
+| Memory *(experiment)* | Watch friends show themselves, watch them hide, flip/reopen to find the matching pairs you saw | Same/different recognition; location recall of witnessed events; small-set completeness | R1 (flip → expressive reveal) | R2–R3 (deliberate pair-seeking, remembering locations across mismatch reveals) |
+| Numbers *(experiment)* | Add items to a creature one at a time or release them back; each change is visible, audible, and reversible | Quantity as manipulable event; one more/one fewer; perceptual counting exposure | R1 (tap → item arrives with count-appropriate response) | R2–R3 (anticipating how many, making "two" or "three" on purpose) |
 | Story Scenes | Tap adds cast members; repeated taps vary them; nearby pairs begin story beats; castle ingredients combine | Symbolic and pretend play; thematic vocabulary; reversible cause-effect pairs; composition | R1–R2 (placement variety is complete play) | R3 (narrative beats, roles, castle tableaux) |
-| Together Tones | Tap pads for tone + visual response; repeats echo; alternates link; beads replay one voice | Cause-effect with sound; same/different and repeat/change; short temporal patterns; shared turn-taking | R1 (tap → tone + light) | R2–R3 (same/different, alternation, motif shapes, caregiver turn-taking) |
+| ~~Stack & Settle~~ *(retired)* | ~~Place and rearrange five big pieces~~ | ~~Spatial relationships; construction~~ | — | — |
+| ~~Together Tones~~ *(retired)* | ~~Tap pads for tone + visual response~~ | ~~Temporal patterns; same/different over time~~ | — | — |
 
 ### Risk resolutions
 
 - **Together Tones under-30-month risk — accepted, territory clarified.** The world never demands sequence reproduction: motifs are consequences of what the child already did, and history beads replay exactly one voice. R1 receives a complete cause-effect sound toy; arbitrary recall (beyond toddler working memory) is never required. Any future TT-3 work must use meaningful chunks and echo formats, never arbitrary-sequence imitation. Portfolio *value* versus other candidates remains a B3 question.
 - **Story Scenes R3 skew — accepted, surface/depth split documented.** Symbolic substitution and multi-step scripts are R3 capacities, but the surface (tap → object appears; repeated taps vary it) is complete, satisfying play for R1–R2. Narrative depth rewards the older child without gating the younger. Caregiver mediation (naming, prompting) is the intended bridge and belongs to the caregiver-layer epic (C).
 
-### Portfolio composition verdict (story B3, 2026-08-23)
+### Portfolio composition verdict (story B3, 2026-08-23; superseded 2026-08-24)
 
-Scored against delivered quality, regime fit, medium value (does the touchscreen add what the physical activity cannot?), distinct agency, and composition gaps. No child or device evidence exists yet for any world, so all verdicts carry explicit evidence triggers and remain reversible.
+The B3 verdict below kept all six worlds. **It was superseded one day later** by the owner's first real child evidence and product direction (recorded in [`EVIDENCE.md`](./EVIDENCE.md)): Stack & Settle and Together Tones leave the active portfolio immediately and are replaced by the Memory and Numbers experiments; the "archive only after F1 device evidence" trigger is retired — portfolio slots are scarce, and owner direction plus observed zoom interference outrank unobserved-drag caution. The table is retained for its reasoning record.
 
-| World | Verdict | Rationale |
+| World | Verdict (superseded) | Rationale |
 |---|---|---|
 | Bloom | **Keep — flagship** | Strongest delivered quality (owner-gated reachability, protected rainbow, CI-guarded rates); digital-native transformations physical flowers cannot do; anchors cause-effect and the special-event pattern. |
 | Color Splash | **Keep** | Most digital-native agency (flood-fill has no physical analog); connected-region reasoning is the portfolio's best research-backed differentiation; stable frame rendered-verified. |
@@ -50,29 +54,29 @@ Scored against delivered quality, regime fit, medium value (does the touchscreen
 | Stack & Settle | **Keep — with explicit archive trigger** | The medium-value concern is real (screen transfer is weakest for object manipulation; physical blocks offer weight/gravity/instability the screen cannot), but touch-device ease has never been observed — archiving on an untested assumption violates evidence discipline. **Trigger:** the F1 device pass. If drag construction frustrates real toddler hands, archive or reshape toward tap-only placement (the resident pilot migrates to another world). Until then it remains the spatial-construction representative. |
 | Together Tones | **Keep — first replacement candidate** | Thinnest world by content, but its surface is a complete cause-effect sound toy for the youngest regime and temporal agency is distinct. Archive only if a B4 matching/classification concept proves stronger in explicit comparison — not before a replacement exists. |
 
-**Composition consequences:** launcher unchanged (six worlds). The confirmed portfolio gap — visible matching/classification and explicit small quantities — proceeds to B4 concept briefs. Vocabulary and spatial-talk leverage belongs to the caregiver layer (C1), not a new world. C/D sequencing unlocked: C1 (caregiver layer) is the next epic-level investment after B4.
+**Composition consequences (superseded 2026-08-24):** the B3 consequence — launcher unchanged at six worlds, B4 briefs next — was overtaken by the owner's replan: the launcher now carries Bloom, Color Splash, Peekaboo Pockets, Story Scenes, and the Memory/Numbers experiments as they land. The confirmed gap (matching/classification + small quantities) is addressed by exactly those two replacement worlds rather than a separate B4 concept.
 
-### Portfolio gap notes (inputs to B3/B4)
+### Portfolio gap notes (inputs to B3/B4; resolved by the 2026-08-24 replacements)
 
-- **Uncovered agencies:** visible matching/classification (research: identical-pair matching ~28–32 mo; sort-by-one-attribute from ~18 mo) and explicit small-quantity exposure beyond Bloom's implicit 3s/9s. Strongest candidates for a genuinely new world or a bounded reshape; briefs belong to B4 only if B3 confirms the gap. *(B3 confirmed it.)*
-- **Covered strongly:** cause-effect (all worlds), connected-region/spatial reasoning (Color Splash, Stack & Settle — the portfolio's best differentiation), symbolic play (Story Scenes), temporal pattern surface (Together Tones).
-- **Caregiver-mediated, not world-shaped:** vocabulary/language and spatial talk — highest-leverage per research, belongs to the caregiver layer (C1 co-play prompts), not a new child-facing world.
-- **Medium-value flag for B3:** Stack & Settle's physical analog (blocks) is superb, and screen transfer is weakest for object-manipulation tasks; its digital additions (deterministic settling, structure recognition, resident) must outweigh that, and touch-device ease is still unobserved (Epic F1).
+- **Uncovered agencies:** visible matching/classification (research: identical-pair matching ~28–32 mo; sort-by-one-attribute from ~18 mo) and explicit small-quantity exposure beyond Bloom's implicit 3s/9s → **now covered by the Memory and Numbers territories.**
+- **Covered strongly:** cause-effect (all worlds), connected-region/spatial reasoning (Color Splash), symbolic play (Story Scenes).
+- **Caregiver-mediated, not world-shaped:** vocabulary/language and spatial talk — highest-leverage per research, belongs to the caregiver layer, not a new child-facing world.
+- **Vacated by retirement:** temporal-pattern agency (Together Tones) and physical-construction simulation (Stack & Settle) are intentionally dropped from the portfolio.
 
 ## Current per-game frontier
 
-This table is the quick index for this document. “Next candidate” means the next unimplemented milestone within that game, not permission to bypass the portfolio sequence in `ROADMAP.md`.
-
-**Paused 2026-08-23:** portfolio composition is under explicit review (`ROADMAP.md` Epic B). Per-game depth candidates below are suspended until each world's territory, regime fit, and launcher placement are decided by story B3; do not begin new per-game milestones before then.
+Quick index for this document. "Next candidate" means the next unimplemented milestone within that game, not permission to bypass the portfolio sequence in `ROADMAP.md`.
 
 | Experience | Implemented through | Next per-game candidate |
 |---|---|---|
-| Bloom | `BL-3A` mechanically implemented; second-tier reachability revision required | revise `BL-3A` before `BL-4` |
-| Color Splash | `CS-2` reversible planning, plus stable-frame correction | `CS-3` two growing corners |
-| Peekaboo Pockets | `PP-2` clues plus `PP-4` themed reunion slice | `PP-3` child hides, caregiver seeks |
-| Stack & Settle | `STK-2` idea cards, plus Familiar World bridge resident | `STK-3` themed construction kits |
-| Story Scenes | `SCN-2A` toddler-first variation and compositional castle | `SCN-3` roles and child-directed sides |
-| Together Tones | `TT-2` touchable recent history | `TT-3` tone qualities and visible comparison |
+| Bloom | Merge reachability revision, rainbow cutscene, visitors — child-engagement validated | Epic G polish only; no depth milestones |
+| Color Splash | Teaching boards + families, stable frame, butterfly resident (weak) | Epic G3/G2 completion protection + resident life before any CS-3 consideration |
+| Peekaboo Pockets | Clues + themed reunions | Epic G5 hygiene + friend variety; PP-3 deferred |
+| Memory *(experiment)* | Not started | H1 brief → H2 playable experiment → **evidence gate** |
+| Numbers *(experiment)* | Not started | I1 brief → I2 playable experiment → **evidence gate** |
+| Story Scenes | SCN-2A variation + compositional castle; snail resident (weak) | Epic G4 control simplification + G2 snail life; SCN-3 stays frozen |
+| ~~Stack & Settle~~ | Retired 2026-08-24 | none — do not invest |
+| ~~Together Tones~~ | Retired 2026-08-24 | none — do not invest |
 
 ## Rules shared by every roadmap
 
@@ -87,7 +91,7 @@ This table is the quick index for this document. “Next candidate” means the 
 9. Continue to prohibit scores, streaks, timers, lives, locked content, rarity, autoplay, nagging, analytics, accounts, advertising, and external actions.
 10. Availability is not validation. A roadmap milestone may be public for testing while its child, device, and caregiver evidence remains pending.
 11. Every finite or round-based experience must offer an obvious in-game replay after its restful completion pause. Protect valuable child-authored work, but make destructive friction proportional to the value and replaceability of the state. Prefer reversible or nondestructive behavior underneath a direct child interaction over routine confirmation UI.
-12. Keep user-initiated browser and accessibility zoom available, but use game-directed zoom or reframing only when changing scale materially improves the central mechanic.
+12. Child play surfaces reject accidental scale/pan gestures (toddler pinch/pan must not interrupt play; `ROADMAP.md` standing constraint). The caregiver surface remains fully zoomable; OS-level accessibility zoom is the preserved path. Use game-directed zoom or reframing only when changing scale materially improves the central mechanic.
 13. Keep the primary play surface spatially stable. Controls and render-state changes must not unexpectedly move, resize, or recenter it; reserve control space or overlay controls without changing child-authored geometry.
 14. Model toddler play faithfully in any reachability or discoverability probe: clustered bursts within attention zones, relocation between zones, drag gestures near plausible targets — never uniform random interaction. Uniform randomness validates nothing and can both falsely condemn and falsely clear mechanics; calibrate each simulation against at least one known-reachable case before trusting its verdicts.
 
@@ -511,6 +515,8 @@ The child currently receives three stable containers, one visual target, two fri
 
 ## Stack & Settle roadmap
 
+> **RETIRED 2026-08-24** (owner direction; see `ROADMAP.md` Epic J). Everything below is history. STK-3 themed kits, STK-4 moving relationships, and any further work are cancelled. Salvage notes: the pictorial idea-card concept (invitation without objective) and tap-place-with-forgiving-settling input model are recorded in `IDEAS.md` as reusable patterns. The spotted-bird bridge cameo is gone; the recurring cast continues via Bloom's visitors.
+
 ### Experience identity
 
 Stack & Settle should become the collection’s construction and spatial-problem-solving world. Its pleasure comes from arranging a small reusable set, seeing pieces form stable relationships, revising a structure, and optionally pursuing a visual idea without losing free play.
@@ -756,6 +762,8 @@ Letters and numerals may appear as meaningful environmental marks—a bus number
 
 ## Together Tones roadmap
 
+> **RETIRED 2026-08-24** (owner direction; see `ROADMAP.md` Epic J). Everything below is history. TT-3 tone qualities, TT-4 cooperative relationships, and TT-5 voice themes are cancelled. Salvage notes: the touchable-history pattern (past actions remain individually replayable) and one-tone-at-a-time audio safety model are recorded in `IDEAS.md` as reusable patterns. Temporal-pattern territory intentionally leaves the portfolio.
+
 ### Experience identity
 
 Together Tones should become the collection’s temporal and cooperative-play world. Its pleasure comes from making a local response, repeating or alternating it, seeing recent order, and naturally sharing turns. It should remain complete with sound muted.
@@ -867,6 +875,102 @@ The child currently receives four stable visual voices, five bounded visual leve
 - an automatic song player or recording tool;
 - an escalating sensory spectacle;
 - a formal multiplayer system that assigns turns or winners.
+
+---
+
+## Memory roadmap *(experiment — Epic H)*
+
+### Experience identity
+
+Memory is the collection's **matching-and-recall** world. Peekaboo's pleasure is discovering what you never knew; Memory's pleasure is **recognizing a relationship and remembering where something was**. The child watches information appear, watches it hide, and then acts on what they remember. It is a toddler toy, not school concentration: no face-down grids of unseen content, no failure, no score.
+
+Owner-set territory (2026-08-24): matching + spatial recall. Explicitly distinct from Peekaboo search/reveal.
+
+### Concepts Memory can expose
+
+- same/different recognition across oversized tokens;
+- location memory for *witnessed* events (you saw where it went);
+- small-set completeness ("all the pairs are together");
+- part/whole (each pair is two of one kind);
+- gentle delayed gratification with guaranteed success;
+- turn-taking vocabulary through caregiver co-play ("whose turn?", "where was the duck?").
+
+### MEM-1 — Playable experiment: "Memory Pairs" (H2)
+
+**Kind:** experiment; deliberately thin presentation; hardening only after experiential evidence.
+
+- Four oversized cards (two pairs) in stable positions. Round generation is seed-deterministic.
+- **Witnessed intro:** all cards start face-up briefly so the child sees who is where (developmental accommodation: face-down unseen arrays exceed under-30-month spans; recall of witnessed events arrives much earlier).
+- Cards close with a playful flip animation. No timer pressure anywhere.
+- The child flips any card at any time; flipping a second opens it too.
+  - **Match:** the pair celebrates together and stays open — the collection's established "together" meaning, joined by a connector like Peekaboo's reunions.
+  - **Mismatch:** both friends appear cheerfully (a wrong card is still a delightful reveal), wave, and close again. Nothing resembles failure; the mismatch itself re-shows spatial information ("the duck was THERE").
+- Completing both pairs produces a calm everyone-together moment, then an in-game "Hide again" replay control (Peekaboo's proven pattern).
+- Sound-off complete; reduced-motion respected; unrestricted tapping safe; no reading required.
+- Deterministic core from day one: seeded round validity (exactly two pairs), flip state machine (max two open, mismatch auto-close, matches lock), monotonic completion.
+
+**Experience question:** do children act on remembered locations after mismatches reveal them (i.e., does recall actually participate), and does the loop delight without instruction?
+
+**Gate:** stop after the playable experiment for owner/child hands-on evidence before any widening or polish.
+
+### MEM-2+ — Widening candidates (blocked on H2 gate)
+
+- Caregiver-level widening only: default stays two pairs; rich adds a third pair; never locks or gates.
+- Possible later texture: themed token families reusing local friend art; a "who went where?" variant (request one friend pictorially, find their home). Do not build while the core question is open.
+
+### Memory should not become
+
+- conventional 4×4 concentration or any grid requiring memorizing unseen content;
+- a scored game, timer pressure, or move counter;
+- Peekaboo-with-flipping (search must not be the missing skill);
+- a matching quiz that marks wrong answers.
+
+---
+
+## Numbers roadmap *(experiment — Epic I)*
+
+### Experience identity
+
+Numbers is the collection's **quantity-as-event** world. The number means something the child did and can perceive: things arrive, pile up, and go back out, each change visible, audible, and reversible. There is no quiz, no request the child must satisfy, no numerals required to succeed, and no wrong answer. Free add/remove play is complete in itself.
+
+Owner-set territory (2026-08-24): early quantity intuition through manipulation and consequence.
+
+### Concepts Numbers can expose
+
+- one more / one fewer as perceivable change;
+- tiny quantities (1–5) shown concretely, subitizing exposure without counting tasks;
+- accumulation and its reversal;
+- quantity paired across channels (pile size, motion, tone step);
+- optional environmental numeral exposure (never required, never tested).
+
+### NUM-1 — Playable experiment: "Number Nibbles" (I2)
+
+**Kind:** experiment; deliberately thin presentation; hardening only after experiential evidence.
+
+- One big friendly creature beside a small tray of items (CSS/SVG-drawn, locally bundled).
+- Tapping the tray sends **one item** hopping into the creature; it lands in a visible pile/belly. Each arrival gets a count-appropriate response: motion grows, tone steps upward, the creature reacts (1 = curious look, 2 = happy wiggle, 3+ = bigger bounce).
+- Tapping the creature makes items hop back out one at a time to the tray, tones stepping down — removal is as playful as adding.
+- Hard cap of five items; the cap expresses itself as the creature being satisfyingly full (never "wrong").
+- No request mechanic in this experiment: the surface must stand alone as free play. A gentle pictorial "want more?" nudge is a candidate only if observation shows children want direction.
+- Numerals may appear faintly beside the pile as environmental marks; they are decoration, never requirements.
+- Deterministic core from day one: add-one/remove-one state, cap enforcement, tone-step mapping, bounded DOM.
+
+**Experience question:** does the child notice and enjoy that *their action* changed how many there are — repeating adds or removes spontaneously — and does free play survive without any instruction?
+
+**Gate:** stop after the playable experiment for owner/child hands-on evidence before widening.
+
+### NUM-2+ — Widening candidates (blocked on I2 gate)
+
+- Caregiver-level widening: rich mode raises the cap or adds a second creature sharing items (early distribute/fairness texture).
+- Optional request layer (pictorial "some for you" cards) only if free play proves complete first.
+- Later content: item varieties that keep the rule identical (not reskins-for-novelty).
+
+### Numbers should not become
+
+- a counting quiz, flashcards, or worksheet;
+- a game requiring numeral recognition to play well;
+- an escalation ladder toward larger numbers before small ones feel meaningful;
+- an autoplaying demonstration.
 
 ---
 

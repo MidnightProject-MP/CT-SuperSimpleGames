@@ -6,14 +6,19 @@
 
 **SuperSimpleGames** is a local-only collection of no-fail web worlds for toddlers playing with a nearby caregiver: safe under unrestricted tapping, playable offline after first load, private by design, with no accounts, analytics, or external consequences.
 
-**Thesis (revised 2026-08-23):** each experience occupies an intentional, researched developmental territory rather than "educational in disguise" generally. The audience spans roughly three regimes (<24 / 24–30 / 30–42 months; see [`PERSONAS.md`](./PERSONAS.md)), and each world declares which regime(s) it serves while degrading gracefully downward. Sophistication lives underneath the experience: a young child receives simple cause and effect while an older child discovers relationships, patterns, memory demands, prediction, and intentional reproduction. Depth emerges from the world, never from more interface.
+**Thesis (revised 2026-08-23; reprioritized 2026-08-24):** each experience occupies an intentional, researched developmental territory rather than "educational in disguise" generally. The audience spans roughly three regimes (<24 / 24–30 / 30–42 months; see [`PERSONAS.md`](./PERSONAS.md)), and each world declares which regime(s) it serves while degrading gracefully downward. Sophistication lives underneath the experience: a young child receives simple cause and effect while an older child discovers relationships, patterns, memory demands, prediction, and intentional reproduction. Depth emerges from the world, never from more interface.
 
-**Standing constraints:** no scores, streaks, timers shown to children, unlocks, rare rewards, autoplay, nagging, analytics, accounts, ads, purchases, or external actions; no reading required; complete with sound off and reduced motion; local-only persistence; every world safe under unrestricted tapping.
+**Priority hierarchy within the hard constraints (owner-set 2026-08-24):** child engagement and delight → immediate responsiveness → discoverability and agency → replay/variation → interaction polish → appropriate developmental value → robustness → abstraction. Privacy, safety, offline operation, accessibility, and absence of external consequences are hard constraints outside this ordering, not low-priority entries in it. When choosing between another mechanic and making an existing promising interaction feel significantly better, default to the latter unless evidence supports expansion.
+
+**Interaction standard:** a mechanic is finished only when its presence improves the child's experience — not merely when it exists, is reachable, is deterministic, passes tests, or satisfies written criteria. Trace the chain: notice → act → response → consequence → invitation to continue. Real child observation now exists for part of the product and outranks prior product assumptions where they conflict; it is recorded in [`EVIDENCE.md`](./EVIDENCE.md) with its informal, single-source limits.
+
+**Standing constraints:** no scores, streaks, timers shown to children, unlocks, rare rewards, autoplay, nagging, analytics, accounts, ads, purchases, or external actions; no reading required; complete with sound off and reduced motion; local-only persistence; every world safe under unrestricted tapping; child play surfaces reject accidental scale/pan gestures (toddler pinch/pan must not interrupt play; adult/caregiver surfaces remain fully zoomable; OS-level accessibility zoom is the preserved path — this supersedes the earlier in-page browser-zoom guarantee after observed interference).
 
 **Direction principles:**
 
 - Design from the child's observable experience outward. `tap → something happens` beats `tap → management interface → decision → confirmation`. Complexity lives behind the experience.
 - Every control, state, confirmation, and rule competes with play itself and must earn its attention cost. Imprecise input is treated as intent, not failure.
+- Reset, destructive, and application-management controls (Fresh-style resets, scene pickers, settings) live outside the child's immediate play grammar unless there is a strong child-facing reason for their presence; the caregiver layer is their home.
 - A mechanic is experientially real only when ordinary messy play can encounter it and deliberately reproduce it. Implementation, rendered reachability, and child understanding are separate claims; the browser is a sense organ for verifying the second claim.
 - Special moments move `surprise → curiosity → causal understanding → intentional reproduction`, are discoverable through experimentation, interrupt play to create rhythm (`ordinary play → discovery → event → pause → choice`), and are protected: an accidental tap must not dismiss them before they have unfolded — briefly and without frustration.
 - No-fail does not mean no-information: gentle, non-penalizing outcome distinction is welcome; celebration targets events and artifacts, never the child's traits.
@@ -45,7 +50,7 @@
 |---|---|---|
 | B1 Domain research synthesis | Evidence base on early numeracy, memory, classification, patterns, language, spatial reasoning, symbolic play, transfer deficit, and joint media engagement | **Closed** 2026-08-23 (delegated research recorded in `EVIDENCE.md`) |
 | B2 World territory map | Each world declares its developmental territory, regime band, and what a child actually does there; personas applied at each boundary; Together Tones' under-30-month risk and Story Scenes' R3 skew explicitly resolved (reshape, reposition, or accept) | **Closed** 2026-08-23: map recorded in `GAME_ROADMAPS.md`; both risks accepted with surface/depth splits documented and design constraints recorded; gap notes captured for B3/B4 |
-| B3 Portfolio composition recommendation | Keep / reshape / archive verdict per world using delivered quality, regime fit, and medium value (Stack & Settle touchscreen-vs-physical question; Together Tones span risk); consolidation precedent informs rather than dictates; owner informed of consequential verdicts, not asked to choose alternatives | **Closed** 2026-08-23: all six worlds keep their launcher place; Story Scenes depth frozen pending child observation; Stack & Settle carries an explicit archive trigger at the F1 device pass; Together Tones is first replacement candidate against a B4 concept; verdict recorded in `GAME_ROADMAPS.md` |
+| B3 Portfolio composition recommendation | Keep / reshape / archive verdict per world using delivered quality, regime fit, and medium value (Stack & Settle touchscreen-vs-physical question; Together Tones span risk); consolidation precedent informs rather than dictates; owner informed of consequential verdicts, not asked to choose alternatives | **Closed 2026-08-23; superseded by owner direction 2026-08-24** (first real child evidence): Stack & Settle and Together Tones are replaced by Memory and Numbers; see Epic J. The keep-all-six verdict and the Stack archive-trigger-at-F1 condition are retired. |
 | B4 Gap concept briefs | If B3 confirms gaps (visible matching/classification, quantity exposure, language hooks), produce briefs into `IDEAS.md`/`GAME_ROADMAPS.md` — only forms whose agency is distinct | **Closed** 2026-08-23: "Gather families" brief recorded in `IDEAS.md` (classification by attribute, reversible revision, visible 1–3 set sizes; includes the Together Tones comparison and the no-fail open question). Epic B complete |
 
 ### Epic C — Caregiver layer and session rhythm
@@ -68,26 +73,66 @@
 | D2 Discoverability-tiered special relationships | Existing deeper triggers audited for whether ordinary experimentation can plausibly reveal them (`surprise → intentional reproduction`); unreachable ones redesigned or retired | **Closed** 2026-08-24: audit found every trigger discoverable except Stack's bridge + bird; beam now seeks the nearest compatible support pair (deterministic diagnosis → fix → re-probe: bird reachable at gestures 4–36 in clustered play, bridges in 6/12 simulated sessions vs 0 before); recorded in `plans/` + `EVIDENCE.md` |
 | D3 Event rhythm review | Portfolio-wide pass so special events interrupt loops with a restful pause and genuine choice, per the rainbow pattern | Merged into A3/A4 review criteria |
 
-### Epic E — Ownable visual identity
+### Epic G — Retained-world interaction polish
+
+*The next phase is product quality, not breadth: make the worlds children already touch feel alive, protected, and free of application machinery. No new mechanics.*
 
 | Story | Outcome | State |
 |---|---|---|
-| E1 Identity directions | Two or three opinionated visual alternatives (illustration system, texture, palette, typography) prototyped on representative screens via a temporary global skin; judged by the screenshot-recognition test; shipping nothing is acceptable | Planned; after A3 so corrections land first |
+| G1 Play-surface gesture protection | One consistent policy: child-facing surfaces (launcher + every retained game) reject accidental scale/pan (`touch-action` policy plus a Safari `gesturestart` guard); caregiver page stays fully zoomable; invariant tested deterministically and verified rendered | Planned — first |
+| G2 Resident life, world-local | Color Splash's butterfly inhabits the finished board (lands on squares, relocates spatially per touch, varies response); Story Scenes' snail travels the garden edge and pauses near the child's objects; each implemented inside its own world first — shared abstraction only if proven common behavior emerges (Bloom visitors remain the quality reference, not an architecture mandate) | Planned |
+| G3 Protected completion moments | A completed Color Splash board holds briefly before any input can start the next board (the rainbow pattern); celebration and resident cannot be destroyed by the next reflexive tap | Planned |
+| G4 Child-facing control simplification | Fresh removed from Bloom and Story Scenes' play grammar — destructive resets move to the caregiver surface ("Clear saved creations"); Story Scenes setting switching becomes three direct pictorial chips in the dock (tap → immediate switch, parking preserved), removing the picker overlay and its cancel step | Planned |
+| G5 Hygiene slice | Peekaboo clue-arrow mojibake repaired; duplicate live regions deduplicated (visible message loses `aria-live`, sr-only announcement remains the single AT channel) in Peekaboo and Story Scenes; dead Color Splash control CSS removed; Color Splash cell semantics clarified for assistive tech; tone envelopes softened at note endings; small Peekaboo friend-response variety (alternating greeting motions, slight pitch variation) | Planned |
 
-### Epic F — Real-world validation readiness
+### Epic H — Memory (portfolio replacement)
+
+*Territory (owner-set): matching + spatial recall — recognizing relationships and remembering where things are. Explicitly distinct from Peekaboo (search/reveal). A toddler toy, not school concentration: tiny boards, oversized tokens, witnessed information, expressive reveals, enjoyable mismatches, caregiver-level widening. Experiment before architecture; hardening waits on experiential evidence.*
 
 | Story | Outcome | State |
 |---|---|---|
-| F1 Device passes | Physical touch-device checks (frame geometry, drag ease) and airplane-mode exercise across launcher → games → Home | Blocked: needs available hardware |
-| F2 Observation protocols | Persona-aligned session guides for caregivers; informal child/caregiver observations recorded in `EVIDENCE.md` with provenance; personas revised from what is seen | Blocked: needs available children/caregivers; protocol drafting unblocked |
+| H1 Concept brief | Working definition in `GAME_ROADMAPS.md`: smallest true memory/matching loop (witnessed face-up intro → hide → find pairs), alternatives noted, success question stated | Planned |
+| H2 Playable experiment | Minimal "Memory Pairs" build: 4 oversized cards (2 pairs), witnessed intro, flip-to-match, joyful mismatch reveals, together-celebration, in-game replay; seeded deterministic round core with tests from day one; deliberately thin presentation; launcher slot swapped in as experimental | Planned — **hard evidence gate after this story**: stop for owner/child hands-on before hardening |
+| H3 Harden + widen | Polish from observation; caregiver-level widening (2→3 pairs); persistence decisions; full shell/offline treatment | Blocked on H2 gate |
+
+### Epic I — Numbers (portfolio replacement)
+
+*Territory: quantity as something the child manipulates and perceives — never a quiz. The number means something that happens in the world. Tiny quantities (≤5), concrete representation, immediate consequence, no wrong-answer loop, no reading.*
+
+| Story | Outcome | State |
+|---|---|---|
+| I1 Concept brief | Working definition in `GAME_ROADMAPS.md`: add-one/remove-one quantity play with visible perceptual consequence; request-free surface must stand alone | Planned |
+| I2 Playable experiment | Minimal "Number Nibbles" build: one friendly creature, tap-to-feed one item at a time (1–5), each arrival counts itself in motion/sound/pile, tapping the creature releases items back out; free add/remove is complete play; seeded core + tests; thin presentation; experimental launcher slot | Planned — **hard evidence gate after this story**: stop for owner/child hands-on before hardening |
+| I3 Harden + widen | Polish from observation; caregiver-level widening; optional gentle request layer only if free play proves complete; full shell treatment | **Blocked on I2 evidence gate** |
+
+### Epic J — Portfolio archive
+
+| Story | Outcome | State |
+|---|---|---|
+| J1 Remove Stack & Settle and Together Tones from the active portfolio | Launcher cards removed immediately (owner decision 2026-08-24: smaller launcher accepted); service-worker shell trimmed; caregiver world-visibility list reduced with safe fallback for stored settings referencing removed worlds; sources left inert in-tree pending later deletion (git retains history); roadmap sections marked retired; salvage notes recorded in `IDEAS.md` | Planned — executes first among code changes |
+
+### Epic E — Ownable visual identity *(deferred)*
+
+| Story | Outcome | State |
+|---|---|---|
+| E1 Identity directions | Two or three opinionated visual alternatives prototyped via temporary global skin; judged by screenshot-recognition test; shipping nothing acceptable | **Deferred by owner (2026-08-24)** until after Epic G interaction polish: retained worlds must feel excellent before identity investment. Ready execution plan remains in `docs/plans/`; the owner taste call stays valid whenever resumed |
+
+### Epic K — Real-world validation
+
+| Story | Outcome | State |
+|---|---|---|
+| K1 Record relayed child observations | Owner-relayed informal child evidence recorded with provenance and limits; observation/inference distinction preserved | **Closed** 2026-08-24 (see `EVIDENCE.md`) |
+| K2 Device passes | Physical touch-device checks (gesture protection feel, drag ease where relevant, frame geometry) and airplane-mode exercise across launcher → games → Home | Blocked: needs available hardware |
+| K3 Observation sessions | Persona-aligned session guides for caregivers, extended with Memory-recall and Numbers-invite hypotheses; observations recorded with provenance; personas revised from what is seen | Blocked: needs available children/caregivers; protocol drafting unblocked |
 
 ## Current position and sequencing
 
-- **Active story:** E1 identity-directions exploration (Epic E) — prototype two or three opinionated visual alternatives (illustration system, texture, palette, typography) on representative screens via a temporary global skin; judge by the screenshot-recognition test ("could someone recognize a SuperSimpleGames screenshot without the logo?"); shipping nothing is acceptable. Epic D is complete.
-- Then: F proceeds opportunistically whenever hardware or participants become available; remaining work is observation-driven.
-- Per-game Round-3 depth milestones in `GAME_ROADMAPS.md` are **paused**: placement was decided by B3 (all six keep their place; Story Scenes depth frozen pending child observation; Stack & Settle archive trigger sits at F1).
+- **Active epic: G — retained-world interaction polish**, in owner-directed order G1 → (G3, G2, G4, G5). No new mechanics in retained worlds during this phase.
+- **Then:** H1/H2 (Memory experiment) and I1/I2 (Numbers experiment), each stopping at its evidence gate; J1 archive executes first among code changes so the launcher carries only intended portfolio slots from the next release.
+- E1 identity directions is deferred until Epic G completes. K proceeds opportunistically whenever hardware or participants become available.
+- Per-game Round-3 depth milestones in `GAME_ROADMAPS.md` remain **paused**; retired-world sections are inert.
 
-The Familiar World foundation (shared control meanings, bounded preservation, stable Color Splash frame, bridge-invited bird, "together" meaning) is implemented and rendered-verified; its open questions transfer to Epic D and Epic F.
+The Familiar World foundation (shared control meanings, bounded preservation, stable Color Splash frame, "together" meaning) remains implemented and rendered-verified; Bloom's bridge-invited-bird cameo left the portfolio with Stack & Settle, while the recurring cast lives on through Bloom's visitors plus the Color Splash butterfly and Story Scenes snail.
 
 ## Spatial stability (standing invariant)
 

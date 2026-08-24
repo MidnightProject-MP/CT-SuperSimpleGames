@@ -1,7 +1,10 @@
 import { loadCaregiverSettings } from "./caregiver-settings.js";
+import { protectPlaySurface } from "./play-gesture.js";
 import { startWindDown } from "./wind-down.js";
 
 const HOLD_MS = 1500;
+
+protectPlaySurface();
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   const workerUrl = new URL("../sw.js", import.meta.url);

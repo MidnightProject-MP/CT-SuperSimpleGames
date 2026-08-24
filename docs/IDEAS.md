@@ -16,27 +16,29 @@ A child could place broad route marks that a friendly object follows. The intere
 
 The open question is whether tap-authored segments can make the experience complete for children who cannot sustain a drag. A continuous-line requirement would conflict with the current motor-access principles.
 
-## Gather families (matching/classification + small quantities)
-
-Story B4 brief (2026-08-23), answering the portfolio gap confirmed by B3. A cozy world of two or three large homes, each displaying one big example — a red leaf, a striped shell, a spotted mushroom. Familiar items (leaves, shells, bugs, stones in matching attribute families) arrive one at a time; the child moves or taps each item toward any home.
-
-The agency is **classification by attribute with reversible revision** — the child judges same/different, which no existing world asks for. Every placement is accepted: a matching item settles into its family row; a non-matching item sits in a visible visitor spot at the home's edge, complete and un-punished, and one tap returns it to the tray for regathering (reversible, never a rejection). When all members of a family gather, the family completes with a calm together-response — the same shared meaning already used across the collection. Homes show one, two, or three outline slots, so set size is visible before it is verbal: subitizing exposure without counting tasks.
-
-- **Regime:** R1 enjoys moving items and watching every placement respond; R2 notices same and different and begins gathering; R3 completes sets deliberately and distinguishes attributes (color, pattern, size).
-- **Surface/depth split:** placement + response is complete play; set completion and deliberate attribute sorting are the depth.
-- **No-fail mechanics:** nothing is ever wrong — a mismatched item is simply "not home yet," and the information stays visible without penalty.
-- **Together Tones comparison (B3):** both serve R1 surfaces well. This concept covers the uncovered classification/matching agency and small quantities; Together Tones covers temporal agency. If this concept earns implementation, Together Tones is the archive candidate per B3; if it fails the distinct-agency bar in review, Together Tones stays.
-
-**Open question:** can attribute differences stay exploratory rather than becoming a disguised right-answer sorter — does the pleasure survive if the child never completes a set? (If completion pressure is the core pleasure, it conflicts with the product contract and should not proceed.)
-
 ## Soft shape homes
 
 Large objects and flexible homes could explore relative size, nesting, and containment. Every placement would need a satisfying consequence, including imperfect or non-matching placement.
 
 The open question is whether differences can remain exploratory rather than becoming a disguised right-answer sorter. This should not proceed if the core pleasure depends on correction.
 
+## Gather families (matching/classification + small quantities)
+
+Story B4 brief (2026-08-23). **Status update 2026-08-24:** the portfolio gap this concept addressed is now served by the Memory experiment (matching/recall) and the Numbers experiment (small quantities); Together Tones was retired rather than compared against this brief. The attribute-classification variant below remains parked as a possible later Memory widening, not a separate world.
+
+A cozy world of two or three large homes, each displaying one big example — a red leaf, a striped shell, a spotted mushroom. Familiar items arrive one at a time; the child moves or taps each item toward any home. Every placement is accepted: matching items settle into their family row; non-matching items sit in a visible visitor spot at the home's edge, complete and un-punished, one tap returning them to the tray (reversible, never rejection).
+
+**Open question (unchanged):** can attribute differences stay exploratory rather than becoming a disguised right-answer sorter? If completion pressure is the core pleasure, it conflicts with the product contract and should not proceed.
+
+## Salvage notes from retired worlds (2026-08-24)
+
+Patterns worth remembering if a future world needs them; not commitments:
+
+- **From Stack & Settle:** pictorial idea cards that invite without becoming objectives; tap-to-place with forgiving capability-driven settling; structure recognition from arrangement.
+- **From Together Tones:** touchable history (past actions remain individually replayable tokens); strict one-tone-at-a-time audio with visual equivalents when muted.
+
 ## Promotion rule
 
 Promote an idea only when it introduces a distinct form of agency or answers an unresolved product question better than extending an existing game. Asset novelty alone is insufficient.
 
-Earlier Story Scenes, Peekaboo, and Color Splash proposals have been implemented or incorporated into `GAME_ROADMAPS.md`; they are intentionally no longer duplicated here.
+Earlier Story Scenes, Peekaboo, Color Splash, Stack & Settle, and Together Tones proposals have been implemented, retired, or incorporated into `GAME_ROADMAPS.md`; they are intentionally no longer duplicated here.

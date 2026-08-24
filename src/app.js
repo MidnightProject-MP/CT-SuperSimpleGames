@@ -29,6 +29,7 @@ import { loadCaregiverSettings, normalizeLevel } from "./caregiver-settings.js";
 import { setupFreshStart } from "./fresh-start.js";
 import { createPointerSampler } from "./interaction.js";
 import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
+import { protectPlaySurface } from "./play-gesture.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { startWindDown } from "./wind-down.js";
 
@@ -579,6 +580,7 @@ addEventListener("resize", () => {
 
 renderSoundState();
 restoreGarden();
+protectPlaySurface();
 setupFreshStart({ onConfirm: freshGarden });
 startWindDown({ lines: { "/games/bloom/": "The garden is going to sleep." } });
 

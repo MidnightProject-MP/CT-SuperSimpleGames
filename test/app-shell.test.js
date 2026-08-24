@@ -85,7 +85,7 @@ test("every app page enforces the no-external-action boundary", () => {
   }
 });
 
-test("the launcher exposes every available game and prototype", () => {
+test("the launcher exposes exactly the active portfolio", () => {
   const html = readFileSync(resolve(root, "index.html"), "utf8");
   const gameLinks = [...html.matchAll(/<a\s+class="game-card[^"]*"\s+href="([^"]+)"/g)]
     .map((match) => match[1]);
@@ -93,10 +93,24 @@ test("the launcher exposes every available game and prototype", () => {
     "./games/bloom/",
     "./games/color-splash/",
     "./games/peekaboo/",
-    "./games/stack-settle/",
-    "./games/story-scenes/",
-    "./games/together-tones/"
+    "./games/story-scenes/"
   ]);
+});
+
+test("retired worlds stay out of the launcher, offline shell, and caregiver settings", () => {
+  const launcher = readFileSync(resolve(root, "index.html"), "utf8");
+  assert.doesNotMatch(launcher, /data-world="(stack-settle|together-tones)"/);
+
+  const worker = readFileSync(resolve(root, "sw.js"), "utf8");
+  for (const retired of ["stack-settle", "together-tones", "src/stack", "src/together-tone"]) {
+    assert.equal(worker.includes(retired), false, `${retired} must not be pre-cached`);
+  }
+
+  const settings = readFileSync(resolve(root, "src/caregiver-settings.js"), "utf8");
+  assert.doesNotMatch(settings, /"(stack-settle|together-tones)"/);
+
+  const caregiverPage = readFileSync(resolve(root, "caregiver.html"), "utf8");
+  assert.doesNotMatch(caregiverPage, /value="(stack-settle|together-tones)"/);
 });
 
 test("Color Splash completion stays assistive and restarts from ordinary input", () => {

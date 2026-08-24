@@ -16,6 +16,7 @@ body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+  touch-action: none;
 }
 
 button { font: inherit; }
@@ -149,7 +150,7 @@ button { font: inherit; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   width: 100%;
   gap: clamp(8px, 2.4vw, 24px);
-  touch-action: manipulation;
+  touch-action: none;
 }
 
 .together-link { position: absolute; z-index: 5; height: 14px; border: 3px solid rgba(255,255,255,.9); border-radius: 999px; transform: translateY(-50%); transform-origin: center; pointer-events: none; box-shadow: 0 4px 0 rgba(71,34,79,.12); }
