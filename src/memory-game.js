@@ -1,4 +1,5 @@
 import { createTonePlayer } from "./audio.js";
+import { loadCaregiverSettings, normalizeLevel } from "./caregiver-settings.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { protectPlaySurface } from "./play-gesture.js";
 import {
@@ -69,7 +70,9 @@ function createCardElement(token) {
 }
 
 function renderBoard() {
+  const columns = round.tokens.length > 4 ? 3 : 2;
   board.style.setProperty("--token-count", String(round.tokens.length));
+  board.style.setProperty("--cols", String(columns));
   board.replaceChildren(...round.tokens.map(createCardElement));
 }
 
@@ -223,7 +226,9 @@ function startRound(seed) {
   replayButton.hidden = true;
   document.querySelector("#memory-playfield").classList.remove("complete");
   message.textContent = "";
-  round = createMemoryRound({ seed, pairCount: 2, pool: TOKEN_POOL });
+  // H3 widening: rich level adds a third pair; gentle/default stay at two.
+  const pairCount = normalizeLevel(loadCaregiverSettings().level) === "rich" ? 3 : 2;
+  round = createMemoryRound({ seed, pairCount, pool: TOKEN_POOL });
   renderBoard();
   startWitnessPhase();
 }

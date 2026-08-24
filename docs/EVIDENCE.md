@@ -144,6 +144,18 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 
 **Consequence:** Epic G closed with both evidence layers; H2/I2 experiments shipped to their gates with rendered behavioral evidence behind them. Remaining uncertainty: everything above is automation, not a child — Memory recall participation, Numbers invite-vs-task, resident delight, and zoom-fix feel on real devices await owner/child hands-on (the active gates) and K2/K3.
 
+### 2026-08-24 — Round-1 device feedback on the experiments (owner, hands-on)
+
+**Method:** owner tested the deployed collection on a device (initially via desktop-view while the launcher-scroll fix was propagating; the `pan-y` fix in `86ac18e` addresses that separately).
+
+| Signal | Class | Consequence |
+|---|---|---|
+| Memory is "great — super simple, very good visual and interactive gameplay" | Product-owner hands-on (gate signal) | **H2 gate PASSED.** The witnessed hide → find-pairs loop is validated at the owner level. H3 stays minimal: no widening beyond observation unless real use asks for it. |
+| Numbers is "cute but not great"; should show **actual numbers, big ones** rather than text words; "not much visual interaction"; "maybe try a different strategy" | Product-owner hands-on (gate signal) | **I2 gate returned REVISE.** The add/remove-berry experiment is rejected as-is: word-count text instead of numerals misses the point for babies, and the single-item pile lacks visual life. v1 concept archived to git history; Numbers rebuilds around a generative-spawn strategy: **big tappable numeral bubbles; tapping "3" makes three friends burst into the scene** with staggered arrivals and per-item tones — the number is the button and the group is its meaning. Gate re-arms until the revised loop gets hands-on signal. |
+| Launcher required desktop view to reach games | Defect report | Already fixed in `86ac18e` (`pan-y`) before this feedback session concluded; owner should see normal scrolling after a refresh now. |
+
+**Lesson:** the gates worked — an unproven concept cost one thin experiment, not an architecture. Memory's success also validates the reuse of Peekaboo's reveal grammar for a *recall* twist.
+
 ### 2026-08-24 — post-release regression: launcher scrolling
 
 **Source:** owner report after testing on a device — the launcher could not be scrolled to reach the games.
@@ -151,6 +163,17 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 **Cause:** G1 set `touch-action: none` on the launcher body along with the game worlds. Correct for fixed play surfaces, wrong for a scrollable menu: touch panning was dead, so only the first card row was reachable.
 
 **Fix:** launcher body policy changed to `touch-action: pan-y` — vertical touch scrolling restored, pinch/double-tap zoom still blocked by the policy plus the gesture guard. Rendered verification: launcher scrolls its full overflow (666px portrait / 360px landscape) with every last card visible, and all six worlds confirmed to fit their viewports exactly (zero trapped overflow) at 390×844 and 640×360, so `none` remains safe inside games. Deterministic contract updated so the launcher must keep `pan-y`. Lesson recorded: blanket body policies need a per-surface scroll audit before release — added as part of the gesture-policy invariant's meaning ("menu surfaces pan, play surfaces don't").
+
+### 2026-08-24 — first hands-on signal on the experiments (owner, on-device)
+
+**Source:** product-owner feedback after playing the two new experimental worlds on a device (reached via desktop-view workaround during the launcher-scroll regression; the `pan-y` fix in `86ac18e` addresses that path).
+
+| Signal | Verdict | Consequence |
+|---|---|---|
+| Memory Pairs | **"Memory is great, super simple, very good visual and interactive gameplay."** | The H2 evidence gate **passes on owner hands-on**: core loop validated. H3 unblocks for bounded widening only (caregiver-level third pair); no further expansion until child-interest signal. |
+| Number Nibbles | **"Cute but not great… should not be text but actual numbers on screen… not much visual interaction. Maybe try a different strategy, and definitely show the numbers, big ones."** | The I2 gate **returns a revise verdict**: word-count messages are wrong for this audience — big numerals must be primary; the feed-the-creature loop is too passive to be fun. Owner direction explicitly overrides the earlier research-informed "numerals later" stance for this world. I2 reopens as a redesign iteration: numerals become the visual anchor and interaction is rebuilt around them (generative "tap a number → that many friends appear" strategy). |
+
+**Consequence:** Memory keeps its launcher slot with widening shipped under H3; Numbers is rebuilt in place as experiment v2 and returns to the same gate. Residual uncertainty unchanged: neither world has structured child observation yet.
 
 ## External research
 

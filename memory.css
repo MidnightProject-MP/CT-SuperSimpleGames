@@ -115,7 +115,7 @@ button { font: inherit; }
 
 .memory-board {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr));
   width: min(88vw, calc(100svh - 300px), 400px);
   gap: clamp(10px, 3vw, 18px);
 }

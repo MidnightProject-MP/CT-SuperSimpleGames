@@ -1,117 +1,131 @@
 import { createTonePlayer } from "./audio.js";
-import { loadSoundPreference, saveSoundPreference } from "./settings.js";
+import { choicesForLevel, createSpawnPlan, toneFor } from "./nibbles-core.js";
+import { loadCaregiverSettings } from "./caregiver-settings.js";
+import { getPocketItem } from "./pocket-items.js";
 import { protectPlaySurface } from "./play-gesture.js";
-import { addItem, createNibblesState, NIBBLES_CAP, removeItem, toneFor } from "./nibbles-core.js";
+import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { startWindDown } from "./wind-down.js";
 
+const KIND_POOL = Object.freeze(["duck", "cat", "bear", "flower", "star", "sun"]);
 const COUNT_WORDS = Object.freeze({ 1: "one", 2: "two", 3: "three", 4: "four", 5: "five" });
+const PLURALS = Object.freeze({
+  duck: "ducks", cat: "cats", bear: "bears", flower: "flowers", star: "stars", sun: "suns"
+});
+const ARRIVAL_STEP_MS = 300;
 
-const tray = document.querySelector("#nibble-tray");
-const creature = document.querySelector("#creature");
-const pile = document.querySelector("#creature-pile");
+const scene = document.querySelector("#spawn-scene");
+const bubbles = document.querySelector("#number-bubbles");
+const ghost = document.querySelector("#ghost-number");
 const message = document.querySelector("#nibbles-message");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
 
-let state = createNibblesState();
 let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
-let items = [];
+const choices = choicesForLevel(loadCaregiverSettings().level);
+let timers = [];
 
 function renderSoundState() {
   soundToggle.setAttribute("aria-pressed", String(soundEnabled));
   soundToggle.setAttribute("aria-label", soundEnabled ? "Turn sound off" : "Turn sound on");
 }
 
-function replayClass(element, className, duration) {
-  element.classList.remove(className);
-  void element.offsetWidth;
-  element.classList.add(className);
-  setTimeout(() => element.classList.remove(className), duration);
+function nextSeed() {
+  try {
+    const value = new Uint32Array(1);
+    crypto.getRandomValues(value);
+    return value[0];
+  } catch {
+    return Date.now() >>> 0;
+  }
 }
 
 function say(text) {
   announcement.textContent = text;
 }
 
-function renderPile() {
-  pile.replaceChildren(...items.map((item, index) => {
-    const dot = document.createElement("span");
-    dot.className = "pile-item";
-    dot.style.setProperty("--i", String(index));
-    return dot;
+function replayClass(element, className, duration) {
+  element.classList.remove(className);
+  void element.offsetWidth;
+  element.classList.add(className);
+  if (duration) setTimeout(() => element.classList.remove(className), duration);
+}
+
+function clearTimers() {
+  for (const timer of timers) clearTimeout(timer);
+  timers = [];
+}
+
+function renderBubbles() {
+  bubbles.replaceChildren(...choices.map((choice) => {
+    const bubble = document.createElement("button");
+    bubble.type = "button";
+    bubble.className = "number-bubble";
+    bubble.dataset.count = String(choice);
+    bubble.textContent = String(choice);
+    bubble.setAttribute("aria-label", `Make ${COUNT_WORDS[choice]} friend${choice > 1 ? "s" : ""} appear`);
+    return bubble;
   }));
 }
 
-function reactionFor(count) {
-  if (count >= 3) return "delighted";
-  if (count === 2) return "happy";
-  return "curious";
+function makeFriend(planEntry, kind) {
+  const item = getPocketItem(kind);
+  const friend = document.createElement("button");
+  friend.type = "button";
+  friend.className = "scene-friend arriving";
+  friend.dataset.order = String(planEntry.order);
+  friend.style.setProperty("--x", `${Math.round(planEntry.x * 100)}%`);
+  friend.style.setProperty("--y", `${Math.round(planEntry.y * 100)}%`);
+  friend.setAttribute("aria-label", `A ${item.name}; touch it to say hello`);
+  const art = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  art.setAttribute("viewBox", "0 0 100 100");
+  art.setAttribute("aria-hidden", "true");
+  const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+  use.setAttribute("href", `../../assets/pocket-friends.svg#${item.artId}`);
+  art.append(use);
+  friend.append(art);
+  friend.addEventListener("click", () => {
+    replayClass(friend, "hopping", 520);
+    tonePlayer.play(toneFor(Number(friend.dataset.order)));
+    say(`${item.name}!`);
+    message.textContent = item.name;
+  });
+  return friend;
 }
 
-function renderCreature() {
-  creature.dataset.mood = reactionFor(state.count);
-}
-
-function spawnItem() {
-  const item = document.createElement("span");
-  item.className = "nibble arriving";
-  tray.append(item);
-  items.push(item);
-  return item;
-}
-
-function releaseItem() {
-  const item = items.pop();
-  if (!item) return;
-  item.classList.remove("arriving");
-  item.classList.add("leaving");
-  setTimeout(() => item.remove(), 620);
-}
-
-tray.addEventListener("click", () => {
-  const next = addItem(state);
-  if (!next) {
-    // The creature is satisfyingly full — celebrate rather than refuse.
-    replayClass(creature, "full-bounce", 620);
-    message.textContent = "So many! Yum.";
-    say("The friend is full.");
-    tonePlayer.play(toneFor(NIBBLES_CAP) * 1.12);
-    return;
+function spawnGroup(count) {
+  clearTimers();
+  // Existing friends wave goodbye before the new group bursts in.
+  for (const existing of [...scene.querySelectorAll(".scene-friend")]) {
+    existing.classList.add("leaving");
+    setTimeout(() => existing.remove(), 460);
   }
-  state = next;
-  spawnItem();
-  renderPile();
-  renderCreature();
-  const word = COUNT_WORDS[state.count];
-  message.textContent = `${word} ${state.count === 1 ? "berry" : "berries"}!`;
-  say(`${word}.`);
-  tonePlayer.play(toneFor(state.count));
-  replayClass(creature, `mood-${reactionFor(state.count)}`, 560);
-});
 
-creature.addEventListener("click", () => {
-  const next = removeItem(state);
-  if (!next) {
-    replayClass(tray, "empty-wiggle", 420);
-    message.textContent = "All gone!";
-    say("The plate is empty.");
-    return;
+  const seed = nextSeed();
+  const kindSeed = nextSeed();
+  const kind = KIND_POOL[kindSeed % KIND_POOL.length];
+  const plan = createSpawnPlan({ count, seed });
+  const word = COUNT_WORDS[count];
+  const plural = PLURALS[kind];
+
+  ghost.textContent = String(count);
+  replayClass(ghost, "flashing", 950);
+  message.textContent = `${word} ${plural}!`;
+  say(`${word} ${plural}.`);
+
+  for (const entry of plan) {
+    timers.push(setTimeout(() => {
+      scene.append(makeFriend(entry, kind));
+      tonePlayer.play(toneFor(entry.order));
+    }, entry.order * ARRIVAL_STEP_MS + 120));
   }
-  state = next;
-  releaseItem();
-  renderPile();
-  renderCreature();
-  if (state.count === 0) {
-    message.textContent = "Munch! All gone!";
-    say("All gone.");
-  } else {
-    const word = COUNT_WORDS[state.count];
-    message.textContent = `${word} ${state.count === 1 ? "berry" : "berries"} left`;
-    say(word);
-  }
-  tonePlayer.play(toneFor(state.count) * 0.94);
-  replayClass(creature, "munching", 520);
+}
+
+bubbles.addEventListener("click", (event) => {
+  const bubble = event.target.closest(".number-bubble");
+  if (!bubble) return;
+  replayClass(bubble, "pulsing", 480);
+  spawnGroup(Number(bubble.dataset.count));
 });
 
 soundToggle.addEventListener("click", () => {
@@ -119,7 +133,7 @@ soundToggle.addEventListener("click", () => {
   tonePlayer.setEnabled(soundEnabled);
   saveSoundPreference(soundEnabled);
   renderSoundState();
-  if (soundEnabled) tonePlayer.play(330);
+  if (soundEnabled) tonePlayer.play(392);
 });
 
 document.addEventListener("visibilitychange", () => {
@@ -127,11 +141,10 @@ document.addEventListener("visibilitychange", () => {
 });
 addEventListener("pagehide", tonePlayer.stop);
 
-renderPile();
-renderCreature();
+renderBubbles();
 renderSoundState();
 protectPlaySurface();
-startWindDown({ lines: { "/games/number-nibbles/": "The friend is full and sleepy." } });
+startWindDown({ lines: { "/games/number-nibbles/": "The numbers are resting." } });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   const workerUrl = new URL("../sw.js", import.meta.url);

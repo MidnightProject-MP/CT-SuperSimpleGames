@@ -1,58 +1,69 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { addItem, createNibblesState, NIBBLES_CAP, removeItem, toneFor } from "../src/nibbles-core.js";
+import {
+  choicesForLevel,
+  createSpawnPlan,
+  NUMBER_CHOICES_DEFAULT,
+  NUMBER_CHOICES_RICH,
+  toneFor
+} from "../src/nibbles-core.js";
 
-test("the pile starts empty and grows one berry at a time", () => {
-  let state = createNibblesState();
-  assert.equal(state.count, 0);
+test("level choices stay tiny by default and widen only for rich", () => {
+  assert.deepEqual([...NUMBER_CHOICES_DEFAULT], [1, 2, 3]);
+  assert.deepEqual([...NUMBER_CHOICES_RICH], [1, 2, 3, 4, 5]);
+  assert.equal(choicesForLevel("gentle"), NUMBER_CHOICES_DEFAULT);
+  assert.equal(choicesForLevel(undefined), NUMBER_CHOICES_DEFAULT);
+  assert.equal(choicesForLevel("rich"), NUMBER_CHOICES_RICH);
+});
 
-  for (const expected of [1, 2, 3]) {
-    const next = addItem(state);
-    assert.equal(next.count, expected);
-    assert.equal(next.event, "arrived");
-    state = next;
+test("spawn plans are deterministic for a seed", () => {
+  const first = createSpawnPlan({ count: 3, seed: 9 });
+  const second = createSpawnPlan({ count: 3, seed: 9 });
+  assert.deepEqual(first, second);
+});
+
+test("plans place every friend inside the scene without crowding", () => {
+  for (const count of NUMBER_CHOICES_RICH) {
+    const plan = createSpawnPlan({ count, seed: count * 31 + 7 });
+    assert.equal(plan.length, count);
+    for (const spot of plan) {
+      assert.ok(spot.x >= 0.09 && spot.x <= 0.91, `x out of bounds: ${spot.x}`);
+      assert.ok(spot.y >= 0.13 && spot.y <= 0.83, `y out of bounds: ${spot.y}`);
+    }
+    for (let a = 0; a < plan.length; a += 1) {
+      for (let b = a + 1; b < plan.length; b += 1) {
+        const distance = Math.hypot(plan[a].x - plan[b].x, plan[a].y - plan[b].y);
+        assert.ok(distance > 0.12, `friends ${a} and ${b} crowd together (${distance})`);
+      }
+    }
+    const orders = new Set(plan.map((spot) => spot.order));
+    assert.equal(orders.size, count);
+    for (const order of orders) assert.ok(Number.isInteger(order) && order >= 0 && order < count);
   }
 });
 
-test("the cap celebrates instead of growing: five is satisfyingly full", () => {
-  let state = createNibblesState();
-  while (state.count < NIBBLES_CAP) state = addItem(state);
-
-  assert.equal(state.count, NIBBLES_CAP);
-  assert.equal(addItem(state), null);
+test("different seeds vary the arrangement across a sweep", () => {
+  const layouts = new Set();
+  for (let seed = 0; seed < 24; seed += 1) {
+    const plan = createSpawnPlan({ count: 3, seed });
+    layouts.add(plan.map((spot) => `${spot.x.toFixed(2)},${spot.y.toFixed(2)}`).join("|"));
+  }
+  assert.ok(layouts.size > 6, `only ${layouts.size} distinct layouts in 24 seeds`);
 });
 
-test("removing releases items one at a time and stops at zero", () => {
-  let state = createNibblesState();
-  for (let i = 0; i < 3; i += 1) state = addItem(state);
-
-  const first = removeItem(state);
-  assert.equal(first.count, 2);
-  assert.equal(first.event, "released");
-
-  state = removeItem(first);
-  state = removeItem(state);
-  assert.equal(removeItem(state), null);
+test("invalid counts and seeds are rejected", () => {
+  for (const bad of [0, -1, 1.5, 6]) {
+    assert.throws(() => createSpawnPlan({ count: bad, seed: 1 }));
+    assert.throws(() => validateCountShim(bad));
+  }
+  assert.throws(() => createSpawnPlan({ count: 2, seed: -4 }));
+  function validateCountShim(value) { return createSpawnPlan({ count: value, seed: 1 }); }
 });
 
-test("add and remove round-trips preserve the exact count", () => {
-  let state = createNibblesState();
-  state = addItem(state);
-  state = addItem(state);
-  state = addItem(state);
-  assert.equal(state.count, 3);
-  state = removeItem(state);
-  assert.equal(state.count, 2);
-  state = addItem(state);
-  assert.equal(state.count, 3);
-});
-
-test("each quantity has a distinct audible step", () => {
+test("tones rise with arrival order so groups count themselves aloud", () => {
   const tones = [];
-  for (let count = 1; count <= NIBBLES_CAP; count += 1) tones.push(toneFor(count));
-  assert.equal(new Set(tones).size, NIBBLES_CAP);
-  assert.ok(tones.every((tone) => Number.isFinite(tone) && tone > 0));
-  assert.throws(() => toneFor(0));
-  assert.throws(() => toneFor(6));
-  assert.throws(() => toneFor(2.5));
+  for (let order = 0; order < NUMBER_CHOICES_RICH.length; order += 1) tones.push(toneFor(order));
+  for (let i = 1; i < tones.length; i += 1) assert.ok(tones[i] > tones[i - 1]);
+  assert.throws(() => toneFor(-1));
+  assert.throws(() => toneFor(5.5));
 });

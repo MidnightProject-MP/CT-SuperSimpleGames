@@ -92,8 +92,8 @@
 | Story | Outcome | State |
 |---|---|---|
 | H1 Concept brief | Working definition in `GAME_ROADMAPS.md`: smallest true memory/matching loop (witnessed face-up intro → hide → find pairs), alternatives noted, success question stated | **Closed** 2026-08-24 |
-| H2 Playable experiment | Minimal "Memory Pairs" build: 4 oversized cards (2 pairs), witnessed intro, flip-to-match, joyful mismatch reveals, together-celebration, in-game replay; seeded deterministic round core with tests from day one; deliberately thin presentation; launcher slot swapped in as experimental | **Closed** 2026-08-24: shipped behind the launcher's Memory card; deterministic core (191→196 checks green) plus rendered childlike playthrough probe (10 flips to completion). **EVIDENCE GATE ACTIVE — stopped for owner/child hands-on before any hardening or widening** |
-| H3 Harden + widen | Polish from observation; caregiver-level widening (2→3 pairs); persistence decisions; full shell/offline treatment | **Blocked on H2 gate** — do not resume without child/owner signal |
+| H2 Playable experiment | Minimal "Memory Pairs" build: 4 oversized cards (2 pairs), witnessed intro, flip-to-match, joyful mismatch reveals, together-celebration, in-game replay; seeded deterministic round core with tests from day one; deliberately thin presentation; launcher slot swapped in as experimental | **Closed — gate PASSED** (owner hands-on, round-1 device feedback): "great, super simple, very good visual and interactive gameplay" |
+| H3 Harden + widen | Polish from observation; caregiver-level widening; persistence decisions; full shell/offline treatment | **Unblocked but restrained:** core loop validated; shell treatment already shipped. No widening or extra polish until child observation asks for it — protect what works |
 
 ### Epic I — Numbers (portfolio replacement)
 
@@ -102,8 +102,9 @@
 | Story | Outcome | State |
 |---|---|---|
 | I1 Concept brief | Working definition in `GAME_ROADMAPS.md`: add-one/remove-one quantity play with visible perceptual consequence; request-free surface must stand alone | **Closed** 2026-08-24 |
-| I2 Playable experiment | Minimal "Number Nibbles" build: one friendly creature, tap-to-feed one item at a time (1–5), each arrival counts itself in motion/sound/pile, tapping the creature releases items back out; free add/remove is complete play; seeded core + tests; thin presentation; experimental launcher slot | **Closed** 2026-08-24: shipped behind the launcher's Numbers card; deterministic cap/step logic tested; rendered probe feeds to three, releases, hits the celebratory cap. **EVIDENCE GATE ACTIVE — stopped for owner/child hands-on before hardening or any request layer** |
-| I3 Harden + widen | Polish from observation; caregiver-level widening; optional gentle request layer only if free play proves complete; full shell treatment | **Blocked on I2 evidence gate** |
+| I2 Playable experiment | Minimal "Number Nibbles" build: one friendly creature, tap-to-feed add/remove loop, quantity shown as words and a hidden pile | **Closed — gate returned REVISE** (owner hands-on, round-1 device feedback): word-count text misses the audience — big numerals must be primary; the passive pile lacks visual interaction. v1 archived to git history. |
+| I2b Numbers redesign experiment | Rebuild around owner direction: **big real numerals are the interface** — oversized tappable number bubbles; tapping a bubble makes that many friends burst into an open scene with staggered arrivals and per-item tones; every arrived friend is individually touchable; free play, no quiz, no request. Same thin-experiment discipline; gate re-arms afterward | **Active story** |
+| I3 Harden + widen | Polish from observation; caregiver-level widening (choice range); full shell treatment | **Blocked on the I2b gate** |
 
 ### Epic J — Portfolio archive
 
@@ -128,11 +129,11 @@
 ## Current position and sequencing
 
 - **Epic G is complete** (all five stories closed 2026-08-24 with deterministic + rendered evidence).
-- **Epics H and I sit at their evidence gates:** Memory Pairs and Number Nibbles are live as experimental launcher slots; per owner instruction, **no hardening or widening happens until the children/owner play them**. H3/I3 resume only on that signal.
+- **Round-1 hands-on feedback is in** (`EVIDENCE.md`, 2026-08-24): Memory's gate **passed** ("great"); H3 stays restrained (caregiver-level third pair shipped, nothing more until child signal). Numbers' gate **returned a revise verdict**: v1 archived, and I2b rebuilds it around big tappable numerals with generative spawn — implemented and rendered-verified, **gate re-armed** for the next hands-on round.
 - E1 identity directions remains deferred until the retained worlds feel excellent in real use — which now also includes observation of the two experiments.
 - K proceeds opportunistically whenever hardware or participants become available.
 
-The launcher's six slots now hold exactly the intended portfolio: Bloom, Color Splash, Peekaboo Pockets, Story Scenes, Memory (experiment), Numbers (experiment).
+The launcher's six slots now hold exactly the intended portfolio: Bloom, Color Splash, Peekaboo Pockets, Story Scenes, Memory (validated experiment), Numbers (redesigned experiment v2).
 
 The Familiar World foundation (shared control meanings, bounded preservation, stable Color Splash frame, "together" meaning) remains implemented and rendered-verified; Bloom's bridge-invited-bird cameo left the portfolio with Stack & Settle, while the recurring cast lives on through Bloom's visitors plus the Color Splash butterfly and Story Scenes snail.
 

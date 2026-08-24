@@ -931,44 +931,41 @@ Owner-set territory (2026-08-24): matching + spatial recall. Explicitly distinct
 
 ### Experience identity
 
-Numbers is the collection's **quantity-as-event** world. The number means something the child did and can perceive: things arrive, pile up, and go back out, each change visible, audible, and reversible. There is no quiz, no request the child must satisfy, no numerals required to succeed, and no wrong answer. Free add/remove play is complete in itself.
+Numbers is the collection's **quantity-as-visible-number** world, rebuilt once already by evidence. The interface *is* the numerals: oversized tappable bubbles showing 1–3 (rich level widens to 5). Tapping a bubble makes **that many** friendly characters burst into an open meadow — staggered bouncy arrivals, each arrival carrying its own rising tone so the group counts itself aloud, and a giant ghost of the chosen numeral flashing across the sky. Every arrived friend is individually touchable and hops with its voice. Tapping another number waves the current group goodbye; re-tapping rearranges freshly. Free play is complete in itself: no quiz, no request, no wrong answer.
 
-Owner-set territory (2026-08-24): early quantity intuition through manipulation and consequence.
+**History:** v1 ("Number Nibbles", feed-the-creature add/remove with word counts) was rejected at the first hands-on gate — text instead of numerals missed the audience and the pile was visually quiet (see `EVIDENCE.md`, 2026-08-24). v1 lives in git history; its tone-step discipline carried into v2.
 
 ### Concepts Numbers can expose
 
-- one more / one fewer as perceivable change;
-- tiny quantities (1–5) shown concretely, subitizing exposure without counting tasks;
-- accumulation and its reversal;
-- quantity paired across channels (pile size, motion, tone step);
-- optional environmental numeral exposure (never required, never tested).
+- numeral ↔ quantity correspondence through generative action;
+- small set sizes (1–3 primary) shown concretely and subitizably;
+- one-to-one rhythm via per-item arrival tones and touchable friends;
+- same/different groups across repeated taps;
+- optional widening to 4–5 through caregiver level only.
 
-### NUM-1 — Playable experiment: "Number Nibbles" (I2)
+### NUM-2 — Playable experiment v2: "tap the number" (I2b)
 
-**Kind:** experiment; deliberately thin presentation; hardening only after experiential evidence.
+**Kind:** experiment rebuild; deliberately thin; hardening only after experiential evidence.
 
-- One big friendly creature beside a small tray of items (CSS/SVG-drawn, locally bundled).
-- Tapping the tray sends **one item** hopping into the creature; it lands in a visible pile/belly. Each arrival gets a count-appropriate response: motion grows, tone steps upward, the creature reacts (1 = curious look, 2 = happy wiggle, 3+ = bigger bounce).
-- Tapping the creature makes items hop back out one at a time to the tray, tones stepping down — removal is as playful as adding.
-- Hard cap of five items; the cap expresses itself as the creature being satisfyingly full (never "wrong").
-- No request mechanic in this experiment: the surface must stand alone as free play. A gentle pictorial "want more?" nudge is a candidate only if observation shows children want direction.
-- Numerals may appear faintly beside the pile as environmental marks; they are decoration, never requirements.
-- Deterministic core from day one: add-one/remove-one state, cap enforcement, tone-step mapping, bounded DOM.
+- Oversized numeral bubbles (real digits, huge targets) are the only controls.
+- Deterministic seeded spawn plans place each group spread across the meadow without crowding.
+- Per-item rising tones; ghost-numeral flash ties symbol to quantity.
+- Friends reuse the local pocket-friends art; sound-off play complete; reduced motion respected.
+- Caregiver rich level extends choices to 5; never locks or gates.
 
-**Experience question:** does the child notice and enjoy that *their action* changed how many there are — repeating adds or removes spontaneously — and does free play survive without any instruction?
+**Experience question:** do children connect the numeral they pressed with how many friends appeared — repeating taps deliberately to make "two" or "three"?
 
-**Gate:** stop after the playable experiment for owner/child hands-on evidence before widening.
+**Gate:** stop after hands-on signal before any widening or polish.
 
-### NUM-2+ — Widening candidates (blocked on I2 gate)
+### NUM-3+ — Widening candidates (blocked on I2b gate)
 
-- Caregiver-level widening: rich mode raises the cap or adds a second creature sharing items (early distribute/fairness texture).
-- Optional request layer (pictorial "some for you" cards) only if free play proves complete first.
-- Later content: item varieties that keep the rule identical (not reskins-for-novelty).
+- Caregiver-level texture beyond 5 only if real use demands it.
+- Possible later: two groups side-by-side for same/different comparison. Do not build while the core question is open.
 
 ### Numbers should not become
 
-- a counting quiz, flashcards, or worksheet;
-- a game requiring numeral recognition to play well;
+- a counting quiz or numeral-recognition test;
+- a game requiring reading;
 - an escalation ladder toward larger numbers before small ones feel meaningful;
 - an autoplaying demonstration.
 
