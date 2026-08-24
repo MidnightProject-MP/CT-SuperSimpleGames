@@ -16,7 +16,6 @@ import { STORY_PACKS, getStoryPack, storyCastItem } from "./story-packs.js";
 import { loadSoundPreference, saveSoundPreference } from "./settings.js";
 import { RESIDENT_TOUCHES, attachResident, storyResidentFor } from "./residents.js";
 import { protectPlaySurface } from "./play-gesture.js";
-import { setupFreshStart } from "./fresh-start.js";
 import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
 import { startWindDown } from "./wind-down.js";
 
@@ -27,10 +26,7 @@ const palette = document.querySelector("#story-palette");
 const message = document.querySelector("#story-message");
 const announcement = document.querySelector("#announcement");
 const soundToggle = document.querySelector("#sound-toggle");
-const backgroundButton = document.querySelector("#background-button");
-const backgroundPicker = document.querySelector("#background-picker");
-const backgroundOptions = document.querySelector("#background-options");
-const backgroundCancel = document.querySelector("#background-cancel");
+const sceneChips = document.querySelector("#scene-chips");
 
 const KEYBOARD_POINTS = Object.freeze([
   Object.freeze({ x: 0.3, y: 0.66 }),
@@ -336,15 +332,6 @@ function applyResult(result) {
   persistStoryWorld();
 }
 
-function freshStory() {
-  state = createSceneState(state.sceneId);
-  persistStoryWorld();
-  renderPalette();
-  renderScene();
-  message.textContent = `Tap the ${currentPack().label.toLowerCase()} to add ${currentItem(state.selected).plural.toLowerCase()}!`;
-  announcement.textContent = "A fresh story is ready";
-}
-
 palette.addEventListener("click", (event) => {
   const tool = event.target.closest(".story-tool");
   if (!tool) return;
@@ -357,46 +344,50 @@ palette.addEventListener("click", (event) => {
   persistStoryWorld();
 });
 
-function closeBackgroundPicker() {
-  backgroundPicker.hidden = true;
-  backgroundButton.setAttribute("aria-expanded", "false");
-}
+// Direct scene switching: three always-visible chips; tapping one parks the
+// current scene and restores the target exactly — no overlay, no confirmation.
+const CHIP_NAMES = Object.freeze({ garden: "Garden", town: "Town", castle: "Castle" });
 
-function renderBackgroundOptions() {
-  backgroundOptions.replaceChildren(...STORY_PACKS.map((pack) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.dataset.sceneId = pack.id;
-    button.textContent = pack.label;
-    if (pack.id === state.sceneId) button.disabled = true;
-    return button;
+function renderSceneChips() {
+  sceneChips.replaceChildren(...STORY_PACKS.map((pack) => {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = "scene-chip";
+    chip.dataset.sceneId = pack.id;
+    chip.setAttribute("aria-label", `${pack.label} story`);
+    const art = document.createElement("span");
+    art.className = "chip-art";
+    art.dataset.scene = pack.id;
+    art.setAttribute("aria-hidden", "true");
+    const label = document.createElement("span");
+    label.textContent = CHIP_NAMES[pack.id] ?? pack.label;
+    chip.setAttribute("aria-pressed", String(pack.id === state.sceneId));
+    chip.append(art, label);
+    return chip;
   }));
 }
 
-backgroundButton.addEventListener("click", () => {
-  backgroundPicker.hidden = false;
-  backgroundButton.setAttribute("aria-expanded", "true");
-  renderBackgroundOptions();
+sceneChips.addEventListener("click", (event) => {
+  const chip = event.target.closest("[data-scene-id]");
+  if (!chip || chip.dataset.sceneId === state.sceneId) return;
+  switchScene(chip.dataset.sceneId);
 });
-backgroundOptions.addEventListener("click", (event) => {
-  const option = event.target.closest("[data-scene-id]");
-  if (!option || option.disabled) return;
-  const targetId = option.dataset.sceneId;
+
+function switchScene(targetId) {
+  if (!STORY_PACKS.some(({ id }) => id === targetId)) return;
   const returning = Boolean(parkedScenes[targetId]);
   parkedScenes[state.sceneId] = state;
   state = parkedScenes[targetId] ?? createSceneState(targetId);
   delete parkedScenes[targetId];
   stage.dataset.scene = state.sceneId;
-  backgroundButton.textContent = currentPack().label;
   updateStageLabel();
   renderPalette();
   renderScene();
+  renderSceneChips();
   message.textContent = `Tap the ${currentPack().label.toLowerCase()} to add ${currentItem(state.selected).plural.toLowerCase()}!`;
   announcement.textContent = returning ? `Back in ${currentPack().label}. Your story waited here.` : `Welcome to ${currentPack().label}!`;
   persistStoryWorld();
-  closeBackgroundPicker();
-});
-backgroundCancel.addEventListener("click", closeBackgroundPicker);
+}
 
 objectLayer.addEventListener("pointerdown", (event) => {
   const object = event.target.closest(".scene-object");
@@ -457,13 +448,12 @@ objectLayer.addEventListener("click", (event) => {
 });
 
 stage.addEventListener("click", (event) => {
-  if (!backgroundPicker.hidden) return;
   if (event.target.closest(".scene-object")) return;
   applyResult(placeSceneObject(state, normalizedPoint(event), currentLayout()));
 });
 
 stage.addEventListener("keydown", (event) => {
-  if (!backgroundPicker.hidden || event.target !== stage || !["Enter", " "].includes(event.key)) return;
+  if (event.target !== stage || !["Enter", " "].includes(event.key)) return;
   event.preventDefault();
   applyResult(placeSceneObject(state, KEYBOARD_POINTS[state.objects.length % KEYBOARD_POINTS.length], currentLayout()));
 });
@@ -483,12 +473,11 @@ addEventListener("pagehide", tonePlayer.stop);
 addEventListener("pagehide", () => persistStoryWorld());
 
 stage.dataset.scene = state.sceneId;
-backgroundButton.textContent = currentPack().label;
 updateStageLabel();
 renderPalette();
 renderSoundState();
+renderSceneChips();
 renderScene();
-setupFreshStart({ onConfirm: freshStory });
 protectPlaySurface();
 startWindDown({ lines: { "/games/story-scenes/": "The stories are going to sleep." } });
 

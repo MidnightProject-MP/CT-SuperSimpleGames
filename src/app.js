@@ -26,7 +26,6 @@ import {
 } from "./game.js";
 import { createTonePlayer } from "./audio.js";
 import { loadCaregiverSettings, normalizeLevel } from "./caregiver-settings.js";
-import { setupFreshStart } from "./fresh-start.js";
 import { createPointerSampler } from "./interaction.js";
 import { clearLocalState, loadLocalState, saveLocalState } from "./local-state.js";
 import { protectPlaySurface } from "./play-gesture.js";
@@ -134,21 +133,6 @@ function restoreGarden() {
     clearLocalState(GARDEN_STORAGE_KEY);
     return false;
   }
-}
-
-function freshGarden() {
-  bloomCount = 0;
-  gardenBlooms.clear();
-  bloomElements.clear();
-  gardenLinks.length = 0;
-  gardenCanopies.length = 0;
-  blooms.replaceChildren();
-  visitorLayer.replaceChildren();
-  visitorState = null;
-  dismissedVisitorKey = null;
-  invitation.classList.remove("hidden");
-  clearLocalState(GARDEN_STORAGE_KEY);
-  announcement.textContent = "A fresh garden is ready";
 }
 
 function petalTransform(index, total) {
@@ -505,7 +489,7 @@ function reflowBlooms() {
 }
 
 garden.addEventListener("pointerdown", (event) => {
-  if (event.target.closest("a, button, .fresh-dialog")) return;
+  if (event.target.closest("a, button")) return;
   event.preventDefault();
   garden.setPointerCapture?.(event.pointerId);
   interactAt(event.clientX, event.clientY, event.target.closest(".bloom"));
@@ -581,7 +565,6 @@ addEventListener("resize", () => {
 renderSoundState();
 restoreGarden();
 protectPlaySurface();
-setupFreshStart({ onConfirm: freshGarden });
 startWindDown({ lines: { "/games/bloom/": "The garden is going to sleep." } });
 
 if ("serviceWorker" in navigator && location.protocol !== "file:") {

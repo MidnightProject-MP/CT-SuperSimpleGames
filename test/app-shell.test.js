@@ -123,15 +123,27 @@ test("Color Splash completion stays assistive, protected briefly, then restarts 
   assert.match(controller, /- completedAt >= COMPLETION_HOLD_MS\) newRound\(/, "input after the hold must start the new board");
 });
 
-test("open-ended creations share non-destructive home and confirmed fresh-start controls", () => {
-  for (const page of ["games/bloom/index.html", "games/stack-settle/index.html", "games/story-scenes/index.html"]) {
+test("active worlds keep destructive resets behind the grown-ups surface", () => {
+  for (const page of ["games/bloom/index.html", "games/story-scenes/index.html"]) {
     const html = readFileSync(resolve(root, page), "utf8");
     assert.match(html, /<a\b[^>]+href="\.\.\/\.\.\/"[^>]+aria-label="All games"/i, `${page} has no non-destructive home control`);
-    assert.match(html, /id="fresh-start"[^>]+aria-haspopup="dialog"/i, `${page} has no fresh-start control`);
-    assert.match(html, /id="fresh-dialog"[^>]+role="alertdialog"[^>]+aria-modal="true"/i, `${page} has no modal confirmation`);
-    assert.match(html, /id="fresh-cancel"[^>]*>Keep playing</i, `${page} cannot preserve the current creation`);
-    assert.match(html, /id="fresh-confirm"[^>]*>Start fresh</i, `${page} cannot confirm clearing`);
+    assert.doesNotMatch(html, /id="fresh-start"/i, `${page} exposes a child-visible Fresh control`);
+    assert.doesNotMatch(html, /id="fresh-dialog"/i, `${page} keeps a child-facing confirmation dialog`);
   }
+  const caregiverPage = readFileSync(resolve(root, "caregiver.html"), "utf8");
+  assert.match(caregiverPage, /id="clear-creations"/, "caregiver surface must own creation clearing");
+  const caregiverScript = readFileSync(resolve(root, "src/caregiver.js"), "utf8");
+  assert.match(caregiverScript, /\.creation/);
+});
+
+test("Story Scenes switches scenes directly from dock chips without an overlay", () => {
+  const html = readFileSync(resolve(root, "games/story-scenes/index.html"), "utf8");
+  assert.doesNotMatch(html, /background-picker|background-button/i, "management overlay must be gone");
+  assert.match(html, /id="scene-chips"/);
+  const controller = readFileSync(resolve(root, "src/story-scenes.js"), "utf8");
+  assert.match(controller, /function renderSceneChips/);
+  assert.match(controller, /function switchScene/);
+  assert.match(controller, /renderSceneChips\(\)/);
 });
 
 test("Color Splash reserves controls without state-dependent board dimensions", () => {
