@@ -63,6 +63,49 @@ The B3 verdict below kept all six worlds. **It was superseded one day later** by
 - **Caregiver-mediated, not world-shaped:** vocabulary/language and spatial talk — highest-leverage per research, belongs to the caregiver layer, not a new child-facing world.
 - **Vacated by retirement:** temporal-pattern agency (Together Tones) and physical-construction simulation (Stack & Settle) are intentionally dropped from the portfolio.
 
+## Adaptive progression envelopes (Epic L, 2026-08-24)
+
+Owner direction: fixed caregiver-selected levels are replaced by **per-game adaptive progression** — continuous, hidden, game-specific, slow, reversible. Each world defines a minimum and maximum experience and its own meaningful signals; the game adapts within that envelope from recent play, serving a *distribution* of experiences rather than a single difficulty. Companion rule: **measure the interaction the game actually cares about; never invent generic metrics because they are countable.** Internal fluency records are gameplay plumbing: local, minimal, versioned, resettable from the grown-ups surface, never surfaced to the child, and framed as "how much of this game's experience seems useful right now" — nothing diagnostic.
+
+Shared rules for every adapting world:
+
+- Evidence updates once per natural round boundary (completed round/board), never mid-play.
+- Exponential average with hysteresis tiers (enrich band / dead zone / simplify band) — inertia over single rounds.
+- At most **one meaningful dimension** moves per step; no cliffs.
+- ~25–30% of served experiences come one step simpler than current estimate (comfort variation); nothing is served above tier.
+- Simplification reacts faster than enrichment (toddlers are inconsistent; confusion should resolve quickly, growth should be earned).
+
+### Memory — adaptive prototype (L2)
+
+- **Minimum:** two highly distinct pairs; witnessed preview ≈1.9s; mismatch reveal ≈1.05s; stable 2×2 grid.
+- **Maximum (built envelope):** three pairs; preview ≈1.4s; mismatch window ≈0.85s; arrangement variety across rounds; token subsets rotate among distinct friends. *(Documented beyond build, deferred: four pairs; subtly related tokens.)*
+- **Signals:** second-flip pair completions vs mismatches; deliberate re-selection of locations already revealed this round; completion itself gates the update — abandoned rounds change nothing.
+- **Never performance:** total time; taps on found pairs (celebration play); witness-phase taps; multi-touch/palm input; session length.
+- **Adapting dimensions (one per step):** pair count · preview duration · mismatch window · arrangement variety.
+
+### Color Splash — second application (L3)
+
+- **Minimum:** simple-family boards at three identities. **Maximum:** structural/mixed families (bridge, island, ring, path) at four identities. Board pixel size untouched — the spatial-stability invariant stands.
+- **Signals:** share of taps that grow the connected region; completions; stalls (long stretches without growth lower a board's evidence weight); patterns across consecutive boards.
+- **Never performance:** raw speed; idling at the completion screen; sound toggles; repeated-color acknowledgments (correct play, not failure).
+- **Dimensions:** identity count · family-tier mix. One per step.
+
+### Numbers — mostly stable (L5 later)
+
+The bubble row **is** child-selected challenge: pressing a numeral is itself the adaptation input, so numerals are never hidden behind fluency. Deepening happens inside chosen quantities first (friend-kind rotation breadth, arrangement styles from clearly separated to subtly grouped, motion richness); only then does range widen — signalled by **sustained voluntary selection of the current maximum across ≥2 sessions**. The child asking for more is the signal. Tap cadence, first choice, and mashing are not performance.
+
+### Bloom — stable
+
+Organic depth already emerges from ordinary play (bouquets → trees → rainbow → visitors); there is no honest per-action fluency metric worth counting, and inventing one would degrade a child-validated world. The gentle 16-object cap retires at L4 in favor of the unified 24-object garden (merges keep density breathable). Envelope exists conceptually but no dimensions are adopted.
+
+### Peekaboo Pockets — stable
+
+Opening every pocket *is* success; search-efficiency would be a manufactured metric. Stable without adaptation. Far-future candidate (unscheduled): freshness rotation of themes only.
+
+### Story Scenes — stable
+
+Depth remains frozen pending K3 observation (standing decision). Cast limits and scene packs are *potential* dimensions, but no signals are adopted until real observation data exists.
+
 ## Current per-game frontier
 
 Quick index for this document. "Next candidate" means the next unimplemented milestone within that game, not permission to bypass the portfolio sequence in `ROADMAP.md`.
@@ -915,7 +958,7 @@ Owner-set territory (2026-08-24): matching + spatial recall. Explicitly distinct
 
 ### MEM-2+ — Widening candidates (blocked on H2 gate)
 
-- Caregiver-level widening only: default stays two pairs; rich adds a third pair; never locks or gates.
+- Widening now belongs to the adaptive envelope (L2): pair count, preview, mismatch window, and arrangement variety move with observed fluency; nothing locks or gates.
 - Possible later texture: themed token families reusing local friend art; a "who went where?" variant (request one friend pictorially, find their home). Do not build while the core question is open.
 
 ### Memory should not become
@@ -951,7 +994,7 @@ Numbers is the collection's **quantity-as-visible-number** world, rebuilt once a
 - Deterministic seeded spawn plans place each group spread across the meadow without crowding.
 - Per-item rising tones; ghost-numeral flash ties symbol to quantity.
 - Friends reuse the local pocket-friends art; sound-off play complete; reduced motion respected.
-- Caregiver rich level extends choices to 5; never locks or gates.
+- Caregiver rich level currently extends choices to 5 (transition until L4); afterward the row stays 1·2·3 with deepening per the Numbers envelope — numerals are never hidden.
 
 **Experience question:** do children connect the numeral they pressed with how many friends appeared — repeating taps deliberately to make "two" or "three"?
 

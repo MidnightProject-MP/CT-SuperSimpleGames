@@ -61,7 +61,7 @@
 |---|---|---|
 | C1 Caregiver-layer architecture | One gated adult surface owning sound, session length, accessibility, developmental level, content preferences, and destructive resets; child-facing UI unchanged or simplified | **Closed** 2026-08-23: gated "For grown-ups" surface shipped (1500 ms hold gate, quick-tap inert, keyboard immediate); owns sound default, session length, developmental level, world visibility, confirmed full reset; settings validated with safe fallback; offline shell updated; 165 deterministic + 12 rendered checks pass |
 | C2 Wind-down and stopping ritual | Caregiver-set duration produces a gradual world-level wind-down (evening light, calmer motion, animals homeward, sounds simplify) and enough deliberate restart friction for the caregiver to regain control smoothly; never countdown pressure on the child | **Closed** 2026-08-23: shared wind-down engine wired into launcher + all six worlds; evening dim in the final two minutes, then a calm good-night veil with per-world line and a deliberate "Play again" sun; no countdown anywhere; reduced-motion instant states; offline shell bumped (v43); 169 deterministic + 8 rendered checks pass |
-| C3 Developmental-level widening | Caregiver-selected parameters expose more density, tolerance change, quantities, sequencing, and relationship depth inside the same worlds | **Closed** 2026-08-24: gentle adopted where meaningful (Bloom cap 16, Color Splash 3 identities, Stack idea card hidden, Together Tones motifs omitted); default byte-equivalent to today; Peekaboo/Story Scenes level-neutral by decision; 173 deterministic + 11 rendered checks pass |
+| C3 Developmental-level widening | Caregiver-selected parameters expose more density, tolerance change, quantities, sequencing, and relationship depth inside the same worlds | **Closed** 2026-08-24; **approach superseded by Epic L (2026-08-24)**: fixed caregiver-selected levels are being replaced by per-game adaptive progression — see `EVIDENCE.md` round-2 direction |
 
 ### Epic D — Shared grammar and inhabitants
 
@@ -103,8 +103,8 @@
 |---|---|---|
 | I1 Concept brief | Working definition in `GAME_ROADMAPS.md`: add-one/remove-one quantity play with visible perceptual consequence; request-free surface must stand alone | **Closed** 2026-08-24 |
 | I2 Playable experiment | Minimal "Number Nibbles" build: one friendly creature, tap-to-feed add/remove loop, quantity shown as words and a hidden pile | **Closed — gate returned REVISE** (owner hands-on, round-1 device feedback): word-count text misses the audience — big numerals must be primary; the passive pile lacks visual interaction. v1 archived to git history. |
-| I2b Numbers redesign experiment | Rebuild around owner direction: **big real numerals are the interface** — oversized tappable number bubbles; tapping a bubble makes that many friends burst into an open scene with staggered arrivals and per-item tones; every arrived friend is individually touchable; free play, no quiz, no request. Same thin-experiment discipline; gate re-arms afterward | **Active story** |
-| I3 Harden + widen | Polish from observation; caregiver-level widening (choice range); full shell treatment | **Blocked on the I2b gate** |
+| I2b Numbers redesign experiment | Rebuild around owner direction: **big real numerals are the interface** — oversized tappable number bubbles; tapping a bubble makes that many friends burst into an open scene with staggered arrivals and per-item tones; every arrived friend is individually touchable; free play, no quiz, no request. Same thin-experiment discipline; gate re-arms afterward | **Closed — gate PASSED** (owner hands-on, round-2 feedback): "really like the new Numbers experience… the redesigned interaction works very well. Preserve its core direction." |
+| I3 Harden + widen | Polish from observation | **Restrained:** core validated; any range widening or presentation deepening now belongs to Epic L5's adaptive envelope rather than a fixed-level step |
 
 ### Epic J — Portfolio archive
 
@@ -126,14 +126,27 @@
 | K2 Device passes | Physical touch-device checks (gesture protection feel, drag ease where relevant, frame geometry) and airplane-mode exercise across launcher → games → Home | Blocked: needs available hardware |
 | K3 Observation sessions | Persona-aligned session guides for caregivers, extended with Memory-recall and Numbers-invite hypotheses; observations recorded with provenance; personas revised from what is seen | Blocked: needs available children/caregivers; protocol drafting unblocked |
 
+### Epic L — Adaptive progression
+
+*Owner direction (2026-08-24): replace fixed caregiver-selected levels with per-game adaptive progression — continuous, hidden, game-specific, slow, reversible, never experienced as levels, scores, promotion, or failure. Each world defines its minimum and maximum experience plus the interaction signals that actually matter to it; the game adapts within that envelope from recent play. Companion rule: measure the interaction the game cares about — do not invent generic metrics because they are countable. No shared adaptive engine until game-specific implementations prove common shape.*
+
+| Story | Outcome | State |
+|---|---|---|
+| L1 Adaptive envelopes & philosophy | Minimum experience, maximum experience, meaningful signals, non-signals, adaptable dimensions, and adaptation tempo documented for all six worlds (`GAME_ROADMAPS.md` § Adaptive progression envelopes); worlds without honest signals documented as deliberately **stable** rather than forced into the system | **Closed** 2026-08-24 |
+| L2 Memory adaptive prototype | First implementation: versioned local fluency record (`supersimplegames.memory.adaptive`, gameplay state only); envelope = pairs 2–3 · preview 1.9→1.4s · mismatch window 1.05→0.85s · arrangement variety; exponential average with hysteresis tiers; ~25–30% of rounds serve one step simpler than estimate (comfort variation); at most one dimension moves per completed round; grown-ups gains "Reset playful growth"; deterministic tests + rendered probes | Planned — first implementation; gate re-arms afterward |
+| L3 Color Splash adaptive board mix | Second application: identity count (3–4) and family-tier mix adapt within envelope from completed-board evidence; extract a tiny shared adaptive-state helper **only if** Memory's record shape proves identical | Blocked on L2 gate passing |
+| L4 Fixed-level retirement | Remove the Default/Gentle/Rich control, `level` settings field, and every consumer (Bloom unified 24-object garden; Color Splash interim fixed 4 identities; Numbers visible row stays 1·2·3); delete retired Stack/Tones sources and tests; sanitizer drops stored level harmlessly; grown-ups page keeps creations/reset controls and gains the growth reset | Planned — executes after L2 so Memory's widened envelope replaces what gentle/rich provided |
+| L5 Numbers deepening-within-quantity | Observation-gated exploration: richer presentation inside chosen counts (friend-kind rotation, arrangement styles) before any range change; widening signal = sustained voluntary selection of the current maximum across ≥2 sessions — the child asking for more is the signal; numerals are never hidden behind fluency | Blocked on observation |
+
+**Deliberately stable (documented, not built):** Bloom (organic depth already emerges from ordinary play — merges, trees, rainbow), Peekaboo Pockets (opening every pocket *is* success; search-efficiency would be a manufactured metric), Story Scenes (depth frozen pending K3 observation; dimensions exist but no signals adopted). If a world has no honest performance signal, it does not participate.
+
 ## Current position and sequencing
 
-- **Epic G is complete** (all five stories closed 2026-08-24 with deterministic + rendered evidence).
-- **Round-1 hands-on feedback is in** (`EVIDENCE.md`, 2026-08-24): Memory's gate **passed** ("great"); H3 stays restrained (caregiver-level third pair shipped, nothing more until child signal). Numbers' gate **returned a revise verdict**: v1 archived, and I2b rebuilds it around big tappable numerals with generative spawn — implemented and rendered-verified, **gate re-armed** for the next hands-on round.
-- E1 identity directions remains deferred until the retained worlds feel excellent in real use — which now also includes observation of the two experiments.
-- K proceeds opportunistically whenever hardware or participants become available.
+- **Round-2 direction landed (2026-08-24):** Numbers v2 **passed its gate** on owner hands-on ("really like the new Numbers experience… preserve its core direction") — I3 hardening stays restrained. Fixed caregiver-selected levels are **superseded by Epic L**: per-game adaptive progression, envelopes documented (L1 closed), Memory prototype next (L2), then level retirement (L4), then Color Splash application (L3), Numbers deepening (L5, observation-gated).
+- **Implementation of adaptation is staged:** this roadmap revision ships first; L2 begins only after owner acceptance of the envelope design.
+- E1 identity directions remains deferred. K proceeds opportunistically whenever hardware or participants become available.
 
-The launcher's six slots now hold exactly the intended portfolio: Bloom, Color Splash, Peekaboo Pockets, Story Scenes, Memory (validated experiment), Numbers (redesigned experiment v2).
+The launcher's six slots hold exactly the intended portfolio: Bloom, Color Splash, Peekaboo Pockets, Story Scenes, Memory (validated), Numbers (validated v2).
 
 The Familiar World foundation (shared control meanings, bounded preservation, stable Color Splash frame, "together" meaning) remains implemented and rendered-verified; Bloom's bridge-invited-bird cameo left the portfolio with Stack & Settle, while the recurring cast lives on through Bloom's visitors plus the Color Splash butterfly and Story Scenes snail.
 

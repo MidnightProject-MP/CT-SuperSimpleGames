@@ -6,33 +6,33 @@ A local-only collection of six no-fail web worlds for toddlers (~18–42 months,
 
 ## Current milestone
 
-**Round-1 experiment feedback processed; Numbers rebuilt as v2; both worlds back at their gates (2026-08-24).** Launcher portfolio: Bloom, Color Splash, Peekaboo Pockets, Story Scenes, Memory, Numbers. Stack & Settle and Together Tones retired from launcher/shell/settings; sources inert in-tree.
+**Round-2 owner direction processed: adaptive progression replaces fixed levels; Epic L defined with envelopes documented (L1 closed) — awaiting acceptance before implementing L2 (2026-08-24).** Launcher portfolio: Bloom, Color Splash, Peekaboo Pockets, Story Scenes, Memory, Numbers. Stack & Settle and Together Tones retired from launcher/shell/settings; sources inert in-tree pending deletion.
 
-- **Epic G — interaction polish: COMPLETE**, plus one post-release regression fixed (launcher `touch-action: pan-y` so touch scrolling works while pinch stays blocked).
-- **Memory: gate PASSED on owner hands-on** ("great, super simple"). H3 restrained to the caregiver-level third pair (rich = 3 pairs, three-column layout); nothing more until child observation.
-- **Numbers v1 rejected at gate** (word-count text instead of numerals; visually quiet). **I2b redesign shipped the same day:** oversized tappable numeral bubbles (1·2·3; rich 1–5); tapping a number flashes a giant ghost digit and bursts that many friends into a meadow with staggered arrivals and per-item rising tones; every friend is individually touchable. Rendered-verified end-to-end; deterministic core tested. **Gate re-armed for next hands-on round.**
-- Launcher-scroll lesson recorded in `EVIDENCE.md`: menu surfaces pan, play surfaces don't.
+- **Numbers v2 gate PASSED** on owner hands-on ("really like… preserve its core direction"); I3 hardening stays restrained.
+- **Memory gate previously passed** ("great"); H3 restrained.
+- **Epic G — interaction polish: COMPLETE**, plus launcher-scroll regression fixed (`pan-y`: menu surfaces pan, play surfaces don't).
+- **Epic L — adaptive progression:** L1 closed (per-game min/max experiences, signals, non-signals, dimensions, tempo documented in `GAME_ROADMAPS.md` § Adaptive progression envelopes; Bloom/Peekaboo/Story Scenes deliberately stable). L2 Memory prototype is the first implementation; L4 retires Default/Gentle/Rich afterward; L3 applies the pattern to Color Splash boards; L5 Numbers deepening waits on observation. Fixed-level control still present in this build until L4.
 
 ## Decisions
 
-- Owner direction 2026-08-24 (recorded in `EVIDENCE.md`): interaction polish outranks mechanic breadth; Memory/Numbers replace Stack/Tones; Fresh/reset controls live behind the grown-ups surface (generalized to all management UI); E1 identity deferred until retained worlds feel excellent; residents are world-local experiments first — `residents.js` deliberately unchanged this phase.
-- Child play surfaces reject accidental scale/pan gestures; the caregiver surface stays fully zoomable; OS accessibility zoom is the preserved path.
-- Memory lead concept is matching + spatial recall (owner-revised away from a "who's hiding?" request variant to stay distinct from Peekaboo).
-- Rendered verification tooling now exists: playwright-core + system Edge probes against `npm run dev` (temp workspace, not repo). Probe harnesses have caught two real pre-release defects (Memory matched-face visibility; Numbers friend placement) — rendered checks are mandatory before release claims.
-- Numbers v2 direction (owner, round-1 feedback): big real numerals are the interface — owner taste overrode the research-informed "numerals later" stance.
+- Owner round-2 direction (in `EVIDENCE.md`): **adaptive progression replaces fixed levels** — hidden, continuous, game-specific, slow/reversible, distribution-not-point-estimate, no cliffs, no generic metrics, no shared engine until game-specific implementations prove shape; caregiver keeps reset/start-simpler/cap-style controls, never a global child classification; fluency records are local gameplay state, never assessment.
+- Owner direction 2026-08-24: interaction polish outranks mechanic breadth; Memory/Numbers replaced Stack/Tones; management UI lives behind grown-ups; E1 deferred; residents are world-local experiments (`residents.js` untouched).
+- Child play surfaces reject accidental scale/pan; launcher menu pans vertically while blocking zoom ("menu surfaces pan, play surfaces don't"); caregiver page fully zoomable; OS accessibility zoom preserved.
+- Rendered verification tooling exists (playwright-core + system Edge vs `npm run dev`, temp workspace). Probes have caught three real pre-release defects (Memory matched-face; Memory rich-card count wiring; Numbers friend placement) — rendered checks mandatory before release claims.
 
-## Open questions (evidence gates)
+## Open questions
 
-1. **Memory (gate passed on owner signal):** do the *children* return to it voluntarily, and does the rich-level third pair get used? Observation pending.
-2. **Numbers v2 gate (re-armed):** do children connect the numeral they pressed with how many friends appeared — re-tapping deliberately to make "two" or "three"?
-3. Physical device pass (zoom-fix feel, drag ease, airplane mode) — needs hardware.
-4. Observation sessions (Story Scenes depth unfreeze; persona revision) — needs participants.
+1. **Epic L acceptance:** does the envelope design (L1) match owner intent before L2 implements it?
+2. **Memory adaptive prototype gate:** do children experience the adapting envelope as "meeting them where they are" — and does the fluency record move for the right reasons? (Owner/child hands-on after L2.)
+3. Physical device pass (gesture feel, drag ease, airplane mode) — needs hardware (K2).
+4. Observation sessions (Story Scenes depth unfreeze; adaptive-signal validation for Bloom/Peekaboo) — needs participants (K3).
 
 ## Evidence gaps
 
-- Only one informal child-evidence source exists (owner-relayed Bloom engagement + zoom interference); structured observation pending (K3).
-- Real-device feel unobserved everywhere (K2); all new-world evidence is deterministic + headless-rendered only.
+- Child evidence remains informal/owner-relayed plus owner hands-on of both experiments; structured observation pending (K3).
+- Adaptation *behavior* is entirely unproven: envelopes and tempo are design hypotheses until the Memory prototype survives hands-on; mechanical EMA correctness proves nothing about child experience.
+- Real-device feel unobserved everywhere (K2).
 
 ## Next action
 
-**Paused at the re-armed evidence gates.** Resume only on: (a) owner/child hands-on signal for Numbers v2 → I3 hardening/widening per what survived; child-interest signal for Memory → only then consider more; (b) testing feedback on any shipped change → bounded corrections first; (c) hardware/participants → K2/K3. Do not add mechanics to retained worlds; E1 stays deferred until real-use quality is confirmed. Update this file at milestone boundaries; record decision-changing evidence in `EVIDENCE.md`.
+**Paused awaiting owner acceptance of the Epic L design** (this commit). On acceptance, in order: implement **L2 Memory adaptive prototype** (deterministic core + rendered probes + grown-ups reset control), then **L4 fixed-level retirement**, then **L3 Color Splash application** if Memory's record shape holds. Testing feedback on shipped worlds always takes bounded-corrections priority. E1 stays deferred; K opportunistic.

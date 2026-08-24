@@ -144,6 +144,17 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 
 **Consequence:** Epic G closed with both evidence layers; H2/I2 experiments shipped to their gates with rendered behavioral evidence behind them. Remaining uncertainty: everything above is automation, not a child — Memory recall participation, Numbers invite-vs-task, resident delight, and zoom-fix feel on real devices await owner/child hands-on (the active gates) and K2/K3.
 
+### 2026-08-24 — Round-2 direction: adaptive progression replaces fixed levels (owner)
+
+**Source:** product-owner product direction after trying the latest builds (Memory + Numbers v2).
+
+| Signal | Verdict | Consequence |
+|---|---|---|
+| Numbers v2 | **"I really like the new Numbers experience… the redesigned interaction works very well. Preserve its core direction."** | **Gate PASSED on owner hands-on.** Numeral-bubble generative spawn is the kept core; hardening may follow the same restrained pattern as Memory. |
+| Fixed developmental levels | **Rejected as the primary mechanism.** Caregiver-selected Default/Gentle/Rich becomes adaptive, continuous, hidden, game-specific progression. Constraints set by owner: define min/max experience + real signals per game; adapt slowly, reversibly, one dimension at a time; serve a *distribution* of experiences (comfort rounds included), never a rigid difficulty; no cliffs; no generic metrics ("measure the interaction the game actually cares about"); open-ended worlds must not manufacture performance signals; caregiver keeps only reset/start-simpler/cap-style controls, never "my child is Level 2"; all state local, private, minimal, framed as gameplay not assessment; **no generic adaptive engine — game-specific experiments first, abstraction only from proven common behavior**. | Supersedes Epic C3's fixed-level approach mid-transition. New **Epic L** defined in [`ROADMAP.md`](./ROADMAP.md): per-game envelopes documented first (L1), Memory as first prototype (L2), level-system retirement + retired-source deletion (L3), Color Splash board-mix application (L4), Numbers deepening-within-quantity (L5, observation-gated). Bloom, Peekaboo, and Story Scenes documented as deliberately **stable** — no manufactured signals. Implementation intentionally waits until this roadmap revision is accepted. |
+
+**Residual uncertainty:** the adaptation *behavior itself* is unproven — envelopes and tempo are design hypotheses until the Memory prototype survives hands-on; mechanical correctness of an EMA says nothing about whether children experience it as "meeting them where they are."
+
 ### 2026-08-24 — Round-1 device feedback on the experiments (owner, hands-on)
 
 **Method:** owner tested the deployed collection on a device (initially via desktop-view while the launcher-scroll fix was propagating; the `pan-y` fix in `86ac18e` addresses that separately).
