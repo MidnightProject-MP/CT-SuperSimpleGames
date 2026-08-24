@@ -11,6 +11,13 @@ export const SIMPLIFY_THRESHOLD = 0.45;
 const ALPHA = 0.3;
 const COMFORT_RATE = 0.28;
 
+export const MINIMUM_CONFIG = Object.freeze({
+  pairs: 2,
+  previewMs: 1900,
+  mismatchMs: 1050,
+  variety: false,
+});
+
 // Ordered enrichment path — each notch moves exactly one dimension one step.
 // Simplification walks this list backwards (undo the newest change first).
 const NOTCHES = Object.freeze([
@@ -29,7 +36,7 @@ export function defaultRecord() {
   return Object.freeze({
     version: 1,
     avg: 0.55,
-    config: Object.freeze({ pairs: 2, previewMs: 1900, mismatchMs: 1050, variety: false }),
+    config: MINIMUM_CONFIG,
   });
 }
 
@@ -88,6 +95,20 @@ function simplify(config) {
 }
 
 /**
+ * Starts every page entry at minimum, then lets current-session evidence climb
+ * one notch at a time. The persisted average is only a ramp-speed prior.
+ */
+export function nextSessionConfig(config, record) {
+  const avg = record && typeof record.avg === "number" ? record.avg : 0.55;
+  const next = avg >= ENRICH_THRESHOLD
+    ? enrich(config)
+    : avg <= SIMPLIFY_THRESHOLD
+      ? simplify(config)
+      : null;
+  return Object.freeze(next ? { ...next } : { ...config });
+}
+
+/**
  * Folds a completed round into the estimate and moves at most one notch.
  * Hysteresis keeps a dead zone so ordinary variance does not flap config.
  */
@@ -101,8 +122,10 @@ export function applyRound(record, score) {
 }
 
 /**
- * What this round should actually serve: usually the current config, sometimes
- * one notch simpler (comfort variation). Comfort serving never persists.
+ * What this round should actually serve: the current session config, sometimes
+ * one notch simpler (comfort variation). The caller owns the session config;
+ * persisted record.config is historical frontier evidence, not a launch level.
+ * Comfort serving never persists.
  */
 export function serveConfig(record, random = Math.random) {
   if (typeof random !== "function") throw new TypeError("random must be a function");

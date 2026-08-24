@@ -17,7 +17,7 @@ Each game should provide a different kind of agency and a different route into e
 | Numbers *(experiment)* | Quantity as manipulation and perception | one more / one fewer, small set sizes, concrete consequence, subitizing exposure |
 | Story Scenes | Symbolic storytelling and causal narratives | characters, settings, sequence, roles, emotion, cooperation, cause and effect |
 
-Retired from the active portfolio (2026-08-24, owner direction): **Stack & Settle** (construction/spatial arrangement) and **Together Tones** (temporal patterns). Their roadmaps below are retained as history and marked retired; their sources remain inert in-tree pending deletion.
+Retired from the active portfolio (2026-08-24, owner direction): **Stack & Settle** (construction/spatial arrangement) and **Together Tones** (temporal patterns). Their roadmaps below are retained as history and marked retired; their active sources, pages, styles, and tests were deleted at L4.
 
 “Learning” means exposure through understandable play. It never means a quiz, a mastery claim, a performance score, or pressure to produce an adult-defined answer.
 
@@ -67,6 +67,11 @@ The B3 verdict below kept all six worlds. **It was superseded one day later** by
 
 Owner direction: fixed caregiver-selected levels are replaced by **per-game adaptive progression** — continuous, hidden, game-specific, slow, reversible. Each world defines a minimum and maximum experience and its own meaningful signals; the game adapts within that envelope from recent play, serving a *distribution* of experiences rather than a single difficulty. Companion rule: **measure the interaction the game actually cares about; never invent generic metrics because they are countable.** Internal fluency records are gameplay plumbing: local, minimal, versioned, resettable from the grown-ups surface, never surfaced to the child, and framed as "how much of this game's experience seems useful right now" — nothing diagnostic.
 
+Two further rules shape every envelope:
+
+- **Minimum is the beginning, not a classification.** Every fresh entry into a game starts at that world's minimum. Historical fluency is a prior for ramp speed, not a starting difficulty; current-session behavior must confirm any enrichment, and tired or distracted play can hold or simplify the current session without demotion language.
+- **Maximum should feel like the full game, not merely the harder game.** Minimum experiences may be intentionally sparse with huge targets. Maximum experiences should make fuller purposeful use of the play surface while remaining uncluttered; unused space should be intentional rather than an artifact of designing only for minimum.
+
 Shared rules for every adapting world:
 
 - Evidence updates once per natural round boundary (completed round/board), never mid-play.
@@ -77,8 +82,9 @@ Shared rules for every adapting world:
 
 ### Memory — adaptive prototype (L2)
 
-- **Minimum:** two highly distinct pairs; witnessed preview ≈1.9s; mismatch reveal ≈1.05s; stable 2×2 grid.
-- **Maximum (built envelope):** three pairs; preview ≈1.4s; mismatch window ≈0.85s; arrangement variety across rounds; token subsets rotate among distinct friends. *(Documented beyond build, deferred: four pairs; subtly related tokens.)*
+- **Minimum:** two highly distinct pairs; witnessed preview ≈1.9s; mismatch reveal ≈1.05s; intentionally sparse 2×2 grid with oversized cards.
+- **Maximum (built envelope):** three pairs in a purposeful 3×2 field that uses more of the play area; preview ≈1.4s; mismatch window ≈0.85s; arrangement variety across rounds; token subsets rotate among distinct friends. *(Documented beyond build, deferred: four pairs; subtly related tokens.)*
+- **Session rule:** every fresh entry starts at the 2×2 minimum. Historical fluency changes how much current-session evidence is needed to climb the envelope; it never serves the historical frontier directly.
 - **Signals:** second-flip pair completions vs mismatches; deliberate re-selection of locations already revealed this round; completion itself gates the update — abandoned rounds change nothing.
 - **Never performance:** total time; taps on found pairs (celebration play); witness-phase taps; multi-touch/palm input; session length.
 - **Adapting dimensions (one per step):** pair count · preview duration · mismatch window · arrangement variety.
@@ -92,7 +98,7 @@ Shared rules for every adapting world:
 
 ### Numbers — mostly stable (L5 later)
 
-The bubble row **is** child-selected challenge: pressing a numeral is itself the adaptation input, so numerals are never hidden behind fluency. Deepening happens inside chosen quantities first (friend-kind rotation breadth, arrangement styles from clearly separated to subtly grouped, motion richness); only then does range widen — signalled by **sustained voluntary selection of the current maximum across ≥2 sessions**. The child asking for more is the signal. Tap cadence, first choice, and mashing are not performance.
+The bubble row **is** child-selected challenge: pressing a numeral is itself the adaptation input, so numerals are never hidden behind fluency. The current minimum is the sparse, spacious 1·2·3 field; a future maximum may reasonably become a well-spaced 3×3 field of 1–9 if observation supports that numerical range, with added occupied space creating meaningful opportunities rather than decoration. Deepening happens inside chosen quantities first (friend-kind rotation breadth, arrangement styles from clearly separated to subtly grouped, motion richness); only then does range widen — signalled by **sustained voluntary selection of the current maximum across ≥2 sessions**. The child asking for more is the signal. Tap cadence, first choice, and mashing are not performance.
 
 ### Bloom — stable
 
@@ -115,8 +121,8 @@ Quick index for this document. "Next candidate" means the next unimplemented mil
 | Bloom | Merge reachability revision, rainbow cutscene, visitors — child-engagement validated | Epic G polish only; no depth milestones |
 | Color Splash | Teaching boards + families, stable frame, butterfly resident (weak) | Epic G3/G2 completion protection + resident life before any CS-3 consideration |
 | Peekaboo Pockets | Clues + themed reunions | Epic G5 hygiene + friend variety; PP-3 deferred |
-| Memory *(experiment)* | Not started | H1 brief → H2 playable experiment → **evidence gate** |
-| Numbers *(experiment)* | Not started | I1 brief → I2 playable experiment → **evidence gate** |
+| Memory *(experiment)* | L2 adaptive prototype, minimum-on-entry refinement | **Hands-on gate**: does the session ramp meet the child where they are? |
+| Numbers *(experiment)* | I2b big numeral bubbles | L5 adaptive envelope: deepen presentation, then observation-gated range widening |
 | Story Scenes | SCN-2A variation + compositional castle; snail resident (weak) | Epic G4 control simplification + G2 snail life; SCN-3 stays frozen |
 | ~~Stack & Settle~~ | Retired 2026-08-24 | none — do not invest |
 | ~~Together Tones~~ | Retired 2026-08-24 | none — do not invest |

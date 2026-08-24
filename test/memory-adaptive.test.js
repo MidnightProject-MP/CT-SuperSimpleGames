@@ -2,11 +2,13 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   ENRICH_THRESHOLD,
+  MINIMUM_CONFIG,
   SIMPLIFY_THRESHOLD,
   applyRound,
   clearMemoryAdaptive,
   defaultRecord,
   loadMemoryAdaptive,
+  nextSessionConfig,
   sanitizeRecord,
   saveMemoryAdaptive,
   scoreRound,
@@ -27,8 +29,53 @@ test("the default record starts at minimum experience mid-dead-zone", () => {
   assert.equal(record.avg, 0.55);
   assert.deepEqual(
     record.config,
-    { pairs: 2, previewMs: 1900, mismatchMs: 1050, variety: false }
+    MINIMUM_CONFIG
   );
+});
+
+test("a fresh session starts at minimum even when historical frontier is rich", () => {
+  const history = sanitizeRecord({
+    version: 1,
+    avg: 0.95,
+    config: { pairs: 3, previewMs: 1400, mismatchMs: 850, variety: true }
+  });
+
+  assert.deepEqual(MINIMUM_CONFIG, { pairs: 2, previewMs: 1900, mismatchMs: 1050, variety: false });
+  assert.deepEqual(nextSessionConfig(MINIMUM_CONFIG, history), {
+    pairs: 2, previewMs: 1900, mismatchMs: 950, variety: false
+  });
+});
+
+test("current-session evidence gates the prior and keeps a weak launch at minimum", () => {
+  const history = sanitizeRecord({
+    version: 1,
+    avg: 0.95,
+    config: { pairs: 3, previewMs: 1400, mismatchMs: 850, variety: true }
+  });
+  const weakRound = applyRound(history, 0);
+
+  assert.ok(weakRound.avg < ENRICH_THRESHOLD);
+  assert.deepEqual(nextSessionConfig(MINIMUM_CONFIG, weakRound), MINIMUM_CONFIG);
+});
+
+test("session enrichment is bounded to one notch and never exceeds historical frontier", () => {
+  let history = sanitizeRecord({
+    version: 1,
+    avg: 0.95,
+    config: { pairs: 3, previewMs: 1400, mismatchMs: 850, variety: true }
+  });
+  let session = MINIMUM_CONFIG;
+  const path = [];
+
+  for (let i = 0; i < 8; i += 1) {
+    history = applyRound(history, 1);
+    session = nextSessionConfig(session, history);
+    path.push(session);
+  }
+
+  assert.deepEqual(path[0], { pairs: 2, previewMs: 1900, mismatchMs: 950, variety: false });
+  assert.deepEqual(path[1], { pairs: 2, previewMs: 1650, mismatchMs: 950, variety: false });
+  assert.deepEqual(path.at(-1), history.config);
 });
 
 test("sanitize falls back to defaults on corrupt or partial records", () => {

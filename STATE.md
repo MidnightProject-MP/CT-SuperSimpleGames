@@ -6,12 +6,12 @@ A local-only collection of six no-fail web worlds for toddlers (~18–42 months,
 
 ## Current milestone
 
-**Epic L in progress: adaptive envelopes designed (L1) and Memory's adaptive prototype SHIPPED (L2); fixed-level retirement (L4) next (2026-08-24).** Launcher portfolio: Bloom, Color Splash, Peekaboo Pockets, Story Scenes, Memory, Numbers. Stack & Settle and Together Tones retired from launcher/shell/settings; sources inert pending deletion at L4.
+**Epic L in progress: adaptive envelopes (L1), Memory adaptive prototype plus session-ramp refinement (L2), and fixed-level retirement (L4) shipped; L2 hands-on gate remains open (2026-08-24).** Launcher portfolio: Bloom, Color Splash, Peekaboo Pockets, Story Scenes, Memory, Numbers. Stack & Settle and Together Tones are retired and their active sources, pages, styles, and tests are deleted.
 
 - **Numbers v2 gate PASSED** on owner hands-on ("really like… preserve its core direction"); hardening restrained.
-- **Memory gate PASSED** ("great").
+- **Memory gate PASSED for the core loop** ("great"); adaptive behavior gate remains open after the owner refined the persistence model.
 - **Epic G — interaction polish: COMPLETE**, plus launcher-scroll regression fixed (`pan-y`: menu surfaces pan, play surfaces don't).
-- **Epic L:** L1 envelopes closed (see `GAME_ROADMAPS.md` § Adaptive progression envelopes; Bloom/Peekaboo/Story deliberately stable). **L2 shipped:** `supersimplegames.memory.adaptive` record drives pair count 2–3, witnessed preview 1.9→1.4s, mismatch window 1.05→0.85s, arrangement variety — EMA α=0.3, hysteresis tiers (enrich ≥0.72 / simplify ≤0.45), one notch per completed round, ~28% comfort rounds one step simpler; grown-ups "Reset playful growth" clears it. Verified: 10 dedicated unit tests + rendered probe (fresh=min, persisted-max deals six cards/three columns, completion folds evidence, reset clears). **Gate re-armed for hands-on.**
+- **Epic L:** L1 envelopes closed (see `GAME_ROADMAPS.md` § Adaptive progression envelopes; Bloom/Peekaboo/Story deliberately stable). **L2 shipped and refined:** `supersimplegames.memory.adaptive` record drives pair count 2–3, witnessed preview 1.9→1.4s, mismatch window 1.05→0.85s, arrangement variety — EMA α=0.3, hysteresis tiers (enrich ≥0.72 / simplify ≤0.45), one notch per completed round, ~28% comfort rounds one step simpler; every fresh entry starts at minimum, while historical fluency controls ramp speed; maximum uses a purposeful 3×2 field; grown-ups "Reset playful growth" clears it. Verified by deterministic tests and rendered launch/ramp/reset probes. **Gate remains re-armed for hands-on.**
 - Fixed Default/Gentle/Rich levels **retired (L4)**: control and settings field removed with graceful fallback for stored data; Bloom unified at 24-object garden; Color Splash fixed at four identities until L3 adaptation; Numbers row stays 1·2·3 until L5. Retired Stack/Tones sources, pages, styles, and tests deleted from the tree (git retains history). Grown-ups surface now owns "Reset playful growth."
 
 ## Decisions
@@ -23,8 +23,7 @@ A local-only collection of six no-fail web worlds for toddlers (~18–42 months,
 
 ## Open questions
 
-1. **Epic L acceptance:** does the envelope design (L1) match owner intent before L2 implements it?
-2. **Memory adaptive prototype gate:** do children experience the adapting envelope as "meeting them where they are" — and does the fluency record move for the right reasons? (Owner/child hands-on after L2.)
+1. **Memory adaptive behavior gate:** do children experience minimum-on-entry plus evidence-gated ramping as "meeting them where they are" — and does the fluency record move for the right reasons? (Owner/child hands-on.)
 3. Physical device pass (gesture feel, drag ease, airplane mode) — needs hardware (K2).
 4. Observation sessions (Story Scenes depth unfreeze; adaptive-signal validation for Bloom/Peekaboo) — needs participants (K3).
 
@@ -36,4 +35,4 @@ A local-only collection of six no-fail web worlds for toddlers (~18–42 months,
 
 ## Next action
 
-**Paused awaiting owner acceptance of the Epic L design** (this commit). On acceptance, in order: implement **L2 Memory adaptive prototype** (deterministic core + rendered probes + grown-ups reset control), then **L4 fixed-level retirement**, then **L3 Color Splash application** if Memory's record shape holds. Testing feedback on shipped worlds always takes bounded-corrections priority. E1 stays deferred; K opportunistic.
+**Paused at the refined L2 hands-on gate.** L1, L2, and L4 are implemented, verified, and pushed. Next justified work is L3 Color Splash only if hands-on confirms that minimum-on-entry plus historical ramp-speed behavior feels right; L5 Numbers remains observation-gated. Testing feedback on shipped worlds takes bounded-corrections priority. E1 stays deferred; K remains opportunistic.

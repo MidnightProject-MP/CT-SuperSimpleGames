@@ -2,6 +2,8 @@ import { createTonePlayer } from "./audio.js";
 import {
   applyRound,
   loadMemoryAdaptive,
+  MINIMUM_CONFIG,
+  nextSessionConfig,
   saveMemoryAdaptive,
   scoreRound,
   serveConfig
@@ -33,7 +35,10 @@ let mismatchTimer;
 // Adaptive envelope state (Epic L2): the served config carries pair count,
 // witnessed-preview duration, mismatch reveal window, and arrangement variety.
 let adaptive = loadMemoryAdaptive();
-let served = serveConfig(adaptive);
+// Every page entry warms up from minimum. Persisted history controls how much
+// current-session evidence is needed before this local frontier enriches.
+let sessionConfig = MINIMUM_CONFIG;
+let served = serveConfig({ ...adaptive, config: sessionConfig });
 let mismatchesThisRound = 0;
 let soundEnabled = loadSoundPreference();
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
@@ -188,6 +193,7 @@ function settleIfComplete() {
     matches: round.pairCount,
     mismatches: mismatchesThisRound,
   }));
+  sessionConfig = nextSessionConfig(sessionConfig, adaptive);
   saveMemoryAdaptive(adaptive);
   playfieldComplete();
   return true;
@@ -246,7 +252,7 @@ function startRound(seed) {
   // Adaptive envelope (Epic L2): the served config carries pair count,
   // preview duration, mismatch window, and arrangement variety. Comfort
   // rounds occasionally serve one notch simpler without moving the estimate.
-  served = serveConfig(adaptive);
+  served = serveConfig({ ...adaptive, config: sessionConfig });
   round = createMemoryRound({
     seed,
     pairCount: served.config.pairs,
