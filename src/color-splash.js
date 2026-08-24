@@ -24,6 +24,7 @@ let complete = false;
 let round = 0;
 let soundEnabled = loadSoundPreference();
 let residentTouchesLeft = RESIDENT_TOUCHES;
+let residentSpot = 0;
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 
 function nextSeed() {
@@ -129,6 +130,7 @@ function newRound({ playSound = false } = {}) {
 }
 
 function pulseTile(tile) {
+  if (!tile) return;
   tile.classList.remove("pressed");
   void tile.offsetWidth;
   tile.classList.add("pressed");
@@ -168,8 +170,12 @@ function resolveTile(event) {
   return tiles[index];
 }
 
+const COMPLETION_HOLD_MS = 1500;
+let completedAt = 0;
+
 function finishRound(colorIndex) {
   complete = true;
+  completedAt = performance.now();
   prompt.textContent = "All filled!";
   boardElement.classList.add("complete");
   announcement.textContent = "All squares filled. Tap anywhere for a new board.";
@@ -187,13 +193,40 @@ function residentLayer() {
   return layer;
 }
 
+// World-local resident experiment: the butterfly inhabits the finished board,
+// hopping between real squares when touched instead of hovering at one edge.
+function butterflySpots() {
+  const tiles = [...boardElement.querySelectorAll(".color-cell")];
+  if (!tiles.length) return [];
+  const picks = [...new Set([0, Math.floor(tiles.length / 2), tiles.length - 1])];
+  return picks.map((index) => ({
+    x: tiles[index].offsetLeft + tiles[index].offsetWidth / 2,
+    y: tiles[index].offsetTop + tiles[index].offsetHeight / 2,
+  }));
+}
+
+function placeButterfly(button, spot) {
+  button.style.left = `${spot.x - 42}px`;
+  button.style.top = `${spot.y - 42}px`;
+}
+
 function touchResident(button) {
-  button.classList.remove("flapping");
-  void button.offsetWidth;
-  button.classList.add("flapping");
-  setTimeout(() => button.classList.remove("flapping"), 600);
+  const replay = (className, duration) => {
+    button.classList.remove(className);
+    void button.offsetWidth;
+    button.classList.add(className);
+    setTimeout(() => button.classList.remove(className), duration);
+  };
   residentTouchesLeft -= 1;
-  if (residentTouchesLeft <= 0) button.remove();
+  if (residentTouchesLeft <= 0) {
+    replay("leaving", 750);
+    setTimeout(() => button.remove(), 760);
+    return;
+  }
+  const spots = butterflySpots();
+  residentSpot = (residentSpot + 1) % spots.length;
+  placeButterfly(button, spots[residentSpot]);
+  replay(residentSpot % 2 ? "gliding" : "flapping", 650);
 }
 
 function updateResident() {
@@ -203,17 +236,23 @@ function updateResident() {
     layer?.querySelector(".cs-resident")?.remove();
     return;
   }
-  if (layer?.querySelector(".cs-resident")) return;
+  const existing = layer?.querySelector(".cs-resident");
+  const spots = butterflySpots();
+  if (!spots.length) return;
+  if (existing) {
+    placeButterfly(existing, spots[residentSpot] ?? spots[0]);
+    return;
+  }
   residentTouchesLeft = RESIDENT_TOUCHES;
+  residentSpot = 0;
   const button = attachResident({
     layer: residentLayer(),
     resident,
     className: "cs-resident",
-    label: "A butterfly floats by the finished board",
+    label: "A butterfly flutters over the finished board",
     onTouch: touchResident,
   });
-  button.style.top = "-22px";
-  button.style.right = "-22px";
+  placeButterfly(button, spots[0]);
 }
 
 document.addEventListener("click", (event) => {
@@ -221,8 +260,10 @@ document.addEventListener("click", (event) => {
   const tile = resolveTile(event);
 
   if (complete) {
-    if (tile) pulseTile(tile);
-    newRound({ playSound: true });
+    // Protected moment: a brief opening hold lets the finished board and its
+    // visitor unfold before ordinary input may start the next board.
+    pulseTile(tile);
+    if (performance.now() - completedAt >= COMPLETION_HOLD_MS) newRound({ playSound: true });
     return;
   }
 

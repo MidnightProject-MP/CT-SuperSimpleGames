@@ -214,6 +214,13 @@ button { font: inherit; }
   touch-action: manipulation;
 }
 .cs-resident:focus-visible { outline: 6px solid #312166; outline-offset: 4px; }
+@media (prefers-reduced-motion: no-preference) {
+  .cs-resident { transition: left 520ms ease-in-out, top 520ms ease-in-out; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cs-resident { transition: none; }
+}
+.cs-resident.leaving { pointer-events: none; }
 .cs-resident .resident-art { position: absolute; inset: 8px; filter: drop-shadow(0 6px 3px rgba(51,35,111,.22)); }
 .cs-resident .resident-art i { position: absolute; display: block; }
 .cs-resident[data-type="butterfly"] .resident-art i:first-child,
@@ -232,6 +239,8 @@ button { font: inherit; }
 @media (prefers-reduced-motion: no-preference) {
   .cs-resident[data-type="butterfly"] .resident-art { animation: cs-butterfly-float 3s ease-in-out infinite alternate; }
   .cs-resident.flapping .resident-art { animation: cs-butterfly-flap 600ms ease-out; }
+  .cs-resident.gliding .resident-art { animation: cs-butterfly-glide 650ms ease-in-out; }
+  .cs-resident.leaving .resident-art { animation: cs-butterfly-home 900ms ease-in both; }
 
   @keyframes cs-butterfly-float {
     from { transform: translateY(0); }
@@ -243,10 +252,22 @@ button { font: inherit; }
     35% { transform: rotate(-10deg) scale(1.08); }
     70% { transform: rotate(8deg) scale(.96); }
   }
+
+  @keyframes cs-butterfly-glide {
+    0%, 100% { transform: translateX(0) rotate(0); }
+    40% { transform: translateX(9px) rotate(7deg) scale(1.05); }
+    75% { transform: translateX(-5px) rotate(-5deg); }
+  }
+
+  @keyframes cs-butterfly-home {
+    to { transform: translateY(-64px) scale(.55); opacity: 0; }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .cs-resident.flapping .resident-art,
+  .cs-resident.gliding .resident-art,
+  .cs-resident.leaving .resident-art,
   .cs-resident[data-type="butterfly"] .resident-art { animation-duration: 1ms; }
 }
 

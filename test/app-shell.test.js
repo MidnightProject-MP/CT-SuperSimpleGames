@@ -113,12 +113,14 @@ test("retired worlds stay out of the launcher, offline shell, and caregiver sett
   assert.doesNotMatch(caregiverPage, /value="(stack-settle|together-tones)"/);
 });
 
-test("Color Splash completion stays assistive and restarts from ordinary input", () => {
+test("Color Splash completion stays assistive, protected briefly, then restarts from ordinary input", () => {
   const html = readFileSync(resolve(root, "games/color-splash/index.html"), "utf8");
   assert.doesNotMatch(html, /id="celebration"|id="new-board"|id="undo-move"/i, "completion must not depend on special controls");
   const controller = readFileSync(resolve(root, "src/color-splash.js"), "utf8");
   assert.match(controller, /All squares filled\. Tap anywhere for a new board\./);
-  assert.match(controller, /if \(complete\) \{[\s\S]{0,120}?newRound\(/);
+  assert.match(controller, /COMPLETION_HOLD_MS = 1500/, "completion must hold before input can dismiss it");
+  assert.match(controller, /completedAt = performance\.now\(\)/);
+  assert.match(controller, /- completedAt >= COMPLETION_HOLD_MS\) newRound\(/, "input after the hold must start the new board");
 });
 
 test("open-ended creations share non-destructive home and confirmed fresh-start controls", () => {

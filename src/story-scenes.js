@@ -97,6 +97,7 @@ let soundEnabled = loadSoundPreference();
 let drag = null;
 let suppressClickFor = null;
 let residentTouchesLeft = RESIDENT_TOUCHES;
+let snailStop = 0;
 const tonePlayer = createTonePlayer({ initialEnabled: soundEnabled });
 
 function persistStoryWorld() {
@@ -222,13 +223,45 @@ function renderScene(focusId, motion) {
   updateSceneResident();
 }
 
+// World-local resident experiment: the snail travels along the garden's lower
+// edge, pausing near the child's lowest-placed objects instead of one corner.
+function snailStops() {
+  const ranked = [...objectLayer.children]
+    .map((element) => ({
+      x: Number.parseFloat(element.style.getPropertyValue("--x")),
+      y: Number.parseFloat(element.style.getPropertyValue("--y")),
+    }))
+    .filter((point) => Number.isFinite(point.x) && Number.isFinite(point.y))
+    .sort((first, second) => second.y - first.y)
+    .slice(0, 4);
+  const stops = [...new Set(ranked.map((point) => Math.round(Math.min(86, Math.max(8, point.x * 100)))))].sort((a, b) => a - b);
+  if (!stops.length || stops[0] > 12) stops.unshift(8);
+  while (stops.length < 3) stops.push(stops[stops.length - 1] + 28);
+  return stops;
+}
+
+function placeSnail(button, percentX, facing) {
+  button.dataset.facing = facing;
+  button.style.left = `${percentX}%`;
+}
+
 function touchSceneResident(button) {
   button.classList.remove("sliding");
   void button.offsetWidth;
   button.classList.add("sliding");
   setTimeout(() => button.classList.remove("sliding"), 900);
+
   residentTouchesLeft -= 1;
-  if (residentTouchesLeft <= 0) button.remove();
+  if (residentTouchesLeft <= 0) {
+    placeSnail(button, Math.max(2, Number.parseFloat(button.style.left) - 14), "-1");
+    button.classList.add("leaving");
+    setTimeout(() => button.remove(), 1100);
+    return;
+  }
+  const stops = snailStops();
+  snailStop = (snailStop + 1) % stops.length;
+  const current = Number.parseFloat(button.style.left);
+  placeSnail(button, stops[snailStop], String(stops[snailStop] >= current ? "1" : "-1"));
 }
 
 function updateSceneResident() {
@@ -240,6 +273,7 @@ function updateSceneResident() {
   }
   if (existing) return;
   residentTouchesLeft = RESIDENT_TOUCHES;
+  snailStop = 0;
   const button = attachResident({
     layer: stage,
     resident,
@@ -247,8 +281,8 @@ function updateSceneResident() {
     label: "A snail slides through the garden",
     onTouch: touchSceneResident,
   });
-  button.style.left = "8%";
   button.style.bottom = "6%";
+  placeSnail(button, snailStops()[0], "1");
 }
 
 function renderPalette() {
