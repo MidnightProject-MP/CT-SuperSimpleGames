@@ -84,18 +84,30 @@ test("transposeBoard preserves flood region size and orthogonal adjacency", () =
   assert.equal(before, after);
 });
 
-test("visible play surface ≅ forgiving tap: resolveTile only within shell margin", () => {
-  assert.match(runtime, /boardShell\.getBoundingClientRect/);
+test("visible play surface ≅ forgiving tap: resolveTile only within board +16px", () => {
+  assert.match(runtime, /boardElement\.getBoundingClientRect/);
   assert.match(runtime, /margin = 16/);
-  assert.match(runtime, /if \(event\.clientX < shellRect\.left - margin/);
-  assert.doesNotMatch(runtime, /document\.addEventListener\("click"/); // now scoped to boardShell
+  assert.match(runtime, /if \(event\.clientX < boardRect\.left - margin/);
+  assert.doesNotMatch(runtime, /document\.addEventListener\("click"/);
   assert.match(runtime, /boardShell\.addEventListener\("click", handleBoardTap\)/);
 });
 
 test("no accidental complexity increase from viewport dimensions", () => {
-  // Runtime should cap cell at 120 and keep ≤16 cells, so larger screen ≠ harder
-  assert.match(runtime, /Math\.max\(44, Math\.min\(120/);
+  // No arbitrary maximum cell size — minimum 44 ensures comfort, available
+  // rectangle caps the board; larger screen does not imply harder puzzle.
+  assert.match(runtime, /Math\.max\(44, cell\)/);
+  assert.doesNotMatch(runtime, /Math\.min\(120/);
   assert.match(runtime, /GRID_OPTIONS/);
   assert.match(runtime, /width: 3, height: 4/);
   assert.match(runtime, /width: 4, height: 3/);
+  assert.match(runtime, /width: 3, height: 5/);
+  assert.match(runtime, /width: 5, height: 3/);
+});
+
+test("boardSizeForViewport uses correct round (no off-by-one) and step-based chooser", () => {
+  assert.match(runtime, /function isTeachingRound\(r\)\s*\{\s*return r <= 3/);
+  assert.match(runtime, /boardSizeForViewport\(\)\s*\{[^}]*isTeachingRound\(round\)/s);
+  assert.doesNotMatch(runtime, /isTeachingRound\(round \+ 1\)/);
+  assert.match(runtime, /function gridsForStep\(step\)/);
+  assert.match(runtime, /function chooseGrid\(availW, availH, teachingOrStep\)/);
 });

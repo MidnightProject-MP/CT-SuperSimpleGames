@@ -39,17 +39,18 @@ function nextSeed() {
 
 // --- Responsive geometry: discrete grid selection ---
 
-// Conservative set for this slice: teaching 2×2, main options that form
-// transpose pairs and keep square cells. 4×3 ↔ 3×4 (12 cells) uses tall
-// portrait / wide landscape efficiently with large targets; 4×4 square
-// remains as fallback for square-ish viewports. All keep ≤16 cells so
-// larger screen does not mean harder puzzle — larger visual board with
-// same or fewer cells means larger targets.
+// Discrete grid options per complexity step. Teaching is always 2×2.
+// Main step exposes several transpose-paired candidates so the chooser can
+// select the best fit for the *actual* available aspect ratio — e.g. tall
+// 3×4 ↔ wide 4×3 (12), tall 3×5 ↔ wide 5×3 (15), and square 4×4 (16).
+// All ≤16 so larger screen does not mean harder.
 const GRID_OPTIONS = Object.freeze([
   { width: 2, height: 2 }, // teaching
-  { width: 4, height: 3 }, // tall portrait main (12) ↔ 3×4 landscape
   { width: 3, height: 4 },
-  { width: 4, height: 4 }, // square main (16)
+  { width: 4, height: 3 },
+  { width: 3, height: 5 },
+  { width: 5, height: 3 },
+  { width: 4, height: 4 },
 ]);
 
 function isTeachingRound(r) {
@@ -60,8 +61,6 @@ function getAvailableRect() {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const isPortrait = vh >= vw;
-  // Use viewport minus essential chrome, not shell size, to avoid feedback
-  // where a too-large board expands the shell and makes avail appear larger.
   const topBarH = 48;
   const railW = 56;
   const promptRect = prompt.getBoundingClientRect();
@@ -73,12 +72,27 @@ function getAvailableRect() {
   return { width: vw - railW - 24, height: vh - promptH - 16 };
 }
 
-function chooseGrid(availW, availH, teaching) {
-  if (teaching) return { width: 2, height: 2 };
-  const isPortraitAvail = availH > availW;
-  const candidates = isPortraitAvail
-    ? [{ width: 3, height: 4 }, { width: 4, height: 4 }]
-    : [{ width: 4, height: 3 }, { width: 4, height: 4 }];
+// Complexity steps for this slice: 0 = teaching (2×2), 1 = main (up to 16 cells).
+// Each step exposes a small set of transpose-paired discrete grids; the chooser
+// then selects the best fit for the *actual* available aspect ratio.
+function gridsForStep(step) {
+  if (step === 0) return [{ width: 2, height: 2 }];
+  // Main step: several transpose pairs so tall vs wide rectangles can be
+  // filled efficiently with large square targets. All ≤16 so larger screen
+  // does not imply harder puzzle.
+  return [
+    { width: 3, height: 4 }, // 12 tall
+    { width: 4, height: 3 }, // 12 wide (transpose)
+    { width: 3, height: 5 }, // 15 tall
+    { width: 5, height: 3 }, // 15 wide (transpose)
+    { width: 4, height: 4 }, // 16 square
+  ];
+}
+
+function chooseGrid(availW, availH, teachingOrStep) {
+  // Back-compat: teaching boolean still supported, but prefer step number.
+  const step = typeof teachingOrStep === "number" ? teachingOrStep : (teachingOrStep ? 0 : 1);
+  const candidates = gridsForStep(step);
   let best = null;
   for (const g of candidates) {
     const gap = 8;
@@ -90,8 +104,9 @@ function chooseGrid(availW, availH, teaching) {
     const boardW = cell * g.width + (g.width - 1) * gap + pad;
     const boardH = cell * g.height + (g.height - 1) * gap + pad;
     const utilization = (boardW * boardH) / (availW * availH);
-    const orientationBonus = (isPortraitAvail && g.height >= g.width) || (!isPortraitAvail && g.width >= g.height) ? 0.05 : 0;
-    const score = cell * 0.7 + utilization * 100 * 0.3 + orientationBonus * 100;
+    // No arbitrary maximum cell size — huge toddler targets are not a problem.
+    // Score prefers larger cells and better fill of the actual rectangle.
+    const score = cell * 0.85 + utilization * 100 * 0.15;
     if (!best || score > best.score) best = { ...g, cell, boardW, boardH, utilization, score };
   }
   const chosen = best ? { width: best.width, height: best.height } : { width: 4, height: 4 };
@@ -99,9 +114,10 @@ function chooseGrid(availW, availH, teaching) {
 }
 
 export function boardSizeForViewport() {
-  const teaching = isTeachingRound(round + 1);
+  const teaching = isTeachingRound(round);
   const avail = getAvailableRect();
-  return chooseGrid(avail.width, avail.height, teaching);
+  const step = teaching ? 0 : 1;
+  return chooseGrid(avail.width, avail.height, step);
 }
 
 // Pure transpose: (r,c) → (c,r), dimensions swap, preserves top-left, identity, adjacency.
@@ -128,8 +144,9 @@ function applyBoardGeometry() {
   const cellByW = Math.floor((avail.width - pad - (board.width - 1) * gap) / board.width);
   const cellByH = Math.floor((avail.height - pad - (board.height - 1) * gap) / board.height);
   let cell = Math.min(cellByW, cellByH);
-  cell = Math.max(44, Math.min(120, cell));
-  // Clamp to comfortable toddler range and also ensure board fits avail
+  cell = Math.max(44, cell);
+  // No arbitrary maximum — huge toddler targets are not a problem; minimum
+  // ensures comfort, available rectangle caps the board.
   boardElement.style.setProperty("--cell-size", `${cell}px`);
   boardElement.style.setProperty("--cols", String(board.width));
   boardElement.style.setProperty("--rows", String(board.height));
@@ -258,17 +275,17 @@ function showColorTravel(tile, colorIndex) {
 }
 
 function resolveTile(event) {
-  // Visible play area ≅ forgiving area: resolve only within board-shell,
-  // but allow generous near-edge misses via nearestTarget within board.
-  // Do not treat far-background taps as board input — board should be the toy.
+  // Forgiving hit-box is the visible board plus a small margin, not the entire
+  // play pane. This keeps visible ≅ forgiving: near-edge misses resolve
+  // generously, but large blank areas of the play pane do not secretly act as
+  // board input.
   const literalTile = event.target.closest?.(".color-cell");
   if (literalTile) return literalTile;
   if (!Number.isFinite(event.clientX) || !Number.isFinite(event.clientY)) return null;
-  // Only resolve if tap is within board-shell's extended forgiving margin (16px)
-  const shellRect = boardShell.getBoundingClientRect();
+  const boardRect = boardElement.getBoundingClientRect();
   const margin = 16;
-  if (event.clientX < shellRect.left - margin || event.clientX > shellRect.right + margin ||
-      event.clientY < shellRect.top - margin || event.clientY > shellRect.bottom + margin) {
+  if (event.clientX < boardRect.left - margin || event.clientX > boardRect.right + margin ||
+      event.clientY < boardRect.top - margin || event.clientY > boardRect.bottom + margin) {
     return null;
   }
   const tiles = [...boardElement.querySelectorAll(".color-cell")];
