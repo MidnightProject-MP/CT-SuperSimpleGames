@@ -149,15 +149,17 @@ test("Story Scenes switches scenes directly from dock chips without an overlay",
   assert.match(controller, /renderSceneChips\(\)/);
 });
 
-test("Color Splash reserves a stable frame with no removed-control remnants", () => {
+test("Color Splash uses the full play frame with no removed-control remnants", () => {
   const css = readFileSync(resolve(root, "color-splash.css"), "utf8");
   const runtime = readFileSync(resolve(root, "src/color-splash.js"), "utf8");
-  assert.match(css, /\.board-shell\s*\{[^}]*grid-template-rows:\s*auto auto 72px/s);
-  assert.equal([...css.matchAll(/grid-template-rows:\s*auto auto 72px/g)].length, 2);
+  assert.match(css, /\.board-shell\s*\{[^}]*grid-template-rows:\s*auto auto/s);
+  assert.equal([...css.matchAll(/grid-template-rows:\s*auto auto/g)].length, 3);
+  assert.match(css, /--board-size: min\(96vw, calc\(100svh - 128px\), 520px\)/);
   assert.doesNotMatch(css, /\.has-undo[^}]*--board-size/s);
   assert.doesNotMatch(css, /\.teaching-board\s*\{[^}]*--board-size/s);
   assert.match(css, /\.splash-prompt\s*\{[^}]*grid-row:\s*1/s);
   assert.match(css, /\.color-board\s*\{[^}]*grid-row:\s*2/s);
   assert.doesNotMatch(css, /undo-move|new-board/, "retired control styles must stay removed");
   assert.doesNotMatch(runtime, /has-undo/);
+  assert.match(runtime, /pre-L3 play surface at the established 4 × 4 size/);
 });

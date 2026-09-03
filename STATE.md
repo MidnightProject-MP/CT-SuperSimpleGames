@@ -24,15 +24,17 @@ A local-only collection of six no-fail web worlds for toddlers (~18–42 months,
 ## Open questions
 
 1. **Memory adaptive behavior gate:** do children experience minimum-on-entry plus evidence-gated ramping as "meeting them where they are" — and does the fluency record move for the right reasons? (Owner/child hands-on.)
-3. Physical device pass (gesture feel, drag ease, airplane mode) — needs hardware (K2).
+3. Physical device pass (gesture feel, drag ease) — needs hardware (K2). **Airplane-mode offline shell is now CLOSED for `v51`.**
 4. Observation sessions (Story Scenes depth unfreeze; adaptive-signal validation for Bloom/Peekaboo) — needs participants (K3).
 
 ## Evidence gaps
 
 - Child evidence remains informal/owner-relayed plus owner hands-on of both experiments; structured observation pending (K3).
 - Adaptation *behavior* is entirely unproven: envelopes and tempo are design hypotheses until the Memory prototype survives hands-on; mechanical EMA correctness proves nothing about child experience.
-- Real-device feel unobserved everywhere (K2).
+- Real-device feel partially remains (K2 gesture/drag). **Offline airplane-mode is now validated on physical device (2026-09-03, owner provenance):** installed PWA after `v51` opened online, fully closed, airplane mode, relaunched from icon — launcher and all active games opened and functioned offline. Corroborates the automated fix (194 checks + rendered Edge offline probe: 62 cached, all 6 worlds + caregiver cold-load offline, core interactions offline). Do not reopen offline work unless new physical evidence contradicts this result.
 
 ## Next action
 
-**Paused at the refined L2 hands-on gate.** L1, L2, and L4 are implemented, verified, and pushed. Next justified work is L3 Color Splash only if hands-on confirms that minimum-on-entry plus historical ramp-speed behavior feels right; L5 Numbers remains observation-gated. Testing feedback on shipped worlds takes bounded-corrections priority. E1 stays deferred; K remains opportunistic.
+**Paused at the refined L2 hands-on gate.** L1, L2, and L4 are implemented, verified, and pushed. **Offline P0 gate CLOSED on 2026-09-03 physical-device PASSED.** Next justified work is L3 Color Splash adaptive board mix **only** if hands-on confirms that minimum-on-entry plus historical ramp-speed behavior feels right (offline no longer blocks it); L5 Numbers remains observation-gated. Testing feedback on shipped worlds takes bounded-corrections priority. E1 stays deferred; K remains opportunistic otherwise.
+
+**What changed:** `sw.js` `v50 → v51` cache-first + `Promise.allSettled` per-entry precache + navigation-variant fallback. Verified at automated layers (`test/service-worker.test.js` 11, `test/offline-lifecycle.test.js` 8, `scripts/verify-offline.mjs` Edge `context.setOffline(true)` 62 cached) and now **closed by physical-device evidence 2026-09-03 (owner: online → close → airplane → relaunch → launcher + all games offline).** See `docs/EVIDENCE.md` 2026-09-03.

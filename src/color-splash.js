@@ -38,15 +38,9 @@ function nextSeed() {
 }
 
 function boardSizeForViewport() {
-  const bounds = boardElement.getBoundingClientRect();
-  const targetCell = Math.max(64, Math.min(110, Math.round(Math.min(bounds.width, window.innerHeight) / 7)));
-  const width = Number.isFinite(bounds.width) && bounds.width > 0
-    ? Math.max(4, Math.min(12, Math.floor(bounds.width / targetCell)))
-    : 4;
-  const height = Number.isFinite(bounds.height) && bounds.height > 40
-    ? Math.max(4, Math.min(16, Math.floor(bounds.height / targetCell)))
-    : 6;
-  return { width, height };
+  // Screen polish changes the board's footprint, not its complexity. Keep the
+  // pre-L3 play surface at the established 4 × 4 size.
+  return { width: 4, height: 4 };
 }
 
 function renderSoundState() {

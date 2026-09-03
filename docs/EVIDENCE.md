@@ -228,6 +228,43 @@ Missing child or caregiver evidence limits claims; it does not prohibit bounded,
 
 **Consequence:** Validates the archive hypotheses, wind-down epic, caregiver-layer epic, recurring-inhabitant cast, and visual-identity exploration as researched directions rather than speculative ones; informs B3 portfolio-composition criteria (medium value, regime fit, delivered quality).
 
+### 2026-09-03 — Offline shell physical-device failure and fix (owner report → investigation → rendered verification)
+
+**Source:** product-owner physical-device report: installed PWA on phone, then airplane mode, then unable to open games. Relayed as real-device evidence that overrides the 179/179 green suite.
+
+**Investigation (Celestan, 2026-09-03):** deployed site at `https://midnightproject-mp.github.io/CT-SuperSimpleGames/` inspected. Precache list (62 URLs) is complete — every HTML, CSS, JS, manifest, and icon resolves and is precached — so "asset exists on disk" was not the bug. Two design weaknesses were confirmed against MDN recommended patterns:
+
+1. **Network-first fetch for a static offline-first app shell.** Every request tried `fetch()` before `caches.match()`, so an installed shell could not launch *instantly* offline and was sensitive to transient network failure. MDN's caching guide recommends cache-first (or stale-while-revalidate) for precached app shells. ([MDN](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Caching))
+2. **`cache.addAll(APP_SHELL)` all-or-nothing install.** `addAll()` rejects if any single response fails, so one transient or deployment-specific 404 would prevent the new worker from installing at all. With ~60 precached URLs this fragility is material. ([MDN](https://developer.mozilla.org/en-US/docs/Web/API/Cache/addAll))
+
+Service-worker lifecycle is also separate from PWA installation: offline behavior only appears after the worker is installed, active, and controlling the pages. The prior suite proved "file exists," not that the worker controlled the PWA, the shell was cached, and cold offline launches worked. ([MDN](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers))
+
+**Fix (2026-09-03):** `sw.js` `v50 → v51`:
+
+* `CACHE_NAME` bumped, install now uses `Promise.allSettled(APP_SHELL.map(u => cache.add(u)))` so a single asset failure is logged but does not brick the shell; gaps fill on demand when online.
+* Fetch strategy changed to **cache-first with background revalidation** for same-origin GETs: `caches.match()` first, return immediately if hit and refresh in background, otherwise fetch → cache → return. Offline navigations try directory/index variants before falling back to root, handling trailing-slash differences (`/games/bloom` vs `/games/bloom/` vs `/games/bloom/index.html`).
+
+**Verification (2026-09-03):**
+
+* Deterministic: 194 checks pass (was 179). New `test/service-worker.test.js` (11 checks) proves cache-first ordering, per-entry install tolerance, and navigation-variant fallback. New `test/offline-lifecycle.test.js` (8 checks) proves every launcher link, every game HTML+asset, and cold offline navigation across all six worlds from a simulated installed scope.
+* Rendered: headless Edge via `playwright-core` (system `msedge`) against `npm run dev` at 390×844, `hasTouch: true`. Steps mirrored the required physical evidence: install online → `navigator.serviceWorker.ready` + `controller` + `caches.keys()` → `cachedCount 62` → `context.setOffline(true)` → cold offline `goto` for `/`, `/games/bloom/`, `/games/color-splash/`, `/games/peekaboo/`, `/games/story-scenes/`, `/games/memory/`, `/games/number-nibbles/`, `/caregiver.html` — all returned their expected shell without network. Core interactions offline: Bloom created a flower (`0 → 1`), Color Splash cells present, Peekaboo pockets present, Memory 4 cards, Numbers 3 bubbles → 1 friend. Script: `scripts/verify-offline.mjs`.
+
+**Remaining uncertainty:** the automated offline probe is still a desktop-browser proxy. It does not establish the actual phone's PWA launch in airplane mode, carrier-specific behavior, or iOS/Android install prompts. Owner physical-device validation in airplane mode remains the required separate evidence layer. Until that passes, offline is considered "fixed at automated layers, pending device."
+
+**Consequence:** offline/local-only is a hard constraint, so it outranks Epic L3 (Color Splash adaptive board mix). L3 stays blocked until physical-device airplane-mode validation completes, even though L2's hands-on gate is also open.
+
+### 2026-09-03 — Offline shell physical-device validation PASSED (owner, on-device)
+
+**Source:** product-owner physical-device report after `v51` fix — owner provenance, same device that previously reported failure.
+
+**Method (owner, relayed):** opened the deployed PWA online first; fully closed the PWA; enabled airplane mode; relaunched from the installed icon; verified launcher loaded correctly; opened and functioned in each active game offline.
+
+**Signal:** launcher loaded correctly; active games opened and functioned offline. This is the exact cold-launch, scope-controlled offline flow that the automated `scripts/verify-offline.mjs` probe was designed to approximate (install → controlling → 62 cached → `context.setOffline(true)` → cold `goto` for `/`, `/games/bloom/`, `/games/color-splash/`, `/games/peekaboo/`, `/games/story-scenes/`, `/games/memory/`, `/games/number-nibbles/`).
+
+**Consequence:** offline P0 gate **CLOSED**. The prior automated fix (`v51` cache-first + `allSettled` per-entry precache + navigation-variant fallback) is now corroborated by the required separate evidence layer. L3 (Color Splash adaptive board mix) remains gated **only** on the outstanding Memory adaptive-progression hands-on feedback (L2). Offline work is not to be reopened unless new physical evidence contradicts this result. See `STATE.md` and `ROADMAP.md` updates.
+
+**Remaining uncertainty:** gesture feel, drag ease, and frame geometry on real touch hardware (other K2 dimensions) remain unobserved; child comprehension of offline vs online remains untested.
+
 ## External guidance boundary
 
 The external sources cited in `PRODUCT.md` and `CONCEPTS.md` inform safety, co-play, and claim restraint. They do not establish that SuperSimpleGames teaches a developmental skill, is suitable for every child in an age band, or produces a developmental outcome.
