@@ -116,8 +116,6 @@ async function main() {
         throw e;
       }
       // Check core element exists and is visible
-      const found = await offlinePage.evaluate((sel) => !!eval(sel), world.check);
-      // Actually evaluate check string
       const ok = await offlinePage.evaluate((check) => {
         try { return !!eval(check); } catch { return false; }
       }, world.check);

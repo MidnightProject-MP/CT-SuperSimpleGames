@@ -99,6 +99,21 @@ test("the launcher exposes exactly the active portfolio", () => {
   ]);
 });
 
+test("every active launcher route is represented in the offline shell", () => {
+  const launcher = readFileSync(resolve(root, "index.html"), "utf8");
+  const gameRoutes = [...launcher.matchAll(/<a\s+class="game-card[^"]*"\s+href="([^"]+)"/g)]
+    .map((match) => match[1]);
+  const worker = readFileSync(resolve(root, "sw.js"), "utf8");
+  const shellBlock = worker.match(/const APP_SHELL = \[([\s\S]*?)\];/)?.[1];
+  assert.ok(shellBlock, "APP_SHELL is missing");
+  const shellPaths = new Set([...shellBlock.matchAll(/"([^"]+)"/g)].map((match) => match[1]));
+
+  for (const route of gameRoutes) {
+    const normalized = `./${route.replace(/^\.\//, "").replace(/\/$/, "")}/`;
+    assert.ok(shellPaths.has(normalized), `${route} is not represented in APP_SHELL`);
+  }
+});
+
 test("retired worlds stay out of the launcher, offline shell, and caregiver settings", () => {
   const launcher = readFileSync(resolve(root, "index.html"), "utf8");
   assert.doesNotMatch(launcher, /data-world="(stack-settle|together-tones)"/);
