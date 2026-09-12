@@ -59,7 +59,7 @@ Then open <http://localhost:4173>.
 
 ## Verify
 
-The default `node --test` command is the deterministic CI verification layer. Rendered/offline qualification is a separate evidence layer: `scripts/verify-offline.mjs` exercises a real browser via `playwright-core` and a system Edge installation, so it is not part of the dependency-free default test suite.
+CI performs JavaScript syntax checks and the deterministic `node --test` suite. Rendered/offline qualification is a separate evidence layer: `scripts/verify-offline.mjs` exercises a real browser via `playwright-core` and a system Edge installation, so it is not part of the dependency-free default test suite.
 
 ```powershell
 node --test
